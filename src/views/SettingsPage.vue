@@ -16,9 +16,9 @@ import {
 import {Preferences} from '@capacitor/preferences';
 
 const settings = ref({
-  laudesOfficio: false,
-  laudesEvangelio: false,
-  vesperaeOfficio: false,
+  laudesOfficium: false,
+  laudesEvangelium: false,
+  vesperaeOfficium: false,
   theme: 'system'
 });
 
@@ -79,15 +79,15 @@ onMounted(async () => {
 
         <ion-item>
           <ion-label>Laudes + Officium</ion-label>
-          <ion-toggle v-model="settings.laudesOfficio" @ionChange="saveSettings"></ion-toggle>
+          <ion-toggle v-model="settings.laudesOfficium" @ionChange="saveSettings"></ion-toggle>
         </ion-item>
         <ion-item>
           <ion-label>Laudes + Evangelium</ion-label>
-          <ion-toggle v-model="settings.laudesEvangelio" @ionChange="saveSettings"></ion-toggle>
+          <ion-toggle v-model="settings.laudesEvangelium" @ionChange="saveSettings"></ion-toggle>
         </ion-item>
         <ion-item>
           <ion-label>Vesperae + Officium</ion-label>
-          <ion-toggle v-model="settings.vesperaeOfficio" @ionChange="saveSettings"></ion-toggle>
+          <ion-toggle v-model="settings.vesperaeOfficium" @ionChange="saveSettings"></ion-toggle>
         </ion-item>
       </ion-list>
     </ion-content>
