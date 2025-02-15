@@ -131,7 +131,8 @@ updateSaintOfDay();
   --padding-start: 16px;
   --padding-end: 16px;
   --border-radius: 8px;
-  --background: var(--ion-color-light);
+  --background: var(--background-color-card);
+  border: 0px solid var(--border-color);
 }
 
 .date-picker-modal {
