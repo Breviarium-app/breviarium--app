@@ -20,7 +20,13 @@
   --ion-color-danger: #eb445a;
   --ion-color-medium: #92949c;
   --ion-color-light: #f4f5f8;
-
+  --background-color-card: #f4f5f8;
+}
+:host{
+  --inner-border-width: 0px 0px 0px 0px !important;
+}
+ion-item:deep(*){
+  --border-color: #dfdfe1;
 }
 
 /* Paper theme */
@@ -30,6 +36,11 @@
   --ion-text-color: #2c1810;
   --ion-text-color-rgb: 44, 24, 16;
   --ion-border-color: #d4b594;
+  ion-item:deep(*){
+    --border-color: #c5b096;
+  }
+  --background-color-card: #dac7af;
+
 }
 
 [data-theme="dark"] {
@@ -37,6 +48,10 @@
   --ion-background-color-rgb: 18, 18, 18;
   --ion-text-color: #ffffff;
   --ion-text-color-rgb: 255, 255, 255;
+  --background-color-card: #222222;
+  ion-item:deep(*){
+    --border-color: #434343;
+  }
 }
 
 a {
