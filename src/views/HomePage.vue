@@ -10,9 +10,10 @@ import {
   IonModal,
   IonPage,
   IonTitle,
-  IonToolbar
+  IonToolbar, useBackButton, useIonRouter
 } from '@ionic/vue';
 import {format} from 'date-fns';
+import {App} from '@capacitor/app';
 
 const selectedDate = ref(new Date().toISOString());
 const isDatePickerOpen = ref(false);
@@ -61,6 +62,13 @@ const confirmDate = () => {
 
 // Set initial saint
 updateSaintOfDay();
+
+const ionRouter = useIonRouter();
+useBackButton(-1, () => {
+  if (!ionRouter.canGoBack()) {
+    App.exitApp();
+  }
+});
 </script>
 
 <template>
