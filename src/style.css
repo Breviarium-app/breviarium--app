@@ -12,6 +12,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  --ion-background-color: #f8f9fb;
   --ion-color-primary: #be4747;
   --ion-color-secondary: #3dc2ff;
   --ion-color-tertiary: #be4747;
@@ -21,6 +22,7 @@
   --ion-color-medium: #92949c;
   --ion-color-light: #f4f5f8;
   --background-color-card: #f4f5f8;
+  --background: var(--ion-background-color);
 }
 :host{
   --inner-border-width: 0px 0px 0px 0px !important;
@@ -40,6 +42,7 @@ ion-item:deep(*){
     --border-color: #c5b096;
   }
   --background-color-card: #dac7af;
+  --background: var(--ion-background-color);
 
 }
 
@@ -52,6 +55,7 @@ ion-item:deep(*){
   ion-item:deep(*){
     --border-color: #434343;
   }
+  --background: var(--ion-background-color);
 }
 
 a {
