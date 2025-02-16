@@ -18,6 +18,7 @@
     "@capacitor/preferences": "^7.0.0",
     "@ionic/vue": "^7.0.0",
     "@ionic/vue-router": "^7.0.0",
+    "biblia-de-jerusalen": "^0.1.2",
     "date-fns": "^4.1.0",
     "vue": "^3.4.38",
     "vue-router": "^4.2.5"
