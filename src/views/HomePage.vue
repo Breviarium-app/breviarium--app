@@ -10,14 +10,16 @@ import {
   IonModal,
   IonPage,
   IonTitle,
-  IonToolbar, useBackButton, useIonRouter
+  IonToolbar,
+  useBackButton,
+  useIonRouter
 } from '@ionic/vue';
 import {format} from 'date-fns';
 import {App} from '@capacitor/app';
+import SaintBanner from "@/views/SaintBanner.vue";
 
 const selectedDate = ref(new Date().toISOString());
 const isDatePickerOpen = ref(false);
-const saintOfDay = ref('');
 const modal = ref();
 
 const prayerTypes = [
@@ -32,36 +34,15 @@ const prayerTypes = [
   {id: 'lectiones', title: 'Lectiones'}
 ];
 
-const saints = [
-  'Saint Francis of Assisi',
-  'Saint Teresa of Ávila',
-  'Saint Augustine of Hippo',
-  'Saint Thomas Aquinas',
-  'Saint Catherine of Siena',
-  'Saint Ignatius of Loyola',
-  'Saint Benedict of Nursia',
-  'Saint Thérèse of Lisieux',
-  'Saint Patrick',
-  'Saint Joan of Arc'
-];
-
-const updateSaintOfDay = () => {
-  const randomIndex = Math.floor(Math.random() * saints.length);
-  saintOfDay.value = saints[randomIndex];
-};
 
 const handleDateChange = (value: any) => {
   console.log(value);
   selectedDate.value = value;
-  updateSaintOfDay();
 };
 
 const confirmDate = () => {
   isDatePickerOpen.value = false;
 };
-
-// Set initial saint
-updateSaintOfDay();
 
 const ionRouter = useIonRouter();
 useBackButton(-1, () => {
@@ -84,7 +65,7 @@ useBackButton(-1, () => {
         <div id="open-modal-calendar" class="date-button">
           {{ format(new Date(selectedDate), 'MMMM d, yyyy') }}
         </div>
-        <div class="saint-day">{{ saintOfDay }}</div>
+        <SaintBanner/>
       </div>
 
       <div class="prayer-grid">
@@ -120,12 +101,6 @@ useBackButton(-1, () => {
   font-size: 1.2em;
   padding: 8px;
   cursor: pointer;
-}
-
-.saint-day {
-  color: var(--ion-color-danger);
-  font-size: 0.9em;
-  margin-top: 0.5rem;
 }
 
 .prayer-grid {
