@@ -20,6 +20,8 @@
     "@ionic/vue-router": "^7.0.0",
     "biblia-de-jerusalen": "^0.1.2",
     "date-fns": "^4.1.0",
+    "romcal": "^3.0.0-dev.95",
+    "@romcal/calendar.spain": "^3.0.0-dev.95",
     "vue": "^3.4.38",
     "vue-router": "^4.2.5"
   },
