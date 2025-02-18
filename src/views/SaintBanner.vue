@@ -1,28 +1,15 @@
 <script lang="ts" setup>
 
 import {ref} from "vue";
-
-const saints = [
-  'Saint Francis of Assisi',
-  'Saint Teresa of Ávila',
-  'Saint Augustine of Hippo',
-  'Saint Thomas Aquinas',
-  'Saint Catherine of Siena',
-  'Saint Ignatius of Loyola',
-  'Saint Benedict of Nursia',
-  'Saint Thérèse of Lisieux',
-  'Saint Patrick',
-  'Saint Joan of Arc'
-];
+import {Sanctus} from "sanctus";
 
 const saintOfDay = ref('');
 
-const updateSaintOfDay: void = () => {
-  const randomIndex = Math.floor(Math.random() * saints.length);
-  saintOfDay.value = saints[randomIndex];
-};
-
-updateSaintOfDay();
+let sanctus = new Sanctus();
+const saint: any = sanctus.getSaint();
+const name = saint ? saint.name : '';
+console.log(name);
+saintOfDay.value = name;
 
 </script>
 <template>

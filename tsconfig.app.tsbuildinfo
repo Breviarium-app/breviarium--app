@@ -1,1 +1,1 @@
-{"root":["./src/main.ts","./src/vite-env.d.ts","./src/router/index.ts","./src/app.vue","./src/views/biblepage.vue","./src/views/homepage.vue","./src/views/prayerpage.vue","./src/views/settingspage.vue","./src/views/tabsnavbar.vue"],"version":"5.7.3"}
+{"root":["./src/main.ts","./src/vite-env.d.ts","./src/router/index.ts","./src/services/calendar/romcal.ts","./src/app.vue","./src/views/biblepage.vue","./src/views/homepage.vue","./src/views/prayerpage.vue","./src/views/saintbanner.vue","./src/views/settingspage.vue","./src/views/tabsnavbar.vue"],"version":"5.7.3"}
