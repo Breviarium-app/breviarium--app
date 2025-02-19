@@ -4,10 +4,13 @@ import {ref} from "vue";
 import {SaintInfo, Sanctus} from "sanctus";
 
 let sanctus = new Sanctus();
-const saint: SaintInfo | undefined = sanctus.getSaint( new Date(2025,5,1));
+const saint: SaintInfo | undefined = sanctus.getSaint(new Date(2025, 5, 1));
 
 const saintOfDay = ref('');
-saintOfDay.value = saint?.name;
+if (saint != undefined) {
+  saintOfDay.value = saint?.name;
+}
+
 
 </script>
 <template>
