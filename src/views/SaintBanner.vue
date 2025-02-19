@@ -1,15 +1,13 @@
 <script lang="ts" setup>
 
 import {ref} from "vue";
-import {Sanctus} from "sanctus";
-
-const saintOfDay = ref('');
+import {SaintInfo, Sanctus} from "sanctus";
 
 let sanctus = new Sanctus();
-const saint: any = sanctus.getSaint();
-const name = saint ? saint.name : '';
-console.log(name);
-saintOfDay.value = name;
+const saint: SaintInfo | undefined = sanctus.getSaint( new Date(2025,5,1));
+
+const saintOfDay = ref('');
+saintOfDay.value = saint?.name;
 
 </script>
 <template>
