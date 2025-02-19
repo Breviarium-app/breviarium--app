@@ -23,15 +23,14 @@ const isDatePickerOpen = ref(false);
 const modal = ref();
 
 const prayerTypes = [
-  {id: 'evangelium', title: 'Evangelium'},
+  {id: 'evangelium-and-lectiones', title: 'Evangelio y lecturas'},
   {id: 'laudes', title: 'Laudes'},
-  {id: 'vesperae', title: 'Vesperae'},
-  {id: 'officium', title: 'Officium'},
-  {id: 'tertia', title: 'Tertia'},
+  {id: 'vesperae', title: 'Vísperas'},
+  {id: 'officium', title: 'Oficio'},
+  {id: 'tertia', title: 'Tercia'},
   {id: 'sexta', title: 'Sexta'},
   {id: 'nona', title: 'Nona'},
-  {id: 'completorium', title: 'Completorium'},
-  {id: 'lectiones', title: 'Lectiones'}
+  {id: 'completorium', title: 'Completas'},
 ];
 
 
