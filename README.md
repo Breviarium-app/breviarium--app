@@ -22,6 +22,9 @@
 
 This app uses [Breviarium](https://www.npmjs.com/package/breviarium) library (open source) with Liturgy of the hours.
 
+[![npm version](https://badge.fury.io/js/breviarium.svg)](https://www.npmjs.com/package/breviarium)
+![ci-node](https://github.com/breviarium-app/breviarium--app/actions/workflows/ci-node.yml/badge.svg)
+
 To run the app:
 
 ```shell
