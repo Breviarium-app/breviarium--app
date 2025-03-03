@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
-import {useSanctusStore} from "@/services/sanctus/sanctus.ts";
+import {useSanctusStore} from "@/stores/sanctus/sanctus.ts";
 import {MONTH_SPANISH} from "@/constants";
 import {ref} from "vue";
 

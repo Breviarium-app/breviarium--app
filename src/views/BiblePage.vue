@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {computed, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import {
   IonContent,
   IonHeader,

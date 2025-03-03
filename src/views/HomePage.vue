@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import {
   IonButton,
   IonContent,
@@ -49,6 +49,7 @@ useBackButton(-1, () => {
     App.exitApp();
   }
 });
+
 </script>
 
 <template>

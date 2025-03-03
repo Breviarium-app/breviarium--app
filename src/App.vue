@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import {IonApp, IonRouterOutlet, IonTabs} from '@ionic/vue';
 import TabsNavbar from "@/components/molecules/TabsNavbar.vue";
+import {onMounted} from "vue";
+import {useSettingsStore} from "@/stores/settingsStore.ts";
+onMounted(() => {
+  useSettingsStore().loadSettings();
+});
 </script>
 
 <template>
