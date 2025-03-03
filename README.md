@@ -14,17 +14,13 @@
   <a href="LICENSE">
     <img alt="License" src="https://img.shields.io/badge/license-MIT-blue?color=blue&style=flat">
 </a>
-<a href="https://www.npmjs.com/package/breviarium/v/latest" target="_blank" rel="noopener noreferrer">
-   <img alt="npm breviarium version" src="https://img.shields.io/npm/v/breviarium/latest?style=flat&logo=npm&color=35d401">
-</a>
-
 </p>
+
+![node-ci](https://github.com/breviarium-app/breviarium--app/actions/workflows/ci-node.yml/badge.svg)
 
 ## Quickstart
 
 This app uses [Breviarium](https://www.npmjs.com/package/breviarium) library (open source) with Liturgy of the hours.
-
-[![npm version](https://badge.fury.io/js/breviarium.svg)](https://www.npmjs.com/package/breviarium)
 
 To run the app:
 
