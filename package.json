@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "test": "vitest run",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
     "ionic:build": "npm run build",
@@ -22,6 +23,7 @@
     "biblia-de-jerusalen": "^0.1.2",
     "breviarium": "^0.2.9",
     "date-fns": "^4.1.0",
+    "pinia": "^3.0.1",
     "romcal": "^3.0.0-dev.95",
     "sanctus": "^1.0.4",
     "vue": "^3.4.38",
@@ -32,6 +34,7 @@
     "@vitejs/plugin-vue": "^5.1.3",
     "typescript": "^5.5.3",
     "vite": "^6.1.0",
+    "vitest": "^3.0.7",
     "vue-tsc": "^2.1.4"
   }
 }

@@ -13,5 +13,5 @@ run: ## build package
 build: ## build to dist folder
 	@npm run build
 
-test: ## execute unit tests
-	@npm run test:unit
+test: ## execute tests
+	@npm run test

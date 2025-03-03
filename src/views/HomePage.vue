@@ -16,7 +16,7 @@ import {
 } from '@ionic/vue';
 import {format} from 'date-fns';
 import {App} from '@capacitor/app';
-import SaintBanner from "@/views/SaintBanner.vue";
+import SaintBanner from "@/components/molecules/SaintBanner.vue";
 
 const selectedDate = ref(new Date().toISOString());
 const isDatePickerOpen = ref(false);

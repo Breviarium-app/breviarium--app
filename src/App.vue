@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {IonApp, IonRouterOutlet, IonTabs} from '@ionic/vue';
-import TabsNavbar from "@/views/TabsNavbar.vue";
+import TabsNavbar from "@/components/molecules/TabsNavbar.vue";
 </script>
 
 <template>
