@@ -3,6 +3,7 @@ import { RouteRecordRaw } from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import SettingsPage from '../views/SettingsPage.vue'
 import BiblePage from '../views/BiblePage.vue'
+import SaintPage from "@/components/organism/SaintPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -18,6 +19,10 @@ const routes: Array<RouteRecordRaw> = [
     path: '/bible',
     name: 'Bible',
     component: BiblePage
+  },{
+    path: '/saint',
+    name: 'Saint',
+    component: SaintPage
   },
   {
     path: '/settings',
@@ -27,7 +32,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/prayer/:type',
     name: 'Prayer',
-    component: () => import('../views/PrayerPage.vue')
+    component: () => import('../components/organism/PrayerPage.vue')
   }
 ]
 
