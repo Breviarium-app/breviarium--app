@@ -16,8 +16,6 @@
 </a>
 </p>
 
-![node-ci](https://github.com/breviarium-app/breviarium--app/actions/workflows/ci-node.yml/badge.svg)
-
 ## Quickstart
 
 This app uses [Breviarium](https://www.npmjs.com/package/breviarium) library (open source) with Liturgy of the hours.
