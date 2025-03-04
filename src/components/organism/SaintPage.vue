@@ -25,8 +25,8 @@ let todaySaint = ref<any | undefined>(selectedSaint);
           }}</span><br/>
         <span v-if="todaySaint?.birth">👶 Nacimiento: {{ todaySaint?.birth }}<br/></span>
         <span v-if="todaySaint?.dead">🪦 Muerte: {{ todaySaint?.dead }}<br/></span>
-        <span v-if="todaySaint?.meaning">🔠 Significado: {{ todaySaint?.meaning }}<br/></span>
-        <span v-if="todaySaint?.description">📜 Historia: {{ todaySaint?.description }}<br/></span>
+        <span v-if="todaySaint?.meaning">🔠 Significado: {{ todaySaint?.meaning }}</span>
+        <span v-if="todaySaint?.description"><br/><br/>📜: {{ todaySaint?.description }}<br/></span>
       </p>
 
       <ul v-if="saintsOfDay.length > 1">
