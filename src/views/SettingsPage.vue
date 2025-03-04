@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {onMounted, ref, watch} from 'vue';
+import {watch} from 'vue';
 import {
   IonContent,
   IonHeader,
@@ -13,49 +13,15 @@ import {
   IonToggle,
   IonToolbar
 } from '@ionic/vue';
-import {Preferences} from '@capacitor/preferences';
+import {useSettingsStore} from '@/stores/settingsStore.ts'; // Adjust path as needed
 
-const settings = ref({
-  laudesOfficium: false,
-  laudesEvangelium: false,
-  vesperaeOfficium: false,
-  theme: 'system'
+const settingsStore = useSettingsStore();
+
+watch(() => settingsStore.settings.theme, (newTheme) => {
+  settingsStore.applyTheme(newTheme);
+  settingsStore.saveSettings();
 });
 
-const themes = [
-  {value: 'system', label: 'System'},
-  {value: 'light', label: 'Light'},
-  {value: 'paper', label: 'Paper'},
-  {value: 'dark', label: 'Dark'}
-];
-
-const saveSettings = async () => {
-  await Preferences.set({
-    key: 'settings',
-    value: JSON.stringify(settings.value)
-  });
-};
-
-const applyTheme = (theme: string) => {
-  if (theme === 'system') {
-    document.documentElement.removeAttribute('data-theme');
-  } else {
-    document.documentElement.setAttribute('data-theme', theme);
-  }
-};
-
-watch(() => settings.value.theme, (newTheme) => {
-  applyTheme(newTheme);
-  saveSettings();
-});
-
-onMounted(async () => {
-  const {value} = await Preferences.get({key: 'settings'});
-  if (value) {
-    settings.value = JSON.parse(value);
-    applyTheme(settings.value.theme);
-  }
-});
 </script>
 
 <template>
@@ -70,8 +36,8 @@ onMounted(async () => {
       <ion-list>
         <ion-item>
           <ion-label>Theme</ion-label>
-          <ion-select v-model="settings.theme" interface="action-sheet">
-            <ion-select-option v-for="theme in themes" :key="theme.value" :value="theme.value">
+          <ion-select v-model="settingsStore.settings.theme" interface="action-sheet">
+            <ion-select-option v-for="theme in settingsStore.themes" :key="theme.value" :value="theme.value">
               {{ theme.label }}
             </ion-select-option>
           </ion-select>
@@ -79,15 +45,18 @@ onMounted(async () => {
 
         <ion-item>
           <ion-label>Laudes + Officium</ion-label>
-          <ion-toggle v-model="settings.laudesOfficium" @ionChange="saveSettings"></ion-toggle>
+          <ion-toggle v-model="settingsStore.settings.laudesOfficium"
+                      @ionChange="settingsStore.saveSettings"></ion-toggle>
         </ion-item>
         <ion-item>
           <ion-label>Laudes + Evangelium</ion-label>
-          <ion-toggle v-model="settings.laudesEvangelium" @ionChange="saveSettings"></ion-toggle>
+          <ion-toggle v-model="settingsStore.settings.laudesEvangelium"
+                      @ionChange="settingsStore.saveSettings"></ion-toggle>
         </ion-item>
         <ion-item>
           <ion-label>Vesperae + Officium</ion-label>
-          <ion-toggle v-model="settings.vesperaeOfficium" @ionChange="saveSettings"></ion-toggle>
+          <ion-toggle v-model="settingsStore.settings.vesperaeOfficium"
+                      @ionChange="settingsStore.saveSettings"></ion-toggle>
         </ion-item>
       </ion-list>
     </ion-content>

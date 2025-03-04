@@ -49,6 +49,7 @@ useBackButton(-1, () => {
     App.exitApp();
   }
 });
+
 </script>
 
 <template>
@@ -114,7 +115,7 @@ useBackButton(-1, () => {
   --padding-end: 16px;
   --border-radius: 8px;
   --background: var(--background-color-card);
-  border: 0px solid var(--border-color);
+  border: 0 solid var(--border-color);
 }
 
 .date-picker-modal {
