@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, watch } from 'vue';
+import {watch} from 'vue';
 import {
   IonContent,
   IonHeader,
@@ -13,7 +13,7 @@ import {
   IonToggle,
   IonToolbar
 } from '@ionic/vue';
-import { useSettingsStore } from '@/stores/settingsStore.ts'; // Adjust path as needed
+import {useSettingsStore} from '@/stores/settingsStore.ts'; // Adjust path as needed
 
 const settingsStore = useSettingsStore();
 
@@ -45,15 +45,18 @@ watch(() => settingsStore.settings.theme, (newTheme) => {
 
         <ion-item>
           <ion-label>Laudes + Officium</ion-label>
-          <ion-toggle v-model="settingsStore.settings.laudesOfficium" @ionChange="settingsStore.saveSettings"></ion-toggle>
+          <ion-toggle v-model="settingsStore.settings.laudesOfficium"
+                      @ionChange="settingsStore.saveSettings"></ion-toggle>
         </ion-item>
         <ion-item>
           <ion-label>Laudes + Evangelium</ion-label>
-          <ion-toggle v-model="settingsStore.settings.laudesEvangelium" @ionChange="settingsStore.saveSettings"></ion-toggle>
+          <ion-toggle v-model="settingsStore.settings.laudesEvangelium"
+                      @ionChange="settingsStore.saveSettings"></ion-toggle>
         </ion-item>
         <ion-item>
           <ion-label>Vesperae + Officium</ion-label>
-          <ion-toggle v-model="settingsStore.settings.vesperaeOfficium" @ionChange="settingsStore.saveSettings"></ion-toggle>
+          <ion-toggle v-model="settingsStore.settings.vesperaeOfficium"
+                      @ionChange="settingsStore.saveSettings"></ion-toggle>
         </ion-item>
       </ion-list>
     </ion-content>
