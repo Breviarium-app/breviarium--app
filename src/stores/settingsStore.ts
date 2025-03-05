@@ -1,27 +1,30 @@
 // stores/settings.ts
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import { Preferences } from '@capacitor/preferences';
+import {defineStore} from 'pinia';
+import {ref} from 'vue';
+import {Preferences} from '@capacitor/preferences';
 
 export const useSettingsStore = defineStore('settings', () => {
     const settings = ref({
         laudesOfficium: false,
         laudesEvangelium: false,
         vesperaeOfficium: false,
-        theme: 'system'
+        theme: 'system',
+        deceased: false,
     });
 
     const themes = [
-        { value: 'system', label: 'System' },
-        { value: 'light', label: 'Light' },
-        { value: 'paper', label: 'Paper' },
-        { value: 'dark', label: 'Dark' }
+        {value: 'system', label: 'System'},
+        {value: 'light', label: 'Light'},
+        {value: 'paper', label: 'Paper'},
+        {value: 'dark', label: 'Dark'}
     ];
 
     const saveSettings = async () => {
         await Preferences.set({
             key: 'settings',
             value: JSON.stringify(settings.value)
+        }).catch(err => {
+            console.error("NO GUardado:", err)
         });
     };
 
@@ -34,7 +37,7 @@ export const useSettingsStore = defineStore('settings', () => {
     };
 
     const loadSettings = async () => {
-        const { value } = await Preferences.get({ key: 'settings' });
+        const {value} = await Preferences.get({key: 'settings'});
         if (value) {
             settings.value = JSON.parse(value);
             applyTheme(settings.value.theme);

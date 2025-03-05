@@ -1,10 +1,9 @@
 <script lang="ts" setup>
-import {watch} from 'vue';
+import {onMounted, watch} from 'vue';
 import {
   IonContent,
   IonHeader,
   IonItem,
-  IonLabel,
   IonList,
   IonPage,
   IonSelect,
@@ -17,10 +16,14 @@ import {useSettingsStore} from '@/stores/settingsStore.ts'; // Adjust path as ne
 
 const settingsStore = useSettingsStore();
 
+
 watch(() => settingsStore.settings.theme, (newTheme) => {
   settingsStore.applyTheme(newTheme);
   settingsStore.saveSettings();
 });
+const handleToggleChange = () => {
+  settingsStore.saveSettings();
+};
 
 </script>
 
@@ -35,8 +38,7 @@ watch(() => settingsStore.settings.theme, (newTheme) => {
     <ion-content>
       <ion-list>
         <ion-item>
-          <ion-label>Theme</ion-label>
-          <ion-select v-model="settingsStore.settings.theme" interface="action-sheet">
+          <ion-select v-model="settingsStore.settings.theme" interface="action-sheet" label="Theme">
             <ion-select-option v-for="theme in settingsStore.themes" :key="theme.value" :value="theme.value">
               {{ theme.label }}
             </ion-select-option>
@@ -44,19 +46,32 @@ watch(() => settingsStore.settings.theme, (newTheme) => {
         </ion-item>
 
         <ion-item>
-          <ion-label>Laudes + Officium</ion-label>
-          <ion-toggle v-model="settingsStore.settings.laudesOfficium"
-                      @ionChange="settingsStore.saveSettings"></ion-toggle>
+          <ion-toggle v-model="settingsStore.settings.laudesOfficium" justify="space-between"
+                      label-placement="start"
+                      :ionChange="handleToggleChange()">
+            Laudes + Officium
+          </ion-toggle>
         </ion-item>
         <ion-item>
-          <ion-label>Laudes + Evangelium</ion-label>
-          <ion-toggle v-model="settingsStore.settings.laudesEvangelium"
-                      @ionChange="settingsStore.saveSettings"></ion-toggle>
+          <ion-toggle v-model="settingsStore.settings.laudesEvangelium" justify="space-between"
+                      label-placement="start"
+                      :ionChange="handleToggleChange()">
+            Laudes + Evangelium
+          </ion-toggle>
         </ion-item>
         <ion-item>
-          <ion-label>Vesperae + Officium</ion-label>
-          <ion-toggle v-model="settingsStore.settings.vesperaeOfficium"
-                      @ionChange="settingsStore.saveSettings"></ion-toggle>
+          <ion-toggle v-model="settingsStore.settings.vesperaeOfficium" justify="space-between"
+                      label-placement="start"
+                      :ionChange="handleToggleChange()">
+            Vesperae + Officium
+          </ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-toggle v-model="settingsStore.settings.deceased" justify="space-between"
+                      label-placement="start"
+                      :ionChange="handleToggleChange()">
+            Mostrar oficio difuntos
+          </ion-toggle>
         </ion-item>
       </ion-list>
     </ion-content>
