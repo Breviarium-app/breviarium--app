@@ -27,6 +27,7 @@
     "romcal": "^3.0.0-dev.95",
     "sanctus": "^1.0.10",
     "vue": "^3.4.38",
+    "vue-i18n": "^11.1.1",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
