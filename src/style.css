@@ -21,10 +21,12 @@
 
     --background: #f8f9fb;
     --background-accent: #efefef;
+    --border-color-light: #e8e8e8;
     --ion-background-color: var(--background);
     --ion-tab-bar-background: var(--ion-background-color);
     --ion-toolbar-background: var(--ion-background-color);
     --ion-overlay-background-color: var(--ion-background-color);
+    --ion-tab-bar-border-color: var(--border-color-light);
     --ion-color-primary: var(--breviarium-primary);
     --ion-color-secondary: #3dc2ff;
     --ion-color-tertiary: #be4747;
@@ -36,11 +38,11 @@
     --background-color-card: #f4f5f8;
     --inner-border-width: 0px 0px 0px 0px !important;
 
+    ion-item::part(native) {
+        --border-color: var(--border-color-light);
+    }
 }
 
-ion-item::part(native) {
-    --border-color: #e8e8e8;
-}
 
 [data-theme="dark"] {
     --background: #121212;
@@ -48,10 +50,12 @@ ion-item::part(native) {
     --ion-background-color-rgb: 18, 18, 18;
     --ion-text-color: #ffffff;
     --ion-text-color-rgb: 255, 255, 255;
+    --ion-border-color: #272727;
     --background-color-card: #222222;
+    --border-color-light: #1b1a1a;
 
-    ion-item:deep(*) {
-        --border-color: #434343;
+    ion-item::part(native) {
+        --border-color: var(--border-color-light);
     }
 }
 
@@ -62,10 +66,11 @@ ion-item::part(native) {
     --ion-text-color: #2c1810;
     --ion-text-color-rgb: 44, 24, 16;
     --ion-border-color: #d4b594;
-    --background-color-card: #dac7af;
+    --background-color-card: #e1d0ba;
+    --border-color-light: #e1d0ba;
 
-    ion-item:deep(*) {
-        --border-color: #c5b096;
+    ion-item::part(native) {
+        --border-color: var(--border-color-light);
     }
 
 }
