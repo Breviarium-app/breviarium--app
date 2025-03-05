@@ -174,6 +174,7 @@ useBackButton(-1, () => {
 .selected_hour {
   font-weight: bold;
   box-shadow: 1px 1px 5px var(--breviarium-primary);
+  border-radius: 7px;
 }
 
 @keyframes slideIn {
