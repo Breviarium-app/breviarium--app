@@ -1,18 +1,9 @@
 <script lang="ts" setup>
 import {watch} from 'vue';
-import {
-  IonContent,
-  IonHeader,
-  IonItem,
-  IonList,
-  IonPage,
-  IonSelect,
-  IonSelectOption,
-  IonTitle,
-  IonToggle,
-  IonToolbar
-} from '@ionic/vue';
+import {IonContent, IonHeader, IonItem, IonList, IonPage, IonTitle, IonToggle, IonToolbar} from '@ionic/vue';
 import {useSettingsStore} from '@/stores/settingsStore.ts';
+import LanguageSelector from "@/components/molecules/LanguageSelector.vue";
+import SelectorTheme from "@/views/SelectorTheme.vue";
 
 const settingsStore = useSettingsStore();
 
@@ -34,17 +25,17 @@ const handleToggleChange = () => {
         <ion-title>{{ $t('settings.title') }}</ion-title>
       </ion-toolbar>
     </ion-header>
-
     <ion-content>
       <ion-list>
-        <ion-item>
-          <ion-select v-model="settingsStore.settings.theme" :label="$t('settings.theme')" interface="action-sheet">
-            <ion-select-option v-for="theme in settingsStore.themes" :key="theme.value" :value="theme.value">
-              {{ theme.value }}
-            </ion-select-option>
-          </ion-select>
+        <ion-item lines="none">
+          <ion-label>{{ $t('settings.theme') }}</ion-label>
         </ion-item>
-
+        <ion-item class="ion-text-center">
+          <SelectorTheme/>
+        </ion-item>
+        <ion-item>
+          <LanguageSelector></LanguageSelector>
+        </ion-item>
         <ion-item>
           <ion-toggle v-model="settingsStore.settings.laudesOfficium" :ionChange="handleToggleChange()"
                       justify="space-between"
@@ -79,10 +70,6 @@ const handleToggleChange = () => {
 </template>
 
 <style scoped>
-:deep(.ion-page) {
-  animation: slideIn 0.3s ease-out;
-}
-
 @keyframes slideIn {
   from {
     transform: translateX(100%);
