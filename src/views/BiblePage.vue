@@ -11,10 +11,12 @@ import {
   IonTitle,
   IonToolbar
 } from '@ionic/vue';
-import {getBooks} from "biblia-de-jerusalen";
+import {Bible} from "biblia-de-jerusalen";
+
+const bible = new Bible();
 
 const searchQuery = ref('');
-const bibleBooks = getBooks();
+const bibleBooks = bible.getAllBooks();
 const filteredBooks = computed(() => {
   const query = searchQuery.value.toLowerCase();
   return bibleBooks.filter(book => book.toLowerCase().includes(query));
