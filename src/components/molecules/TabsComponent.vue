@@ -1,6 +1,6 @@
 <template>
   <ion-tab-bar slot="bottom">
-    <ion-tab-button href="/" tab="home">
+    <ion-tab-button href="/home" tab="home">
       <ion-icon :icon="bonfireOutline"/>
       <ion-label>Home</ion-label>
     </ion-tab-button>

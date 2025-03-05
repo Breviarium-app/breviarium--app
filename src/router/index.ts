@@ -12,7 +12,10 @@ const routes: Array<RouteRecordRaw> = [
         component: TabsNavbar,
         children: [
             {
-                path: "",
+                path: "/", redirect: 'home',
+            },
+            {
+                path: "home",
                 name: "home",
                 component: HomePage,
             },
@@ -36,9 +39,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: SaintPage
             },
         ],
-    }, {
-        path: "/home", redirect: '/',
-    }
+    },
 ]
 
 const router = createRouter({

@@ -173,7 +173,7 @@ useBackButton(-1, () => {
 
 .selected_hour {
   font-weight: bold;
-  box-shadow: 1px 1px 5px var(--breviarium-primary);
+  box-shadow: 1px 1px 5px var(--background-card-shadow);
   border-radius: 7px;
 }
 

@@ -16,6 +16,7 @@ export const useSettingsStore = defineStore('settings', () => {
         {value: 'system', label: 'System'},
         {value: 'light', label: 'Light'},
         {value: 'paper', label: 'Paper'},
+        {value: 'moon', label: 'Moon'},
         {value: 'dark', label: 'Dark'}
     ];
 
