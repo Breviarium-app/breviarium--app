@@ -37,9 +37,10 @@
     --ion-color-light: #f4f5f8;
     --background-color-card: #f4f5f8;
     --inner-border-width: 0px 0px 0px 0px !important;
+    --background-card-shadow: var(--breviarium-primary);
 
     ion-item::part(native) {
-        --border-color: var(--border-color-light);
+        --border-color: var(--border-color-light); /* navbar & ion-item border */
     }
 }
 
@@ -50,13 +51,10 @@
     --ion-background-color-rgb: 18, 18, 18;
     --ion-text-color: #ffffff;
     --ion-text-color-rgb: 255, 255, 255;
-    --ion-border-color: #272727;
+    --ion-border-color: #272727; /* top header border */
     --background-color-card: #222222;
-    --border-color-light: #1b1a1a;
-
-    ion-item::part(native) {
-        --border-color: var(--border-color-light);
-    }
+    --border-color-light: #1b1a1a; /* navbar & ion-item border */
+    --background-card-shadow: var(--breviarium-primary);
 }
 
 [data-theme="paper"] {
@@ -65,14 +63,22 @@
     --ion-background-color-rgb: 245, 230, 211;
     --ion-text-color: #2c1810;
     --ion-text-color-rgb: 44, 24, 16;
-    --ion-border-color: #d4b594;
+    --ion-border-color: #d4b594; /* top header border */
     --background-color-card: #e1d0ba;
-    --border-color-light: #e1d0ba;
+    --border-color-light: #e1d0ba; /* navbar & ion-item border */
+    --background-card-shadow: #b1773c;
+}
 
-    ion-item::part(native) {
-        --border-color: var(--border-color-light);
-    }
-
+[data-theme="moon"] {
+    --background: #15202b;
+    --background-accent: #b61c61;
+    --ion-background-color-rgb: 18, 18, 18;
+    --ion-text-color: #ffffff;
+    --ion-text-color-rgb: 255, 255, 255;
+    --ion-border-color: #1e3249; /* top header border */
+    --background-color-card: #1b2e42;
+    --border-color-light: #162637; /* navbar & ion-item border */
+    --background-card-shadow: #4e82b8;
 }
 
 a {
