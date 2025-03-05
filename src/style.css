@@ -20,9 +20,11 @@
     --breviarium-primary: #be4747;
 
     --background: #f8f9fb;
+    --background-accent: #efefef;
     --ion-background-color: var(--background);
     --ion-tab-bar-background: var(--ion-background-color);
     --ion-toolbar-background: var(--ion-background-color);
+    --ion-overlay-background-color: var(--ion-background-color);
     --ion-color-primary: var(--breviarium-primary);
     --ion-color-secondary: #3dc2ff;
     --ion-color-tertiary: #be4747;
@@ -42,6 +44,7 @@ ion-item:deep(*) {
 
 [data-theme="dark"] {
     --background: #121212;
+    --background-accent: #272727;
     --ion-background-color-rgb: 18, 18, 18;
     --ion-text-color: #ffffff;
     --ion-text-color-rgb: 255, 255, 255;
@@ -54,6 +57,7 @@ ion-item:deep(*) {
 
 [data-theme="paper"] {
     --background: #f5e6d3;
+    --background-accent: #e1d0ba;
     --ion-background-color-rgb: 245, 230, 211;
     --ion-text-color: #2c1810;
     --ion-text-color-rgb: 44, 24, 16;
