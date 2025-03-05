@@ -35,12 +35,12 @@
     --ion-color-light: #f4f5f8;
     --background-color-card: #f4f5f8;
     --inner-border-width: 0px 0px 0px 0px !important;
+
 }
 
-ion-item:deep(*) {
-    --border-color: #dfdfe1;
+ion-item::part(native) {
+    --border-color: #e8e8e8;
 }
-
 
 [data-theme="dark"] {
     --background: #121212;
@@ -63,6 +63,7 @@ ion-item:deep(*) {
     --ion-text-color-rgb: 44, 24, 16;
     --ion-border-color: #d4b594;
     --background-color-card: #dac7af;
+
     ion-item:deep(*) {
         --border-color: #c5b096;
     }

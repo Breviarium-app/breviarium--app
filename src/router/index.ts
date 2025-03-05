@@ -13,13 +13,10 @@ const routes: Array<RouteRecordRaw> = [
         children: [
             {
                 path: "",
-                redirect: "/home",
-            },
-            {
-                path: "home",
                 name: "home",
                 component: HomePage,
-            }, {
+            },
+            {
                 path: '/bible',
                 name: 'Bible',
                 component: BiblePage
@@ -39,7 +36,9 @@ const routes: Array<RouteRecordRaw> = [
                 component: SaintPage
             },
         ],
-    },
+    }, {
+        path: "/home", redirect: '/',
+    }
 ]
 
 const router = createRouter({
