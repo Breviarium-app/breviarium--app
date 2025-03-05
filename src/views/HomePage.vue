@@ -49,7 +49,7 @@ useBackButton(-1, () => {
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Breviarium</ion-title>
+        <ion-title>{{ $t('title') }}</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -66,13 +66,13 @@ useBackButton(-1, () => {
           <ion-row>
             <ion-col>
               <ion-item class="prayer-item" router-link="/prayer/evangelium-and-lectiones">
-                <ion-label>Evangelio y lecturas</ion-label>
+                <ion-label>{{ $t('breviarium.evangelium_lectiones') }}</ion-label>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Laudes' ? 'selected_hour' : ''" class="prayer-item"
                         router-link="/prayer/laudes">
-                <ion-label>Laudes</ion-label>
+                <ion-label>{{ $t('breviarium.laudes') }}</ion-label>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -80,12 +80,12 @@ useBackButton(-1, () => {
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Vesperae' ? 'selected_hour' : ''" class="prayer-item"
                         router-link="/prayer/vesperae">
-                <ion-label>Vísperas</ion-label>
+                <ion-label>{{ $t('breviarium.vesperae') }}</ion-label>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item class="prayer-item" router-link="/prayer/officium">
-                <ion-label>Oficio</ion-label>
+                <ion-label>{{ $t('breviarium.officium') }}</ion-label>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -93,13 +93,13 @@ useBackButton(-1, () => {
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Tercia' ? 'selected_hour' : ''" class="prayer-item"
                         router-link="/prayer/tertia">
-                <ion-label>Tercia</ion-label>
+                <ion-label>{{ $t('breviarium.tercia') }}</ion-label>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Sexta' ? 'selected_hour' : ''" class="prayer-item"
                         router-link="/prayer/sexta">
-                <ion-label>Sexta</ion-label>
+                <ion-label>{{ $t('breviarium.sexta') }}</ion-label>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -107,13 +107,13 @@ useBackButton(-1, () => {
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Nona' ? 'selected_hour' : ''" class="prayer-item"
                         router-link="/prayer/nona">
-                <ion-label>Nona</ion-label>
+                <ion-label>{{ $t('breviarium.nona') }}</ion-label>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Completorium' ? 'selected_hour' : ''" class="prayer-item"
                         router-link="/prayer/completorium">
-                <ion-label>Completas</ion-label>
+                <ion-label>{{ $t('breviarium.completorium') }}</ion-label>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -127,8 +127,8 @@ useBackButton(-1, () => {
             @ionChange="handleDateChange($event.detail.value)"
         >
           <div slot="buttons">
-            <ion-button @click="isDatePickerOpen = false">Cancel</ion-button>
-            <ion-button @click="confirmDate">Confirm</ion-button>
+            <ion-button @click="isDatePickerOpen = false">{{ $t('common.cancel') }}</ion-button>
+            <ion-button @click="confirmDate">{{ $t('common.accept') }}</ion-button>
           </div>
         </ion-datetime>
       </ion-modal>

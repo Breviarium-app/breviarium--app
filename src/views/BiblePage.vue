@@ -27,7 +27,7 @@ const filteredBooks = computed(() => {
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Bible</ion-title>
+        <ion-title>{{ $t('bible') }}</ion-title>
       </ion-toolbar>
     </ion-header>
 

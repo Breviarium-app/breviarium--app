@@ -31,16 +31,16 @@ const handleToggleChange = () => {
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Settings</ion-title>
+        <ion-title>{{ $t('settings.title') }}</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content>
       <ion-list>
         <ion-item>
-          <ion-select v-model="settingsStore.settings.theme" interface="action-sheet" label="Theme">
+          <ion-select v-model="settingsStore.settings.theme" :label="$t('settings.theme')" interface="action-sheet">
             <ion-select-option v-for="theme in settingsStore.themes" :key="theme.value" :value="theme.value">
-              {{ theme.label }}
+              {{ theme.value }}
             </ion-select-option>
           </ion-select>
         </ion-item>
@@ -49,28 +49,28 @@ const handleToggleChange = () => {
           <ion-toggle v-model="settingsStore.settings.laudesOfficium" :ionChange="handleToggleChange()"
                       justify="space-between"
                       label-placement="start">
-            Laudes + Officium
+            {{ $t('settings.laudes_and_office') }}
           </ion-toggle>
         </ion-item>
         <ion-item>
           <ion-toggle v-model="settingsStore.settings.laudesEvangelium" :ionChange="handleToggleChange()"
                       justify="space-between"
                       label-placement="start">
-            Laudes + Evangelium
+            {{ $t('settings.laudes_and_evangelium') }}
           </ion-toggle>
         </ion-item>
         <ion-item>
           <ion-toggle v-model="settingsStore.settings.vesperaeOfficium" :ionChange="handleToggleChange()"
                       justify="space-between"
                       label-placement="start">
-            Vesperae + Officium
+            {{ $t('settings.vesperae_and_office') }}
           </ion-toggle>
         </ion-item>
         <ion-item>
           <ion-toggle v-model="settingsStore.settings.deceased" :ionChange="handleToggleChange()"
                       justify="space-between"
                       label-placement="start">
-            Mostrar oficio difuntos
+            {{ $t('settings.office_deceased') }}
           </ion-toggle>
         </ion-item>
       </ion-list>

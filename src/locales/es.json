@@ -1,0 +1,38 @@
+{
+  "title": "Breviarium",
+  "home": "Inicio",
+  "bible": "Biblia",
+  "settings": {
+    "title": "Configuración",
+    "theme": "Diseño",
+    "language": "Idioma",
+    "laudes_and_office": "Laudes + Oficio",
+    "laudes_and_evangelium": "Laudes + Evangelio",
+    "vesperae_and_office": "Vísperas + Oficio",
+    "office_deceased": "Oficio de difuntos"
+  },
+  "breviarium": {
+    "evangelium_lectiones": "Evangelio y lecturas",
+    "laudes": "Laudes",
+    "vesperae": "Vísperas",
+    "officium": "Oficio",
+    "tercia": "Tercia",
+    "sexta": "Sexta",
+    "nona": "Nona",
+    "completorium": "Completas"
+  },
+  "common": {
+    "languages": {
+      "es": "Español",
+      "en": "Inglés"
+    },
+    "cancel": "Cancelar",
+    "accept": "Aceptar",
+    "confirm": "Confirmar"
+  },
+  "system": "Sistema",
+  "dark": "Oscuro",
+  "light": "Claro",
+  "moon": "Lunar",
+  "paper": "Papel"
+}
