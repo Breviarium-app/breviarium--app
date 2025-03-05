@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import {IonApp, IonRouterOutlet, IonTabs} from '@ionic/vue';
-import TabsNavbar from "@/components/molecules/TabsNavbar.vue";
+import {IonApp, IonRouterOutlet} from '@ionic/vue';
 import {onMounted} from "vue";
 import {useSettingsStore} from "@/stores/settingsStore.ts";
 
@@ -11,11 +10,13 @@ onMounted(() => {
 
 <template>
   <ion-app>
-    <ion-tabs>
-      <ion-router-outlet></ion-router-outlet>
-      <TabsNavbar/>
-    </ion-tabs>
+    <div class="safe-area">
+      <ion-router-outlet/>
+    </div>
   </ion-app>
 </template>
 <style>
+.safe-area {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
 </style>
