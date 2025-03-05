@@ -2,13 +2,16 @@
 import {ref} from 'vue';
 import {
   IonButton,
+  IonCol,
   IonContent,
   IonDatetime,
+  IonGrid,
   IonHeader,
   IonItem,
   IonLabel,
   IonModal,
   IonPage,
+  IonRow,
   IonTitle,
   IonToolbar,
   useBackButton,
@@ -17,22 +20,11 @@ import {
 import {format} from 'date-fns';
 import {App} from '@capacitor/app';
 import SaintBanner from "@/components/molecules/SaintBanner.vue";
+import {currentLiturgyHour} from "@/services/utils/utils.ts";
 
 const selectedDate = ref(new Date().toISOString());
 const isDatePickerOpen = ref(false);
 const modal = ref();
-
-const prayerTypes = [
-  {id: 'evangelium-and-lectiones', title: 'Evangelio y lecturas'},
-  {id: 'laudes', title: 'Laudes'},
-  {id: 'vesperae', title: 'Vísperas'},
-  {id: 'officium', title: 'Oficio'},
-  {id: 'tertia', title: 'Tercia'},
-  {id: 'sexta', title: 'Sexta'},
-  {id: 'nona', title: 'Nona'},
-  {id: 'completorium', title: 'Completas'},
-];
-
 
 const handleDateChange = (value: any) => {
   console.log(value);
@@ -49,6 +41,7 @@ useBackButton(-1, () => {
     App.exitApp();
   }
 });
+
 
 </script>
 
@@ -69,10 +62,62 @@ useBackButton(-1, () => {
       </div>
 
       <div class="prayer-grid">
-        <ion-item v-for="prayer in prayerTypes" :key="prayer.id" :router-link="'/prayer/' + prayer.id"
-                  class="prayer-item">
-          <ion-label>{{ prayer.title }}</ion-label>
-        </ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item class="prayer-item" router-link="/prayer/evangelium-and-lectiones">
+                <ion-label>Evangelio y lecturas</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item :class="currentLiturgyHour() == 'Laudes' ? 'selected_hour' : ''" class="prayer-item"
+                        router-link="/prayer/laudes">
+                <ion-label>Laudes</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item :class="currentLiturgyHour() == 'Vesperae' ? 'selected_hour' : ''" class="prayer-item"
+                        router-link="/prayer/vesperae">
+                <ion-label>Vísperas</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item class="prayer-item" router-link="/prayer/officium">
+                <ion-label>Oficio</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item :class="currentLiturgyHour() == 'Tercia' ? 'selected_hour' : ''" class="prayer-item"
+                        router-link="/prayer/tertia">
+                <ion-label>Tercia</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item :class="currentLiturgyHour() == 'Sexta' ? 'selected_hour' : ''" class="prayer-item"
+                        router-link="/prayer/sexta">
+                <ion-label>Sexta</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item :class="currentLiturgyHour() == 'Nona' ? 'selected_hour' : ''" class="prayer-item"
+                        router-link="/prayer/nona">
+                <ion-label>Nona</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item :class="currentLiturgyHour() == 'Completorium' ? 'selected_hour' : ''" class="prayer-item"
+                        router-link="/prayer/completorium">
+                <ion-label>Completas</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
 
       <ion-modal ref="modal" class="date-picker-modal" trigger="open-modal-calendar">
@@ -104,10 +149,7 @@ useBackButton(-1, () => {
 }
 
 .prayer-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  padding: 16px;
+  padding: 6px;
 }
 
 .prayer-item {
@@ -127,6 +169,11 @@ useBackButton(-1, () => {
 /* Add animation for page transitions */
 :deep(.ion-page) {
   animation: slideIn 0.3s ease-out;
+}
+
+.selected_hour {
+  font-weight: bold;
+  box-shadow: 1px 1px 5px var(--breviarium-primary);
 }
 
 @keyframes slideIn {
