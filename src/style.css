@@ -11,11 +11,19 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
+    --brown-sugar: #BA8269ff;
+    --smoky-black: #0D0505ff;
+    --saffron: #F5C13Fff;
+    --cocoa-brown: #E26F19ff;
+    --yinmn-blue: #3D5495ff;
+
+    --breviarium-primary: #be4747;
+
     --background: #f8f9fb;
     --ion-background-color: var(--background);
     --ion-tab-bar-background: var(--ion-background-color);
     --ion-toolbar-background: var(--ion-background-color);
-    --ion-color-primary: #be4747;
+    --ion-color-primary: var(--breviarium-primary);
     --ion-color-secondary: #3dc2ff;
     --ion-color-tertiary: #be4747;
     --ion-color-success: #2dd36f;

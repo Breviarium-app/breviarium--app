@@ -22,11 +22,11 @@ let todaySaint = ref<any | undefined>(selectedSaint);
       <p>
         <span v-if="todaySaint?.day">🗓️ Festividad: {{ todaySaint?.day }} de {{
             MONTH_SPANISH[todaySaint?.month - 1]
-          }}</span><br/>
-        <span v-if="todaySaint?.birth">👶 Nacimiento: {{ todaySaint?.birth }}<br/></span>
-        <span v-if="todaySaint?.dead">🪦 Muerte: {{ todaySaint?.dead }}<br/></span>
-        <span v-if="todaySaint?.meaning">🔠 Significado: {{ todaySaint?.meaning }}</span>
-        <span v-if="todaySaint?.description"><br/><br/>📜: {{ todaySaint?.description }}<br/></span>
+          }}</span>
+        <span v-if="todaySaint?.birth"><br/>👶 Nacimiento: {{ todaySaint?.birth }}</span>
+        <span v-if="todaySaint?.dead"><br/>🪦 Muerte: {{ todaySaint?.dead }}</span>
+        <span v-if="todaySaint?.meaning"><br/>🔠 Significado: {{ todaySaint?.meaning }}</span>
+        <span v-if="todaySaint?.description"><br/>📜 {{ todaySaint?.description }}</span>
       </p>
 
       <ul v-if="saintsOfDay.length > 1">
