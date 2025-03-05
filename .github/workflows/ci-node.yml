@@ -2,10 +2,10 @@ name: Build project
 
 on:
   pull_request:
-    branches: [main]
-    types: [opened, reopened, closed]
+    branches: [ main ]
+    types: [ opened, reopened, closed ]
   push:
-    branches: [feat/*, feature/*, fix/*, hotfix/*]
+    branches: [ main, feat/*, feature/*, fix/*, hotfix/* ]
 
 permissions:
   contents: write
