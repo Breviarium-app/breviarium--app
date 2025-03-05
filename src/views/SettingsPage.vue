@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {onMounted, watch} from 'vue';
+import {watch} from 'vue';
 import {
   IonContent,
   IonHeader,
@@ -12,7 +12,7 @@ import {
   IonToggle,
   IonToolbar
 } from '@ionic/vue';
-import {useSettingsStore} from '@/stores/settingsStore.ts'; // Adjust path as needed
+import {useSettingsStore} from '@/stores/settingsStore.ts';
 
 const settingsStore = useSettingsStore();
 
@@ -46,30 +46,30 @@ const handleToggleChange = () => {
         </ion-item>
 
         <ion-item>
-          <ion-toggle v-model="settingsStore.settings.laudesOfficium" justify="space-between"
-                      label-placement="start"
-                      :ionChange="handleToggleChange()">
+          <ion-toggle v-model="settingsStore.settings.laudesOfficium" :ionChange="handleToggleChange()"
+                      justify="space-between"
+                      label-placement="start">
             Laudes + Officium
           </ion-toggle>
         </ion-item>
         <ion-item>
-          <ion-toggle v-model="settingsStore.settings.laudesEvangelium" justify="space-between"
-                      label-placement="start"
-                      :ionChange="handleToggleChange()">
+          <ion-toggle v-model="settingsStore.settings.laudesEvangelium" :ionChange="handleToggleChange()"
+                      justify="space-between"
+                      label-placement="start">
             Laudes + Evangelium
           </ion-toggle>
         </ion-item>
         <ion-item>
-          <ion-toggle v-model="settingsStore.settings.vesperaeOfficium" justify="space-between"
-                      label-placement="start"
-                      :ionChange="handleToggleChange()">
+          <ion-toggle v-model="settingsStore.settings.vesperaeOfficium" :ionChange="handleToggleChange()"
+                      justify="space-between"
+                      label-placement="start">
             Vesperae + Officium
           </ion-toggle>
         </ion-item>
         <ion-item>
-          <ion-toggle v-model="settingsStore.settings.deceased" justify="space-between"
-                      label-placement="start"
-                      :ionChange="handleToggleChange()">
+          <ion-toggle v-model="settingsStore.settings.deceased" :ionChange="handleToggleChange()"
+                      justify="space-between"
+                      label-placement="start">
             Mostrar oficio difuntos
           </ion-toggle>
         </ion-item>
