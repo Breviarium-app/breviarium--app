@@ -1,13 +1,14 @@
 <template>
-  <ion-app>
+  <ion-page>
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
       <TabsComponent/>
     </ion-tabs>
-  </ion-app>
+  </ion-page>
+
 </template>
 <script lang="ts" setup>
-import {IonApp, IonRouterOutlet, IonTabs} from '@ionic/vue';
+import {IonPage, IonRouterOutlet, IonTabs} from '@ionic/vue';
 import TabsComponent from "@/components/molecules/TabsComponent.vue";
 </script>
 <style>
