@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {watch} from 'vue';
-import {IonContent, IonHeader, IonItem, IonList, IonPage, IonTitle, IonToggle, IonToolbar} from '@ionic/vue';
+import {IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToggle, IonToolbar} from '@ionic/vue';
 import {useSettingsStore} from '@/stores/settingsStore.ts';
 import LanguageSelector from "@/components/molecules/LanguageSelector.vue";
 import SelectorTheme from "@/views/SelectorTheme.vue";
