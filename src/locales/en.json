@@ -9,7 +9,8 @@
     "laudes_and_office": "Lauds + Office",
     "laudes_and_evangelium": "Lauds + Gospel",
     "vesperae_and_office": "Vespers + Office",
-    "office_deceased": "Office of the Dead"
+    "office_deceased": "Office of the Dead",
+    "haptics_active": "Vibration in the app"
   },
   "breviarium": {
     "evangelium_lectiones": "Gospel and Readings",
@@ -37,5 +38,6 @@
   "dark": "Dark",
   "light": "Light",
   "moon": "Moon",
-  "paper": "Paper"
+  "paper": "Paper",
+  "opensource_join_us": "Open-source project, ¡join us!"
 }
