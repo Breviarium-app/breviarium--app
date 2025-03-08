@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
-import {useSanctusStore} from "@/stores/sanctus/sanctus.ts";
+import {useSanctusStore} from "@/stores/sanctus.ts";
 import {MONTH_SPANISH} from "@/constants";
 import {ref} from "vue";
 
@@ -30,7 +30,7 @@ let todaySaint = ref<any | undefined>(selectedSaint);
       </p>
 
       <ul v-if="saintsOfDay.length > 1">
-        <li v-for="(saint, index) in saintsOfDay.slice(1)" :key="index">{{saint.name}}</li>
+        <li v-for="(saint, index) in saintsOfDay.slice(1)" :key="index">{{ saint.name }}</li>
       </ul>
     </ion-content>
   </ion-page>

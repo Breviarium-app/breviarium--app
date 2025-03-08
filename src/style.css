@@ -37,14 +37,14 @@
     --ion-color-light: #f4f5f8;
     --background-color-card: #f4f5f8;
     --inner-border-width: 0px 0px 0px 0px !important;
-    --background-card-shadow: #e8a4a4;
+    --background-card-shadow: #be4747;
     --ion-tab-bar-color: #666;
+    --ion-tab-bar-color-selected: var(--breviarium-primary);
 
     ion-item::part(native) {
         --border-color: var(--border-color-light); /* navbar & ion-item border */
     }
 }
-
 
 [data-theme="dark"] {
     --background: #121212;
@@ -56,6 +56,7 @@
     --background-color-card: #222222;
     --border-color-light: #1b1a1a; /* navbar & ion-item border */
     --background-card-shadow: #7a2e2e;
+    --ion-color-primary: var(--background-card-shadow);
 }
 
 [data-theme="paper"] {
@@ -69,6 +70,7 @@
     --border-color-light: #e1d0ba; /* navbar & ion-item border */
     --background-card-shadow: #b1773c;
     --ion-tab-bar-color: #85613d;
+    --ion-color-primary: var(--background-card-shadow);
 }
 
 [data-theme="moon"] {
@@ -82,6 +84,8 @@
     --border-color-light: #162637; /* navbar & ion-item border */
     --background-card-shadow: #4e82b8;
     --ion-tab-bar-color: #516f8e;
+    --ion-color-primary: var(--background-card-shadow);
+
 }
 
 a {
