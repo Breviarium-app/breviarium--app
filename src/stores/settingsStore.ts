@@ -8,12 +8,12 @@ export const useSettingsStore = defineStore('settings', () => {
         laudesOfficium: false,
         laudesEvangelium: false,
         vesperaeOfficium: false,
-        theme: 'system',
+        theme: 'light',
         deceased: false,
     });
 
     const themes = [
-        {value: 'system', label: 'System'},
+        // {value: 'system', label: 'System'},
         {value: 'light', label: 'Light'},
         {value: 'paper', label: 'Paper'},
         {value: 'moon', label: 'Moon'},
@@ -25,7 +25,7 @@ export const useSettingsStore = defineStore('settings', () => {
             key: 'settings',
             value: JSON.stringify(settings.value)
         }).catch(err => {
-            console.error("NO GUardado:", err)
+            console.error("No Guardado:", err)
         });
     };
 
