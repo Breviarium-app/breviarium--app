@@ -23,7 +23,7 @@ console.log("17", sanctus.getSaint(new Date(2025, 1, 17)));
 <style scoped>
 
 .saint-day {
-  color: var(--ion-color-primary);
+  color: var(--breviarium-primary);
   font-size: 0.9em;
   margin-top: 0.5rem;
 }

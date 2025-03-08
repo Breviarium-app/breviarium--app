@@ -6,14 +6,11 @@ import {
   IonContent,
   IonDatetime,
   IonGrid,
-  IonHeader,
   IonItem,
   IonLabel,
   IonModal,
   IonPage,
   IonRow,
-  IonTitle,
-  IonToolbar,
   useBackButton,
   useIonRouter
 } from '@ionic/vue';
@@ -47,12 +44,6 @@ useBackButton(-1, () => {
 
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>{{ $t('title') }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
     <ion-content>
       <div class="date-section ion-padding">
         <div id="open-modal-calendar" class="date-button">
@@ -164,11 +155,6 @@ useBackButton(-1, () => {
   --height: auto;
   --width: 90%;
   --border-radius: 16px;
-}
-
-/* Add animation for page transitions */
-:deep(.ion-page) {
-  animation: slideIn 0.3s ease-out;
 }
 
 .selected_hour {

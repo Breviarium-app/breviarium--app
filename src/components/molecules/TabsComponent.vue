@@ -6,7 +6,7 @@
     </ion-tab-button>
     <ion-tab-button href="/bible" tab="bible">
       <ion-icon :icon="bookOutline"/>
-      <ion-label>{{ $t('bible') }}</ion-label>
+      <ion-label>{{ $t('bible_name') }}</ion-label>
     </ion-tab-button>
     <ion-tab-button href="/settings" tab="settings">
       <ion-icon :icon="settingsOutline"/>

@@ -30,10 +30,12 @@ import {contrast, document, moon, sunny} from 'ionicons/icons'
 import {useSettingsStore} from "@/stores/settingsStore.ts";
 import {ref} from "vue";
 
-const theme = ref('');
+const {applyTheme, settings} = useSettingsStore();
+
+const theme = ref(settings.theme);
 
 const apply = (x: string) => {
-  const {applyTheme} = useSettingsStore();
+
   theme.value = x;
   applyTheme(x);
 }

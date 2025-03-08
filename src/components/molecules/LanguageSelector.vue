@@ -1,7 +1,7 @@
 <template>
   <ion-select v-model="currentLocale" :label="$t('settings.language')" interface="action-sheet">
     <ion-select-option v-for="locale in availableLocales" :key="locale" :value="locale">
-      {{ locale }}
+      {{ $t('common.languages.' + locale) }}
     </ion-select-option>
   </ion-select>
 </template>
