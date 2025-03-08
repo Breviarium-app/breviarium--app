@@ -29,15 +29,16 @@ import {IonCol, IonGrid, IonIcon, IonLabel, IonRow} from '@ionic/vue';
 import {contrast, document, moon, sunny} from 'ionicons/icons'
 import {useSettingsStore} from "@/stores/settingsStore.ts";
 import {ref} from "vue";
+import HapticsService from "@/services/HapticsService.ts";
 
 const {applyTheme, settings} = useSettingsStore();
 
 const theme = ref(settings.theme);
 
 const apply = (x: string) => {
-
   theme.value = x;
   applyTheme(x);
+  HapticsService.light();
 }
 </script>
 <style scoped>

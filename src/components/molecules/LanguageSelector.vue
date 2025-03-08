@@ -10,6 +10,7 @@
 import {computed} from 'vue';
 import {useI18n} from 'vue-i18n';
 import {IonSelect, IonSelectOption} from "@ionic/vue";
+import HapticsService from "@/services/HapticsService.ts";
 
 const {locale, availableLocales} = useI18n();
 console.log(availableLocales)
@@ -17,6 +18,7 @@ const currentLocale = computed({
   get: () => locale.value,
   set: (val) => {
     locale.value = val;
+    HapticsService.light();
   },
 });
 </script>
