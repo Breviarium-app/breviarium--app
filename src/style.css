@@ -20,7 +20,7 @@
     --breviarium-primary: #be4747;
 
     --background: #f8f9fb;
-    --background-accent: #efefef;
+    --background-accent: #d5d5d5;
     --border-color-light: #e8e8e8;
     --ion-background-color: var(--background);
     --ion-tab-bar-background: var(--ion-background-color);
@@ -37,7 +37,7 @@
     --ion-color-light: #f4f5f8;
     --background-color-card: #f4f5f8;
     --inner-border-width: 0px 0px 0px 0px !important;
-    --background-card-shadow: var(--breviarium-primary);
+    --background-card-shadow: #e8a4a4;
     --ion-tab-bar-color: #666;
 
     ion-item::part(native) {
@@ -55,12 +55,12 @@
     --ion-border-color: #272727; /* top header border */
     --background-color-card: #222222;
     --border-color-light: #1b1a1a; /* navbar & ion-item border */
-    --background-card-shadow: var(--breviarium-primary);
+    --background-card-shadow: #7a2e2e;
 }
 
 [data-theme="paper"] {
     --background: #f5e6d3;
-    --background-accent: #e1d0ba;
+    --background-accent: #cfbba1;
     --ion-background-color-rgb: 245, 230, 211;
     --ion-text-color: #2c1810;
     --ion-text-color-rgb: 44, 24, 16;
@@ -73,7 +73,7 @@
 
 [data-theme="moon"] {
     --background: #15202b;
-    --background-accent: #b61c61;
+    --background-accent: #4e82b8;
     --ion-background-color-rgb: 18, 18, 18;
     --ion-text-color: #ffffff;
     --ion-text-color-rgb: 255, 255, 255;

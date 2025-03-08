@@ -40,16 +40,20 @@ const apply = (x: string) => {
 </script>
 <style scoped>
 
+ion-grid {
+  --ion-grid-padding: 0px;
+}
+
 .selector-columns ion-col {
   background-color: var(--border-color-light);
   border-radius: 11px;
-  padding: 15px 0 9px 0;
+  padding: 10px 0 9px 0;
   text-align: center;
   cursor: pointer;
 }
 
 .active-theme {
-  background-color: var(--background-color-card);
+  background-color: var(--background-accent) !important;
 }
 
 .selector-columns ion-icon {
