@@ -1,7 +1,7 @@
 {
   "title": "Breviarium",
   "home": "Inicio",
-  "bible": "Biblia",
+  "bible_name": "Biblia",
   "settings": {
     "title": "Configuración",
     "theme": "Tema",
@@ -20,6 +20,9 @@
     "sexta": "Sexta",
     "nona": "Nona",
     "completorium": "Completas"
+  },
+  "bible": {
+    "search_books": "Buscar libros..."
   },
   "common": {
     "languages": {

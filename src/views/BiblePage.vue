@@ -27,7 +27,7 @@ const filteredBooks = computed(() => {
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>{{ $t('bible') }}</ion-title>
+        <ion-title>{{ $t('bible_name') }}</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -35,7 +35,7 @@ const filteredBooks = computed(() => {
       <ion-searchbar
           v-model="searchQuery"
           :debounce="300"
-          placeholder="Search books..."
+          :placeholder="$t('bible.search_books')"
       ></ion-searchbar>
 
       <ion-list>
@@ -48,10 +48,6 @@ const filteredBooks = computed(() => {
 </template>
 
 <style scoped>
-:deep(.ion-page) {
-  animation: slideIn 0.3s ease-out;
-}
-
 @keyframes slideIn {
   from {
     transform: translateX(100%);
