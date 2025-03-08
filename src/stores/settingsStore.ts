@@ -10,6 +10,7 @@ export const useSettingsStore = defineStore('settings', () => {
         vesperaeOfficium: false,
         theme: 'light',
         deceased: false,
+        hapticsActive: true,
     });
 
     const themes = [
@@ -20,6 +21,10 @@ export const useSettingsStore = defineStore('settings', () => {
         {value: 'dark', label: 'Dark'}
     ];
 
+
+    const setHapticsState = (state: boolean) => {
+        settings.value.hapticsActive = state;
+    }
     const saveSettings = async () => {
         await Preferences.set({
             key: 'settings',
@@ -50,6 +55,7 @@ export const useSettingsStore = defineStore('settings', () => {
         themes,
         saveSettings,
         applyTheme,
-        loadSettings
+        loadSettings,
+        setHapticsState
     };
 });

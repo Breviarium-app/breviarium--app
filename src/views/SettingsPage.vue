@@ -5,6 +5,7 @@ import {useSettingsStore} from '@/stores/settingsStore.ts';
 import LanguageSelector from "@/components/molecules/LanguageSelector.vue";
 import VersionNumber from "@/components/molecules/VersionNumber.vue";
 import SelectorTheme from "@/components/molecules/SelectorTheme.vue";
+import HapticsService from "@/services/HapticsService.ts";
 
 const settingsStore = useSettingsStore();
 
@@ -15,6 +16,7 @@ watch(() => settingsStore.settings.theme, (newTheme) => {
 });
 const handleToggleChange = () => {
   settingsStore.saveSettings();
+  HapticsService.light();
 };
 
 </script>
@@ -57,6 +59,13 @@ const handleToggleChange = () => {
                       justify="space-between"
                       label-placement="start">
             {{ $t('settings.office_deceased') }}
+          </ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-toggle v-model="settingsStore.settings.hapticsActive" :ionChange="handleToggleChange()"
+                      justify="space-between"
+                      label-placement="start">
+            {{ $t('settings.haptics_active') }}
           </ion-toggle>
         </ion-item>
         <ion-item lines="none">
