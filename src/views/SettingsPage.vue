@@ -4,6 +4,7 @@ import {IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, Io
 import {useSettingsStore} from '@/stores/settingsStore.ts';
 import LanguageSelector from "@/components/molecules/LanguageSelector.vue";
 import SelectorTheme from "@/views/SelectorTheme.vue";
+import VersionNumber from "@/components/molecules/VersionNumber.vue";
 
 const settingsStore = useSettingsStore();
 
@@ -30,7 +31,7 @@ const handleToggleChange = () => {
         <ion-item lines="none">
           <ion-label>{{ $t('settings.theme') }}</ion-label>
         </ion-item>
-        <ion-item class="ion-text-center">
+        <ion-item class="ion-text-center" lines="none">
           <SelectorTheme/>
         </ion-item>
         <ion-item>
@@ -63,6 +64,11 @@ const handleToggleChange = () => {
                       label-placement="start">
             {{ $t('settings.office_deceased') }}
           </ion-toggle>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>
+            <VersionNumber/>
+          </ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
