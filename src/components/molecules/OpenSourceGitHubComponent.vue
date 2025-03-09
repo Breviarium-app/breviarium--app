@@ -1,6 +1,6 @@
 <template>
   <div class="colab">
-    <a href="https://breviarium--site.pages.dev/" target="_blank">
+    <a href="https://breviarium.es/?utm_source=app_config_page" target="_blank">
       <ion-icon :icon="logoGithub" class="icon-github"/>
       <br/>
       {{ $t('opensource_join_us') }}
