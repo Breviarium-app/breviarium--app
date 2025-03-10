@@ -13,7 +13,6 @@ import {IonSelect, IonSelectOption} from "@ionic/vue";
 import HapticsService from "@/services/HapticsService.ts";
 
 const {locale, availableLocales} = useI18n();
-console.log(availableLocales)
 const currentLocale = computed({
   get: () => locale.value,
   set: (val) => {
