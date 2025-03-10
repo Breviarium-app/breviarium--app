@@ -8,11 +8,7 @@ const saintOfDay = ref('');
 let sanctus = new Sanctus();
 const saint: any = sanctus.getSaint();
 const name = saint ? saint.name : '';
-console.log(name);
 saintOfDay.value = name;
-
-console.log("17", sanctus.getSaint(new Date(2025, 1, 17)));
-
 </script>
 <template>
   <router-link to="/saint">
