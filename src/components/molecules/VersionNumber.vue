@@ -19,6 +19,7 @@ const versionApp = version
   color: var(--ion-text-color);
   text-align: center;
   opacity: 0.6;
+  padding: 2em 0;
 }
 
 </style>
