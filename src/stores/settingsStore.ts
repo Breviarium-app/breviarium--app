@@ -40,6 +40,9 @@ export const useSettingsStore = defineStore('settings', () => {
         } else {
             document.documentElement.setAttribute('data-theme', theme);
         }
+        if (settings.value.theme != theme) {
+            settings.value.theme = theme;
+        }
     };
 
     const loadSettings = async () => {

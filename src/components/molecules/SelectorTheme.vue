@@ -32,7 +32,6 @@ import {ref} from "vue";
 import HapticsService from "@/services/HapticsService.ts";
 
 const {applyTheme, settings} = useSettingsStore();
-
 const theme = ref(settings.theme);
 
 const apply = (x: string) => {
