@@ -2,6 +2,7 @@
   "title": "Breviarium",
   "home": "Inicio",
   "bible_name": "Biblia",
+  "version": "Versión",
   "settings": {
     "title": "Configuración",
     "theme": "Tema",

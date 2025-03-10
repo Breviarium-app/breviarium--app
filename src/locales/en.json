@@ -2,6 +2,7 @@
   "title": "Breviarium",
   "home": "Home",
   "bible_name": "Bible",
+  "version": "Version",
   "settings": {
     "title": "Settings",
     "theme": "Theme",

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
+import {IonBackButton, IonButtons, IonContent, IonHeader, IonLabel, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
 import {useSanctusStore} from "@/stores/sanctus.ts";
 import {MONTH_SPANISH} from "@/constants";
 import {ref} from "vue";
@@ -32,6 +32,13 @@ let todaySaint = ref<any | undefined>(selectedSaint);
       <ul v-if="saintsOfDay.length > 1">
         <li v-for="(saint, index) in saintsOfDay.slice(1)" :key="index">{{ saint.name }}</li>
       </ul>
+      <ion-label>
+        <p class="footer">
+          <a href="https://breviarium.es/" target="_blank">Breviarium Project</a> • <a
+            href="https://breviarium.es/sanctus/" target="_blank">Sanctus</a>
+        </p>
+      </ion-label>
+
     </ion-content>
   </ion-page>
 </template>
@@ -41,6 +48,11 @@ p {
 }
 
 h2 {
-  color: var(--ion-color-primary);
+  color: var(--breviarium-primary);
+}
+
+.footer {
+  text-align: center;
+  padding: 1.5em 0;
 }
 </style>

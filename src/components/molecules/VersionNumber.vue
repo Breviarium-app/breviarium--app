@@ -1,7 +1,7 @@
 <template>
   <div class="version">
     <p>
-      {{ $t('title') }} · Version {{ versionApp }}
+      {{ $t('title') }} · {{ $t('version') }} {{ versionApp }}
     </p>
     <p>
       <OpenSourceGitHubComponent/>
