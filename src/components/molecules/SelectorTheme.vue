@@ -5,6 +5,10 @@
       <!--        <ion-icon :icon="phonePortrait"></ion-icon>-->
       <!--        <ion-label>{{ $t('system') }}</ion-label>-->
       <!--      </ion-col>-->
+      <ion-col :class="theme == 'system' ? 'active-theme' : ''" @click="apply('system')">
+        <ion-icon :icon="phonePortrait"></ion-icon>
+        <ion-label>{{ $t('system') }}</ion-label>
+      </ion-col>
       <ion-col :class="theme == 'light' ? 'active-theme' : ''" @click="apply('light')">
         <ion-icon :icon="sunny"></ion-icon>
         <ion-label>{{ $t('light') }}</ion-label>
@@ -26,7 +30,7 @@
 </template>
 <script lang="ts" setup>
 import {IonCol, IonGrid, IonIcon, IonLabel, IonRow} from '@ionic/vue';
-import {contrast, document, moon, sunny} from 'ionicons/icons'
+import {contrast, document, moon, phonePortrait, sunny} from 'ionicons/icons'
 import {useSettingsStore} from "@/stores/settingsStore.ts";
 import {ref} from "vue";
 import HapticsService from "@/services/HapticsService.ts";

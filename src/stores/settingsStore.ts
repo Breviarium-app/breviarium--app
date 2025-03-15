@@ -8,7 +8,7 @@ export const useSettingsStore = defineStore('settings', () => {
         laudesOfficium: false,
         laudesEvangelium: false,
         vesperaeOfficium: false,
-        theme: 'light',
+        theme: 'system',
         deceased: false,
         hapticsActive: true,
     });
@@ -37,6 +37,8 @@ export const useSettingsStore = defineStore('settings', () => {
     const applyTheme = (theme: string) => {
         if (theme === 'system') {
             document.documentElement.removeAttribute('data-theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+            document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
         } else {
             document.documentElement.setAttribute('data-theme', theme);
         }
