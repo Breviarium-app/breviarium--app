@@ -32,15 +32,14 @@
     "languages": {
       "es": "Español",
       "en": "Inglés"
-    },
-    "cancel": "Cancelar",
-    "accept": "Aceptar",
-    "confirm": "Confirmar"
+    }
   },
   "system": "Sistema",
   "dark": "Oscuro",
   "light": "Claro",
   "moon": "Lunar",
   "paper": "Papel",
-  "opensource_join_us": "Proyecto open-source, ¡únete!"
+  "opensource_join_us": "Proyecto open-source, ¡únete!",
+  "cancel": "Cancelar",
+  "accept": "Aceptar"
 }

@@ -137,8 +137,8 @@ useBackButton(-1, () => {
             @ionChange="handleDateChange($event.detail.value)"
         >
           <div slot="buttons">
-            <ion-button @click="isDatePickerOpen = false">{{ $t('common.cancel') }}</ion-button>
-            <ion-button @click="confirmDate">{{ $t('common.accept') }}</ion-button>
+            <ion-button @click="isDatePickerOpen = false">{{ $t('cancel') }}</ion-button>
+            <ion-button @click="confirmDate">{{ $t('accept') }}</ion-button>
           </div>
         </ion-datetime>
       </ion-modal>

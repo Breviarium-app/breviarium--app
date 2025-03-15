@@ -32,15 +32,14 @@
     "languages": {
       "es": "Spanish",
       "en": "English"
-    },
-    "cancel": "Cancel",
-    "accept": "Accept",
-    "confirm": "Confirm"
+    }
   },
   "system": "System",
   "dark": "Dark",
   "light": "Light",
   "moon": "Moon",
   "paper": "Paper",
-  "opensource_join_us": "Open-source project, ¡join us!"
+  "opensource_join_us": "Open-source project, ¡join us!",
+  "cancel": "Cancel",
+  "accept": "Accept"
 }

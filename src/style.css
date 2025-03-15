@@ -42,6 +42,7 @@
     --background-card-shadow: #be4747;
     --ion-tab-bar-color: #666;
     --ion-tab-bar-color-selected: var(--breviarium-primary);
+    --ion-color-step-400: var(--ion-tab-bar-color);
 
     ion-item::part(native) {
         --border-color: var(--border-color-light); /* navbar & ion-item border */
@@ -87,7 +88,6 @@
     --background-card-shadow: #4e82b8;
     --ion-tab-bar-color: #516f8e;
     --ion-color-primary: var(--background-card-shadow);
-
 }
 
 a {
