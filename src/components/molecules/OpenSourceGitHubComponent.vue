@@ -18,6 +18,10 @@ import {logoGithub} from 'ionicons/icons';
   vertical-align: -7px;
 }
 
+a {
+  color: var(--breviarium-primary)
+}
+
 .colab {
   margin-top: 1em;
 }

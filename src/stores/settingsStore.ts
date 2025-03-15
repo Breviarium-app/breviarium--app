@@ -21,7 +21,6 @@ export const useSettingsStore = defineStore('settings', () => {
         {value: 'dark', label: 'Dark'}
     ];
 
-
     const setHapticsState = (state: boolean) => {
         settings.value.hapticsActive = state;
     }
