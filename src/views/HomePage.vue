@@ -108,6 +108,14 @@ useBackButton(-1, () => {
               </ion-item>
             </ion-col>
           </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item class="prayer-item"
+                        router-link="/bible">
+                <ion-label>{{ $t('bibleOfJerusalem') }}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
         </ion-grid>
       </div>
 
