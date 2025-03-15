@@ -3,12 +3,20 @@ import {IonApp, IonRouterOutlet} from '@ionic/vue';
 import {onMounted} from "vue";
 import {useSettingsStore} from "@/stores/settingsStore.ts";
 
+const store = useSettingsStore();
+
 onMounted(() => {
-  useSettingsStore().loadSettings();
+  store.loadSettings().then(() => {
+    console.log("Settings store loaded");
+    store.saveSettings();
+    store.applyTheme(store.settings.theme);
+  }).catch(error => {
+    console.error(error);
+  });
 
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    if (useSettingsStore().settings.theme === 'system') {
-      useSettingsStore().applyTheme('system');
+    if (store.settings.theme === 'system') {
+      store.applyTheme('system');
     }
   })
 
