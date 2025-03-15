@@ -6,7 +6,7 @@ import {useSettingsStore} from "@/stores/settingsStore.ts";
 onMounted(() => {
   useSettingsStore().loadSettings();
 
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
     if (useSettingsStore().settings.theme === 'system') {
       useSettingsStore().applyTheme('system');
     }
