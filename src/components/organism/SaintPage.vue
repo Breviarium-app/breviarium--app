@@ -20,18 +20,23 @@ let todaySaint = ref<any | undefined>(selectedSaint);
     <ion-content class="ion-padding">
       <h2>{{ todaySaint?.name }}</h2>
       <p>
-        <span v-if="todaySaint?.day">🗓️ Festividad: {{ todaySaint?.day }} de {{
+        <span v-if="todaySaint?.day">• Festividad: {{ todaySaint?.day }} de {{
             MONTH_SPANISH[todaySaint?.month - 1]
           }}</span>
-        <span v-if="todaySaint?.birth"><br/>👶 Nacimiento: {{ todaySaint?.birth }}</span>
-        <span v-if="todaySaint?.dead"><br/>🪦 Muerte: {{ todaySaint?.dead }}</span>
-        <span v-if="todaySaint?.meaning"><br/>🔠 Significado: {{ todaySaint?.meaning }}</span>
+        <span v-if="todaySaint?.birth"><br/>• Nacimiento: {{ todaySaint?.birth }}</span>
+        <span v-if="todaySaint?.dead"><br/>• Muerte: {{ todaySaint?.dead }}</span>
+        <span v-if="todaySaint?.meaning"><br/>• Significado: {{ todaySaint?.meaning }}</span>
         <span v-if="todaySaint?.description"><br/>📜 {{ todaySaint?.description }}</span>
       </p>
 
-      <ul v-if="saintsOfDay.length > 1">
-        <li v-for="(saint, index) in saintsOfDay.slice(1)" :key="index">{{ saint.name }}</li>
-      </ul>
+      <div v-if="saintsOfDay.length > 1">
+        <h4>Más santos:</h4>
+        <p>En el día de hoy la Iglesia celebra también a:</p>
+        <ul>
+          <li v-for="(saint, index) in saintsOfDay.slice(1)" :key="index">{{ saint.name }}</li>
+        </ul>
+      </div>
+
       <ion-label>
         <p class="footer">
           <a href="https://breviarium.es/" target="_blank">Breviarium Project</a> • <a
