@@ -6,6 +6,7 @@ import {
   IonContent,
   IonDatetime,
   IonGrid,
+  IonIcon,
   IonItem,
   IonLabel,
   IonModal,
@@ -18,6 +19,7 @@ import {format} from 'date-fns';
 import {App} from '@capacitor/app';
 import SaintBanner from "@/components/molecules/SaintBanner.vue";
 import {currentLiturgyHour} from "@/services/utils/utils.ts";
+import {bookOutline} from "ionicons/icons";
 
 const selectedDate = ref(new Date().toISOString());
 const isDatePickerOpen = ref(false);
@@ -57,13 +59,19 @@ useBackButton(-1, () => {
           <ion-row>
             <ion-col>
               <ion-item class="prayer-item" router-link="/prayer/evangelium-and-lectiones">
-                <ion-label>{{ $t('breviarium.evangelium_lectiones') }}</ion-label>
+                <ion-label>
+                  <h2>{{ $t('breviarium.evangelium_lectiones') }}</h2>
+                  <p>Mt 1, 2-5</p>
+                </ion-label>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Laudes' ? 'selected_hour' : ''" class="prayer-item"
                         router-link="/prayer/laudes">
-                <ion-label>{{ $t('breviarium.laudes') }}</ion-label>
+                <ion-label>
+                  <h2>{{ $t('breviarium.laudes') }}</h2>
+                  <p>Oración de la mañana</p>
+                </ion-label>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -110,9 +118,12 @@ useBackButton(-1, () => {
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-item class="prayer-item"
-                        router-link="/bible">
-                <ion-label>{{ $t('bibleOfJerusalem') }}</ion-label>
+              <ion-item class="prayer-item" router-link="/bible">
+                <ion-icon slot="start" :icon="bookOutline" style="color: var(--gold-color);"></ion-icon>
+                <ion-label>
+                  <h2>{{ $t('bibleOfJerusalem') }}</h2>
+                  <p>{{ $t('bibleSubtitle') }}</p>
+                </ion-label>
               </ion-item>
             </ion-col>
           </ion-row>

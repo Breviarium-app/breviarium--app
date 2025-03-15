@@ -4,10 +4,6 @@
       <ion-icon :icon="bonfireOutline"/>
       <ion-label>{{ $t('home') }}</ion-label>
     </ion-tab-button>
-    <ion-tab-button href="/bible" tab="bible">
-      <ion-icon :icon="bookOutline"/>
-      <ion-label>{{ $t('bible_name') }}</ion-label>
-    </ion-tab-button>
     <ion-tab-button href="/settings" tab="settings">
       <ion-icon :icon="settingsOutline"/>
       <ion-label>{{ $t('settings.title') }}</ion-label>
@@ -16,7 +12,7 @@
 </template>
 <script lang="ts" setup>
 import {IonIcon, IonLabel, IonTabBar, IonTabButton} from '@ionic/vue';
-import {bonfireOutline, bookOutline, settingsOutline} from 'ionicons/icons';
+import {bonfireOutline, settingsOutline} from 'ionicons/icons';
 </script>
 <style>
 

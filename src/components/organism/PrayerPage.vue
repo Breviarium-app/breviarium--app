@@ -7,7 +7,7 @@ const prayerType = route.params.type;
 
 const getPrayerTitle = (type: string) => {
   const titles: { [key: string]: string } = {
-    evangelium: 'Evangelio',
+    'evangelium-and-lectiones': 'Evangelio y lecturas',
     laudes: 'Laudes',
     vesperae: 'Vísperas',
     officium: 'Oficio',
