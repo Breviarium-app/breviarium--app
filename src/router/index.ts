@@ -2,9 +2,11 @@ import {createRouter, createWebHistory} from '@ionic/vue-router'
 import {RouteRecordRaw} from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import SettingsPage from '../views/SettingsPage.vue'
-import BiblePage from '../views/BiblePage.vue'
+import BiblePage from '../components/organism/BiblePage.vue'
 import SaintPage from "@/components/organism/SaintPage.vue";
 import TabsNavbar from "@/components/molecules/TabsNavbar.vue";
+import BibleBookPage from "@/components/organism/bible/BibleBookPage.vue";
+import BibleChapterPage from "@/components/organism/bible/BibleChapterPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -23,6 +25,15 @@ const routes: Array<RouteRecordRaw> = [
                 path: '/bible',
                 name: 'Bible',
                 component: BiblePage
+            }, {
+                path: '/bible/:id',
+                name: 'BibleBook',
+                component: BibleBookPage
+            },
+            {
+                path: '/bible/:id/:chapter',
+                name: 'BibleChapter',
+                component: BibleChapterPage
             },
             {
                 path: '/settings',

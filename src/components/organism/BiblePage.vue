@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import {computed, ref} from 'vue';
 import {
+  IonBackButton,
+  IonButtons,
   IonContent,
   IonHeader,
   IonItem,
@@ -27,6 +29,9 @@ const filteredBooks = computed(() => {
   <ion-page>
     <ion-header>
       <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/" text="Atrás"></ion-back-button>
+        </ion-buttons>
         <ion-title>{{ $t('bible_name') }}</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -42,9 +47,11 @@ const filteredBooks = computed(() => {
       ></ion-searchbar>
 
       <ion-list>
-        <ion-item v-for="book in filteredBooks" :key="book">
-          <ion-label>{{ book }}</ion-label>
-        </ion-item>
+        <router-link v-for="book in filteredBooks" :key="book" :to="`/bible/${book}`">
+          <ion-item>
+            <ion-label>{{ book }}</ion-label>
+          </ion-item>
+        </router-link>
       </ion-list>
     </ion-content>
   </ion-page>

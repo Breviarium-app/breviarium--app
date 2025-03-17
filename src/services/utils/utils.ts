@@ -17,3 +17,7 @@ export const currentLiturgyHour = () => {
     }
     return "Laudes" // by default if error
 }
+
+export function selectAll(event: any) {
+    event.target.select()
+}
