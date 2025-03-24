@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {resultBible} from "@/utils/types";
+import {resultBible} from "@/constants/types";
 import {Bible} from "biblia-de-jerusalen";
 
 export const bibleStore = defineStore('bible', () => {
