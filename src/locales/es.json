@@ -13,7 +13,8 @@
     "laudes_and_evangelium": "Laudes + Evangelio",
     "vesperae_and_office": "Vísperas + Oficio",
     "office_deceased": "Oficio de difuntos",
-    "haptics_active": "Vibración en la aplicación"
+    "haptics_active": "Vibración en la aplicación",
+    "keepAwake": "Pantalla activa durante oración"
   },
   "breviarium": {
     "evangelium_lectiones": "Evangelio y lecturas",
