@@ -46,11 +46,14 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           npm version minor --git-tag-version false
-          chmod +x ./.github/workflows/script.sh
-          ./.github/workflows/script.sh
-          echo "Script executed ✅"
-          git add package.json package-lock.json android/app/build.gradle ios/App/App.xcodeproj/project.pbxproj
+          git add package.json package-lock.json
           git commit -m "ci: ⚙️ bump version to $(node -p "require('./package.json').version")"
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+#          chmod +x ./.github/workflows/script.sh
+#          ./.github/workflows/script.sh
+#          echo "Script executed ✅"
+#          git add package.json package-lock.json android/app/build.gradle ios/App/App.xcodeproj/project.pbxproj
