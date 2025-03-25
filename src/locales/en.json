@@ -13,7 +13,8 @@
     "laudes_and_evangelium": "Lauds + Gospel",
     "vesperae_and_office": "Vespers + Office",
     "office_deceased": "Office of the Dead",
-    "haptics_active": "Vibration in the app"
+    "haptics_active": "Vibration in the app",
+    "keepAwake": "Keep the screen awake in prayer"
   },
   "breviarium": {
     "evangelium_lectiones": "Gospel and Readings",

@@ -2,6 +2,7 @@
 import {defineStore} from 'pinia';
 import {ref} from 'vue';
 import {Preferences} from '@capacitor/preferences';
+import {KeepAwakeService} from "@/services/keepAwakeService.ts";
 
 export const useSettingsStore = defineStore('settings', () => {
     const settings = ref({
@@ -11,6 +12,7 @@ export const useSettingsStore = defineStore('settings', () => {
         theme: 'system',
         deceased: false,
         hapticsActive: true,
+        keepAwake: true,
     });
 
     const themes = [
@@ -47,11 +49,27 @@ export const useSettingsStore = defineStore('settings', () => {
     };
 
     const loadSettings = async () => {
-        const {value} = await Preferences.get({key: 'settings'});
-        if (value) {
-            settings.value = JSON.parse(value);
-            applyTheme(settings.value.theme);
+        try {
+            const {value} = await Preferences.get({key: 'settings'});
+
+            if (value) {
+                settings.value = JSON.parse(value);
+                applyTheme(settings.value.theme);
+
+                const keepAwake = settings.value.keepAwake ?? false;
+                const isSupported = await KeepAwakeService.isSupported();
+
+                if (keepAwake && isSupported) {
+                    await KeepAwakeService.keepAwake();
+                } else if (!keepAwake) {
+                    await KeepAwakeService.allowSleep();
+                }
+
+            }
+        } catch (error) {
+            console.error("error loading settings:", error);
         }
+
     };
 
     return {
