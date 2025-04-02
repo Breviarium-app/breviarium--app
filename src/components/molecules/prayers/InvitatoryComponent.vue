@@ -1,48 +1,57 @@
 <template>
-
-  <breviarium-segment :value="pSalmSelected" @update:value="segmentChanged($event)">
-    <breviarium-segment-button value="psalm94">
+  <ion-segment>
+    <ion-segment-button content-id="first" value="first">
       <ion-label>{{ $t('psalm') }} 94</ion-label>
-    </breviarium-segment-button>
-    <breviarium-segment-button value="psalm99">
+    </ion-segment-button>
+    <ion-segment-button content-id="second" value="second">
       <ion-label>{{ $t('psalm') }} 99</ion-label>
-    </breviarium-segment-button>
-    <breviarium-segment-button value="psalm66">
+    </ion-segment-button>
+    <ion-segment-button content-id="third" value="third">
       <ion-label>{{ $t('psalm') }} 66</ion-label>
-    </breviarium-segment-button>
-    <breviarium-segment-button value="psalm23">
+    </ion-segment-button>
+    <ion-segment-button content-id="fourth" value="fourth">
       <ion-label>{{ $t('psalm') }} 23</ion-label>
-    </breviarium-segment-button>
-  </breviarium-segment>
-  <div class="wrapper">
-    <span class="subtitle title-color cita">
-      {{ invitatory?.title }}
-    </span>
-    <p v-html="invitatory?.psalm"></p>
-  </div>
+    </ion-segment-button>
+  </ion-segment>
+  <ion-segment-view>
+    <ion-segment-content id="first">
+      <div class="title-color" v-html="invitatorium_psalms?.at(0).title"></div>
+      <div v-html="invitatorium_psalms?.at(0).psalm"></div>
+    </ion-segment-content>
+    <ion-segment-content id="second">
+      <div class="title-color" v-html="invitatorium_psalms?.at(1).title"></div>
+      <div v-html="invitatorium_psalms?.at(1).psalm"></div>
+    </ion-segment-content>
+    <ion-segment-content id="third">
+      <div class="title-color" v-html="invitatorium_psalms?.at(2).title"></div>
+      <div v-html="invitatorium_psalms?.at(2).psalm"></div>
+    </ion-segment-content>
+    <ion-segment-content id="fourth">
+      <div class="title-color" v-html="invitatorium_psalms?.at(3).title"></div>
+      <div v-html="invitatorium_psalms?.at(3).psalm"></div>
+    </ion-segment-content>
+  </ion-segment-view>
 </template>
+
 <script lang="ts" setup>
-import {ref, Ref} from "vue";
-import {IonLabel} from "@ionic/vue";
-import BreviariumSegment from "@/components/molecules/prayers/BreviariumSegment.vue";
-import BreviariumSegmentButton from "@/components/molecules/prayers/BreviariumSegmentButton.vue";
+import {onBeforeMount, ref, Ref} from "vue";
+import {IonLabel, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView} from "@ionic/vue";
 import Breviarium from "breviarium";
 
-const brev = new Breviarium();
-const invitatorium_psalms = await brev.getInvitatoriumPsalms();
+let invitatorium_psalms: Ref<any[] | undefined> = ref();
 
-const pSalmSelected: Ref<string> = ref('psalm94');
-let invitatory = invitatorium_psalms.find((element: any) => element.id === pSalmSelected.value);
-
-const segmentChanged = (event: any) => {
-  pSalmSelected.value = event;
-  invitatory = invitatorium_psalms.find((element: any) => element.id === pSalmSelected.value);
-}
+onBeforeMount(() => {
+  const brev = new Breviarium();
+  brev.getInvitatoriumPsalms().then(data => {
+    invitatorium_psalms.value = data;
+  });
+});
 
 </script>
-<style scoped>
 
-.wrapper {
-  margin-top: 10px;
+<style scoped>
+ion-segment-view {
+  overflow-y: hidden; /* Prevents scrolling */
+  height: auto; /* Ensures it takes the height of its content */
 }
 </style>
