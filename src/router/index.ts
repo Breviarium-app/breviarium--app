@@ -41,6 +41,10 @@ const routes: Array<RouteRecordRaw> = [
                 component: SettingsPage
             },
             {
+                path: '/prayer/laudes',
+                name: 'Laudes',
+                component: () => import('../components/organism/prayers/LaudesPage.vue')
+            }, {
                 path: '/prayer/:type',
                 name: 'Prayer',
                 component: () => import('../components/organism/PrayerPage.vue')

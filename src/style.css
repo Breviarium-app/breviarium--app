@@ -158,3 +158,7 @@ button:focus-visible {
         background-color: #f9f9f9;
     }
 }
+
+.title-color {
+    color: var(--breviarium-primary);
+}
