@@ -1,38 +1,22 @@
 <script lang="ts" setup>
-import {ref} from 'vue';
 import {
-  IonButton,
   IonCol,
   IonContent,
-  IonDatetime,
   IonGrid,
   IonIcon,
   IonItem,
   IonLabel,
-  IonModal,
   IonPage,
   IonRow,
   useBackButton,
   useIonRouter
 } from '@ionic/vue';
-import {format} from 'date-fns';
 import {App} from '@capacitor/app';
 import SaintBanner from "@/components/molecules/SaintBanner.vue";
-import {currentLiturgyHour} from "@/services/utils/utils.ts";
+import {currentLiturgyHour} from "@/constants/utils.ts";
 import {bookOutline} from "ionicons/icons";
+import DateAndCelebration from "@/components/molecules/DateAndCelebration.vue";
 
-const selectedDate = ref(new Date().toISOString());
-const isDatePickerOpen = ref(false);
-const modal = ref();
-
-const handleDateChange = (value: any) => {
-  console.log(value);
-  selectedDate.value = value;
-};
-
-const confirmDate = () => {
-  isDatePickerOpen.value = false;
-};
 
 const ionRouter = useIonRouter();
 useBackButton(-1, () => {
@@ -48,9 +32,7 @@ useBackButton(-1, () => {
   <ion-page>
     <ion-content>
       <div class="date-section ion-padding">
-        <div id="open-modal-calendar" class="date-button">
-          {{ format(new Date(selectedDate), 'MMMM d, yyyy') }}
-        </div>
+        <DateAndCelebration/>
         <SaintBanner/>
       </div>
 
@@ -135,18 +117,6 @@ useBackButton(-1, () => {
         </ion-grid>
       </div>
 
-      <ion-modal ref="modal" class="date-picker-modal" trigger="open-modal-calendar">
-        <ion-datetime
-            v-model="selectedDate"
-            presentation="date"
-            @ionChange="handleDateChange($event.detail.value)"
-        >
-          <div slot="buttons">
-            <ion-button @click="isDatePickerOpen = false">{{ $t('cancel') }}</ion-button>
-            <ion-button @click="confirmDate">{{ $t('accept') }}</ion-button>
-          </div>
-        </ion-datetime>
-      </ion-modal>
     </ion-content>
   </ion-page>
 </template>
@@ -155,12 +125,6 @@ useBackButton(-1, () => {
 .date-section {
   text-align: center;
   margin-bottom: 1rem;
-}
-
-.date-button {
-  font-size: 1.2em;
-  padding: 8px;
-  cursor: pointer;
 }
 
 .prayer-grid {
@@ -173,12 +137,6 @@ useBackButton(-1, () => {
   --border-radius: 8px;
   --background: var(--background-color-card);
   border: 0 solid var(--border-color);
-}
-
-.date-picker-modal {
-  --height: auto;
-  --width: 90%;
-  --border-radius: 16px;
 }
 
 .selected_hour {
