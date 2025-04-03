@@ -4,21 +4,17 @@
       {{ $t("hymn") }}
     </h4>
     <div v-if="hymns.length > 1">
-      <breviarium-segment
-          :value="selectedHymn"
-          @update:value="onChangeHymn"
-      >
-        <breviarium-segment-button
-            v-for="(hymn, index) in hymns"
-            :key="index"
-            :value="hymn"
-        >
-          <ion-label>
-            {{ $t("hymn") }} {{ index + 1 }}
-          </ion-label>
-        </breviarium-segment-button>
-      </breviarium-segment>
-      <span v-html="formatText(selectedHymn)"></span>
+      <ion-segment>
+        <ion-segment-button v-for="(item, index) in hymns" :content-id="index" :value="index">
+          <ion-label :alt="item.charAt(0)">{{ $t("hymn") }} {{ index + 1 }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+      <ion-segment-view>
+        <ion-segment-content v-for="(item, index) in hymns" :id="index">
+          <div v-html="formatText(item)"></div>
+        </ion-segment-content>
+      </ion-segment-view>
+
     </div>
     <div v-if="hymns.length === 1">
       <span v-html="formatText(hymns[0])"></span>
@@ -27,10 +23,8 @@
 </template>
 
 <script lang="ts" setup>
-import BreviariumSegment from "@/components/molecules/prayers/BreviariumSegment.vue";
-import BreviariumSegmentButton from "@/components/molecules/prayers/BreviariumSegmentButton.vue";
 import {formatText} from "@/constants/formatText.js";
-import {IonLabel} from "@ionic/vue";
+import {IonLabel, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView} from "@ionic/vue";
 import {computed, ref, watch} from "vue";
 
 const props = defineProps({
@@ -47,6 +41,7 @@ const hymns = computed(
     () => props.text?.split(splitText).map((hymn) => hymn.trim()) || []
 );
 
+console.log("props.text", props.text)
 watch(hymns, () => {
   selectedHymn.value = hymns.value[0];
 }, {immediate: true});
