@@ -46,7 +46,4 @@ watch(hymns, () => {
   selectedHymn.value = hymns.value[0];
 }, {immediate: true});
 
-function onChangeHymn(newHymn: any) {
-  selectedHymn.value = newHymn;
-}
 </script>
