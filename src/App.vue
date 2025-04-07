@@ -2,6 +2,7 @@
 import {IonApp, IonRouterOutlet} from '@ionic/vue';
 import {onMounted} from "vue";
 import {useSettingsStore} from "@/stores/settingsStore.ts";
+import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 const store = useSettingsStore();
 
@@ -19,6 +20,8 @@ onMounted(() => {
       store.applyTheme('system');
     }
   })
+
+  useBreviariumStore();
 
 });
 </script>

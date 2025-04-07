@@ -41,7 +41,6 @@ const hymns = computed(
     () => props.text?.split(splitText).map((hymn) => hymn.trim()) || []
 );
 
-console.log("props.text", props.text)
 watch(hymns, () => {
   selectedHymn.value = hymns.value[0];
 }, {immediate: true});
