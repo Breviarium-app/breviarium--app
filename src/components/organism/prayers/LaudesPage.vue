@@ -79,53 +79,14 @@
     <div v-for="item in laudes?.responsorios" v-bind:key="item">
       <p v-html="formatText(item)"></p>
     </div>
-    <!--    &lt;!&ndash;&#45;&#45;&#45;&#45; OFICIO DE LECTURA (opcional) &#45;&#45;&#45;&#45;&ndash;&gt;-->
-    <!--    <div-->
-    <!--        v-if="-->
-    <!--         settingsStore.isLaudesOficioActived ||-->
-    <!--         settingsStore.isLaudesOficioGospelActived-->
-    <!--         "-->
-    <!--    >-->
-    <!--      <h4-->
-    <!--          class="title title-color"-->
-    <!--      >-->
-    <!--        {{ $t("officiumLectionis") }}-->
-    <!--      </h4>-->
-    <!--      <div>-->
-    <!--        <OfficeFirstLecture :font-size="fontSize"/>-->
-    <!--      </div>-->
-    <!--      <h4-->
-    <!--          class="title title-color"-->
-    <!--      >-->
-    <!--        {{ $t("lectioAltera") }}-->
-    <!--      </h4>-->
-    <!--      <div>-->
-    <!--        <OfficeSecondLecture :font-size="fontSize"/>-->
-    <!--      </div>-->
-    <!--    </div>-->
-    <!--    &lt;!&ndash;&#45;&#45;&#45;&#45; EVANGELIO (opcional) &#45;&#45;&#45;&#45;&ndash;&gt;-->
-    <!--    <div v-if="settingsStore.isLaudesOficioGospelActived">-->
-    <!--      <h4-->
-    <!--          class="office-title margin-y-md"-->
-    <!--      >-->
-    <!--        &lt;!&ndash;        <img alt="gospel symbol" src="@/assets/images/simboloEvangelio.svg"/>&ndash;&gt;-->
-    <!--        {{ $t("gospel") }}-->
-    <!--      </h4>-->
-    <!--      <span v-if="!gospel?.body">-->
-    <!--         <small v-html="$t('gospelInLaudesNotFound')"></small>-->
-    <!--         </span>-->
-    <!--      <div v-else>-->
-    <!--        <h4-->
-    <!--            class="title-color"-->
-    <!--            v-html="formatText(gospel?.title)"-->
-    <!--        ></h4>-->
-    <!--        <p v-html="formatText(gospel?.body)"></p>-->
-    <!--        <p class="margin-y-md">{{ $t("theGospelOfTheLord") }}</p>-->
-    <!--      </div>-->
-    <!--      <p class="margin-y-md"></p>-->
-    <!--    </div>-->
-    <!--    &lt;!&ndash;    <TimerMeditation/> TODO: handle timer working in the background &ndash;&gt;-->
-    <!--    -->
+    <!------ OFICIO DE LECTURA (opcional) ------>
+    <div v-if="settings.laudesOfficium">
+      <OfficiumLectures/>
+    </div>
+    <!------ EVANGELIO (opcional) settings.laudesEvangelium ------>
+    <!--    <EvangeliumLecture v-if="false"/>-->
+    <!--    <TimerMeditation/> TODO: handle timer working in the background -->
+
     <h4 class="title title-color">
       {{ $t("meditationTime") }}
     </h4>
@@ -195,7 +156,6 @@
   </PrayerPage>
 </template>
 <script lang="ts" setup>
-import Breviarium from "breviarium";
 import {onBeforeMount, ref} from "vue";
 import PrayerPage from "@/components/organism/PrayerPage.vue";
 import {formatText} from "@/constants/formatText.ts";
@@ -206,17 +166,19 @@ import {LaudesSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import BenedictusPrayer from "@/components/molecules/prayers/Benedictus.vue";
 import PadreNuestro from "@/components/molecules/prayers/PadreNuestro.vue";
 import {IonLabel, IonText} from "@ionic/vue";
+import {useSettingsStore} from "@/stores/settingsStore.ts";
+import OfficiumLectures from "@/components/molecules/prayers/OfficiumLectures.vue";
+import Breviarium from "breviarium";
 
 const laudes = ref<LaudesSchemaOutput>();
 const invitatorium = ref('');
 const isModalInvocationOpen = ref(false);
+const settings = useSettingsStore().settings;
 
 onBeforeMount(() => {
   const brev = new Breviarium();
-
   brev.getLaudes().then((data) => {
     laudes.value = data;
-    console.log(data)
   })
   brev.getInvitatorium().then((data) => {
     invitatorium.value = data?.val || '';

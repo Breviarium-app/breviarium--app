@@ -162,3 +162,7 @@ button:focus-visible {
 .title-color {
     color: var(--breviarium-primary);
 }
+
+.text-center {
+    text-align: center;
+}
