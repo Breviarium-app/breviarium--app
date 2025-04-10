@@ -55,5 +55,12 @@ const getPrayerTitle = (type: string) => {
 .prayer-wrapper {
   display: block;
   max-width: 800px;
+  font-family: "EBGaramond", serif;
+  font-size: 1.1rem;
+}
+
+:deep(.prayer-wrapper p) {
+  line-height: 1.5rem;
+  margin: 0 0 0.7rem 0;
 }
 </style>
