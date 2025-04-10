@@ -29,9 +29,9 @@
     </p>
     <p><span class="title-color"> ℣.</span>{{ $t("firstVersiculumOffice") }}</p>
     <p><span class="title-color"> ℟.</span>{{ $t("firstResponsioOffice") }}</p>
-    <p><span class="title-color">Ant. </span>{{ invitatorium }}</p>
+    <p><span class="title-color">Ant. </span>{{ invitatorium?.val }}</p>
     <InvitatoryComponent/>
-    <p><span class="title-color">Ant. </span>{{ invitatorium }}</p>
+    <p><span class="title-color">Ant. </span>{{ invitatorium?.val }}</p>
     <HymnComponent :text="laudes?.himno"/>
     <h4 class="title title-color">
       {{ $t("salmodia") }}
@@ -159,7 +159,7 @@ import {formatText} from "@/constants/formatText.ts";
 import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
 import InvitatoryComponent from "@/components/molecules/prayers/InvitatoryComponent.vue";
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
-import {LaudesSchemaOutput} from "breviarium/dist/prayer-manager-interface";
+import {InvitatoriumSchemaOutput, LaudesSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import BenedictusPrayer from "@/components/molecules/prayers/Benedictus.vue";
 import PadreNuestro from "@/components/molecules/prayers/PadreNuestro.vue";
 import {IonLabel, IonText} from "@ionic/vue";
@@ -168,7 +168,7 @@ import OfficiumLectures from "@/components/molecules/prayers/OfficiumLectures.vu
 import Breviarium from "breviarium";
 
 const laudes = ref<LaudesSchemaOutput>();
-const invitatorium = ref('');
+const invitatorium = ref<InvitatoriumSchemaOutput>();
 const isModalInvocationOpen = ref(false);
 const settings = useSettingsStore().settings;
 
@@ -178,7 +178,7 @@ onMounted(async () => {
     laudes.value = data;
   })
   await brev.getInvitatorium().then((data) => {
-    invitatorium.value = data?.val || '';
+    invitatorium.value = data;
   })
 });
 
