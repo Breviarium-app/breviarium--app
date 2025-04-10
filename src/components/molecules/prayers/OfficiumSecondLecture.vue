@@ -69,7 +69,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, onBeforeMount, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import {formatText} from "@/constants/formatText.ts";
 import {OfficiumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import Breviarium from "breviarium";
@@ -81,9 +81,9 @@ const lecturaTitulo = ref<string | undefined>()
 const lecturaTexto = ref<string | undefined>()
 const hasTwoReadings = computed(() => officium.value?.lectura_patristica_cita.length === 2);
 
-onBeforeMount(() => {
+onMounted(async () => {
   const brev = new Breviarium();
-  brev.getOfficium().then(data => {
+  await brev.getOfficium().then(data => {
     officium.value = data;
 
     lecturaCita.value = Array.isArray(officium.value?.lectura_patristica_cita) ? officium.value?.lectura_patristica_cita[0] : officium.value?.lectura_patristica_cita;

@@ -31,10 +31,7 @@
     <p><span class="title-color"> ℟.</span>{{ $t("firstResponsioOffice") }}</p>
     <p><span class="title-color">Ant. </span>{{ invitatorium }}</p>
     <InvitatoryComponent/>
-    <p>
-      <span class="title-color">Ant. </span>
-      {{ invitatorium }}
-    </p>
+    <p><span class="title-color">Ant. </span>{{ invitatorium }}</p>
     <HymnComponent :text="laudes?.himno"/>
     <h4 class="title title-color">
       {{ $t("salmodia") }}
@@ -156,7 +153,7 @@
   </PrayerPage>
 </template>
 <script lang="ts" setup>
-import {onBeforeMount, ref} from "vue";
+import {onMounted, ref} from "vue";
 import PrayerPage from "@/components/organism/PrayerPage.vue";
 import {formatText} from "@/constants/formatText.ts";
 import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
@@ -175,15 +172,16 @@ const invitatorium = ref('');
 const isModalInvocationOpen = ref(false);
 const settings = useSettingsStore().settings;
 
-onBeforeMount(() => {
+onMounted(async () => {
   const brev = new Breviarium();
-  brev.getLaudes().then((data) => {
+  await brev.getLaudes().then((data) => {
     laudes.value = data;
   })
-  brev.getInvitatorium().then((data) => {
+  await brev.getInvitatorium().then((data) => {
     invitatorium.value = data?.val || '';
   })
-})
+});
+
 </script>
 <style lang="css" scoped>
 .cita {

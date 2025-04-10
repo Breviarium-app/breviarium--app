@@ -30,6 +30,7 @@ const pinia = createPinia();
 const i18n = createI18n({
     locale: 'es',
     fallbackLocale: 'es',
+    warnHtmlMessage: false,
     messages: {
         es,
         en

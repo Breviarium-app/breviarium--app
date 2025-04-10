@@ -38,7 +38,22 @@ const getPrayerTitle = (type: string) => {
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <slot></slot>
+      <div class="prayer-page">
+        <div class="prayer-wrapper">
+          <slot></slot>
+        </div>
+      </div>
     </ion-content>
   </ion-page>
 </template>
+<style scoped>
+.prayer-page {
+  display: flex;
+  justify-content: center;
+}
+
+.prayer-wrapper {
+  display: block;
+  max-width: 800px;
+}
+</style>
