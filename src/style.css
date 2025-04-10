@@ -5,16 +5,21 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'SourceSerif';
+    src: url('/src/assets/fonts/SourceSerif4-VariableFont_opsz,wght.ttf') format('truetype');
+    font-weight: 100 900; /* Variable font range, adjust as needed */
+    font-style: normal;
+}
+
 body {
-    font-family: "EBGaramond", Arial, sans-serif;
+    /*font-family: "EBGaramond", Arial, sans-serif;*/
     font-size: 17px;
 }
 
 :root {
     --ion-font-family: "EBGaramond", Arial, sans-serif;
-
-    font-family: "EBGaramond", Arial, sans-serif;
-
+    
     line-height: 1.5;
     font-weight: 400;
 
