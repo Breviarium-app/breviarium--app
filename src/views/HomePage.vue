@@ -16,6 +16,7 @@ import SaintBanner from "@/components/molecules/SaintBanner.vue";
 import {currentLiturgyHour} from "@/constants/utils.ts";
 import {bookOutline} from "ionicons/icons";
 import DateAndCelebration from "@/components/molecules/DateAndCelebration.vue";
+import router from "@/router";
 
 
 const ionRouter = useIonRouter();
@@ -40,7 +41,7 @@ useBackButton(-1, () => {
         <ion-grid>
           <ion-row>
             <ion-col>
-              <ion-item class="prayer-item" router-link="/prayer/evangelium-and-lectiones">
+              <ion-item class="prayer-item" @click="router.push('/prayer/evangelium-and-lectiones')">
                 <ion-label>
                   <h2>{{ $t('breviarium.evangelium_lectiones') }}</h2>
                   <p>Mt 1, 2-5</p>
@@ -49,7 +50,7 @@ useBackButton(-1, () => {
             </ion-col>
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Laudes' ? 'selected_hour' : ''" class="prayer-item"
-                        router-link="/prayer/laudes">
+                        @click="router.push('/prayer/laudes')">
                 <ion-label>
                   <h2>{{ $t('breviarium.laudes') }}</h2>
                   <p>Oración de la mañana</p>
@@ -60,12 +61,12 @@ useBackButton(-1, () => {
           <ion-row>
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Vesperae' ? 'selected_hour' : ''" class="prayer-item"
-                        router-link="/prayer/vesperae">
+                        @click="router.push('/prayer/vesperae')">
                 <ion-label>{{ $t('breviarium.vesperae') }}</ion-label>
               </ion-item>
             </ion-col>
             <ion-col>
-              <ion-item class="prayer-item" router-link="/prayer/officium">
+              <ion-item class="prayer-item" @click="router.push('/prayer/officium')">
                 <ion-label>{{ $t('breviarium.officium') }}</ion-label>
               </ion-item>
             </ion-col>
@@ -73,13 +74,13 @@ useBackButton(-1, () => {
           <ion-row>
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Tercia' ? 'selected_hour' : ''" class="prayer-item"
-                        router-link="/prayer/tertia">
+                        @click="router.push('/prayer/tertia')">
                 <ion-label>{{ $t('breviarium.tercia') }}</ion-label>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Sexta' ? 'selected_hour' : ''" class="prayer-item"
-                        router-link="/prayer/sexta">
+                        @click="router.push('/prayer/sexta')">
                 <ion-label>{{ $t('breviarium.sexta') }}</ion-label>
               </ion-item>
             </ion-col>
@@ -87,20 +88,20 @@ useBackButton(-1, () => {
           <ion-row>
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Nona' ? 'selected_hour' : ''" class="prayer-item"
-                        router-link="/prayer/nona">
+                        @click="router.push('/prayer/nona')">
                 <ion-label>{{ $t('breviarium.nona') }}</ion-label>
               </ion-item>
             </ion-col>
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Completorium' ? 'selected_hour' : ''" class="prayer-item"
-                        router-link="/prayer/completorium">
+                        @click="router.push('/prayer/completorium')">
                 <ion-label>{{ $t('breviarium.completorium') }}</ion-label>
               </ion-item>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-item class="prayer-item" router-link="/bible">
+              <ion-item class="prayer-item" @click="router.push('/bible')">
                 <ion-icon slot="start" :icon="bookOutline" style="color: var(--gold-color);"></ion-icon>
                 <ion-label>
                   <h2>{{ $t('bibleOfJerusalem') }}</h2>

@@ -32,8 +32,7 @@
     <p></p>
     <span class="subtitle title-color cita"
           v-html="formatText(prayer?.segundo_salmo_cita)"></span>
-    <p
-        v-html="formatText(prayer?.segundo_salmo_texto)"></p>
+    <p v-html="formatText(prayer?.segundo_salmo_texto)"></p>
     <p>
       <span class="title-color">Ant. </span>
       <span v-html="formatText(prayer?.segundo_salmo_antifona)"></span>
@@ -77,7 +76,7 @@
       <span v-html="formatText(prayer?.cantico_evangelico_antifona)"></span>
     </p>
     <p class="margin-y-md title-color ion-align-items-center ion-text-center">
-      <Cross/>
+      <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>
     <MagnificatPrayer/>
@@ -87,10 +86,8 @@
     </p>
 
     <h4 class="title title-color">{{ $t('preces') }}</h4>
-    <p
-        v-html="formatText(prayer?.preces_intro)"></p>
-    <p
-        v-html="formatText(prayer?.preces_respuesta)"></p>
+    <p v-html="formatText(prayer?.preces_intro)"></p>
+    <p v-html="formatText(prayer?.preces_respuesta)"></p>
     <div v-for="item in prayer?.preces_contenido"
          v-bind:key="item" class="preces">
       <p v-html="formatText(item)"></p>
