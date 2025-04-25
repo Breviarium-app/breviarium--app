@@ -84,6 +84,7 @@ const hasTwoReadings = computed(() => officium.value?.lectura_patristica_cita.le
 onMounted(async () => {
   const brev = new Breviarium();
   await brev.getOfficium().then(data => {
+    console.log("officium second data", data);
     officium.value = data;
 
     lecturaCita.value = Array.isArray(officium.value?.lectura_patristica_cita) ? officium.value?.lectura_patristica_cita[0] : officium.value?.lectura_patristica_cita;
