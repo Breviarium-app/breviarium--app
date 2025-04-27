@@ -42,7 +42,7 @@
   </ion-page>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import {
   IonButton,
   IonCard,
@@ -59,12 +59,12 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/vue';
-import { trash } from 'ionicons/icons';
-import { onMounted, ref } from 'vue';
+import {trash} from 'ionicons/icons';
+import {onMounted, ref} from 'vue';
 
 // State for new intention input and list of intentions
-const newIntention = ref('');
-const intentions = ref([]);
+const newIntention = ref<String>('');
+const intentions = ref<String[]>([]);
 
 // Load intentions from localStorage on component mount
 onMounted(() => {
@@ -77,14 +77,14 @@ onMounted(() => {
 // Add a new intention
 const addIntention = () => {
   if (newIntention.value.trim()) {
-    intentions.value.push(newIntention.value.trim());
+    intentions.value.push(newIntention.value?.trim());
     localStorage.setItem('prayerIntentions', JSON.stringify(intentions.value));
     newIntention.value = '';
   }
 };
 
 // Delete an intention
-const deleteIntention = (index) => {
+const deleteIntention = (index: any) => {
   intentions.value.splice(index, 1);
   localStorage.setItem('prayerIntentions', JSON.stringify(intentions.value));
 };
