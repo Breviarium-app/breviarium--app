@@ -19,7 +19,7 @@ body {
 
 :root {
     --ion-font-family: "EBGaramond", Arial, sans-serif;
-    
+
     line-height: 1.5;
     font-weight: 400;
 
@@ -63,6 +63,7 @@ body {
     --ion-tab-bar-color: #666;
     --ion-tab-bar-color-selected: var(--breviarium-primary);
     --ion-color-step-400: var(--ion-tab-bar-color);
+    --background-hover: var(--ion-tab-bar-color);
 
     ion-item::part(native) {
         --border-color: var(--border-color-light); /* navbar & ion-item border */
@@ -185,4 +186,16 @@ button:focus-visible {
 
 .text-center {
     text-align: center;
+}
+
+.light-1 {
+    opacity: 0.9
+}
+
+.light-2 {
+    opacity: 0.8
+}
+
+.light-3 {
+    opacity: 0.7
 }
