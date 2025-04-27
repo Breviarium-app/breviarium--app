@@ -1,6 +1,13 @@
 {
   "title": "Breviarium",
   "home": "Inicio",
+  "prayer_intentions": "Intenciones",
+  "prayer_intentions_title": "Intenciones de oración",
+  "prayer_intentions_empty": "No hay intenciones",
+  "prayer_intentions_add_placeholder": "Introduce una intención de oración",
+  "prayer_intentions_add_button": "Añadir intención",
+  "prayer_intentions_explanation_1": "Verás las intenciones junto a las preces de laudes y vísperas para que no te olvides de rezar cada día.",
+  "prayer_intentions_explanation_offline": "Las intenciones no se almacenan en ningún servidor, disponibles únicamente en tu dispositivo",
   "bible_name": "Biblia",
   "bibleOfJerusalem": "Biblia de Jerusalén",
   "bibleSubtitle": "Reza con la palabra de Dios",

@@ -22,6 +22,11 @@ const routes: Array<RouteRecordRaw> = [
                 component: HomePage,
             },
             {
+                path: "prayer-intentions",
+                name: "prayer-intentions",
+                component: () => import('../views/PrayerIntentionsPage.vue'),
+            },
+            {
                 path: '/bible',
                 name: 'Bible',
                 component: BiblePage
