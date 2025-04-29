@@ -18,7 +18,7 @@ import {
 import {format} from 'date-fns';
 import {App} from '@capacitor/app';
 import SaintBanner from "@/components/molecules/SaintBanner.vue";
-import {currentLiturgyHour} from "@/services/utils/utils.ts";
+import {currentLiturgyHour} from "@/constants/utils.ts";
 import {bookOutline} from "ionicons/icons";
 
 const selectedDate = ref(new Date().toISOString());
