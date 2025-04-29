@@ -12,3 +12,13 @@ export const MONTH_SPANISH = [
     "noviembre",
     "diciembre",
 ];
+
+export const DAYS_SPANISH = [
+    "Domingo",
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+];

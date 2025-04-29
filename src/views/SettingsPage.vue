@@ -68,6 +68,13 @@ const handleToggleChange = () => {
             {{ $t('settings.haptics_active') }}
           </ion-toggle>
         </ion-item>
+        <ion-item>
+          <ion-toggle v-model="settingsStore.settings.keepAwake" :ionChange="handleToggleChange()"
+                      justify="space-between"
+                      label-placement="start">
+            {{ $t('settings.keepAwake') }}
+          </ion-toggle>
+        </ion-item>
         <ion-item lines="none">
           <ion-label>{{ $t('settings.theme') }}</ion-label>
         </ion-item>

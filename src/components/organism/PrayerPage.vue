@@ -5,6 +5,12 @@ import {useRoute} from 'vue-router';
 const route = useRoute();
 const prayerType = route.params.type;
 
+defineProps({
+  title: {
+    required: false,
+  }
+})
+
 const getPrayerTitle = (type: string) => {
   const titles: { [key: string]: string } = {
     'evangelium-and-lectiones': 'Evangelio y lecturas',
@@ -28,13 +34,32 @@ const getPrayerTitle = (type: string) => {
         <ion-buttons slot="start">
           <ion-back-button default-href="/" text="Atrás"></ion-back-button>
         </ion-buttons>
-        <ion-title>{{ getPrayerTitle(prayerType as string) }}</ion-title>
+        <ion-title>{{ title || getPrayerTitle(prayerType as string) }}</ion-title>
       </ion-toolbar>
     </ion-header>
-
     <ion-content class="ion-padding">
-      <!-- Prayer content will be added here -->
-      <p>Content for {{ getPrayerTitle(prayerType as string) }}</p>
+      <div class="prayer-page">
+        <div class="prayer-wrapper">
+          <slot></slot>
+        </div>
+      </div>
     </ion-content>
   </ion-page>
 </template>
+<style scoped>
+.prayer-page {
+  display: flex;
+  justify-content: center;
+}
+
+.prayer-wrapper {
+  display: block;
+  max-width: 800px;
+  font-size: 1.2rem;
+}
+
+:deep(.prayer-wrapper p) {
+  line-height: 1.5rem;
+  margin: 0 0 0.7rem 0;
+}
+</style>

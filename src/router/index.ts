@@ -22,6 +22,11 @@ const routes: Array<RouteRecordRaw> = [
                 component: HomePage,
             },
             {
+                path: "prayer-intentions",
+                name: "prayer-intentions",
+                component: () => import('../views/PrayerIntentionsPage.vue'),
+            },
+            {
                 path: '/bible',
                 name: 'Bible',
                 component: BiblePage
@@ -41,6 +46,26 @@ const routes: Array<RouteRecordRaw> = [
                 component: SettingsPage
             },
             {
+                path: '/prayer/laudes',
+                name: 'Laudes',
+                component: () => import('../components/organism/prayers/LaudesPage.vue')
+            }, {
+                path: '/prayer/vesperae',
+                name: 'Vesperae',
+                component: () => import('../components/organism/prayers/VesperaePage.vue')
+            }, {
+                path: '/prayer/tertia',
+                name: 'Tertia',
+                component: () => import('../components/organism/prayers/TertiaPage.vue')
+            }, {
+                path: '/prayer/sexta',
+                name: 'Sexta',
+                component: () => import('../components/organism/prayers/SextaPage.vue')
+            }, {
+                path: '/prayer/nona',
+                name: 'Nona',
+                component: () => import('../components/organism/prayers/NonaPage.vue')
+            }, {
                 path: '/prayer/:type',
                 name: 'Prayer',
                 component: () => import('../components/organism/PrayerPage.vue')

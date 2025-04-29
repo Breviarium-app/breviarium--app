@@ -1,0 +1,53 @@
+name: Build & Patch Version 🚀
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-ci-node:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository 👋🏼
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Install dependencies 🔨
+        run: npm ci
+
+      - name: Build package 📦
+        run: npm run build
+
+  update-version:
+    name: update version ⚒️️
+    runs-on: ubuntu-latest
+    needs: build-ci-node
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Increment version in package.json & Commit
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          npm version patch --git-tag-version false
+          chmod +x ./.github/workflows/script.sh
+          ./.github/workflows/script.sh
+          echo "Script executed ✅"
+          git add package.json package-lock.json android/app/build.gradle ios/App/App.xcodeproj/project.pbxproj
+          git commit -m "ci: ⚙️ bump version to $(node -p "require('./package.json').version")"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

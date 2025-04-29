@@ -15,3 +15,9 @@ build: ## build to dist folder
 
 test: ## execute tests
 	@npm run test
+
+local-breviarium: ## link local breviarium
+	@./scripts/local-breviarium-link.sh
+
+remote-breviarium: ## link remote (npm) breviarium
+	npm i breviarium

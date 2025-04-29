@@ -1,0 +1,16 @@
+<template>
+  <h4 class="office-title margin-y-md">
+    <!--        <img alt="gospel symbol" src="@/assets/images/simboloEvangelio.svg"/>-->
+    {{ $t("gospel") }}
+  </h4><span v-if="!gospel?.body">
+             <small v-html="$t('gospelInLaudesNotFound')"></small>
+             </span>
+  <div v-else>
+    <h4 class="title-color" v-html="formatText(gospel?.title)"></h4>
+    <p v-html="formatText(gospel?.body)"></p>
+    <p class="margin-y-md">{{ $t("theGospelOfTheLord") }}</p>
+  </div>
+</template>
+<script lang="ts" setup>
+import {formatText} from "@/constants/formatText.ts";
+</script>

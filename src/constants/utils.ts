@@ -1,3 +1,6 @@
+import {DAYS_SPANISH, MONTH_SPANISH} from "@/constants/index.ts";
+import {LiturgicalColors} from "@/constants/types.ts";
+
 export const currentLiturgyHour = () => {
     const hour = new Date().getHours();
     if (hour < 3) {
@@ -20,4 +23,45 @@ export const currentLiturgyHour = () => {
 
 export function selectAll(event: any) {
     event.target.select()
+}
+
+
+export const buildLocalDate = (date: Date): string => {
+    return (
+        DAYS_SPANISH[date.getDay()] +
+        " " +
+        date.getDate() +
+        " de " +
+        MONTH_SPANISH[date.getMonth()]
+    );
+};
+
+export function getHexLiturgicalColor(color: string) {
+    switch (color) {
+        case LiturgicalColors.GREEN:
+            return LiturgicalColors.GREEN_C;
+        case LiturgicalColors.PURPLE:
+            return LiturgicalColors.PURPLE_C
+        case LiturgicalColors.WHITE:
+            return LiturgicalColors.WHITE_C;
+        case LiturgicalColors.ROSE:
+            return LiturgicalColors.ROSE_C;
+        case LiturgicalColors.BLUE:
+            return LiturgicalColors.BLUE_C;
+        case LiturgicalColors.RED:
+            return LiturgicalColors.RED_C;
+        default:
+            return LiturgicalColors.WHITE_C;
+    }
+}
+
+export function isTodayLent(): boolean {
+    //TODO: feat pending
+    return false;
+    // return await searchPropertyOfDay(date, PropertyCerpetualCalendar.Seasons)).includes('LENT');
+}
+
+export function isOrdinaryTime(): boolean {
+    // TODO: feat pending
+    return false;
 }
