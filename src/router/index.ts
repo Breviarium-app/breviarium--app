@@ -54,6 +54,18 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'Vesperae',
                 component: () => import('../components/organism/prayers/VesperaePage.vue')
             }, {
+                path: '/prayer/tertia',
+                name: 'Tertia',
+                component: () => import('../components/organism/prayers/TertiaPage.vue')
+            }, {
+                path: '/prayer/sexta',
+                name: 'Sexta',
+                component: () => import('../components/organism/prayers/SextaPage.vue')
+            }, {
+                path: '/prayer/nona',
+                name: 'Nona',
+                component: () => import('../components/organism/prayers/NonaPage.vue')
+            }, {
                 path: '/prayer/:type',
                 name: 'Prayer',
                 component: () => import('../components/organism/PrayerPage.vue')

@@ -54,3 +54,14 @@ export function getHexLiturgicalColor(color: string) {
             return LiturgicalColors.WHITE_C;
     }
 }
+
+export function isTodayLent(): boolean {
+    //TODO: feat pending
+    return false;
+    // return await searchPropertyOfDay(date, PropertyCerpetualCalendar.Seasons)).includes('LENT');
+}
+
+export function isOrdinaryTime(): boolean {
+    // TODO: feat pending
+    return false;
+}
