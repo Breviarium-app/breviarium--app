@@ -6,6 +6,12 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Validate secrets
+        run: |
+          if [ -z "${{ secrets.KEYSTORE_BASE64 }}" ] || [ -z "${{ secrets.KEY_ALIAS }}" ] || [ -z "${{ secrets.KEY_PASSWORD }}" ] || [ -z "${{ secrets.GOOGLE_PLAY_JSON }}" ]; then
+            echo "Error: One or more secrets are missing"
+            exit 1
+          fi
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -59,7 +65,7 @@ jobs:
         with:
           serviceAccountJson: service_account.json
           packageName: com.breviarium.app  # Replace with your app's package name
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
           track: internal
           whatsNewDirectory: distribution/
 
