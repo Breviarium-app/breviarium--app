@@ -59,7 +59,7 @@ jobs:
         with:
           serviceAccountJson: service_account.json
           packageName: com.breviarium.app  # Replace with your app's package name
-          releaseFiles: ${{ steps.sign.outputs.signedReleaseFile }}
+          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
           track: internal
           whatsNewDirectory: distribution/
 

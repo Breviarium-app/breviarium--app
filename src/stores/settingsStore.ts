@@ -11,7 +11,7 @@ export const useSettingsStore = defineStore('settings', () => {
         vesperaeOfficium: false,
         theme: 'system',
         deceased: false,
-        hapticsActive: true,
+        hapticsActive: false,
         keepAwake: true,
     });
 
