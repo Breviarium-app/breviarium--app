@@ -58,7 +58,7 @@ jobs:
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJson: service_account.json
-          packageName: es.breviarium.app  # Replace with your app's package name
+          packageName: com.breviarium.app  # Replace with your app's package name
           releaseFiles: ${{ steps.sign.outputs.signedReleaseFile }}
           track: internal
           whatsNewDirectory: distribution/
