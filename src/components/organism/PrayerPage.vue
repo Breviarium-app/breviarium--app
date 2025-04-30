@@ -29,7 +29,7 @@ const getPrayerTitle = (type: string) => {
 
 <template>
   <ion-page>
-    <ion-header>
+    <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
           <ion-back-button default-href="/" text="Atrás"></ion-back-button>
@@ -37,7 +37,7 @@ const getPrayerTitle = (type: string) => {
         <ion-title>{{ title || getPrayerTitle(prayerType as string) }}</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="ion-padding">
+    <ion-content :fullscreen="true" class="ion-padding">
       <div class="prayer-page">
         <div class="prayer-wrapper">
           <slot></slot>

@@ -31,6 +31,7 @@ useBackButton(-1, () => {
 
 <template>
   <ion-page>
+    <ion-header></ion-header>
     <ion-content>
       <div class="date-section ion-padding">
         <DateAndCelebration/>
@@ -110,11 +111,11 @@ useBackButton(-1, () => {
               </ion-item>
             </ion-col>
           </ion-row>
-          <ion-row>
-            <ion-col class="ion-text-center color-danger-500">
-              <ion-label>⚠️ Aplicación en desarrollo</ion-label>
-            </ion-col>
-          </ion-row>
+          <!--          <ion-row>-->
+          <!--            <ion-col class="ion-text-center color-danger-500">-->
+          <!--              <ion-label>⚠️ Aplicación en desarrollo</ion-label>-->
+          <!--            </ion-col>-->
+          <!--          </ion-row>-->
         </ion-grid>
       </div>
 

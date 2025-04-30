@@ -36,10 +36,10 @@ ios-project-open-ide: ## open ios IDE - xcode
 	@npx cap open ios
 
 sync-android: ## sync current data to android folder
-	@ionic cap sync android
+	@npx cap sync android
 
 sync-ios: ## sync current data to ios folder
-	@ionic cap sync ios
+	@npx cap sync ios
 
 sync-all: build
 	npx cap sync
