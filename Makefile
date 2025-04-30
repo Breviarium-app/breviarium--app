@@ -21,3 +21,34 @@ local-breviarium: ## link local breviarium
 
 remote-breviarium: ## link remote (npm) breviarium
 	npm i breviarium
+
+
+android-project: ## install android folder
+	@npx cap add android
+
+ios-project: ## install ios folder
+	@npx cap add ios
+
+ios-project-update: ## update ios dependencies
+	@ionic cap update ios
+
+ios-project-open-ide: ## open ios IDE - xcode
+	@npx cap open ios
+
+sync-android: ## sync current data to android folder
+	@ionic cap sync android
+
+sync-ios: ## sync current data to ios folder
+	@ionic cap sync ios
+
+sync-all: build
+	npx cap sync
+
+check-java-version: ## check java version
+	@cd deploy && ./check-java-version.sh
+
+build-release-android: check-java-version sync-android ## build release for Android
+	cd deploy && ./build-release-android.sh
+
+build-release-ios: sync-ios ## build release for iOS
+	cd deploy && ./build-release-ios.sh
