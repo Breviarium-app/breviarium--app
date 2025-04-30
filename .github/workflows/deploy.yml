@@ -44,7 +44,7 @@ jobs:
         id: sign
         uses: r0adkll/sign-android-release@v1
         with:
-          releaseDirectory: app/build/outputs/bundle/release
+          releaseDirectory: android/app/build/outputs/bundle/release
           signingKeyBase64: ${{ secrets.KEYSTORE_BASE64 }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEY_PASSWORD }}
@@ -59,7 +59,7 @@ jobs:
         with:
           serviceAccountJson: service_account.json
           packageName: com.breviarium.app  # Replace with your app's package name
-          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: internal
           whatsNewDirectory: distribution/
 
