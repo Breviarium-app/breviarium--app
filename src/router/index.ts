@@ -7,6 +7,7 @@ import SaintPage from "@/components/organism/SaintPage.vue";
 import TabsNavbar from "@/components/molecules/TabsNavbar.vue";
 import BibleBookPage from "@/components/organism/bible/BibleBookPage.vue";
 import BibleChapterPage from "@/components/organism/bible/BibleChapterPage.vue";
+import PrivacyPage from "@/components/organism/PrivacyPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -44,6 +45,10 @@ const routes: Array<RouteRecordRaw> = [
                 path: '/settings',
                 name: 'Settings',
                 component: SettingsPage
+            }, {
+                path: '/privacy',
+                name: 'Privacy',
+                component: PrivacyPage
             },
             {
                 path: '/prayer/laudes',
