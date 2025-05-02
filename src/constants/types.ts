@@ -19,3 +19,18 @@ export enum LiturgicalColors {
     RED = "RED",
     RED_C = "#ff5654"
 }
+
+export enum LiturgicalSeasons {
+    EASTER = "EASTER_TIME",
+    CHRISTMAS = "CHRISTMAS_TIME",
+    LENT = "LENT"
+}
+
+export enum Ranks {
+    Solemnity = "SOLEMNITY",
+    Sunday = "SUNDAY",
+    Feast = "FEAST",
+    Memorial = "MEMORIAL",
+    OptionalMemorial = "OPTIONAL_MEMORIAL",
+    Weekday = "WEEKDAY"
+}

@@ -17,7 +17,7 @@
       <span class="title-color">Ant. 1. </span>
       <span v-html="formatText(prayer?.primer_salmo_antifona)"></span>
     </p>
-    <span class="subtitle title-color cita"
+    <span class="title-color cita"
           v-html="formatText(prayer?.primer_salmo_cita)"></span>
     <p v-html="formatText(prayer?.primer_salmo_texto)"></p>
     <p v-if="prayer?.segundo_salmo_antifona && isOrdinaryTime()">
@@ -28,7 +28,7 @@
       <span class="title-color">Ant. 2. </span>
       <span v-html="formatText(prayer?.segundo_salmo_antifona)"></span>
     </p>
-    <span class="subtitle title-color cita"
+    <span class="title-color cita"
           v-html="formatText(prayer?.segundo_salmo_cita)"></span>
     <p v-html="formatText(prayer?.segundo_salmo_texto)"></p>
     <p v-if="prayer?.segundo_salmo_antifona && isOrdinaryTime()">
@@ -39,7 +39,7 @@
       <span class="title-color">Ant. 3. </span>
       <span v-html="formatText(prayer?.tercer_salmo_antifona)"></span>
     </p>
-    <span class="subtitle title-color cita"
+    <span class="title-color cita"
           v-html="formatText(prayer?.tercer_salmo_cita)"></span>
     <p v-html="formatText(prayer?.tercer_salmo_texto)"></p>
     <p v-if="prayer?.tercer_salmo_antifona && isOrdinaryTime()">

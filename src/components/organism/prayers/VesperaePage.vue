@@ -18,7 +18,7 @@
       <span class="title-color">Ant. 1. </span>
       <span v-html="formatText(prayer?.primer_salmo_antifona)"></span>
     </p>
-    <span class="subtitle title-color cita" v-html="formatText(prayer?.primer_salmo_cita)"></span>
+    <span class="title-color cita" v-html="formatText(prayer?.primer_salmo_cita)"></span>
     <p v-html="formatText(prayer?.primer_salmo_texto)"></p>
     <p>
       <span class="title-color">Ant. </span>
@@ -30,7 +30,7 @@
       <span v-html="formatText(prayer?.segundo_salmo_antifona)"></span>
     </p>
     <p></p>
-    <span class="subtitle title-color cita"
+    <span class="title-color cita"
           v-html="formatText(prayer?.segundo_salmo_cita)"></span>
     <p v-html="formatText(prayer?.segundo_salmo_texto)"></p>
     <p>
@@ -43,7 +43,7 @@
       <span v-html="formatText(prayer?.tercer_salmo_antifona)"></span>
     </p>
     <p></p>
-    <span class="subtitle title-color cita" v-html="formatText(prayer?.tercer_salmo_cita)"></span>
+    <span class="title-color cita" v-html="formatText(prayer?.tercer_salmo_cita)"></span>
 
     <p v-html="formatText(prayer?.tercer_salmo_texto)"></p>
 

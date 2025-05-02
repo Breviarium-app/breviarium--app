@@ -1,4 +1,5 @@
 <template>
+  <p><span class="title-color">Ant. </span>{{ invitatorium?.val }}</p>
   <ion-segment>
     <ion-segment-button content-id="first" value="first">
       <ion-label>{{ $t('psalm') }} 94</ion-label>
@@ -31,20 +32,27 @@
       <div v-html="invitatorium_psalms?.at(3).psalm"></div>
     </ion-segment-content>
   </ion-segment-view>
+  <p><span class="title-color">Ant. </span>{{ invitatorium?.val }}</p>
 </template>
 
 <script lang="ts" setup>
-import {onBeforeMount, ref, Ref} from "vue";
+import {onMounted, ref, Ref} from "vue";
 import {IonLabel, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView} from "@ionic/vue";
 import Breviarium from "breviarium";
+import {InvitatoriumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 
 let invitatorium_psalms: Ref<any[] | undefined> = ref();
+const invitatorium = ref<InvitatoriumSchemaOutput>();
 
-onBeforeMount(() => {
+onMounted(async () => {
   const brev = new Breviarium();
-  brev.getInvitatoriumPsalms().then(data => {
+  await brev.getInvitatoriumPsalms().then(data => {
     invitatorium_psalms.value = data;
   });
+
+  await brev.getInvitatorium().then((data) => {
+    invitatorium.value = data;
+  })
 });
 
 </script>

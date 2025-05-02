@@ -1,5 +1,6 @@
 import {DAYS_SPANISH, MONTH_SPANISH} from "@/constants/index.ts";
-import {LiturgicalColors} from "@/constants/types.ts";
+import {LiturgicalColors, LiturgicalSeasons, Ranks} from "@/constants/types.ts";
+
 
 export const currentLiturgyHour = () => {
     const hour = new Date().getHours();
@@ -63,5 +64,21 @@ export function isTodayLent(): boolean {
 
 export function isOrdinaryTime(): boolean {
     // TODO: feat pending
+    return false;
+}
+
+export function showTeDeum(rank: string, season: string) {
+    if (season === LiturgicalSeasons.CHRISTMAS) {
+        return true;
+    }
+    if (rank === Ranks.Solemnity) {
+        return true;
+    }
+    if (rank === Ranks.Sunday && season != LiturgicalSeasons.LENT) {
+        return true;
+    }
+    if (rank === Ranks.Feast) {
+        return true;
+    }
     return false;
 }
