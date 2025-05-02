@@ -29,9 +29,7 @@
     </p>
     <p><span class="title-color"> ℣.</span>{{ $t("firstVersiculumOffice") }}</p>
     <p><span class="title-color"> ℟.</span>{{ $t("firstResponsioOffice") }}</p>
-    <p><span class="title-color">Ant. </span>{{ invitatorium?.val }}</p>
     <InvitatoryComponent/>
-    <p><span class="title-color">Ant. </span>{{ invitatorium?.val }}</p>
     <HymnComponent :text="laudes?.himno"/>
     <h4 class="title title-color">
       {{ $t("salmodia") }}

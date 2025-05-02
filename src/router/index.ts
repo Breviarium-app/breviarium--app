@@ -2,12 +2,7 @@ import {createRouter, createWebHistory} from '@ionic/vue-router'
 import {RouteRecordRaw} from 'vue-router'
 import HomePage from '../views/HomePage.vue'
 import SettingsPage from '../views/SettingsPage.vue'
-import BiblePage from '../components/organism/BiblePage.vue'
-import SaintPage from "@/components/organism/SaintPage.vue";
 import TabsNavbar from "@/components/molecules/TabsNavbar.vue";
-import BibleBookPage from "@/components/organism/bible/BibleBookPage.vue";
-import BibleChapterPage from "@/components/organism/bible/BibleChapterPage.vue";
-import PrivacyPage from "@/components/organism/PrivacyPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -30,16 +25,16 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: '/bible',
                 name: 'Bible',
-                component: BiblePage
+                component: () => import('../components/organism/BiblePage.vue')
             }, {
                 path: '/bible/:id',
                 name: 'BibleBook',
-                component: BibleBookPage
+                component: () => import('../components/organism/bible/BibleBookPage.vue')
             },
             {
                 path: '/bible/:id/:chapter',
                 name: 'BibleChapter',
-                component: BibleChapterPage
+                component: () => import('../components/organism/bible/BibleChapterPage.vue')
             },
             {
                 path: '/settings',
@@ -48,7 +43,7 @@ const routes: Array<RouteRecordRaw> = [
             }, {
                 path: '/privacy',
                 name: 'Privacy',
-                component: PrivacyPage
+                component: () => import('../components/organism/PrivacyPage.vue')
             },
             {
                 path: '/prayer/laudes',
@@ -71,13 +66,17 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'Nona',
                 component: () => import('../components/organism/prayers/NonaPage.vue')
             }, {
+                path: '/prayer/officium',
+                name: 'Nona',
+                component: () => import('../components/organism/prayers/OfficiumPage.vue')
+            }, {
                 path: '/prayer/:type',
                 name: 'Prayer',
                 component: () => import('../components/organism/PrayerPage.vue')
             }, {
                 path: '/saint',
                 name: 'Saint',
-                component: SaintPage
+                component: () => import('../components/organism/SaintPage.vue')
             },
         ],
     },
