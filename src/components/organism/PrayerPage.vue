@@ -54,7 +54,7 @@ const getPrayerTitle = (type: string) => {
 
 .prayer-wrapper {
   display: block;
-  max-width: 800px;
+  max-width: min(800px, 100%);
   font-size: 1.2rem;
 }
 
