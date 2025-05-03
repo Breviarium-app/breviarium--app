@@ -3,11 +3,13 @@ import {
   IonCol,
   IonContent,
   IonGrid,
+  IonHeader,
   IonIcon,
   IonItem,
   IonLabel,
   IonPage,
   IonRow,
+  IonToolbar,
   useBackButton,
   useIonRouter
 } from '@ionic/vue';
@@ -31,7 +33,11 @@ useBackButton(-1, () => {
 
 <template>
   <ion-page>
-    <ion-header></ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Breviarium</ion-title>
+      </ion-toolbar>
+    </ion-header>
     <ion-content>
       <div class="date-section ion-padding">
         <DateAndCelebration/>
