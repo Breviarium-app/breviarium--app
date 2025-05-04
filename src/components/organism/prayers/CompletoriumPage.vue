@@ -86,19 +86,19 @@
       {{ isTriduum() ? "Antífona" : (isInAlbis() ? "Antífona" : (isEaster() ? $t("responsory") : $t("responsory"))) }}
     </h4>
 
-    <span v-if="isTriduum()">
-          <div class="responsorio" v-html="formatText(prayer?.antifona_triduo)"></div>
-        </span>
+    <div v-if="isTriduum()">
+      <div class="responsorio" v-html="formatText(prayer?.antifona_triduo)"></div>
+    </div>
 
-    <span v-else-if="isInAlbis()">
-          <div class="responsorio" v-html="formatText(prayer?.antifona_inalbis)"></div>
-        </span>
+    <div v-else-if="isInAlbis()">
+      <div class="responsorio" v-html="formatText(prayer?.antifona_inalbis)"></div>
+    </div>
 
-    <span v-else-if="isEaster()">
-          <span v-for="item in prayer?.responsorio_pascua" v-bind:key="item">
-            <div class="responsorio" v-html="formatText(item)"></div>
-          </span>
-        </span>
+    <div v-else-if="isEaster()">
+      <div v-for="item in prayer?.responsorio_pascua" v-bind:key="item">
+        <div class="responsorio" v-html="formatText(item)"></div>
+      </div>
+    </div>
 
     <span v-else>
           <span v-for="item in prayer?.responsorio" v-bind:key="item">
