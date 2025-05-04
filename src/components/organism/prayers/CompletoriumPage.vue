@@ -80,7 +80,7 @@
     </h4>
     <div class="reference-bible title-color cita"
          v-html="formatText(prayer?.lectura_biblica_cita)"></div>
-    <div v-html="formatText(prayer?.lectura_biblica)"></div>
+    <div v-html="formatText(prayer?.lectura_biblica_texto)"></div>
 
     <h4 class="title title-color">
       {{ isTriduum() ? "Antífona" : (isInAlbis() ? "Antífona" : (isEaster() ? $t("responsory") : $t("responsory"))) }}
@@ -197,10 +197,12 @@ import {formatText} from "@/constants/formatText.ts";
 import {CompletoriumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import Breviarium from "breviarium";
 import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
-import {isEaster, isTodayLent} from "@/constants/utils.ts";
+import {isEaster, isInAlbis, isTodayLent, isTriduum} from "@/constants/utils.ts";
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
 import BreviariumSegment from "@/components/molecules/prayers/BreviariumSegment.vue";
 import BreviariumSegmentButton from "@/components/molecules/prayers/BreviariumSegmentButton.vue";
+import {useI18n} from "vue-i18n"; // Import useI18n
+const {t} = useI18n(); // Get the t function from useI18n
 
 const prayer = ref<CompletoriumSchemaOutput>();
 
@@ -212,7 +214,7 @@ const selectedMaryAntiphonCode = ref<
     "theHailMary" | "motherOfTheRedeemer" | "queenOfHeaven" | "toThyProtection"
 >("theHailMary");
 
-let maryAntiphon = formatText($t(selectedMaryAntiphonCode.value));
+let maryAntiphon = formatText(t(selectedMaryAntiphonCode.value));
 
 const onChangeFormula = (event: any) => {
   selectedFormula.value = event;
@@ -220,12 +222,13 @@ const onChangeFormula = (event: any) => {
 
 const onChangeMaryAntiphon = (event: any) => {
   selectedMaryAntiphonCode.value = event;
-  maryAntiphon = formatText($t(selectedMaryAntiphonCode.value));
+  maryAntiphon = formatText(t(selectedMaryAntiphonCode.value));
 };
 
 onMounted(async () => {
   const brev = new Breviarium();
   await brev.getCompletorium().then((data) => {
+    console.log(data)
     prayer.value = data;
   })
 

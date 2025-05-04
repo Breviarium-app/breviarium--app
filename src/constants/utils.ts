@@ -62,6 +62,18 @@ export function isEaster(): boolean {
     // return await searchPropertyOfDay(date, PropertyCerpetualCalendar.Seasons)).includes('LENT');
 }
 
+export function isTriduum(): boolean {
+    //TODO: feat pending
+    return false;
+    // return await searchPropertyOfDay(date, PropertyCerpetualCalendar.Seasons)).includes('LENT');
+}
+
+export function isInAlbis(): boolean {
+    //TODO: feat pending
+    return false;
+    // return await searchPropertyOfDay(date, PropertyCerpetualCalendar.Seasons)).includes('LENT');
+}
+
 export function isTodayLent(): boolean {
     //TODO: feat pending
     return false;
