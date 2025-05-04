@@ -23,7 +23,7 @@
     "@ionic/vue-router": "^8.4.3",
     "@romcal/calendar.spain": "^3.0.0-dev.95",
     "biblia-de-jerusalen": "^1.0.8",
-    "breviarium": "^0.2.34",
+    "breviarium": "^0.2.35",
     "date-fns": "^4.1.0",
     "pinia": "^3.0.1",
     "romcal": "^3.0.0-dev.95",

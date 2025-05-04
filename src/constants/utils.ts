@@ -56,6 +56,12 @@ export function getHexLiturgicalColor(color: string) {
     }
 }
 
+export function isEaster(): boolean {
+    //TODO: feat pending
+    return true;
+    // return await searchPropertyOfDay(date, PropertyCerpetualCalendar.Seasons)).includes('LENT');
+}
+
 export function isTodayLent(): boolean {
     //TODO: feat pending
     return false;

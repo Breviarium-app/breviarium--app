@@ -70,6 +70,10 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'Nona',
                 component: () => import('../components/organism/prayers/OfficiumPage.vue')
             }, {
+                path: '/prayer/completorium',
+                name: 'Nona',
+                component: () => import('../components/organism/prayers/CompletoriumPage.vue')
+            }, {
                 path: '/prayer/:type',
                 name: 'Prayer',
                 component: () => import('../components/organism/PrayerPage.vue')
