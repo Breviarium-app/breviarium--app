@@ -157,7 +157,7 @@ import {formatText} from "@/constants/formatText.ts";
 import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
 import InvitatoryComponent from "@/components/molecules/prayers/InvitatoryComponent.vue";
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
-import {InvitatoriumSchemaOutput, LaudesSchemaOutput} from "breviarium/dist/prayer-manager-interface";
+import {LaudesSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import BenedictusPrayer from "@/components/molecules/prayers/Benedictus.vue";
 import PadreNuestro from "@/components/molecules/prayers/PadreNuestro.vue";
 import {IonLabel, IonText} from "@ionic/vue";
@@ -166,7 +166,6 @@ import OfficiumLectures from "@/components/molecules/prayers/OfficiumLectures.vu
 import Breviarium from "breviarium";
 
 const laudes = ref<LaudesSchemaOutput>();
-const invitatorium = ref<InvitatoriumSchemaOutput>();
 const isModalInvocationOpen = ref(false);
 const settings = useSettingsStore().settings;
 
@@ -174,9 +173,6 @@ onMounted(async () => {
   const brev = new Breviarium();
   await brev.getLaudes().then((data) => {
     laudes.value = data;
-  })
-  await brev.getInvitatorium().then((data) => {
-    invitatorium.value = data;
   })
 });
 

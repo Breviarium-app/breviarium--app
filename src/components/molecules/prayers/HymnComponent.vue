@@ -4,16 +4,16 @@
       {{ $t("hymn") }}
     </h4>
     <div v-if="hymns.length > 1">
-      <ion-segment>
-        <ion-segment-button v-for="(item, index) in hymns" :content-id="index" :value="index">
+      <ion-segment v-model="selectedHymn">
+        <ion-segment-button v-for="(item, index) in hymns" :value="index">
           <ion-label :alt="item.charAt(0)">{{ $t("hymn") }} {{ index + 1 }}</ion-label>
         </ion-segment-button>
       </ion-segment>
-      <ion-segment-view>
-        <ion-segment-content v-for="(item, index) in hymns" :id="index">
-          <div v-html="formatText(item)"></div>
-        </ion-segment-content>
-      </ion-segment-view>
+      <div>
+        <div v-for="(item, index) in hymns">
+          <div v-if="selectedHymn == index" v-html="formatText(item)"></div>
+        </div>
+      </div>
 
     </div>
     <div v-if="hymns.length === 1">
@@ -24,8 +24,8 @@
 
 <script lang="ts" setup>
 import {formatText} from "@/constants/formatText.js";
-import {IonLabel, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView} from "@ionic/vue";
-import {computed, ref, watch} from "vue";
+import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
+import {computed, ref} from "vue";
 
 const props = defineProps({
   text: {
@@ -34,15 +34,14 @@ const props = defineProps({
   },
 });
 
-
-const selectedHymn = ref("");
+const selectedHymn = ref<number>(0);
 const splitText = "$O bien:$";
 const hymns = computed(
     () => props.text?.split(splitText).map((hymn) => hymn.trim()) || []
 );
 
-watch(hymns, () => {
-  selectedHymn.value = hymns.value[0];
-}, {immediate: true});
+// watch(hymns, () => {
+//   selectedHymn.value = hymns.value[0];
+// }, {immediate: true});
 
 </script>

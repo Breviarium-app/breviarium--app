@@ -9,6 +9,7 @@ import {
   IonLabel,
   IonPage,
   IonRow,
+  IonTitle,
   IonToolbar,
   useBackButton,
   useIonRouter
