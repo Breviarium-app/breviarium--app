@@ -96,6 +96,7 @@
     <div class="preces">
       <p class="title-color">{{ $t('explanationPreces') }}</p>
     </div>
+    <CustomPrayersBlock/>
 
     <h4 class="title title-color">{{ $t('ourLord') }}</h4>
     <p class="margin-y-md">
@@ -140,11 +141,11 @@ import Breviarium from "breviarium";
 import OfficiumLectures from "@/components/molecules/prayers/OfficiumLectures.vue";
 import MagnificatPrayer from "@/components/molecules/prayers/MagnificatPrayer.vue";
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
+import CustomPrayersBlock from "@/components/organism/prayers/CustomPrayersBlock.vue";
 
 const prayer = ref<LaudesSchemaOutput>();
 const isModalInvocationOpen = ref(false);
 const settings = useSettingsStore().settings;
-
 onMounted(async () => {
   const brev = new Breviarium();
   await brev.getVesperae().then((data) => {

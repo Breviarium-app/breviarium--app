@@ -111,6 +111,7 @@
     <div class="preces">
       <p class="title-color">{{ $t("explanationPreces") }}</p>
     </div>
+    <CustomPrayersBlock/>
     <h4 class="title title-color">
       {{ $t("ourLord") }}
     </h4>
@@ -164,6 +165,7 @@ import {IonLabel, IonText} from "@ionic/vue";
 import {useSettingsStore} from "@/stores/settingsStore.ts";
 import OfficiumLectures from "@/components/molecules/prayers/OfficiumLectures.vue";
 import Breviarium from "breviarium";
+import CustomPrayersBlock from "@/components/organism/prayers/CustomPrayersBlock.vue";
 
 const laudes = ref<LaudesSchemaOutput>();
 const isModalInvocationOpen = ref(false);
@@ -173,7 +175,9 @@ onMounted(async () => {
   const brev = new Breviarium();
   await brev.getLaudes().then((data) => {
     laudes.value = data;
-  })
+  });
+
+
 });
 
 </script>
@@ -184,5 +188,9 @@ onMounted(async () => {
 
 .reference-bible {
   text-align: right;
+}
+
+.custom-prayers li {
+  list-style-type: none;
 }
 </style>

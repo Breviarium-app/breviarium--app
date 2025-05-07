@@ -28,7 +28,29 @@
       </ion-card>
       <ion-list v-if="intentions.length > 0">
         <ion-item v-for="(intention, index) in intentions" :key="index">
-          <ion-label>{{ intention }}</ion-label>
+          <ion-label v-if="!editingIndex || editingIndex !== index">{{ intention }}</ion-label>
+          <ion-input
+              v-else
+              v-model="editedIntention"
+              :placeholder="$t('prayer_intentions_edit_placeholder')"
+              @keyup.enter="updateIntention(index)"
+          ></ion-input>
+          <ion-button
+              v-if="!editingIndex || editingIndex !== index"
+              slot="end"
+              color="warning"
+              @click="startEditing(index, intention)"
+          >
+            <ion-icon :icon="pencil"></ion-icon>
+          </ion-button>
+          <ion-button
+              v-else
+              slot="end"
+              color="success"
+              @click="updateIntention(index)"
+          >
+            <ion-icon :icon="checkmark"></ion-icon>
+          </ion-button>
           <ion-button slot="end" color="danger" @click="deleteIntention(index)">
             <ion-icon :icon="trash"></ion-icon>
           </ion-button>
@@ -36,7 +58,6 @@
       </ion-list>
       <ion-text v-else class="no-intentions">
         <p>{{ $t('prayer_intentions_empty') }}</p>
-
       </ion-text>
     </ion-content>
   </ion-page>
@@ -59,34 +80,46 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/vue';
-import {trash} from 'ionicons/icons';
+import {checkmark, pencil, trash} from 'ionicons/icons';
 import {onMounted, ref} from 'vue';
+import {IntentionsStorageManager} from '@/services/IntentionsStorageManager.ts'; // Adjust the path as needed
 
-// State for new intention input and list of intentions
-const newIntention = ref<String>('');
-const intentions = ref<String[]>([]);
+// Initialize IntentionsStorageManager
+const storageManager = new IntentionsStorageManager('prayerIntentions');
+
+// State for new intention input, list of intentions, and editing
+const newIntention = ref<string>('');
+const intentions = ref<string[]>([]);
+const editingIndex = ref<number | null>(null);
+const editedIntention = ref<string>('');
 
 // Load intentions from localStorage on component mount
 onMounted(() => {
-  const storedIntentions = localStorage.getItem('prayerIntentions');
-  if (storedIntentions) {
-    intentions.value = JSON.parse(storedIntentions);
-  }
+  intentions.value = storageManager.loadIntentions();
 });
 
 // Add a new intention
 const addIntention = () => {
-  if (newIntention.value.trim()) {
-    intentions.value.push(newIntention.value?.trim());
-    localStorage.setItem('prayerIntentions', JSON.stringify(intentions.value));
-    newIntention.value = '';
-  }
+  intentions.value = storageManager.addIntention(intentions.value, newIntention.value);
+  newIntention.value = '';
 };
 
 // Delete an intention
-const deleteIntention = (index: any) => {
-  intentions.value.splice(index, 1);
-  localStorage.setItem('prayerIntentions', JSON.stringify(intentions.value));
+const deleteIntention = (index: number) => {
+  intentions.value = storageManager.deleteIntention(intentions.value, index);
+};
+
+// Start editing an intention
+const startEditing = (index: number, intention: string) => {
+  editingIndex.value = index;
+  editedIntention.value = intention;
+};
+
+// Update an intention
+const updateIntention = (index: number) => {
+  intentions.value = storageManager.updateIntention(intentions.value, index, editedIntention.value);
+  editingIndex.value = null;
+  editedIntention.value = '';
 };
 </script>
 
