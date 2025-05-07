@@ -67,21 +67,20 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import('../components/organism/prayers/NonaPage.vue')
             }, {
                 path: '/prayer/officium',
-                name: 'Nona',
+                name: 'Officium',
                 component: () => import('../components/organism/prayers/OfficiumPage.vue')
             }, {
                 path: '/prayer/completorium',
-                name: 'Nona',
+                name: 'Completorium',
                 component: () => import('../components/organism/prayers/CompletoriumPage.vue')
-            }, {
-                path: '/prayer/:type',
-                name: 'Prayer',
-                component: () => import('../components/organism/PrayerPage.vue')
             }, {
                 path: '/saint',
                 name: 'Saint',
                 component: () => import('../components/organism/SaintPage.vue')
-            },
+            }, {
+                path: '/:pathMatch(.*)*',
+                redirect: '/home'
+            }
         ],
     },
 ]

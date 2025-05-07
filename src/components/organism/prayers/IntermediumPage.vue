@@ -94,10 +94,6 @@ const props = defineProps({
     type: String,
     required: true
   },
-  prayerLib: {
-    type: Function,
-    required: true
-  },
 })
 
 onMounted(async () => {

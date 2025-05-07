@@ -1,14 +1,9 @@
 <template>
-  <IntermediumPage :prayer-lib="brev.getTertia" prayer-title="Tercia"></IntermediumPage>
+  <IntermediumPage prayer-title="Tercia"></IntermediumPage>
 </template>
 <script lang="ts" setup>
 
 import IntermediumPage from "@/components/organism/prayers/IntermediumPage.vue";
-import Breviarium from "breviarium";
-
-const brev = new Breviarium();
-
-
 </script>
 <style lang="css" scoped>
 </style>
