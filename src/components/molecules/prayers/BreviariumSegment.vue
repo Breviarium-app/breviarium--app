@@ -1,8 +1,5 @@
 <template>
-  <ion-segment
-      :value="value"
-      @ionChange="handleSegmentChange"
-  >
+  <ion-segment :value="value" @ionChange="handleSegmentChange">
     <slot/>
   </ion-segment>
 </template>

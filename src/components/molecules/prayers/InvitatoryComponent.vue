@@ -1,48 +1,49 @@
 <template>
-  <p><span class="title-color">Ant. </span>{{ invitatorium?.val }}</p>
-  <ion-segment>
-    <ion-segment-button content-id="first" value="first">
+  <p><span class="title-color">Ant. </span>{{ invitatoriumAntiphon?.val }}</p>
+  <ion-segment v-model="selectedInvitatorium">
+    <ion-segment-button value="first">
       <ion-label>{{ $t('psalm') }} 94</ion-label>
     </ion-segment-button>
-    <ion-segment-button content-id="second" value="second">
+    <ion-segment-button value="second">
       <ion-label>{{ $t('psalm') }} 99</ion-label>
     </ion-segment-button>
-    <ion-segment-button content-id="third" value="third">
+    <ion-segment-button value="third">
       <ion-label>{{ $t('psalm') }} 66</ion-label>
     </ion-segment-button>
-    <ion-segment-button content-id="fourth" value="fourth">
+    <ion-segment-button value="fourth">
       <ion-label>{{ $t('psalm') }} 23</ion-label>
     </ion-segment-button>
   </ion-segment>
-  <ion-segment-view>
-    <ion-segment-content id="first">
+  <div>
+    <div v-if="selectedInvitatorium == 'first'">
       <div class="title-color" v-html="invitatorium_psalms?.at(0).title"></div>
       <div v-html="invitatorium_psalms?.at(0).psalm"></div>
-    </ion-segment-content>
-    <ion-segment-content id="second">
+    </div>
+    <div v-if="selectedInvitatorium == 'second'">
       <div class="title-color" v-html="invitatorium_psalms?.at(1).title"></div>
       <div v-html="invitatorium_psalms?.at(1).psalm"></div>
-    </ion-segment-content>
-    <ion-segment-content id="third">
+    </div>
+    <div v-if="selectedInvitatorium == 'third'">
       <div class="title-color" v-html="invitatorium_psalms?.at(2).title"></div>
       <div v-html="invitatorium_psalms?.at(2).psalm"></div>
-    </ion-segment-content>
-    <ion-segment-content id="fourth">
+    </div>
+    <div v-if="selectedInvitatorium == 'fourth'">
       <div class="title-color" v-html="invitatorium_psalms?.at(3).title"></div>
       <div v-html="invitatorium_psalms?.at(3).psalm"></div>
-    </ion-segment-content>
-  </ion-segment-view>
-  <p><span class="title-color">Ant. </span>{{ invitatorium?.val }}</p>
+    </div>
+  </div>
+  <p><span class="title-color">Ant. </span>{{ invitatoriumAntiphon?.val }}</p>
 </template>
 
 <script lang="ts" setup>
 import {onMounted, ref, Ref} from "vue";
-import {IonLabel, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView} from "@ionic/vue";
+import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
 import Breviarium from "breviarium";
 import {InvitatoriumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 
-let invitatorium_psalms: Ref<any[] | undefined> = ref();
-const invitatorium = ref<InvitatoriumSchemaOutput>();
+const invitatorium_psalms: Ref<any[] | undefined> = ref();
+const invitatoriumAntiphon = ref<InvitatoriumSchemaOutput>();
+const selectedInvitatorium = ref<string>('first');
 
 onMounted(async () => {
   const brev = new Breviarium();
@@ -51,7 +52,9 @@ onMounted(async () => {
   });
 
   await brev.getInvitatorium().then((data) => {
-    invitatorium.value = data;
+    invitatoriumAntiphon.value = data;
+  }).catch(error => {
+    console.error(error);
   })
 });
 
