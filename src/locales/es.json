@@ -22,7 +22,9 @@
     "vesperae_and_office": "Vísperas + Oficio",
     "office_deceased": "Oficio de difuntos",
     "haptics_active": "Vibración en la aplicación",
-    "keepAwake": "Pantalla activa durante oración"
+    "keepAwake": "Pantalla activa durante oración",
+    "font_size": "Tamaño de letra",
+    "sample_text": "Texto de ejemplo"
   },
   "breviarium": {
     "evangelium_lectiones": "Evangelio y lecturas",

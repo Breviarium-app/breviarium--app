@@ -2,10 +2,10 @@
 import {watch} from 'vue';
 import {IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToggle, IonToolbar} from '@ionic/vue';
 import {useSettingsStore} from '@/stores/settingsStore.ts';
-import LanguageSelector from "@/components/molecules/LanguageSelector.vue";
 import VersionNumber from "@/components/molecules/VersionNumber.vue";
 import SelectorTheme from "@/components/molecules/SelectorTheme.vue";
 import HapticsService from "@/services/HapticsService.ts";
+import FontSizeSelector from "@/components/molecules/FontSizeSelector.vue";
 
 const settingsStore = useSettingsStore();
 
@@ -30,21 +30,21 @@ const handleToggleChange = () => {
     </ion-header>
     <ion-content>
       <ion-list>
+        <!--        <ion-item>-->
+        <!--          <LanguageSelector></LanguageSelector>-->
+        <!--        </ion-item>-->
         <ion-item>
-          <LanguageSelector></LanguageSelector>
+          <ion-toggle v-model="settingsStore.settings.laudesEvangelium" :ionChange="handleToggleChange()"
+                      justify="space-between"
+                      label-placement="start">
+            {{ $t('settings.laudes_and_evangelium') }}
+          </ion-toggle>
         </ion-item>
         <ion-item>
           <ion-toggle v-model="settingsStore.settings.laudesOfficium" :ionChange="handleToggleChange()"
                       justify="space-between"
                       label-placement="start">
             {{ $t('settings.laudes_and_office') }}
-          </ion-toggle>
-        </ion-item>
-        <ion-item>
-          <ion-toggle v-model="settingsStore.settings.laudesEvangelium" :ionChange="handleToggleChange()"
-                      justify="space-between"
-                      label-placement="start">
-            {{ $t('settings.laudes_and_evangelium') }}
           </ion-toggle>
         </ion-item>
         <ion-item>
@@ -56,8 +56,8 @@ const handleToggleChange = () => {
         </ion-item>
         <ion-item>
           <ion-toggle v-model="settingsStore.settings.deceased" :ionChange="handleToggleChange()"
-                      justify="space-between"
-                      label-placement="start">
+                      disabled="true"
+                      justify="space-between" label-placement="start">
             {{ $t('settings.office_deceased') }}
           </ion-toggle>
         </ion-item>
@@ -75,6 +75,7 @@ const handleToggleChange = () => {
             {{ $t('settings.keepAwake') }}
           </ion-toggle>
         </ion-item>
+        <FontSizeSelector/>
         <ion-item lines="none">
           <ion-label>{{ $t('settings.theme') }}</ion-label>
         </ion-item>
@@ -86,6 +87,8 @@ const handleToggleChange = () => {
             <VersionNumber/>
           </ion-label>
         </ion-item>
+
+
       </ion-list>
     </ion-content>
   </ion-page>

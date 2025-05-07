@@ -13,6 +13,7 @@ export const useSettingsStore = defineStore('settings', () => {
         deceased: false,
         hapticsActive: false,
         keepAwake: true,
+        fontSize: 14
     });
 
     const themes = [

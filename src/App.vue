@@ -3,6 +3,7 @@ import {IonApp, IonRouterOutlet} from '@ionic/vue';
 import {onMounted} from "vue";
 import {useSettingsStore} from "@/stores/settingsStore.ts";
 import {useBreviariumStore} from "@/stores/breviarium.ts";
+import {useDateStore} from "@/stores/useDateStore.ts";
 
 const store = useSettingsStore();
 
@@ -11,6 +12,7 @@ onMounted(() => {
     console.log("Settings store loaded");
     store.saveSettings();
     store.applyTheme(store.settings.theme);
+    // document.documentElement.style.fontSize = `${store.settings.fontSize}px`;
   }).catch(error => {
     console.error(error);
   });
@@ -21,7 +23,9 @@ onMounted(() => {
     }
   })
 
+  useDateStore();
   useBreviariumStore();
+
 
 });
 </script>

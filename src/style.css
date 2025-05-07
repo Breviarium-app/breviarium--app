@@ -56,6 +56,8 @@ body {
     --ion-tab-bar-color-selected: var(--breviarium-primary);
     --ion-color-step-400: var(--ion-tab-bar-color);
     --background-hover: var(--ion-tab-bar-color);
+    --wheel-highlight-background: var(--background);
+    --background-rgb: var(--background);
 
     ion-item::part(native) {
         --border-color: var(--border-color-light); /* navbar & ion-item border */
