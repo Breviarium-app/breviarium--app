@@ -4,18 +4,22 @@
     {{ buildLocalDate(new Date(selectedDate)) }}
   </div>
 
-  <ion-modal ref="modal" class="date-picker-modal" trigger="open-modal-calendar">
-    <ion-datetime
-        v-model="selectedDate"
-        presentation="date"
-        @ionChange="handleDateChange($event.detail.value)"
-    >
-      <div slot="buttons">
-        <ion-button @click="isDatePickerOpen = false">{{ $t('cancel') }}</ion-button>
-        <ion-button @click="confirmDate">{{ $t('accept') }}</ion-button>
+  <Teleport to="body">
+    <ion-modal ref="modal" trigger="open-modal-calendar">
+      <div class="modal-wrapper">
+        <ion-datetime
+            v-model="selectedDate"
+            presentation="date"
+            @ionChange="handleDateChange($event.detail.value)"
+        >
+          <div slot="buttons">
+            <ion-button @click="isDatePickerOpen = false">{{ $t('cancel') }}</ion-button>
+            <ion-button @click="confirmDate">{{ $t('accept') }}</ion-button>
+          </div>
+        </ion-datetime>
       </div>
-    </ion-datetime>
-  </ion-modal>
+    </ion-modal>
+  </Teleport>
 </template>
 <script lang="ts" setup>
 import {buildLocalDate} from "@/constants/utils.ts";
@@ -46,10 +50,19 @@ const confirmDate = () => {
   cursor: pointer;
 }
 
-.date-picker-modal {
+ion-modal {
   --height: auto;
   --width: 90%;
   --border-radius: 16px;
+}
+
+.modal-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+ion-datetime {
+  --background: var(--background);
 }
 
 </style>
