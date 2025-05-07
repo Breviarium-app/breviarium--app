@@ -19,21 +19,29 @@
     </h4>
     <div v-html="formatText($t('examinationOfConscienceBody'))"></div>
 
-    <breviarium-segment
-        :value="selectedFormula"
-        @update:value="onChangeFormula($event)">
-      <breviarium-segment-button value="firstFormula.body">
+    <ion-segment v-model="selectedSegment">
+      <ion-segment-button content-id="firstFormula.body" value="firstFormula.body">
         <ion-label>{{ $t("firstFormula.title") }}</ion-label>
-      </breviarium-segment-button>
-      <breviarium-segment-button value="secondFormula.body">
+      </ion-segment-button>
+      <ion-segment-button content-id="secondFormula.body" value="secondFormula.body">
         <ion-label>{{ $t("secondFormula.title") }}</ion-label>
-      </breviarium-segment-button>
-      <breviarium-segment-button value="thirdFormula.body">
+      </ion-segment-button>
+      <ion-segment-button content-id="thirdFormula.body" value="thirdFormula.body">
         <ion-label>{{ $t("thirdFormula.title") }}</ion-label>
-      </breviarium-segment-button>
-    </breviarium-segment>
+      </ion-segment-button>
+    </ion-segment>
+    <div class="segment-view">
+      <div v-if="selectedSegment === 'firstFormula.body'">
+        <div v-html="formatText($t('firstFormula.body'))"></div>
+      </div>
+      <div v-if="selectedSegment === 'secondFormula.body'">
+        <div v-html="formatText($t('secondFormula.body'))"></div>
+      </div>
+      <div v-if="selectedSegment === 'thirdFormula.body'">
+        <div v-html="formatText($t('thirdFormula.body'))"></div>
+      </div>
+    </div>
 
-    <p v-html="formatText($t(selectedFormula))"></p>
     <p v-html="formatText($t('complineCommonPresidentPrayer'))"></p>
 
     <HymnComponent :text="prayer?.himno"/>
@@ -100,11 +108,11 @@
       </div>
     </div>
 
-    <span v-else>
-          <span v-for="item in prayer?.responsorio" v-bind:key="item">
-            <div class="responsorio" v-html="formatText(item)"></div>
-          </span>
-        </span>
+    <div v-else>
+      <div v-for="item in prayer?.responsorio" v-bind:key="item">
+        <div class="responsorio" v-html="formatText(item)"></div>
+      </div>
+    </div>
 
 
     <h4 class="title title-color">
@@ -138,7 +146,7 @@
     <p><span class="title-color">℟. </span>Amén.</p>
 
     <p class="margin-y-md title-color ion-align-items-center ion-text-center">
-      <Cross/>
+      <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>
     <div v-html="formatText($t('complineFinalPrayer'))"></div>
@@ -167,24 +175,33 @@
       <p class="title-color text-center">
         {{ $t("complineMarianPrayers") }}
       </p>
-      <breviarium-segment
-          :value="selectedMaryAntiphonCode"
-          @update:value="onChangeMaryAntiphon($event)">
-        <breviarium-segment-button value="theHailMary">
+      <ion-segment v-model="selectedMaryAntiphonCode">
+        <ion-segment-button content-id="theHailMary" value="theHailMary">
           <ion-label>{{ $t("firstFormulaMaryAntiphon") }}</ion-label>
-        </breviarium-segment-button>
-        <breviarium-segment-button value="motherOfTheRedeemer">
+        </ion-segment-button>
+        <ion-segment-button content-id="motherOfTheRedeemer" value="motherOfTheRedeemer">
           <ion-label>{{ $t("secondFormulaMaryAntiphon") }}</ion-label>
-        </breviarium-segment-button>
-        <breviarium-segment-button value="queenOfHeaven">
+        </ion-segment-button>
+        <ion-segment-button content-id="queenOfHeaven" value="queenOfHeaven">
           <ion-label>{{ $t("thirdFormulaMaryAntiphon") }}</ion-label>
-        </breviarium-segment-button>
-        <breviarium-segment-button value="toThyProtection">
+        </ion-segment-button>
+        <ion-segment-button content-id="toThyProtection" value="toThyProtection">
           <ion-label>{{ $t("fourthFormulaMaryAntiphon") }}</ion-label>
-        </breviarium-segment-button>
-      </breviarium-segment>
-      <div class="maryAntiphon">
-        <div v-html="maryAntiphon"></div>
+        </ion-segment-button>
+      </ion-segment>
+      <div class="segment-view">
+        <div v-if="selectedMaryAntiphonCode=='theHailMary'" id="theHailMary">
+          <div v-html="$t('theHailMary')"></div>
+        </div>
+        <div v-if="selectedMaryAntiphonCode=='motherOfTheRedeemer'" id="motherOfTheRedeemer">
+          <div v-html="$t('motherOfTheRedeemer')"></div>
+        </div>
+        <div v-if="selectedMaryAntiphonCode=='queenOfHeaven'" id="queenOfHeaven">
+          <div v-html="$t('queenOfHeaven')"></div>
+        </div>
+        <div v-if="selectedMaryAntiphonCode=='toThyProtection'" id="toThyProtection">
+          <div v-html="$t('toThyProtection')"></div>
+        </div>
       </div>
     </div>
 
@@ -199,37 +216,24 @@ import Breviarium from "breviarium";
 import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
 import {isEaster, isInAlbis, isTodayLent, isTriduum} from "@/constants/utils.ts";
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
-import BreviariumSegment from "@/components/molecules/prayers/BreviariumSegment.vue";
-import BreviariumSegmentButton from "@/components/molecules/prayers/BreviariumSegmentButton.vue";
-import {useI18n} from "vue-i18n"; // Import useI18n
-const {t} = useI18n(); // Get the t function from useI18n
+import {IonSegment, IonSegmentButton} from "@ionic/vue";
+
 
 const prayer = ref<CompletoriumSchemaOutput>();
-
-const selectedFormula = ref<
-    "firstFormula.body" | "secondFormula.body" | "thirdFormula.body"
->("firstFormula.body");
+const selectedSegment = ref('firstFormula.body');
 
 const selectedMaryAntiphonCode = ref<
     "theHailMary" | "motherOfTheRedeemer" | "queenOfHeaven" | "toThyProtection"
 >("theHailMary");
 
-let maryAntiphon = formatText(t(selectedMaryAntiphonCode.value));
-
-const onChangeFormula = (event: any) => {
-  selectedFormula.value = event;
-};
-
-const onChangeMaryAntiphon = (event: any) => {
-  selectedMaryAntiphonCode.value = event;
-  maryAntiphon = formatText(t(selectedMaryAntiphonCode.value));
-};
 
 onMounted(async () => {
   const brev = new Breviarium();
   await brev.getCompletorium().then((data) => {
-    console.log(data)
+    console.log("getCompletorium", data);
     prayer.value = data;
+  }).catch(error => {
+    console.error(error);
   })
 
 });
@@ -238,6 +242,10 @@ onMounted(async () => {
 <style lang="css" scoped>
 .cita {
   text-align: center;
+}
+
+.segment-view {
+  overflow-y: hidden; /* Prevent scrolling issues */
 }
 
 </style>

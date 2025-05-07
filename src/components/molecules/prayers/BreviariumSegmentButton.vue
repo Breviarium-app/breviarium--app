@@ -26,7 +26,7 @@ function handleClick() {
 
 <style scoped>
 ion-segment-button {
-  --indicator-color: var(--reference-bible-color);
+  --indicator-color: var(--ion-color-primary);
   min-width: auto;
 }
 
@@ -36,13 +36,13 @@ ion-segment-button ion-label {
 
 /* Material Design styles */
 ion-segment-button.md {
-  --color-checked: var(--reference-bible-color);
+  --color-checked: var(--ion-color-primary);
   --indicator-height: 4px;
 }
 
 /* iOS styles */
 ion-segment-button.ios {
-  --color: var(--reference-bible-color);
+  --color: var(--ion-color-primary);
   --color-checked: #fff;
   --border-radius: 20px;
 }
