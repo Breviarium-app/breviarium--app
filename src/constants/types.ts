@@ -5,6 +5,13 @@ export type resultBible = {
     content: string;
 };
 
+export enum LectureTypes {
+    GOSPEL = 'GOSPEL',
+    FIRST_LECTURE = 'FIRSTLECTURE',
+    SECOND_LECTURE = 'SECONDLECTURE',
+    PSALM = 'PSALM',
+}
+
 export enum LiturgicalColors {
     GREEN = "GREEN",
     GREEN_C = "#70b26f",
