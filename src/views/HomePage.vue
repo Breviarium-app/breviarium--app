@@ -51,7 +51,7 @@ useBackButton(-1, () => {
         <ion-grid>
           <ion-row>
             <ion-col>
-              <ion-item class="prayer-item" @click="router.push('/prayer/evangelium-and-lectiones')">
+              <ion-item class="prayer-item" @click="router.push('/prayer/evangelium')">
                 <ion-label>
                   <h2>{{ t('breviarium.evangelium_lectiones') }}</h2>
                   <p>Mt 1, 2-5</p>

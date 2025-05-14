@@ -178,7 +178,11 @@ button:focus-visible {
     color: var(--breviarium-primary);
 }
 
-.text-center {
+.text-right, .right {
+    text-align: right;
+}
+
+.text-center, .center {
     text-align: center;
 }
 

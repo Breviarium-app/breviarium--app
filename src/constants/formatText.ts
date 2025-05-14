@@ -1,7 +1,7 @@
 import {t} from "i18next";
 
 export const formatText = (text: string | undefined): string => {
-    if (!text) return "<small>Elemento no encontrado, reportar a <a href='mailto:soporte@breviarium.es?subject=[Reporte] Error de contenido en Breviarium'>soporte@breviarium.es</a></small>";
+    if (!text) return "<small>Elemento no encontrado, reportar a <a href='mailto:info@breviarium.es?subject=[Reporte] Error de contenido en Breviarium'>info@breviarium.es</a></small>";
     let textToFormat = text;
     textToFormat = textToFormat.replaceAll(/\$(.*?)\$/g, '<span class="title-color">$1</span>');
 
@@ -40,4 +40,42 @@ export const formatTextIn18__ = (key: string, lang: string | undefined = 'es'): 
     const translatedText = t(key, {lng: lang});
     console.log("translatedText", translatedText);
     return formatText(translatedText);
+}
+
+export const formatTextLecture = (text: string | undefined): string => {
+    if (!text) return "<small>Elemento no encontrado, reportar a <a href='mailto:info@breviarium.es?subject=[Reporte] Error de contenido en Breviarium'>info@breviarium.es</a></small>";
+    let textToFormat = text;
+    if (textToFormat.includes(' R.')) {
+        textToFormat = formatBodyOfPsalm(text)
+    }
+    return textToFormat.split("\n\n").join("<br /><br />")
+        .split("C.").join('<span class="title-color">&nbsp&nbspC.</span>')
+        .split("S.").join('<span class="title-color">&nbsp&nbspS.</span>')
+        .split("+").join('<b><span class="title-color">&nbsp&nbsp+</span></b>')
+        .split("\n").join("<br />");
+};
+
+export const formatTitleLectures = (title: string) => {
+    let titleSplitted = []
+    if (title.includes('_')) {
+        titleSplitted = title.split('_');
+    } else {
+        titleSplitted = title.split(':');
+    }
+    if (isPsalm(title)) {
+        return `<ion-text class="title-color">
+         <ion-label>${titleSplitted[0].replaceAll(':', '').split('[')[0]} </ion-label> 
+         <br /> 
+         ℟. ${titleSplitted[1]}
+       </ion-text>`
+    }
+    return `<ion-text class="title-color">
+         <ion-label>${titleSplitted[0].replace('\n', '<br />').replace(/(\d):/, "$1").split('[')[0]} • </ion-label> ${titleSplitted[1]}
+       </ion-text>`
+}
+
+const isPsalm = (title: string): boolean => ['Sal', 'Lectura sálmica'].includes(title.split(' ', 1)[0]);
+
+const formatBodyOfPsalm = (psalm: string): string => {
+    return psalm.split(' R.').join('<span class="title-color"> ℟</span>')
 }
