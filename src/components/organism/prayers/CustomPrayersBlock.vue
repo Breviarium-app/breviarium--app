@@ -19,4 +19,8 @@ const storageManager = new IntentionsStorageManager('prayerIntentions');
 .custom-prayers li {
   list-style-type: none;
 }
+
+ul {
+  padding-left: 12px;
+}
 </style>
