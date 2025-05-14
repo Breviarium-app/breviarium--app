@@ -79,7 +79,9 @@
       <OfficiumLectures/>
     </div>
     <!------ EVANGELIO (opcional) settings.laudesEvangelium ------>
-    <!--    <EvangeliumLecture v-if="false"/>-->
+    <div v-if="settings.laudesEvangelium">
+      <EvangeliumLecture/>
+    </div>
     <!--    <TimerMeditation/> TODO: handle timer working in the background -->
 
     <h4 class="title title-color">
@@ -166,6 +168,7 @@ import {useSettingsStore} from "@/stores/settingsStore.ts";
 import OfficiumLectures from "@/components/molecules/prayers/OfficiumLectures.vue";
 import Breviarium from "breviarium";
 import CustomPrayersBlock from "@/components/organism/prayers/CustomPrayersBlock.vue";
+import EvangeliumLecture from "@/components/molecules/prayers/EvangeliumLecture.vue";
 
 const laudes = ref<LaudesSchemaOutput>();
 const isModalInvocationOpen = ref(false);

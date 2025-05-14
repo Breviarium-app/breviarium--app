@@ -33,11 +33,6 @@ onMounted(async () => {
 
 const prayers = ref<LecturesSchemaOutput[]>();
 
-// const selectedLecturesOption: Ref<string> = ref('first');
-// const changeLecturesOption = (event: any) => {
-//   selectedLecturesOption.value = event
-// };
-
 </script>
 <style lang="css" scoped>
 .lecture-block {
