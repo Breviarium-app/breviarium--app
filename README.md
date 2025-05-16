@@ -51,11 +51,11 @@ flowchart TB
     B -- main --> C["Test"]
     B -- dev --> G["Test"]
     C --> D["Build"]
-    D --> E["Deploy store\nProduction"] & F["Deploy to Cloudflare"]
+    D --> E["Deploy store Production"] & F["Deploy to Cloudflare"]
     E --> H["Update Version"]
     F --> H
     G --> I["Build"]
-    I --> J["Deploy store\nInternal Track"] & K["Deploy to Cloudflare"]
+    I --> J["Deploy store Internal Track"] & K["Deploy to Cloudflare"]
     J --> L["Update code version"]
     K --> L
 
