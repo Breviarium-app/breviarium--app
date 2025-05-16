@@ -197,3 +197,7 @@ button:focus-visible {
 .light-3 {
     opacity: 0.7
 }
+
+.italic {
+    font-style: italic;
+}

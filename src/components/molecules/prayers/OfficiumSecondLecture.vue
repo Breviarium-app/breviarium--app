@@ -18,68 +18,57 @@
     <p><span v-html="formatText(officium?.responsorio3[1])?.replace('℟.','℣.')"></span></p>
     <p><span v-html="formatText(officium?.responsorio3[2])?.replace('℣.','℟.')"></span></p>
   </div>
+  <div v-else>
+    <ion-segment v-model="selectedInvitatorium">
+      <ion-segment-button value="ordinary">
+        <ion-label>{{ $t('ordinaryCycle') }}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="bienal">
+        <ion-label>{{ $t('bienalCycle') }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    <div>
+      <div v-if="selectedInvitatorium == 'ordinary'">
+        <div class="title-color" v-html="formatText(officium?.lectura_patristica_cita[0])"></div>
+        <div class="title-color" v-html="formatText(officium?.lectura_patristica_titulo[0])"></div>
+        <div v-html="formatText(officium?.lectura_patristica_texto[0])"></div>
+        <div class="title-color" v-html="formatTextLecture(officium?.lectura_patristica_titulo[0].split('$')[2])"></div>
+        <br/>
+        <p><span v-html="formatText(officium?.responsorio3[0])?.replace('℟.','℣.')"></span></p>
+        <p><span v-html="formatText(officium?.responsorio3[0])?.replace('℣.','℟.')"></span></p>
+        <p><span v-html="formatText(officium?.responsorio3[1])?.replace('℟.','℣.')"></span></p>
+        <p><span v-html="formatText(officium?.responsorio3[2])?.replace('℣.','℟.')"></span></p>
+      </div>
+      <div v-if="selectedInvitatorium == 'bienal'">
+        <div class="title-color" v-html="formatText(officium?.lectura_patristica_cita[1])"></div>
+        <div class="title-color" v-html="formatText(officium?.lectura_patristica_titulo[1])"></div>
+        <div v-html="formatText(officium?.lectura_patristica_texto[1])"></div>
+        <div class="title-color" v-html="formatTextLecture(officium?.lectura_patristica_titulo[1].split('$')[2])"></div>
 
-  <!--  &lt;!&ndash; Two reading options with info button &ndash;&gt;-->
-  <!--  <div v-if="hasTwoReadings" class="selector-container">-->
-  <!--    <breviarium-segment-->
-  <!--        :value="selectedLectura"-->
-  <!--        @update:value="onChangeLectura">-->
-  <!--      <breviarium-segment-button :value="lecturaPar">-->
-  <!--        <ion-label>{{ $t('ordinaryCycle') }}</ion-label>-->
-  <!--      </breviarium-segment-button>-->
-  <!--      <breviarium-segment-button :value="lecturaImpar">-->
-  <!--        <ion-label>{{ $t('bienalCycle') }}</ion-label>-->
-  <!--      </breviarium-segment-button>-->
-  <!--    </breviarium-segment>-->
-  <!--    <BreviariumSegmentButton class="segment-info-button" value="info" @click="() => isModalOpen = true">-->
-  <!--      <strong> i </strong>-->
-  <!--    </BreviariumSegmentButton>-->
-  <!--  </div>-->
+        <br/>
+        <p><span v-html="formatText(officium?.responsorio3B[0])?.replace('℟.','℣.')"></span></p>
+        <p><span v-html="formatText(officium?.responsorio3B[0])?.replace('℣.','℟.')"></span></p>
+        <p><span v-html="formatText(officium?.responsorio3B[1])?.replace('℟.','℣.')"></span></p>
+        <p><span v-html="formatText(officium?.responsorio3B[2])?.replace('℣.','℟.')"></span></p>
+      </div>
+    </div>
+  </div>
 
-  <!--  <div v-if="hasTwoReadings">-->
-  <!--    <p>-->
-  <!--      {{ selectedLectura == lecturaPar ? lecturaCita[0]?.split("$")[0] : lecturaCita[1]?.split("$")[0] }}-->
-  <!--    </p>-->
-  <!--    <p class="title-color">-->
-  <!--      <span class="reference-bible cita">-->
-  <!--        {{ selectedLectura == lecturaPar ? lecturaCita[0]?.split("$")[1] : lecturaCita[1]?.split("$")[1] }}-->
-  <!--      </span>-->
-  <!--      <i class="text-center">-->
-  <!--        {{ selectedLectura == lecturaPar ? formatText(lecturaTitulo[0]) : formatText(lecturaTitulo[1]) }}-->
-  <!--      </i>-->
-  <!--    </p>-->
-  <!--    <div v-html="formattedLecturaTexto"></div>-->
-
-  <!--    <p><br><br></p>-->
-  <!--    <div v-if="hasTwoReadings && (selectedLectura == lecturaPar)">-->
-  <!--      <p><span v-html="formatText(officium?.responsorio2[0])?.replace('℟.', '℣.')"></span></p>-->
-  <!--      <p><span v-html="formatText(officium?.responsorio2[0])?.replace('℣.', '℟.')"></span></p>-->
-  <!--      <p><span v-html="formatText(officium?.responsorio2[1])?.replace('℟.', '℣.')"></span></p>-->
-  <!--      <p><span v-html="formatText(officium?.responsorio2[2])?.replace('℣.', '℟.')"></span></p>-->
-  <!--    </div>-->
-  <!--    <div v-if="hasTwoReadings && (selectedLectura == lecturaImpar)">-->
-  <!--      <p><span v-html="formatText(officium?.responsorio2B[0])?.replace('℟.', '℣.')"></span></p>-->
-  <!--      <p><span v-html="formatText(officium?.responsorio2B[0])?.replace('℣.', '℟.')"></span></p>-->
-  <!--      <p><span v-html="formatText(officium?.responsorio2B[1])?.replace('℟.', '℣.')"></span></p>-->
-  <!--      <p><span v-html="formatText(officium?.responsorio2B[2])?.replace('℣.', '℟.')"></span></p>-->
-  <!--    </div>-->
-
-  <!--    &lt;!&ndash;    <InfoModal v-model:isOpen="isModalOpen" :modalContent="infoModalContent"/>&ndash;&gt;-->
-  <!--  </div>-->
 </template>
 
 <script lang="ts" setup>
 import {computed, onMounted, ref} from 'vue';
-import {formatText} from "@/constants/formatText.ts";
+import {formatText, formatTextLecture} from "@/constants/formatText.ts";
 import {OfficiumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import Breviarium from "breviarium";
-
+import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
 
 const officium = ref<OfficiumSchemaOutput>();
 const lecturaCita = ref<string | undefined>()
 const lecturaTitulo = ref<string | undefined>()
 const lecturaTexto = ref<string | undefined>()
 const hasTwoReadings = computed(() => officium.value?.lectura_patristica_cita.length === 2);
+const selectedInvitatorium = ref("ordinary");
 
 onMounted(async () => {
   const brev = new Breviarium();
