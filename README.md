@@ -31,10 +31,28 @@ make install
 # for windows users:
 npm i
 ```
+
 and run the ionic web app
+
 ```shell
 # linux and mac users:
 make run
 # for windows users:
 npm run dev
+```
+
+```mermaid
+flowchart TB
+    A["Push"] --> B{"Branch?"}
+    B -- main --> C["Test"]
+    B -- dev --> G["Test"]
+    C --> D["Build"]
+    D --> E["Deploy to production"] & F["Deploy to Cloudflare"]
+    E --> H["Update Version"]
+    F --> H
+    G --> I["Build"]
+    I --> J["Deploy to Internal Track"] & K["Deploy to Cloudflare"]
+    J --> L["Update code version"]
+    K --> L
+
 ```
