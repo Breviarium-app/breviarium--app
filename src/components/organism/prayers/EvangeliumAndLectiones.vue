@@ -1,7 +1,8 @@
 <template>
   <PrayerPage title="Evangelio y lecturas">
     <div v-for="(prayer, index) in prayers">
-      <h3 class="center" v-html="formatText(prayer?.celebraciones_posibles[index])"></h3>
+      <h3 v-if="prayer?.celebraciones_posibles[index]" class="center"
+          v-html="formatText(prayer?.celebraciones_posibles[index])"></h3>
       <div v-for="(lecture) in prayer?.lecturas" class="lecture-block">
         <h4 class="title-color" v-html="formatText(lecture.ref)"></h4>
         <p v-html="formatTextLecture(lecture.texto)"></p>
