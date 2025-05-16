@@ -109,6 +109,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: dev
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -125,6 +127,6 @@ jobs:
           echo "Script executed ✅"
           git add package.json package-lock.json android/app/build.gradle ios/App/App.xcodeproj/project.pbxproj
           git commit -m "ci: ⚙️ bump version to $(node -p "require('./package.json').version")"
-          git push origin main
+          git push origin dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
