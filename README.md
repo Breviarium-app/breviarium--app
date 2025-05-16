@@ -41,17 +41,21 @@ make run
 npm run dev
 ```
 
+## CI/CD flow
+
+GitHub Actions flow.
+
 ```mermaid
 flowchart TB
     A["Push"] --> B{"Branch?"}
     B -- main --> C["Test"]
     B -- dev --> G["Test"]
     C --> D["Build"]
-    D --> E["Deploy to production"] & F["Deploy to Cloudflare"]
+    D --> E["Deploy store\nProduction"] & F["Deploy to Cloudflare"]
     E --> H["Update Version"]
     F --> H
     G --> I["Build"]
-    I --> J["Deploy to Internal Track"] & K["Deploy to Cloudflare"]
+    I --> J["Deploy store\nInternal Track"] & K["Deploy to Cloudflare"]
     J --> L["Update code version"]
     K --> L
 
