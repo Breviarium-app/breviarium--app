@@ -2,7 +2,7 @@ name: Build project
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
     types: [ opened, reopened, closed ]
   push:
     branches: [ feat/*, feature/*, fix/*, hotfix/* ]
