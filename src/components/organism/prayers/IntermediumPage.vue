@@ -86,6 +86,7 @@ import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
 import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
 import {isOrdinaryTime, isTodayLent} from "@/constants/utils.ts";
 import Breviarium from "breviarium";
+import {useDateStore} from "@/stores/useDateStore.ts";
 
 const prayer = ref<IntermediateSchemaOutput>();
 
@@ -97,7 +98,7 @@ const props = defineProps({
 })
 
 onMounted(async () => {
-  const brev = new Breviarium();
+  const brev = new Breviarium(useDateStore().getCurrentDate);
 
   if (props.prayerTitle.toLowerCase() == 'tercia') {
     await brev.getTertia().then((data: any) => {

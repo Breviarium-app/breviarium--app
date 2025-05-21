@@ -21,6 +21,10 @@ import {bookOutline} from "ionicons/icons";
 import DateAndCelebration from "@/components/molecules/DateAndCelebration.vue";
 import router from "@/router";
 import {useI18n} from 'vue-i18n'
+import {onMounted, ref} from "vue";
+import Breviarium from "breviarium";
+import LiturgyInformation from "@/components/atoms/LiturgyInformation.vue";
+import {useDateStore} from "@/stores/useDateStore.ts";
 
 const {t} = useI18n()
 
@@ -30,6 +34,17 @@ useBackButton(-1, () => {
     App.exitApp();
   }
 });
+
+const gospelQuote = ref('')
+
+onMounted(async () => {
+  const brev = new Breviarium(useDateStore().getCurrentDate);
+  brev.getEvangelium().then(data => {
+    if (data && data.evangelium_lectiones.length > 0) {
+      gospelQuote.value = data?.evangelium_lectiones[0]?.ref.split(':')[0];
+    }
+  });
+})
 
 
 </script>
@@ -45,6 +60,7 @@ useBackButton(-1, () => {
       <div class="date-section ion-padding">
         <DateAndCelebration/>
         <SaintBanner/>
+        <LiturgyInformation/>
       </div>
 
       <div class="prayer-grid">
@@ -54,7 +70,7 @@ useBackButton(-1, () => {
               <ion-item class="prayer-item" @click="router.push('/prayer/evangelium')">
                 <ion-label>
                   <h2>{{ t('breviarium.evangelium_lectiones') }}</h2>
-                  <p>Mt 1, 2-5</p>
+                  <p>{{ gospelQuote }}</p>
                 </ion-label>
               </ion-item>
             </ion-col>
@@ -120,11 +136,6 @@ useBackButton(-1, () => {
               </ion-item>
             </ion-col>
           </ion-row>
-          <!--          <ion-row>-->
-          <!--            <ion-col class="ion-text-center color-danger-500">-->
-          <!--              <ion-label>⚠️ Aplicación en desarrollo</ion-label>-->
-          <!--            </ion-col>-->
-          <!--          </ion-row>-->
         </ion-grid>
       </div>
 

@@ -16,33 +16,22 @@
 import {formatText} from "@/constants/formatText.ts";
 import {onMounted, ref} from "vue";
 import Breviarium from "breviarium";
-import {LecturesSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import {useI18n} from 'vue-i18n'
+import {useDateStore} from "@/stores/useDateStore.ts";
 
 const {t} = useI18n()
 
 onMounted(async () => {
-  const brev = new Breviarium();
-  await brev.getLectures().then((data) => {
-    console.log("lectures data", data);
-    getGospel(data);
+  const brev = new Breviarium(useDateStore().getCurrentDate);
+  await brev.getEvangelium().then((data) => {
+
+    if (data && data.evangelium_lectiones.length > 0) {
+      gospel.value = data.evangelium_lectiones[0]
+    }
   });
 });
 
 let gospel = ref()
-
-function getGospel(items: LecturesSchemaOutput[] | undefined): void {
-  if (items != undefined && items?.length > 0) {
-    const prayer = items[0];
-    for (let lectura of prayer.lecturas) {
-      if (lectura.type == "GOSPEL") {
-        gospel.value = lectura;
-        console.log("gospel", gospel);
-        break;
-      }
-    }
-  }
-}
 
 </script>
 <style scoped>

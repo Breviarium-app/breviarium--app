@@ -217,6 +217,7 @@ import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
 import {isEaster, isInAlbis, isTodayLent, isTriduum} from "@/constants/utils.ts";
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
 import {IonSegment, IonSegmentButton} from "@ionic/vue";
+import {useDateStore} from "@/stores/useDateStore.ts";
 
 
 const prayer = ref<CompletoriumSchemaOutput>();
@@ -228,7 +229,7 @@ const selectedMaryAntiphonCode = ref<
 
 
 onMounted(async () => {
-  const brev = new Breviarium();
+  const brev = new Breviarium(useDateStore().getCurrentDate);
   await brev.getCompletorium().then((data) => {
     console.log("getCompletorium", data);
     prayer.value = data;

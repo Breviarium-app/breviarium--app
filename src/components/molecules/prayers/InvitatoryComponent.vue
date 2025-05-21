@@ -40,13 +40,14 @@ import {onMounted, ref, Ref} from "vue";
 import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
 import Breviarium from "breviarium";
 import {InvitatoriumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
+import {useDateStore} from "@/stores/useDateStore.ts";
 
 const invitatorium_psalms: Ref<any[] | undefined> = ref();
 const invitatoriumAntiphon = ref<InvitatoriumSchemaOutput>();
 const selectedInvitatorium = ref<string>('first');
 
 onMounted(async () => {
-  const brev = new Breviarium();
+  const brev = new Breviarium(useDateStore().getCurrentDate);
   await brev.getInvitatoriumPsalms().then(data => {
     invitatorium_psalms.value = data;
   });

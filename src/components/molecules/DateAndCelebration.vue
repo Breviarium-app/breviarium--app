@@ -1,6 +1,6 @@
 <template>
   <div class="date-button" @click="setOpen(true)">
-    <CircleLiturgicalColor :liturgical-color-var="LiturgicalColors.PURPLE_C"/>
+    <CircleLiturgicalColor :liturgical-color-var="color"/>
     {{ buildLocalDate(printedDate) }}
   </div>
 
@@ -28,12 +28,12 @@
 </template>
 <script lang="ts" setup>
 import {buildLocalDate} from "@/constants/utils.ts";
-import {ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {IonButton, IonDatetime, IonHeader, IonModal, IonToolbar} from "@ionic/vue";
 import CircleLiturgicalColor from "@/components/atoms/CircleLiturgicalColor.vue";
-import {LiturgicalColors} from "@/constants/types.ts";
 import HapticsService from "@/services/HapticsService.ts";
 import {useDateStore} from "@/stores/useDateStore.ts";
+import Breviarium from "breviarium";
 
 
 const modal = ref();
@@ -71,6 +71,16 @@ watch(datetime, () => {
 const goToday = () => {
   datetime.value.$el.setActiveParts(datetime.value.$el.todayParts);
 };
+
+const color = ref();
+
+onMounted(async () => {
+  const brev = new Breviarium(useDateStore().getCurrentDate);
+  brev.getLiturgyInformation().then(data => {
+    console.log("liturgyInfo", data)
+    color.value = data.color
+  });
+})
 
 </script>
 <style scoped>

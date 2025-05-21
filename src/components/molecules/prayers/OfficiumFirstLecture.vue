@@ -59,7 +59,7 @@ import {formatText} from "@/constants/formatText.ts";
 import {OfficiumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import Breviarium from "breviarium";
 import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
-
+import {useDateStore} from "@/stores/useDateStore.ts";
 
 const officium = ref<OfficiumSchemaOutput>();
 const lecturaCita = ref<string | undefined>()
@@ -69,7 +69,7 @@ const hasTwoReadings = computed(() => officium.value?.lectura_biblica_cita.lengt
 const selectedInvitatorium = ref("ordinary");
 
 onMounted(async () => {
-  const brev = new Breviarium();
+  const brev = new Breviarium(useDateStore().getCurrentDate);
   await brev.getOfficium().then(data => {
     officium.value = data;
     lecturaCita.value = Array.isArray(officium.value?.lectura_biblica_cita) ? officium.value?.lectura_biblica_cita[0] : officium.value?.lectura_biblica_cita;

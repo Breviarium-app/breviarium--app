@@ -142,12 +142,13 @@ import OfficiumLectures from "@/components/molecules/prayers/OfficiumLectures.vu
 import MagnificatPrayer from "@/components/molecules/prayers/MagnificatPrayer.vue";
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
 import CustomPrayersBlock from "@/components/organism/prayers/CustomPrayersBlock.vue";
+import {useDateStore} from "@/stores/useDateStore.ts";
 
 const prayer = ref<LaudesSchemaOutput>();
 const isModalInvocationOpen = ref(false);
 const settings = useSettingsStore().settings;
 onMounted(async () => {
-  const brev = new Breviarium();
+  const brev = new Breviarium(useDateStore().getCurrentDate);
   await brev.getVesperae().then((data) => {
     prayer.value = data;
   })

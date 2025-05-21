@@ -90,11 +90,12 @@ import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
 import InvitatoryComponent from "@/components/molecules/prayers/InvitatoryComponent.vue";
 import {isTodayLent} from "@/constants/utils.ts";
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
+import {useDateStore} from "@/stores/useDateStore.ts";
 
 const prayer = ref<OfficiumSchemaOutput>();
 
 onMounted(async () => {
-  const brev = new Breviarium();
+  const brev = new Breviarium(useDateStore().getCurrentDate);
   await brev.getOfficium().then((data) => {
     prayer.value = data;
   })

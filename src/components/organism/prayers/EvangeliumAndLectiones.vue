@@ -21,11 +21,12 @@ import {LecturesSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import {formatText, formatTextLecture} from "@/constants/formatText.ts";
 import {LectureTypes} from "@/constants/types.ts";
 import {useI18n} from 'vue-i18n'
+import {useDateStore} from "@/stores/useDateStore.ts";
 
 const {t} = useI18n()
 
 onMounted(async () => {
-  const brev = new Breviarium();
+  const brev = new Breviarium(useDateStore().getCurrentDate);
   await brev.getLectures().then((data) => {
     prayers.value = data;
     console.log("lectures!", prayers.value);
