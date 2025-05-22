@@ -1,4 +1,5 @@
 import {defineStore} from 'pinia'
+import {useSanctusStore} from "@/stores/sanctus.ts";
 
 export const useDateStore = defineStore('dateStore', {
     state: () => ({
@@ -12,6 +13,7 @@ export const useDateStore = defineStore('dateStore', {
     actions: {
         setDate(newDate: Date) {
             this.currentDate = newDate;
+            useSanctusStore().updateSaint(newDate);
         },
 
         resetDate() {
