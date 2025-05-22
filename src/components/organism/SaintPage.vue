@@ -9,17 +9,17 @@ const {selectedSaint, saintsOfDay} = useSanctusStore();
 let todaySaint = ref<any | undefined>(selectedSaint);
 </script>
 <template>
-  <PrayerPage>
-    <h2>{{ todaySaint?.name }}</h2>
-    <p>
+  <PrayerPage :title="todaySaint?.name">
+    <div>
+      VIDA
       <p v-if="todaySaint?.day">Festividad: {{ todaySaint?.day }} de {{
           MONTH_SPANISH[todaySaint?.month - 1]
         }}</p>
       <p v-if="todaySaint?.birth">Nacimiento: {{ todaySaint?.birth }}</p>
       <p v-if="todaySaint?.dead">Muerte: {{ todaySaint?.dead }}</p>
       <p v-if="todaySaint?.meaning">Significado: {{ todaySaint?.meaning }}</p>
-      <p v-if="todaySaint?.description">Vida<br/>{{ todaySaint?.description }}</p>
-    </p>
+      <p v-if="todaySaint?.description">HISTORIA<br/>{{ todaySaint?.description }}</p>
+    </div>
 
     <div v-if="saintsOfDay.length > 1">
       <h4>Más santos</h4>
