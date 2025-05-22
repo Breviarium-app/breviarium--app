@@ -16,8 +16,8 @@
 import {formatText} from "@/constants/formatText.ts";
 import {onMounted, ref} from "vue";
 import Breviarium from "breviarium";
-import {useI18n} from 'vue-i18n'
 import {useDateStore} from "@/stores/useDateStore.ts";
+import {useI18n} from 'vue-i18n'
 
 const {t} = useI18n()
 
