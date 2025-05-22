@@ -78,6 +78,10 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'Evangelium',
                 component: () => import('../components/organism/prayers/EvangeliumAndLectiones.vue')
             }, {
+                path: '/popular-prayers',
+                name: 'popular-prayers',
+                component: () => import('../components/organism/prayers/PopularPrayers.vue')
+            }, {
                 path: '/saint',
                 name: 'Saint',
                 component: () => import('../components/organism/SaintPage.vue')

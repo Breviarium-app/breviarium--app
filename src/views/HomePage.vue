@@ -24,7 +24,7 @@ import Breviarium from "breviarium";
 import LiturgyInformation from "@/components/molecules/home-banners/LiturgyInformation.vue";
 import {useDateStore} from "@/stores/useDateStore.ts";
 import SaintBannerComponent from "@/components/molecules/home-banners/SaintBannerComponent.vue";
-import MariamPrayers from "@/components/molecules/home-banners/MariamPrayers.vue";
+import PopularPrayers from "@/components/molecules/home-banners/PopularPrayers.vue";
 import JerusalemBibleBanner from "@/views/JerusalemBibleBanner.vue";
 
 const {t} = useI18n()
@@ -136,7 +136,7 @@ onMounted(async () => {
               <SaintBannerComponent/>
             </ion-col>
             <ion-col>
-              <MariamPrayers/>
+              <PopularPrayers/>
             </ion-col>
           </ion-row>
         </ion-grid>

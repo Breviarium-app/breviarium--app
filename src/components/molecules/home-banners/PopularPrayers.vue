@@ -1,7 +1,7 @@
 <template>
-  <ion-item class="prayer-item" @click="router.push('/')">
+  <ion-item class="prayer-item" @click="router.push('/popular-prayers')">
     <ion-label>
-      <h2>Oraciones</h2>
+      <h2>Oraciones populares</h2>
       <p>Ángelus y Rosario</p>
     </ion-label>
   </ion-item>
