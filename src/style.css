@@ -202,3 +202,11 @@ button:focus-visible {
 .italic {
     font-style: italic;
 }
+
+.prayer-item {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --border-radius: 8px;
+    --background: var(--background-color-card);
+    border: 0 solid var(--border-color);
+}

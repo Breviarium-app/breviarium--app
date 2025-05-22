@@ -4,7 +4,6 @@ import {
   IonContent,
   IonGrid,
   IonHeader,
-  IonIcon,
   IonItem,
   IonLabel,
   IonPage,
@@ -15,16 +14,18 @@ import {
   useIonRouter
 } from '@ionic/vue';
 import {App} from '@capacitor/app';
-import SaintBanner from "@/components/molecules/SaintBanner.vue";
+import SaintBanner from "@/components/molecules/home-banners/SaintBanner.vue";
 import {currentLiturgyHour} from "@/constants/utils.ts";
-import {bookOutline} from "ionicons/icons";
-import DateAndCelebration from "@/components/molecules/DateAndCelebration.vue";
+import DateAndCelebration from "@/components/molecules/home-banners/DateAndCelebration.vue";
 import router from "@/router";
 import {useI18n} from 'vue-i18n'
 import {onMounted, ref} from "vue";
 import Breviarium from "breviarium";
-import LiturgyInformation from "@/components/atoms/LiturgyInformation.vue";
+import LiturgyInformation from "@/components/molecules/home-banners/LiturgyInformation.vue";
 import {useDateStore} from "@/stores/useDateStore.ts";
+import SaintBannerComponent from "@/components/molecules/home-banners/SaintBannerComponent.vue";
+import MariamPrayers from "@/components/molecules/home-banners/MariamPrayers.vue";
+import JerusalemBibleBanner from "@/views/JerusalemBibleBanner.vue";
 
 const {t} = useI18n()
 
@@ -86,36 +87,36 @@ onMounted(async () => {
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-item :class="currentLiturgyHour() == 'Vesperae' ? 'selected_hour' : ''" class="prayer-item"
-                        @click="router.push('/prayer/vesperae')">
-                <ion-label>{{ t('breviarium.vesperae') }}</ion-label>
-              </ion-item>
-            </ion-col>
-            <ion-col>
               <ion-item class="prayer-item" @click="router.push('/prayer/officium')">
                 <ion-label>{{ t('breviarium.officium') }}</ion-label>
               </ion-item>
             </ion-col>
-          </ion-row>
-          <ion-row>
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Tercia' ? 'selected_hour' : ''" class="prayer-item"
                         @click="router.push('/prayer/tertia')">
                 <ion-label>{{ t('breviarium.tercia') }}</ion-label>
               </ion-item>
             </ion-col>
+          </ion-row>
+          <ion-row>
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Sexta' ? 'selected_hour' : ''" class="prayer-item"
                         @click="router.push('/prayer/sexta')">
                 <ion-label>{{ t('breviarium.sexta') }}</ion-label>
               </ion-item>
             </ion-col>
-          </ion-row>
-          <ion-row>
             <ion-col>
               <ion-item :class="currentLiturgyHour() == 'Nona' ? 'selected_hour' : ''" class="prayer-item"
                         @click="router.push('/prayer/nona')">
                 <ion-label>{{ t('breviarium.nona') }}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item :class="currentLiturgyHour() == 'Vesperae' ? 'selected_hour' : ''" class="prayer-item"
+                        @click="router.push('/prayer/vesperae')">
+                <ion-label>{{ t('breviarium.vesperae') }}</ion-label>
               </ion-item>
             </ion-col>
             <ion-col>
@@ -127,13 +128,15 @@ onMounted(async () => {
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-item class="prayer-item" @click="router.push('/bible')">
-                <ion-icon slot="start" :icon="bookOutline" style="color: var(--gold-color);"></ion-icon>
-                <ion-label>
-                  <h2>{{ t('bibleOfJerusalem') }}</h2>
-                  <p>{{ t('bibleSubtitle') }}</p>
-                </ion-label>
-              </ion-item>
+              <JerusalemBibleBanner/>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <SaintBannerComponent/>
+            </ion-col>
+            <ion-col>
+              <MariamPrayers/>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -151,14 +154,6 @@ onMounted(async () => {
 
 .prayer-grid {
   padding: 6px;
-}
-
-.prayer-item {
-  --padding-start: 16px;
-  --padding-end: 16px;
-  --border-radius: 8px;
-  --background: var(--background-color-card);
-  border: 0 solid var(--border-color);
 }
 
 .selected_hour {

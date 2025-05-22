@@ -24,6 +24,7 @@ import '@/style.css'
 import {createI18n} from "vue-i18n";
 import es from '@/locales/es.json'
 import en from '@/locales/en.json'
+import {perpetualCalendar} from "@/services/romcal.ts";
 
 const pinia = createPinia();
 
@@ -45,4 +46,5 @@ const app = createApp(App)
 
 router.isReady().then(() => {
     app.mount('#app')
+    perpetualCalendar(2025).then(console.log)
 })
