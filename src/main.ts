@@ -45,4 +45,5 @@ const app = createApp(App)
 
 router.isReady().then(() => {
     app.mount('#app')
+    // perpetualCalendar(2025).then(console.log)
 })
