@@ -12,18 +12,18 @@ let todaySaint = ref<any | undefined>(selectedSaint);
   <PrayerPage>
     <h2>{{ todaySaint?.name }}</h2>
     <p>
-        <span v-if="todaySaint?.day">• Festividad: {{ todaySaint?.day }} de {{
-            MONTH_SPANISH[todaySaint?.month - 1]
-          }}</span>
-      <span v-if="todaySaint?.birth"><br/>• Nacimiento: {{ todaySaint?.birth }}</span>
-      <span v-if="todaySaint?.dead"><br/>• Muerte: {{ todaySaint?.dead }}</span>
-      <span v-if="todaySaint?.meaning"><br/>• Significado: {{ todaySaint?.meaning }}</span>
-      <span v-if="todaySaint?.description"><br/>📜 {{ todaySaint?.description }}</span>
+      <p v-if="todaySaint?.day">Festividad: {{ todaySaint?.day }} de {{
+          MONTH_SPANISH[todaySaint?.month - 1]
+        }}</p>
+      <p v-if="todaySaint?.birth">Nacimiento: {{ todaySaint?.birth }}</p>
+      <p v-if="todaySaint?.dead">Muerte: {{ todaySaint?.dead }}</p>
+      <p v-if="todaySaint?.meaning">Significado: {{ todaySaint?.meaning }}</p>
+      <p v-if="todaySaint?.description">Vida<br/>{{ todaySaint?.description }}</p>
     </p>
 
     <div v-if="saintsOfDay.length > 1">
       <h4>Más santos</h4>
-      <p>En el día de hoy la Iglesia celebra también:</p>
+      <p>En el día de hoy la Iglesia celebra a</p>
       <ul>
         <li v-for="(saint, index) in saintsOfDay.slice(1)" :key="index">{{ saint.name }}</li>
       </ul>
