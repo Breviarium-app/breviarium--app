@@ -1,4 +1,5 @@
 import {Romcal} from "romcal";
+// @ts-ignore
 import {Spain_Es} from "@romcal/calendar.spain";
 
 const romcal_lib = new Romcal({localizedCalendar: Spain_Es});
