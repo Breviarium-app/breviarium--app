@@ -1,5 +1,5 @@
 <template>
-  <PrayerPage title="Laudes">
+  <PrayerPage :display-liturgical-info="true" title="Laudes">
     <!--    <h4 class="office-title">-->
     <!--      {{ $t("laudes") }}-->
     <!--    </h4>-->

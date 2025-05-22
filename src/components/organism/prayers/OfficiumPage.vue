@@ -1,7 +1,5 @@
 <template>
-  <PrayerPage title="Oficio">
-    <h4 class="title title-color">{{ $t('initialInvocation') }}</h4>
-    <h4 class="office-title">{{ $t('officiumLectionis') }}</h4>
+  <PrayerPage :display-liturgical-info="true" title="Oficio">
     <h4 class="label-rule title-color">{{ $t('laudesFirstExplanation') }}</h4>
     <h4 class="title title-color">{{ $t('initialInvocation') }}</h4>
 

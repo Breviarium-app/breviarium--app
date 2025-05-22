@@ -21,7 +21,6 @@ import router from "@/router";
 import {useI18n} from 'vue-i18n'
 import {onMounted, ref} from "vue";
 import Breviarium from "breviarium";
-import LiturgyInformation from "@/components/molecules/home-banners/LiturgyInformation.vue";
 import {useDateStore} from "@/stores/useDateStore.ts";
 import SaintBannerComponent from "@/components/molecules/home-banners/SaintBannerComponent.vue";
 import PopularPrayers from "@/components/molecules/home-banners/PopularPrayers.vue";
@@ -61,7 +60,6 @@ onMounted(async () => {
       <div class="date-section ion-padding">
         <DateAndCelebration/>
         <SaintBanner/>
-        <LiturgyInformation/>
       </div>
 
       <div class="prayer-grid">

@@ -1,5 +1,5 @@
 <template>
-  <PrayerPage title="Completas">
+  <PrayerPage :display-liturgical-info="true" title="Completas">
 
     <h4 class="title title-color">
       {{ formatText($t("initialInvocation")) }}

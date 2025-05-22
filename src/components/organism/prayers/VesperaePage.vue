@@ -1,5 +1,5 @@
 <template>
-  <PrayerPage title="Vísperas">
+  <PrayerPage :display-liturgical-info="true" title="Vísperas">
     <h4 class="title title-color">{{ $t('initialInvocation') }}</h4>
     <p class="margin-y-md title-color ion-align-items-center ion-text-center"
        @click="() => isModalInvocationOpen = true">
