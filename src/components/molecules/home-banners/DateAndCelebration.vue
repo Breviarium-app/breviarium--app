@@ -43,7 +43,6 @@ const isOpen = ref(false);
 
 watch(datetimeModel, () => {
   const newDate = new Date(datetimeModel.value)
-  console.log("newDate", newDate, "type: ", typeof newDate)
   if (newDate) {
     dateStore.setDate(newDate);
   }

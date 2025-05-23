@@ -15,21 +15,19 @@ import {useBreviariumStore} from "@/stores/breviarium.ts";
 import {useDateStore} from "@/stores/useDateStore.ts";
 
 const gospelQuote = ref('');
-const dateStore = useDateStore();
 const breviariumStore = useBreviariumStore();
 
 const updateGospelQuote = async () => {
   breviariumStore.getEvangelium().then((data) => {
     if (data.evangelium_lectiones.length > 0) {
       gospelQuote.value = data.evangelium_lectiones[0]?.ref.split(':')[0];
-      console.log("Updating gospel quote:", gospelQuote.value);
     }
   });
 
 };
 
 watch(
-    () => dateStore.getCurrentDate,
+    () => useDateStore().getCurrentDate,
     () => updateGospelQuote()
 );
 

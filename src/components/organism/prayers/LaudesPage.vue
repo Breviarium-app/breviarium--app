@@ -176,6 +176,7 @@ const isModalInvocationOpen = ref(false);
 const settings = useSettingsStore().settings;
 
 onMounted(async () => {
+  console.log("laudes date:", useDateStore().getCurrentDate)
   const brev = new Breviarium(useDateStore().getCurrentDate);
   await brev.getLaudes().then((data) => {
     laudes.value = data;

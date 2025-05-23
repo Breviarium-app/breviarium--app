@@ -57,7 +57,6 @@ export const useBreviariumStore = defineStore("breviarium", () => {
     }
 
     const getEvangelium = async (date?: Date): Promise<EvangeliumSchemaOutput | undefined> => {
-        console.log("breviarium date:", breviarium.getCurrentDate())
         return await breviarium.getEvangelium(date || useDateStore().getCurrentDate);
     }
 
