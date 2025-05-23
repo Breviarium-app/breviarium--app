@@ -8,8 +8,9 @@
       <div v-for="(lecture) in prayer?.lecturas" class="lecture-block">
         <h4 class="title-color" v-html="formatText(lecture.ref)"></h4>
         <p v-html="formatTextLecture(lecture.texto)"></p>
-        <p v-if="lecture.type == LectureTypes.GOSPEL" class="right">{{ t('theGospelOfTheLord') }}</p>
-        <p v-if="lecture.type == LectureTypes.FIRST_LECTURE || lecture.type == LectureTypes.SECOND_LECTURE"
+        <p v-if="lecture.type == LectureTypes.GOSPEL || lecture.type == LectureTypes.CELEBRATION_GOSPEL" class="right">
+          {{ t('theGospelOfTheLord') }}</p>
+        <p v-if="lecture.type == LectureTypes.FIRST_LECTURE || lecture.type == LectureTypes.SECOND_LECTURE || lecture.type == LectureTypes.CELEBRATION_FIRST_LECTURE || lecture.type == LectureTypes.CELEBRATION_SECOND_LECTURE"
            class="right">{{ t('theWordOfTheLord') }}</p>
       </div>
     </div>
