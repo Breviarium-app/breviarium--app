@@ -1,7 +1,8 @@
 <template>
   <div class="date-button" @click="setOpen(true)">
     <CircleLiturgicalColor :liturgical-color-var="color"/>
-    {{ buildLocalDate(printableDate) }}
+    {{ liturgyInformationData?.celebration }}<br/>
+    <small class="title-color">{{ buildLocalDate(printableDate) }} - {{ rank }}</small>
   </div>
 
   <Teleport to="body">
@@ -27,13 +28,13 @@
   </Teleport>
 </template>
 <script lang="ts" setup>
-import {buildLocalDate} from "@/constants/utils.ts";
+import {buildLocalDate, rankTranslate} from "@/constants/utils.ts";
 import {computed, onMounted, ref, watch} from "vue";
 import {IonButton, IonDatetime, IonHeader, IonModal, IonToolbar} from "@ionic/vue";
 import CircleLiturgicalColor from "@/components/atoms/CircleLiturgicalColor.vue";
 import HapticsService from "@/services/HapticsService.ts";
 import {useDateStore} from "@/stores/useDateStore.ts";
-import Breviarium from "breviarium";
+import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 const modal = ref();
 const dateStore = useDateStore();
@@ -41,10 +42,15 @@ const datetimeModel = ref(dateStore.getCurrentDate);
 const printableDate = computed(() => new Date(datetimeModel.value))
 const isOpen = ref(false);
 
-watch(datetimeModel, () => {
+watch(datetimeModel, async () => {
   const newDate = new Date(datetimeModel.value)
   if (newDate) {
     dateStore.setDate(newDate);
+    await useBreviariumStore().getLiturgyInformation().then(data => {
+      liturgyInformationData.value = data
+      color.value = data.color
+    });
+    rank.value = await rankTranslate(liturgyInformationData.value?.rank)
   }
 })
 
@@ -58,13 +64,16 @@ const goToday = () => {
   datetimeModel.value = new Date()
 };
 
+const liturgyInformationData = ref();
 const color = ref();
+const rank = ref();
 
 onMounted(async () => {
-  const brev = new Breviarium(useDateStore().getCurrentDate);
-  brev.getLiturgyInformation().then(data => {
+  useBreviariumStore().getLiturgyInformation().then(data => {
+    liturgyInformationData.value = data
     color.value = data.color
   });
+  rank.value = await rankTranslate(liturgyInformationData.value?.rank)
 })
 
 </script>
