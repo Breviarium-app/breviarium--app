@@ -137,19 +137,17 @@ import {LaudesSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import PadreNuestro from "@/components/molecules/prayers/PadreNuestro.vue";
 import {IonLabel, IonText} from "@ionic/vue";
 import {useSettingsStore} from "@/stores/settingsStore.ts";
-import Breviarium from "breviarium";
 import OfficiumLectures from "@/components/molecules/prayers/OfficiumLectures.vue";
 import MagnificatPrayer from "@/components/molecules/prayers/MagnificatPrayer.vue";
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
 import CustomPrayersBlock from "@/components/organism/prayers/CustomPrayersBlock.vue";
-import {useDateStore} from "@/stores/useDateStore.ts";
+import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 const prayer = ref<LaudesSchemaOutput>();
 const isModalInvocationOpen = ref(false);
 const settings = useSettingsStore().settings;
 onMounted(async () => {
-  const brev = new Breviarium(useDateStore().getCurrentDate);
-  await brev.getVesperae().then((data) => {
+  await useBreviariumStore().getVesperae().then((data) => {
     prayer.value = data;
   })
 

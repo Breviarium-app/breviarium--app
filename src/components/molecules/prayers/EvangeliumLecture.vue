@@ -15,15 +15,13 @@
 <script lang="ts" setup>
 import {formatText} from "@/constants/formatText.ts";
 import {onMounted, ref} from "vue";
-import Breviarium from "breviarium";
-import {useDateStore} from "@/stores/useDateStore.ts";
 import {useI18n} from 'vue-i18n'
+import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 const {t} = useI18n()
 
 onMounted(async () => {
-  const brev = new Breviarium(useDateStore().getCurrentDate);
-  await brev.getEvangelium().then((data) => {
+  await useBreviariumStore().getEvangelium().then((data) => {
 
     if (data && data.evangelium_lectiones.length > 0) {
       gospel.value = data.evangelium_lectiones[0]

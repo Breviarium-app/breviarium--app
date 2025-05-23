@@ -57,7 +57,7 @@
 
     <!--    TODO: te deum display from romcal rank/season-->
     <!--    <div v-if="showTeDeum()">-->
-    <!--      <h4 class="title title-color">{{ $t('teDeum') }}</h4>-->
+    <!--      <h4 class="title title-liturgyInformationData">{{ $t('teDeum') }}</h4>-->
     <!--      <TeDeum/>-->
     <!--    </div>-->
 
@@ -82,19 +82,17 @@ import {onMounted, ref} from "vue";
 import PrayerPage from "@/components/organism/PrayerPage.vue";
 import {formatText} from "@/constants/formatText.ts";
 import {OfficiumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
-import Breviarium from "breviarium";
 import OfficiumLectures from "@/components/molecules/prayers/OfficiumLectures.vue";
 import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
 import InvitatoryComponent from "@/components/molecules/prayers/InvitatoryComponent.vue";
 import {isTodayLent} from "@/constants/utils.ts";
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
-import {useDateStore} from "@/stores/useDateStore.ts";
+import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 const prayer = ref<OfficiumSchemaOutput>();
 
 onMounted(async () => {
-  const brev = new Breviarium(useDateStore().getCurrentDate);
-  await brev.getOfficium().then((data) => {
+  await useBreviariumStore().getOfficium().then((data) => {
     prayer.value = data;
   })
 
