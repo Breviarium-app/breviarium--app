@@ -1,5 +1,5 @@
 <template>
-  <PrayerPage :title="props.prayerTitle">
+  <PrayerPage :display-liturgical-info="true" :title="props.prayerTitle">
     <p class="margin-y-md title-color ion-align-items-center ion-text-center">
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>

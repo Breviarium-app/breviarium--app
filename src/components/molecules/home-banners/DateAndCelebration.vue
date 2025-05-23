@@ -1,7 +1,8 @@
 <template>
   <div class="date-button" @click="setOpen(true)">
     <CircleLiturgicalColor :liturgical-color-var="color"/>
-    {{ buildLocalDate(printedDate) }}
+    {{ liturgyInformationData?.celebration }}<br/>
+    <small class="title-color">{{ buildLocalDate(printableDate) }} - {{ rank }}</small>
   </div>
 
   <Teleport to="body">
@@ -13,73 +14,66 @@
         </ion-toolbar>
       </ion-header>
       <div class="modal-wrapper">
-        <ion-datetime ref="datetime"
-                      v-model="datetime"
-                      :first-day-of-week="1"
-                      :prefer-wheel="false"
-                      :value="printedDate.toISOString()"
-                      max="2100-12-31"
-                      min="1990-01-01"
-                      presentation="date"
-                      size="cover"/>
+        <ion-datetime
+            ref="datetime"
+            v-model="datetimeModel"
+            :first-day-of-week="1"
+            :prefer-wheel="false"
+            max="2100-12-31"
+            min="1990-01-01"
+            presentation="date"
+            size="cover"/>
       </div>
     </ion-modal>
   </Teleport>
 </template>
 <script lang="ts" setup>
-import {buildLocalDate} from "@/constants/utils.ts";
-import {onMounted, ref, watch} from "vue";
+import {buildLocalDate, rankTranslate} from "@/constants/utils.ts";
+import {computed, onMounted, ref, watch} from "vue";
 import {IonButton, IonDatetime, IonHeader, IonModal, IonToolbar} from "@ionic/vue";
 import CircleLiturgicalColor from "@/components/atoms/CircleLiturgicalColor.vue";
 import HapticsService from "@/services/HapticsService.ts";
 import {useDateStore} from "@/stores/useDateStore.ts";
-import Breviarium from "breviarium";
-
+import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 const modal = ref();
-const datetime = ref();
-const isOpen = ref<boolean>(false);
+const dateStore = useDateStore();
+const datetimeModel = ref(dateStore.getCurrentDate);
+const printableDate = computed(() => new Date(datetimeModel.value))
+const isOpen = ref(false);
 
-const printedDate = ref<Date>((useDateStore().getCurrentDate));
+watch(datetimeModel, async () => {
+  const newDate = new Date(datetimeModel.value)
+  if (newDate) {
+    dateStore.setDate(newDate);
+    await useBreviariumStore().getLiturgyInformation().then(data => {
+      liturgyInformationData.value = data
+      color.value = data.color
+    });
+    rank.value = await rankTranslate(liturgyInformationData.value?.rank)
+  }
+})
 
 /* Calendar funtions */
 const setOpen = (open: boolean) => {
   HapticsService.light();
   isOpen.value = open;
 };
-watch(datetime, () => {
-  console.log("datetime.value", datetime.value)
-  useDateStore().setDate(datetime.value);
-})
-// const onchange = async (event: CustomEvent) => {
-//   console.log("EY")
-//   HapticsService.light();
-//
-//   // const oSelectedDay = datetime.value.$el.activeParts
-//   const value = event.detail.value;
-//
-//   selectedDate = new Date(
-//       value.year,
-//       value.month - 1,
-//       value.day,
-//       12,
-//   );
-//   console.log("selectedDate from ionmodal", selectedDate)
-//
-// };
 
 const goToday = () => {
-  datetime.value.$el.setActiveParts(datetime.value.$el.todayParts);
+  datetimeModel.value = new Date()
 };
 
+const liturgyInformationData = ref();
 const color = ref();
+const rank = ref();
 
 onMounted(async () => {
-  const brev = new Breviarium(useDateStore().getCurrentDate);
-  brev.getLiturgyInformation().then(data => {
-    console.log("liturgyInfo", data)
+  useBreviariumStore().getLiturgyInformation().then(data => {
+    liturgyInformationData.value = data
     color.value = data.color
   });
+  rank.value = await rankTranslate(liturgyInformationData.value?.rank)
 })
 
 </script>

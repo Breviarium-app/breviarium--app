@@ -2,18 +2,34 @@
   <ion-item class="prayer-item" @click="router.push('/saint')">
     <ion-label>
       <h2>Santoral</h2>
-      <p>{{ todaySaint?.name }} y {{ saintsOfDay.length - 1 }} más</p>
+      <p>{{ todaySaint?.name }} y {{ saintsOfDayPrint }} más</p>
     </ion-label>
   </ion-item>
 </template>
 <script lang="ts" setup>
 import {useSanctusStore} from "@/stores/sanctus.ts";
-import {ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import router from "@/router";
 import {IonItem, IonLabel} from "@ionic/vue";
+import {useDateStore} from "@/stores/useDateStore.ts";
 
-const {selectedSaint, saintsOfDay} = useSanctusStore();
-let todaySaint = ref<any | undefined>(selectedSaint);
+const todaySaint = ref();
+const saintsOfDayPrint = ref();
+
+const updateSaintData = async () => {
+  const {selectedSaint, saintsOfDay} = useSanctusStore();
+  todaySaint.value = selectedSaint;
+  saintsOfDayPrint.value = saintsOfDay?.length - 1;
+};
+
+watch(
+    () => useDateStore().getCurrentDate,
+    () => updateSaintData()
+);
+
+onMounted(async () => {
+  await updateSaintData();
+});
 </script>
 <style scoped>
 

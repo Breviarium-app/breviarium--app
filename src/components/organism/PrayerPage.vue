@@ -3,6 +3,7 @@ import {IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonTitle, Ion
 import {useRoute} from 'vue-router';
 import {useSettingsStore} from "@/stores/settingsStore.ts";
 import {computed} from "vue";
+import LiturgyInformation from "@/components/molecules/home-banners/LiturgyInformation.vue";
 
 const route = useRoute();
 const prayerType = route.params.type;
@@ -10,6 +11,11 @@ const prayerType = route.params.type;
 defineProps({
   title: {
     required: false,
+  },
+  displayLiturgicalInfo: {
+    required: false,
+    default: false,
+    type: Boolean,
   }
 })
 
@@ -50,6 +56,9 @@ const prayerWrapperStyle = computed(() => ({
     <ion-content :fullscreen="true" class="ion-padding">
       <div class="prayer-page">
         <div :style="prayerWrapperStyle" class="prayer-wrapper">
+          <div v-if="displayLiturgicalInfo" class="center">
+            <LiturgyInformation/>
+          </div>
           <slot></slot>
         </div>
       </div>

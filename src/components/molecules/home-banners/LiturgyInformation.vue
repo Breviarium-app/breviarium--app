@@ -1,13 +1,11 @@
 <script lang="ts" setup>
 import {onMounted, ref} from "vue";
-import Breviarium from "breviarium";
-import {useDateStore} from "@/stores/useDateStore.ts";
+import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 const liturgyInfo = ref();
 
 onMounted(async () => {
-  const brev = new Breviarium(useDateStore().getCurrentDate);
-  brev.getLiturgyInformation().then(data => {
+  await useBreviariumStore().getLiturgyInformation().then(data => {
     console.log("liturgyInfo", data)
     liturgyInfo.value = data
   });
@@ -15,7 +13,8 @@ onMounted(async () => {
 </script>
 <template>
   <!--  <p>{{ liturgyInfo }}</p>-->
-  <p class="title-color">Semana {{ liturgyInfo?.psaltery_week }} del salterio</p>
+  <p>{{ liturgyInfo?.celebration }}</p>
+  <p>Semana {{ liturgyInfo?.psaltery_week }} del salterio</p>
 </template>
 
 <style scoped>
