@@ -19,8 +19,10 @@ const breviariumStore = useBreviariumStore();
 
 const updateGospelQuote = async () => {
   breviariumStore.getEvangelium().then((data) => {
-    if (data.evangelium_lectiones.length > 0) {
-      gospelQuote.value = data.evangelium_lectiones[0]?.ref.split(':')[0];
+    if (data?.evangelium_lectiones) {
+      if (data?.evangelium_lectiones?.length > 0) {
+        gospelQuote.value = data?.evangelium_lectiones[0]?.ref.split(':')[0];
+      }
     }
   });
 

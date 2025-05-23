@@ -1,17 +1,17 @@
 import {defineStore} from "pinia";
-import type {
+
+import Breviarium from "breviarium";
+import {useDateStore} from "@/stores/useDateStore.ts";
+import {
     CompletoriumSchemaOutput,
     EvangeliumSchemaOutput,
     IntermediateSchemaOutput,
     InvitatoriumSchemaOutput,
     LaudesSchemaOutput,
     LecturesSchemaOutput,
-    LiturgyInformation,
     OfficiumSchemaOutput,
     VesperaeSchemaOutput
-} from "breviarium";
-import Breviarium from "breviarium";
-import {useDateStore} from "@/stores/useDateStore.ts";
+} from "breviarium/dist/prayer-manager-interface";
 
 export const useBreviariumStore = defineStore("breviarium", () => {
     const breviarium = new Breviarium(useDateStore().getCurrentDate);
@@ -61,10 +61,10 @@ export const useBreviariumStore = defineStore("breviarium", () => {
     }
 
     const getInvitatoriumPsalms = async (): Promise<any[]> => {
-        return await breviarium.getInvitatoriumPsalms(date || useDateStore().getCurrentDate);
+        return await breviarium.getInvitatoriumPsalms();
     }
 
-    const getLiturgyInformation = async (date?: Date): Promise<LiturgyInformation> => {
+    const getLiturgyInformation = async (date?: Date): Promise<any> => {
         return await breviarium.getLiturgyInformation(date || useDateStore().getCurrentDate);
     }
 

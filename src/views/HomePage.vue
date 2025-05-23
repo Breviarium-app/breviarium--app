@@ -14,7 +14,6 @@ import {
   useIonRouter
 } from '@ionic/vue';
 import {App} from '@capacitor/app';
-import SaintBanner from "@/components/molecules/home-banners/SaintBanner.vue";
 import {currentLiturgyHour} from "@/constants/utils.ts";
 import DateAndCelebration from "@/components/molecules/home-banners/DateAndCelebration.vue";
 import router from "@/router";
@@ -45,7 +44,6 @@ useBackButton(-1, () => {
     <ion-content>
       <div class="date-section ion-padding">
         <DateAndCelebration/>
-        <SaintBanner/>
       </div>
 
       <div class="prayer-grid">

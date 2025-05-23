@@ -41,3 +41,13 @@ export enum Ranks {
     OptionalMemorial = "OPTIONAL_MEMORIAL",
     Weekday = "WEEKDAY"
 }
+
+export enum RANKS_SPANISH {
+    Solemnity = "Solemnidad",
+    Feast = "Fiesta",
+    Memorial = "Memoria obligatoria",
+    OptionalMemorial = "Memoria libre",
+    Ferial = "feria",
+    Empty = "",
+    Sunday = "Domingo"
+}

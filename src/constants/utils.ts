@@ -1,5 +1,5 @@
 import {DAYS_SPANISH, MONTH_SPANISH} from "@/constants/index.ts";
-import {LiturgicalColors, LiturgicalSeasons, Ranks} from "@/constants/types.ts";
+import {LiturgicalColors, LiturgicalSeasons, Ranks, RANKS_SPANISH} from "@/constants/types.ts";
 
 
 export const currentLiturgyHour = () => {
@@ -99,4 +99,40 @@ export function showTeDeum(rank: string, season: string) {
         return true;
     }
     return false;
+}
+
+export async function rankTranslate(rankCode: string) {
+    let rank = RANKS_SPANISH.Ferial;
+
+    // const precedenceCode = await searchPropertyOfDay(useDateStore().getCurrentDate, PropertyCerpetualCalendar.Precedence);
+    switch (rankCode) {
+        case Ranks.Solemnity: {
+            rank = RANKS_SPANISH.Solemnity;
+            break;
+        }
+        case Ranks.Feast: {
+            rank = RANKS_SPANISH.Feast;
+            break;
+        }
+        case Ranks.Sunday: {
+            // if (precedenceCode === "PRIVILEGED_SUNDAY_2") rank = RANKS_SPANISH.Empty;
+            rank = RANKS_SPANISH.Sunday
+            break;
+        }
+        case Ranks.Weekday: {
+            rank = RANKS_SPANISH.Ferial;
+            // if ((precedenceCode === "TRIDUUM_1") || (precedenceCode === "PRIVILEGED_WEEKDAY_9")) rank = RANKS_SPANISH.Empty;
+            break;
+        }
+        case Ranks.Memorial: {
+            rank = RANKS_SPANISH.Memorial;
+            break;
+        }
+        case Ranks.OptionalMemorial: {
+            rank = RANKS_SPANISH.OptionalMemorial;
+            break;
+        }
+    }
+    console.log("rankCode", rankCode, ", final:", rank)
+    return rank;
 }
