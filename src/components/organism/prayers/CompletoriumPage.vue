@@ -1,5 +1,5 @@
 <template>
-  <PrayerPage title="Completas">
+  <PrayerPage :display-liturgical-info="true" title="Completas">
 
     <h4 class="title title-color">
       {{ formatText($t("initialInvocation")) }}
@@ -212,11 +212,11 @@ import {onMounted, ref} from "vue";
 import PrayerPage from "@/components/organism/PrayerPage.vue";
 import {formatText} from "@/constants/formatText.ts";
 import {CompletoriumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
-import Breviarium from "breviarium";
 import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
 import {isEaster, isInAlbis, isTodayLent, isTriduum} from "@/constants/utils.ts";
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
 import {IonSegment, IonSegmentButton} from "@ionic/vue";
+import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 
 const prayer = ref<CompletoriumSchemaOutput>();
@@ -228,8 +228,7 @@ const selectedMaryAntiphonCode = ref<
 
 
 onMounted(async () => {
-  const brev = new Breviarium();
-  await brev.getCompletorium().then((data) => {
+  await useBreviariumStore().getCompletorium().then((data) => {
     console.log("getCompletorium", data);
     prayer.value = data;
   }).catch(error => {

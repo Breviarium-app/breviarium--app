@@ -1,10 +1,6 @@
 name: Build & Patch Version 🚀
 
-on:
-  pull_request:
-    types: [ closed ]  # Trigger when a PR is closed (includes merged)
-    branches:
-      - main  # Only trigger for PRs targeting main
+on: workflow_dispatch
 
 jobs:
   build-ci-node:

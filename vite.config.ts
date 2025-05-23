@@ -11,7 +11,7 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),
-            romcal: resolve(__dirname, 'node_modules/romcal/dist/esm/romcal.mjs'),
+            romcal: resolve(__dirname, 'node_modules/romcal/rites/roman1969/dist/esm/romcal.js'),
         },
     },
 

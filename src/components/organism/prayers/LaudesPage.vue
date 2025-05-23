@@ -1,5 +1,5 @@
 <template>
-  <PrayerPage title="Laudes">
+  <PrayerPage :display-liturgical-info="true" title="Laudes">
     <!--    <h4 class="office-title">-->
     <!--      {{ $t("laudes") }}-->
     <!--    </h4>-->
@@ -166,17 +166,18 @@ import PadreNuestro from "@/components/molecules/prayers/PadreNuestro.vue";
 import {IonLabel, IonText} from "@ionic/vue";
 import {useSettingsStore} from "@/stores/settingsStore.ts";
 import OfficiumLectures from "@/components/molecules/prayers/OfficiumLectures.vue";
-import Breviarium from "breviarium";
 import CustomPrayersBlock from "@/components/organism/prayers/CustomPrayersBlock.vue";
 import EvangeliumLecture from "@/components/molecules/prayers/EvangeliumLecture.vue";
+import {useDateStore} from "@/stores/useDateStore.ts";
+import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 const laudes = ref<LaudesSchemaOutput>();
 const isModalInvocationOpen = ref(false);
 const settings = useSettingsStore().settings;
 
 onMounted(async () => {
-  const brev = new Breviarium();
-  await brev.getLaudes().then((data) => {
+  console.log("laudes date:", useDateStore().getCurrentDate)
+  await useBreviariumStore().getLaudes().then((data) => {
     laudes.value = data;
   });
 

@@ -49,7 +49,7 @@ body {
     --ion-color-danger: #eb445a;
     --ion-color-medium: #92949c;
     --ion-color-light: #f4f5f8;
-    --background-color-card: #f4f5f8;
+    --background-color-card: #e9ebed;
     --inner-border-width: 0px 0px 0px 0px !important;
     --background-card-shadow: #be4747;
     --ion-tab-bar-color: #666;
@@ -58,6 +58,7 @@ body {
     --background-hover: var(--ion-tab-bar-color);
     --wheel-highlight-background: var(--background);
     --background-rgb: var(--background);
+    --ion-toolbar-color: var(--ion-color-primary);
 
     ion-item::part(native) {
         --border-color: var(--border-color-light); /* navbar & ion-item border */
@@ -73,7 +74,7 @@ body {
     --ion-border-color: #272727; /* top header border */
     --background-color-card: #222222;
     --border-color-light: #1b1a1a; /* navbar & ion-item border */
-    --background-card-shadow: #7a2e2e;
+    --background-card-shadow: #be4747;
     --ion-color-primary: var(--background-card-shadow);
 }
 
@@ -200,4 +201,12 @@ button:focus-visible {
 
 .italic {
     font-style: italic;
+}
+
+.prayer-item {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --border-radius: 8px;
+    --background: var(--background-color-card);
+    border: 0 solid var(--border-color);
 }

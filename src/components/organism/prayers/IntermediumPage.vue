@@ -1,5 +1,5 @@
 <template>
-  <PrayerPage :title="props.prayerTitle">
+  <PrayerPage :display-liturgical-info="true" :title="props.prayerTitle">
     <p class="margin-y-md title-color ion-align-items-center ion-text-center">
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
@@ -86,6 +86,7 @@ import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
 import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
 import {isOrdinaryTime, isTodayLent} from "@/constants/utils.ts";
 import Breviarium from "breviarium";
+import {useDateStore} from "@/stores/useDateStore.ts";
 
 const prayer = ref<IntermediateSchemaOutput>();
 
@@ -97,7 +98,7 @@ const props = defineProps({
 })
 
 onMounted(async () => {
-  const brev = new Breviarium();
+  const brev = new Breviarium(useDateStore().getCurrentDate);
 
   if (props.prayerTitle.toLowerCase() == 'tercia') {
     await brev.getTertia().then((data: any) => {

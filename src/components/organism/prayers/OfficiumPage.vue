@@ -1,7 +1,5 @@
 <template>
-  <PrayerPage title="Oficio">
-    <h4 class="title title-color">{{ $t('initialInvocation') }}</h4>
-    <h4 class="office-title">{{ $t('officiumLectionis') }}</h4>
+  <PrayerPage :display-liturgical-info="true" title="Oficio">
     <h4 class="label-rule title-color">{{ $t('laudesFirstExplanation') }}</h4>
     <h4 class="title title-color">{{ $t('initialInvocation') }}</h4>
 
@@ -59,7 +57,7 @@
 
     <!--    TODO: te deum display from romcal rank/season-->
     <!--    <div v-if="showTeDeum()">-->
-    <!--      <h4 class="title title-color">{{ $t('teDeum') }}</h4>-->
+    <!--      <h4 class="title title-liturgyInformationData">{{ $t('teDeum') }}</h4>-->
     <!--      <TeDeum/>-->
     <!--    </div>-->
 
@@ -84,18 +82,17 @@ import {onMounted, ref} from "vue";
 import PrayerPage from "@/components/organism/PrayerPage.vue";
 import {formatText} from "@/constants/formatText.ts";
 import {OfficiumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
-import Breviarium from "breviarium";
 import OfficiumLectures from "@/components/molecules/prayers/OfficiumLectures.vue";
 import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
 import InvitatoryComponent from "@/components/molecules/prayers/InvitatoryComponent.vue";
 import {isTodayLent} from "@/constants/utils.ts";
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
+import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 const prayer = ref<OfficiumSchemaOutput>();
 
 onMounted(async () => {
-  const brev = new Breviarium();
-  await brev.getOfficium().then((data) => {
+  await useBreviariumStore().getOfficium().then((data) => {
     prayer.value = data;
   })
 

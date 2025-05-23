@@ -1,14 +1,10 @@
 <script lang="ts" setup>
 
-import {ref} from "vue";
-import {Sanctus} from "sanctus";
+import {computed} from "vue";
+import {useSanctusStore} from "@/stores/sanctus.ts";
 
-const saintOfDay = ref('');
+const saintOfDay = computed(() => useSanctusStore().selectedSaint?.name);
 
-let sanctus = new Sanctus();
-const saint: any = sanctus.getSaint();
-const name = saint ? saint.name : '';
-saintOfDay.value = name;
 </script>
 <template>
   <router-link to="/saint">

@@ -31,6 +31,7 @@ const i18n = createI18n({
     locale: 'es',
     fallbackLocale: 'es',
     warnHtmlMessage: false,
+    warnHtmlInMessage: 'off',
     messages: {
         es,
         en
@@ -45,4 +46,5 @@ const app = createApp(App)
 
 router.isReady().then(() => {
     app.mount('#app')
+    // perpetualCalendar(2025).then(console.log)
 })

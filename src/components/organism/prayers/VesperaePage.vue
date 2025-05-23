@@ -1,5 +1,5 @@
 <template>
-  <PrayerPage title="Vísperas">
+  <PrayerPage :display-liturgical-info="true" title="Vísperas">
     <h4 class="title title-color">{{ $t('initialInvocation') }}</h4>
     <p class="margin-y-md title-color ion-align-items-center ion-text-center"
        @click="() => isModalInvocationOpen = true">
@@ -137,18 +137,17 @@ import {LaudesSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import PadreNuestro from "@/components/molecules/prayers/PadreNuestro.vue";
 import {IonLabel, IonText} from "@ionic/vue";
 import {useSettingsStore} from "@/stores/settingsStore.ts";
-import Breviarium from "breviarium";
 import OfficiumLectures from "@/components/molecules/prayers/OfficiumLectures.vue";
 import MagnificatPrayer from "@/components/molecules/prayers/MagnificatPrayer.vue";
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
 import CustomPrayersBlock from "@/components/organism/prayers/CustomPrayersBlock.vue";
+import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 const prayer = ref<LaudesSchemaOutput>();
 const isModalInvocationOpen = ref(false);
 const settings = useSettingsStore().settings;
 onMounted(async () => {
-  const brev = new Breviarium();
-  await brev.getVesperae().then((data) => {
+  await useBreviariumStore().getVesperae().then((data) => {
     prayer.value = data;
   })
 
