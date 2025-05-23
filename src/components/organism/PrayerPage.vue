@@ -75,6 +75,10 @@ const prayerWrapperStyle = computed(() => ({
   display: block;
   max-width: min(800px, 100%);
   font-size: 1.2rem;
+  -webkit-user-select: auto !important;
+  -moz-user-select: auto !important;
+  -ms-user-select: auto !important;
+  user-select: auto !important;
 }
 
 :deep(.prayer-wrapper p) {
