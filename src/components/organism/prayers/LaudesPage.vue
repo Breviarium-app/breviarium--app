@@ -168,7 +168,6 @@ import {useSettingsStore} from "@/stores/settingsStore.ts";
 import OfficiumLectures from "@/components/molecules/prayers/OfficiumLectures.vue";
 import CustomPrayersBlock from "@/components/organism/prayers/CustomPrayersBlock.vue";
 import EvangeliumLecture from "@/components/molecules/prayers/EvangeliumLecture.vue";
-import {useDateStore} from "@/stores/useDateStore.ts";
 import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 const laudes = ref<LaudesSchemaOutput>();
@@ -176,7 +175,6 @@ const isModalInvocationOpen = ref(false);
 const settings = useSettingsStore().settings;
 
 onMounted(async () => {
-  console.log("laudes date:", useDateStore().getCurrentDate)
   await useBreviariumStore().getLaudes().then((data) => {
     laudes.value = data;
   });

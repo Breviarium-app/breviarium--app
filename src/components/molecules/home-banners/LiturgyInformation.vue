@@ -6,7 +6,6 @@ const liturgyInfo = ref();
 
 onMounted(async () => {
   await useBreviariumStore().getLiturgyInformation().then(data => {
-    console.log("liturgyInfo", data)
     liturgyInfo.value = data
   });
 })
