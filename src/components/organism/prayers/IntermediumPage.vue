@@ -4,7 +4,7 @@
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>
-    <span v-if="isTodayLent()"
+    <span v-if="isTodayLentCondition"
           v-html="formatText($t('initialInvocationBodyLent'))"></span>
     <span v-else
           v-html="formatText($t('initialInvocationBody'))"></span>
@@ -20,33 +20,33 @@
     <span class="title-color cita"
           v-html="formatText(prayer?.primer_salmo_cita)"></span>
     <p v-html="formatText(prayer?.primer_salmo_texto)"></p>
-    <p v-if="prayer?.segundo_salmo_antifona && isOrdinaryTime()">
+    <p v-if="prayer?.segundo_salmo_antifona && isOrdinaryTimeCondition">
       <span class="title-color">Ant. </span>
       <span v-html="formatText(prayer?.primer_salmo_antifona)"></span>
     </p>
-    <p v-if="prayer?.segundo_salmo_antifona && isOrdinaryTime()">
+    <p v-if="prayer?.segundo_salmo_antifona && isOrdinaryTimeCondition">
       <span class="title-color">Ant. 2. </span>
       <span v-html="formatText(prayer?.segundo_salmo_antifona)"></span>
     </p>
     <span class="title-color cita"
           v-html="formatText(prayer?.segundo_salmo_cita)"></span>
     <p v-html="formatText(prayer?.segundo_salmo_texto)"></p>
-    <p v-if="prayer?.segundo_salmo_antifona && isOrdinaryTime()">
+    <p v-if="prayer?.segundo_salmo_antifona && isOrdinaryTimeCondition">
       <span class="title-color">Ant. </span>
       <span v-html="formatText(prayer?.segundo_salmo_antifona)"></span>
     </p>
-    <p v-if="prayer?.tercer_salmo_antifona && isOrdinaryTime()">
+    <p v-if="prayer?.tercer_salmo_antifona && isOrdinaryTimeCondition">
       <span class="title-color">Ant. 3. </span>
       <span v-html="formatText(prayer?.tercer_salmo_antifona)"></span>
     </p>
     <span class="title-color cita"
           v-html="formatText(prayer?.tercer_salmo_cita)"></span>
     <p v-html="formatText(prayer?.tercer_salmo_texto)"></p>
-    <p v-if="prayer?.tercer_salmo_antifona && isOrdinaryTime()">
+    <p v-if="prayer?.tercer_salmo_antifona && isOrdinaryTimeCondition">
       <span class="title-color">Ant. </span>
       <span v-html="formatText(prayer?.tercer_salmo_antifona)"></span>
     </p>
-    <p v-if="!prayer?.tercer_salmo_antifona || !isOrdinaryTime()">
+    <p v-if="!prayer?.tercer_salmo_antifona || !isOrdinaryTimeCondition">
       <span class="title-color">Ant. </span>
       <span v-html="formatText(prayer?.primer_salmo_antifona)"></span>
     </p>
@@ -89,6 +89,8 @@ import Breviarium from "breviarium";
 import {useDateStore} from "@/stores/useDateStore.ts";
 
 const prayer = ref<IntermediateSchemaOutput>();
+const isOrdinaryTimeCondition = ref()
+const isTodayLentCondition = ref()
 
 const props = defineProps({
   prayerTitle: {
@@ -115,6 +117,13 @@ onMounted(async () => {
       prayer.value = data;
     })
   }
+
+  await isOrdinaryTime().then((data) => {
+    isOrdinaryTimeCondition.value = data;
+  })
+  await isTodayLent().then((data) => {
+    isTodayLentCondition.value = data;
+  })
 
 });
 

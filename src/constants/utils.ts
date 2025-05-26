@@ -1,6 +1,6 @@
 import {DAYS_SPANISH, MONTH_SPANISH} from "@/constants/index.ts";
-import {LiturgicalColors, LiturgicalSeasons, Ranks, RANKS_SPANISH} from "@/constants/types.ts";
-
+import {LiturgicalColors, LiturgicalPeriods, LiturgicalSeasons, Ranks, RANKS_SPANISH} from "@/constants/types.ts";
+import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 export const currentLiturgyHour = () => {
     const hour = new Date().getHours();
@@ -56,37 +56,52 @@ export function getHexLiturgicalColor(color: string) {
     }
 }
 
-export function isEaster(): boolean {
-    //TODO: feat pending
-    return true;
+export async function isEaster(): Promise<boolean> {
+    let result: boolean = false;
+    await useBreviariumStore().getLiturgyInformation().then((data) => {
+        if (data.seasons) result = data.seasons?.includes(LiturgicalSeasons.EASTER);
+        console.log("data", data)
+    })
+    console.log("easter?", result)
+    return result;
+}
+
+export async function isTriduum(): Promise<boolean> {
+    let result: boolean = false;
+    await useBreviariumStore().getLiturgyInformation().then((data) => {
+        if (data.seasons) result = data.seasons?.includes(LiturgicalSeasons.PASCHAL_TRIDUUM);
+    })
+    return result;
     // return await searchPropertyOfDay(date, PropertyCerpetualCalendar.Seasons)).includes('LENT');
 }
 
-export function isTriduum(): boolean {
-    //TODO: feat pending
-    return false;
-    // return await searchPropertyOfDay(date, PropertyCerpetualCalendar.Seasons)).includes('LENT');
+export async function isInAlbis(): Promise<boolean> {
+    let result: boolean = false;
+    await useBreviariumStore().getLiturgyInformation().then((data) => {
+        if (data.periods) result = data.periods?.includes(LiturgicalPeriods.EASTER_OCTAVE);
+    })
+    console.log(result)
+    return result;
 }
 
-export function isInAlbis(): boolean {
-    //TODO: feat pending
-    return false;
-    // return await searchPropertyOfDay(date, PropertyCerpetualCalendar.Seasons)).includes('LENT');
+export async function isTodayLent(): Promise<boolean> {
+    let result: boolean = false;
+    await useBreviariumStore().getLiturgyInformation().then((data) => {
+        if (data.seasons) result = data.seasons?.includes(LiturgicalSeasons.LENT);
+    })
+    return result;
 }
 
-export function isTodayLent(): boolean {
-    //TODO: feat pending
-    return false;
-    // return await searchPropertyOfDay(date, PropertyCerpetualCalendar.Seasons)).includes('LENT');
-}
-
-export function isOrdinaryTime(): boolean {
-    // TODO: feat pending
-    return false;
+export async function isOrdinaryTime(): Promise<boolean> {
+    let result: boolean = false;
+    await useBreviariumStore().getLiturgyInformation().then((data) => {
+        if (data.seasons) result = data.seasons?.includes(LiturgicalSeasons.ORDINARY_TIME);
+    })
+    return result;
 }
 
 export function showTeDeum(rank: string, season: string) {
-    if (season === LiturgicalSeasons.CHRISTMAS) {
+    if (season === LiturgicalSeasons.CHRISTMAS_TIME) {
         return true;
     }
     if (rank === Ranks.Solemnity) {
@@ -115,13 +130,13 @@ export async function rankTranslate(rankCode: string) {
             break;
         }
         case Ranks.Sunday: {
-            // if (precedenceCode === "PRIVILEGED_SUNDAY_2") rank = RANKS_SPANISH.Empty;
+            // TODO: if (precedenceCode === "PRIVILEGED_SUNDAY_2") rank = RANKS_SPANISH.Empty;
             rank = RANKS_SPANISH.Sunday
             break;
         }
         case Ranks.Weekday: {
             rank = RANKS_SPANISH.Ferial;
-            // if ((precedenceCode === "TRIDUUM_1") || (precedenceCode === "PRIVILEGED_WEEKDAY_9")) rank = RANKS_SPANISH.Empty;
+            // TODO: if ((precedenceCode === "TRIDUUM_1") || (precedenceCode === "PRIVILEGED_WEEKDAY_9")) rank = RANKS_SPANISH.Empty;
             break;
         }
         case Ranks.Memorial: {
@@ -133,6 +148,5 @@ export async function rankTranslate(rankCode: string) {
             break;
         }
     }
-    console.log("rankCode", rankCode, ", final:", rank)
     return rank;
 }

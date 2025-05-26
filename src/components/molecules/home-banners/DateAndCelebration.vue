@@ -15,7 +15,6 @@
       </ion-header>
       <div class="modal-wrapper">
         <ion-datetime
-            ref="datetime"
             v-model="datetimeModel"
             :first-day-of-week="1"
             :prefer-wheel="false"
@@ -38,7 +37,8 @@ import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 const modal = ref();
 const dateStore = useDateStore();
-const datetimeModel = ref(dateStore.getCurrentDate);
+const datetimeModel = ref(dateStore.getCurrentDate || new Date());
+console.log("datetimeModel", datetimeModel)
 const printableDate = computed(() => new Date(datetimeModel.value))
 const isOpen = ref(false);
 

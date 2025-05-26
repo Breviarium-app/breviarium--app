@@ -7,9 +7,8 @@
     <p class="margin-y-md title-color ion-align-items-center ion-text-center">
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
-
     </p>
-    <div v-if="isTodayLent()"
+    <div v-if="isLentCondition"
          v-html="formatText($t('initialInvocationBodyLent'))"></div>
     <div v-else
          v-html="formatText($t('initialInvocationBody'))"></div>
@@ -50,35 +49,35 @@
 
     <p>
       <span class="title-color">Ant. </span>
-      <span v-if="isEaster()">Aleluya, aleluya, aleluya.</span>
+      <span v-if="isEasterCondition">Aleluya, aleluya, aleluya.</span>
       <span v-else v-html="formatText(prayer?.primer_salmo_antifona)"></span>
     </p>
     <span class="subtitle title-color cita"
           v-html="formatText(prayer?.primer_salmo_cita)"></span>
     <div v-html="formatText(prayer?.primer_salmo_texto)"></div>
-    <p v-if="isEaster() && !prayer?.segundo_salmo_texto">
+    <p v-if="isEasterCondition && !prayer?.segundo_salmo_texto">
       <span class="title-color">Ant. </span>
-      <span v-if="isEaster() && !prayer?.segundo_salmo_texto">Aleluya, aleluya, aleluya</span>
+      <span v-if="isEasterCondition && !prayer?.segundo_salmo_texto">Aleluya, aleluya, aleluya</span>
       <span v-else v-html="formatText(prayer?.primer_salmo_antifona)"></span>
     </p>
-    <p v-if="!isEaster()">
+    <p v-if="!isEasterCondition">
       <span class="title-color">Ant. </span><span v-html="formatText(prayer?.primer_salmo_antifona)"></span>
     </p>
     <div v-if="prayer?.segundo_salmo_texto">
-      <p v-if="!isEaster()">
+      <p v-if="!isEasterCondition">
         <span class="title-color">Ant. </span>
         <span v-html="formatText(prayer?.segundo_salmo_antifona)"></span>
       </p>
       <span class="subtitle title-color cita"
             v-html="formatText(prayer?.segundo_salmo_cita)"></span>
       <div v-html="formatText(prayer?.segundo_salmo_texto)"></div>
-      <p v-if="!isEaster()">
+      <p v-if="!isEasterCondition">
         <span class="title-color">Ant. </span>
         <span v-html="formatText(prayer?.segundo_salmo_antifona)"></span>
       </p>
-      <p v-if="isEaster() && prayer?.segundo_salmo_texto">
+      <p v-if="isEasterCondition && prayer?.segundo_salmo_texto">
         <span class="title-color">Ant. </span>
-        <span v-if="isEaster()">Aleluya, aleluya, aleluya</span>
+        <span v-if="isEasterCondition">Aleluya, aleluya, aleluya</span>
         <span v-else v-html="formatText(prayer?.primer_salmo_antifona)"></span>
       </p>
     </div>
@@ -91,18 +90,20 @@
     <div v-html="formatText(prayer?.lectura_biblica_texto)"></div>
 
     <h4 class="title title-color">
-      {{ isTriduum() ? "Antífona" : (isInAlbis() ? "Antífona" : (isEaster() ? $t("responsory") : $t("responsory"))) }}
+      {{
+        isTriduumCondition ? "Antífona" : (isInAlbisCondition ? "Antífona" : (isEasterCondition ? $t("responsory") : $t("responsory")))
+      }}
     </h4>
 
-    <div v-if="isTriduum()">
+    <div v-if="isTriduumCondition">
       <div class="responsorio" v-html="formatText(prayer?.antifona_triduo)"></div>
     </div>
 
-    <div v-else-if="isInAlbis()">
+    <div v-else-if="isInAlbisCondition">
       <div class="responsorio" v-html="formatText(prayer?.antifona_inalbis)"></div>
     </div>
 
-    <div v-else-if="isEaster()">
+    <div v-else-if="isEasterCondition">
       <div v-for="item in prayer?.responsorio_pascua" v-bind:key="item">
         <div class="responsorio" v-html="formatText(item)"></div>
       </div>
@@ -150,7 +151,7 @@
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>
     <div v-html="formatText($t('complineFinalPrayer'))"></div>
-    <div v-if="isEaster()">
+    <div v-if="isEasterCondition">
       <h4 class="title title-color">
         {{ $t("complineFinalAntiphonReginaCoeli") }}
       </h4>
@@ -226,6 +227,10 @@ const selectedMaryAntiphonCode = ref<
     "theHailMary" | "motherOfTheRedeemer" | "queenOfHeaven" | "toThyProtection"
 >("theHailMary");
 
+const isEasterCondition = ref();
+const isTriduumCondition = ref();
+const isInAlbisCondition = ref();
+const isLentCondition = ref();
 
 onMounted(async () => {
   await useBreviariumStore().getCompletorium().then((data) => {
@@ -233,8 +238,20 @@ onMounted(async () => {
     prayer.value = data;
   }).catch(error => {
     console.error(error);
-  })
+  });
 
+  await isEaster().then(value => {
+    isEasterCondition.value = value;
+  });
+  await isInAlbis().then(value => {
+    isInAlbisCondition.value = value
+  });
+  await isTriduum().then(value => {
+    isTriduumCondition.value = value
+  });
+  await isTodayLent().then(value => {
+    isLentCondition.value = value
+  });
 });
 
 </script>

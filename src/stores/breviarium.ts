@@ -9,6 +9,7 @@ import {
     InvitatoriumSchemaOutput,
     LaudesSchemaOutput,
     LecturesSchemaOutput,
+    LiturgyInformationOutput,
     OfficiumSchemaOutput,
     VesperaeSchemaOutput
 } from "breviarium/dist/prayer-manager-interface";
@@ -64,7 +65,7 @@ export const useBreviariumStore = defineStore("breviarium", () => {
         return await breviarium.getInvitatoriumPsalms();
     }
 
-    const getLiturgyInformation = async (date?: Date): Promise<any> => {
+    const getLiturgyInformation = async (date?: Date): Promise<LiturgyInformationOutput> => {
         return await breviarium.getLiturgyInformation(date || useDateStore().getCurrentDate);
     }
 
@@ -82,6 +83,6 @@ export const useBreviariumStore = defineStore("breviarium", () => {
         getCompletorium,
         getEvangelium,
         getInvitatoriumPsalms,
-        getLiturgyInformation
+        getLiturgyInformation,
     };
 });

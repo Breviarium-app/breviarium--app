@@ -8,7 +8,7 @@
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>
 
-    <span v-if="isTodayLent()" v-html="formatText($t('initialInvocationBodyLent'))"></span>
+    <span v-if="isTodayLentCondition" v-html="formatText($t('initialInvocationBodyLent'))"></span>
     <span v-else v-html="formatText($t('initialInvocationBody'))"></span>
 
     <h4 class="title title-color">{{ $t('invitatory') }}</h4>
@@ -90,11 +90,13 @@ import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
 import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 const prayer = ref<OfficiumSchemaOutput>();
-
+const isTodayLentCondition = ref();
 onMounted(async () => {
   await useBreviariumStore().getOfficium().then((data) => {
     prayer.value = data;
   })
+
+  await isTodayLent().then(value => isTodayLentCondition.value = value);
 
 });
 
