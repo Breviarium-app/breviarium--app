@@ -8,13 +8,13 @@
       <ion-label>{{ $t('psalm') }} 99</ion-label>
     </ion-segment-button>
     <ion-segment-button value="third">
-      <ion-label>{{ $t('psalm') }} 66</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="fourth">
       <ion-label>{{ $t('psalm') }} 23</ion-label>
     </ion-segment-button>
+    <ion-segment-button value="fourth">
+      <ion-label>{{ $t('psalm') }} 66</ion-label>
+    </ion-segment-button>
   </ion-segment>
-  <div>
+  <div class="invitatory-wrapper">
     <div v-if="selectedInvitatorium == 'first'">
       <div class="title-color" v-html="invitatorium_psalms?.at(0).title"></div>
       <div v-html="invitatorium_psalms?.at(0).psalm"></div>
@@ -63,5 +63,9 @@ onMounted(async () => {
 ion-segment-view {
   overflow-y: hidden; /* Prevents scrolling */
   height: auto; /* Ensures it takes the height of its content */
+}
+
+.invitatory-wrapper {
+  padding-top: 1em;
 }
 </style>
