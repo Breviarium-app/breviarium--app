@@ -90,7 +90,7 @@
     <p v-html="formatText(prayer?.preces_respuesta)"></p>
     <div v-for="item in prayer?.preces_contenido"
          v-bind:key="item" class="preces">
-      <p v-html="formatText(item)"></p>
+      <p v-html="formatPrayers(item)"></p>
     </div>
 
     <div class="preces">
@@ -131,7 +131,7 @@
 <script lang="ts" setup>
 import {onMounted, ref} from "vue";
 import PrayerPage from "@/components/organism/PrayerPage.vue";
-import {formatText} from "@/constants/formatText.ts";
+import {formatPrayers, formatText} from "@/constants/formatText.ts";
 import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
 import {LaudesSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import PadreNuestro from "@/components/molecules/prayers/PadreNuestro.vue";

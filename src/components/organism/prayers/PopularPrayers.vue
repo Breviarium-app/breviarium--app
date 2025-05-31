@@ -1,6 +1,6 @@
 <template>
   <PrayerPage title="Oraciones">
-    <p class="label-rule title-color">
+    <p class=" title-color">
 
     </p>
     <h4 class="title title-color">

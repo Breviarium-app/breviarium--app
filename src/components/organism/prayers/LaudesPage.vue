@@ -3,7 +3,7 @@
     <!--    <h4 class="office-title">-->
     <!--      {{ $t("laudes") }}-->
     <!--    </h4>-->
-    <p class="label-rule title-color">
+    <p class=" title-color">
       {{ $t("laudesFirstExplanation") }}
     </p>
     <h4 class="title title-color">
@@ -87,11 +87,9 @@
     <h4 class="title title-color">
       {{ $t("meditationTime") }}
     </h4>
-    <ion-text
-        class="label-rule title-color"
-    >
-      {{ $t("meditationTimeNote") }}
-    </ion-text>
+    <p class="title-color">
+      <i>{{ $t("meditationTimeNote") }}</i>
+    </p>
     <h4 class="title title-color">
       {{ $t("canticumEvangelicum") }}
     </h4>
@@ -108,7 +106,7 @@
     <p v-html="formatText(laudes?.preces_intro)"></p>
     <p v-html="formatText(laudes?.preces_respuesta)"></p>
     <div v-for="item in laudes?.preces_contenido" v-bind:key="item" class="preces">
-      <p v-html="formatText(item)"></p>
+      <p v-html="formatPrayers(item)"></p>
     </div>
     <div class="preces">
       <p class="title-color">{{ $t("explanationPreces") }}</p>
@@ -119,11 +117,7 @@
     </h4>
     <p class="margin-y-md">
       <ion-label class="title-color"> ℣.</ion-label>
-      <span
-          v-html="
-            formatText(laudes?.invitacion_padrenuestro)
-            "
-      ></span>
+      <span v-html="formatText(laudes?.invitacion_padrenuestro)"></span>
     </p>
     <PadreNuestro/>
     <h4 class="title title-color">
@@ -156,14 +150,14 @@
 <script lang="ts" setup>
 import {onMounted, ref} from "vue";
 import PrayerPage from "@/components/organism/PrayerPage.vue";
-import {formatText} from "@/constants/formatText.ts";
+import {formatPrayers, formatText} from "@/constants/formatText.ts";
 import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
 import InvitatoryComponent from "@/components/molecules/prayers/InvitatoryComponent.vue";
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
 import {LaudesSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import BenedictusPrayer from "@/components/molecules/prayers/Benedictus.vue";
 import PadreNuestro from "@/components/molecules/prayers/PadreNuestro.vue";
-import {IonLabel, IonText} from "@ionic/vue";
+import {IonLabel} from "@ionic/vue";
 import {useSettingsStore} from "@/stores/settingsStore.ts";
 import OfficiumLectures from "@/components/molecules/prayers/OfficiumLectures.vue";
 import CustomPrayersBlock from "@/components/organism/prayers/CustomPrayersBlock.vue";

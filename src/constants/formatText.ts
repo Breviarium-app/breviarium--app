@@ -17,9 +17,16 @@ export const formatText = (text: string | undefined): string => {
     return paragraphs.split("\n").join("<br />");
 };
 
+export const formatPrayers = (text: string | undefined): string => {
+    if (!text) return "";
+    let textToFormat = text;
+    textToFormat = formatItalic(textToFormat, true);
+    const paragraphs = textToFormat.split("\n\n").join("<br /><br />");
+    return paragraphs.split("\n").join("<br />");
+};
 
 export const formatItalic = (text: string, preces = false) => {
-    return text.replaceAll(/_(.*?)_/g, preces ? '<br/><i>$1</i>' : '<i>$1</i>');
+    return text.replaceAll(/_(.*?)_/g, preces ? '<br/>&nbsp;&nbsp;<i>$1</i>' : '<i>$1</i>');
 }
 
 const format$ToVRRed = (text: string) => {
