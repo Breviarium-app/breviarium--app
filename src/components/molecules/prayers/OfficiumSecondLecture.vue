@@ -8,11 +8,13 @@
       <span class="reference-bible cita">
         {{ lecturaCita?.split("$")[1] }}
       </span>
-      <i class="text-center cita" v-html=" formatText(lecturaTitulo)">
+      <i class="text-center cita" v-html="formatText(lecturaTitulo)">
       </i>
     </p>
     <p v-html="formatText(lecturaTexto)"></p>
-    <br/>
+
+    <p class="text-right title-color">{{ lecturaTitulo?.split('$')[2] }}</p>
+
     <p><span v-html="formatText(officium?.responsorio3[0])?.replace('℟.','℣.')"></span></p>
     <p><span v-html="formatText(officium?.responsorio3[0])?.replace('℣.','℟.')"></span></p>
     <p><span v-html="formatText(officium?.responsorio3[1])?.replace('℟.','℣.')"></span></p>
@@ -44,7 +46,6 @@
         <div class="title-color" v-html="formatText(officium?.lectura_patristica_titulo[1])"></div>
         <div v-html="formatText(officium?.lectura_patristica_texto[1])"></div>
         <div class="title-color" v-html="formatTextLecture(officium?.lectura_patristica_titulo[1].split('$')[2])"></div>
-
         <br/>
         <p><span v-html="formatText(officium?.responsorio3B[0])?.replace('℟.','℣.')"></span></p>
         <p><span v-html="formatText(officium?.responsorio3B[0])?.replace('℣.','℟.')"></span></p>
@@ -77,6 +78,8 @@ onMounted(async () => {
     lecturaCita.value = Array.isArray(officium.value?.lectura_patristica_cita) ? officium.value?.lectura_patristica_cita[0] : officium.value?.lectura_patristica_cita;
     lecturaTitulo.value = Array.isArray(officium.value?.lectura_patristica_titulo) ? officium.value?.lectura_patristica_titulo[0] : officium.value?.lectura_patristica_titulo;
     lecturaTexto.value = Array.isArray(officium.value?.lectura_patristica_texto) ? officium.value?.lectura_patristica_texto[0] : officium.value?.lectura_patristica_texto;
+    console.log("lecturaCita", lecturaCita.value)
+    console.log("lecturaTitulo", lecturaTitulo.value)
   });
 });
 
