@@ -1,7 +1,8 @@
 <template>
   <div class="version">
     <p>
-      {{ $t('title') }}.es · {{ $t('version') }} {{ versionApp }}
+      <a class="title-color" href="https://breviarium.es" target="_blank">{{ $t('title') }}.es</a> · {{ $t('version') }}
+      {{ versionApp }}
     </p>
     <p>
       <OpenSourceGitHubComponent/>

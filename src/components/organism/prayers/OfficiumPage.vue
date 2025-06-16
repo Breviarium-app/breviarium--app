@@ -1,6 +1,8 @@
 <template>
   <PrayerPage :display-liturgical-info="true" title="Oficio">
-    <h4 class=" title-color">{{ $t('laudesFirstExplanation') }}</h4>
+    <h4 class="title-color">
+      <small>{{ $t("laudesFirstExplanation") }}</small>
+    </h4>
     <h4 class="title title-color">{{ $t('initialInvocation') }}</h4>
 
     <p class="margin-y-md title-color ion-align-items-center ion-text-center">

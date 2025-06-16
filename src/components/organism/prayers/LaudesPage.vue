@@ -3,8 +3,8 @@
     <!--    <h4 class="office-title">-->
     <!--      {{ $t("laudes") }}-->
     <!--    </h4>-->
-    <p class=" title-color">
-      {{ $t("laudesFirstExplanation") }}
+    <p class="title-color">
+      <small>{{ $t("laudesFirstExplanation") }}</small>
     </p>
     <h4 class="title title-color">
       {{ formatText($t("initialInvocation")) }}
