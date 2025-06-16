@@ -1,9 +1,20 @@
 <template>
-  <div class="date-button" @click="setOpen(true)">
-    <CircleLiturgicalColor :liturgical-color-var="color"/>
-    {{ liturgyInformationData?.celebration }}<br/>
-    <small class="title-color">{{ buildLocalDate(printableDate) }} - {{ rank }}</small>
+  <div class="date-navigation">
+    <ion-button class="nav-button" fill="clear" @click="changeDate(-1)">
+      <ion-icon :icon="chevronBackOutline"></ion-icon>
+    </ion-button>
+
+    <div class="date-button">
+      <CircleLiturgicalColor :liturgical-color-var="color"/>
+      {{ liturgyInformationData?.celebration }}<br/>
+      <small class="title-color">{{ buildLocalDate(printableDate) }} - {{ rank }}</small>
+    </div>
+
+    <ion-button class="nav-button" fill="clear" @click="changeDate(1)">
+      <ion-icon :icon="chevronForwardOutline"></ion-icon>
+    </ion-button>
   </div>
+
 
   <Teleport to="body">
     <ion-modal ref="modal" :is-open="isOpen" @didDismiss="setOpen(false)">
@@ -29,11 +40,12 @@
 <script lang="ts" setup>
 import {buildLocalDate, rankTranslate} from "@/constants/utils.ts";
 import {computed, onMounted, ref, watch} from "vue";
-import {IonButton, IonDatetime, IonHeader, IonModal, IonToolbar} from "@ionic/vue";
+import {IonButton, IonDatetime, IonHeader, IonIcon, IonModal, IonToolbar} from "@ionic/vue";
 import CircleLiturgicalColor from "@/components/atoms/CircleLiturgicalColor.vue";
 import HapticsService from "@/services/HapticsService.ts";
 import {useDateStore} from "@/stores/useDateStore.ts";
 import {useBreviariumStore} from "@/stores/breviarium.ts";
+import {chevronBackOutline, chevronForwardOutline} from "ionicons/icons";
 
 const modal = ref();
 const dateStore = useDateStore();
@@ -76,14 +88,37 @@ onMounted(async () => {
   rank.value = await rankTranslate(liturgyInformationData.value?.rank)
 })
 
+const changeDate = (days: number) => {
+  const currentDate = new Date(datetimeModel.value);
+  currentDate.setDate(currentDate.getDate() + days);
+  datetimeModel.value = currentDate;
+  HapticsService.light();
+};
+
 </script>
 <style scoped>
+.date-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.nav-button {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  height: 100%;
+}
 
 .date-button {
-  font-size: 1.2em;
+  font-size: 1.1em;
   padding: 8px;
   cursor: pointer;
+  flex: 1;
+  text-align: center;
+  touch-action: pan-y pinch-zoom;
 }
+
 
 ion-modal {
   --height: auto;

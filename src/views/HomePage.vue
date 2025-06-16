@@ -38,7 +38,7 @@ useBackButton(-1, () => {
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Breviarium</ion-title>
+        <ion-title>{{ $t('title') }}</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
