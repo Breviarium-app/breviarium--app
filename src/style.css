@@ -200,6 +200,10 @@ button:focus-visible {
     color: var(--breviarium-primary);
 }
 
+.text-red {
+    color: var(--breviarium-primary);
+}
+
 .text-right, .right {
     text-align: right;
 }

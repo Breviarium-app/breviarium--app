@@ -157,17 +157,17 @@
       </h4>
       <p>
         <span class="text-red">℣.</span> {{ $t('firstVersiculumReginaCoeli') }}<br/>
-        <span class="text-red">℟.</span> {{ $t('firstResponsioReginaCoeli') }}
+        <span class="text-red">℟.</span> {{ $t('firstResponseReginaCoeli') }}
       </p>
 
       <p>
         <span class="text-red">℣.</span> {{ $t('secondVersiculumReginaCoeli') }}<br/>
-        <span class="text-red">℟.</span> {{ $t('secondResponsioReginaCoeli') }}
+        <span class="text-red">℟.</span> {{ $t('secondResponseReginaCoeli') }}
       </p>
 
       <p>
         <span class="text-red">℣.</span> {{ $t('thirdVersiculumReginaCoeli') }}<br/>
-        <span class="text-red">℟.</span> {{ $t('thirdResponsioReginaCoeli') }}
+        <span class="text-red">℟.</span> {{ $t('thirdResponseReginaCoeli') }}
       </p>
     </div>
 

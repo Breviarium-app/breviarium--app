@@ -28,7 +28,7 @@
       <small>{{ formatText($t("signOfTheCrossInvitatory")) }}</small>
     </p>
     <p><span class="title-color"> ℣.</span>{{ $t("firstVersiculumOffice") }}</p>
-    <p><span class="title-color"> ℟.</span>{{ $t("firstResponsioOffice") }}</p>
+    <p><span class="title-color"> ℟.</span>{{ $t("firstResponseOffice") }}</p>
     <InvitatoryComponent/>
     <HymnComponent :text="laudes?.himno"/>
     <h4 class="title title-color">

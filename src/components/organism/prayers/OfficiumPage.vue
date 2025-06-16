@@ -22,7 +22,7 @@
     </p>
     <p>
       <span class="title-color"> ℟.</span>
-      {{ $t('firstResponsioOffice') }}
+      {{ $t('firstResponseOffice') }}
     </p>
     <InvitatoryComponent/>
 
