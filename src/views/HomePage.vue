@@ -42,7 +42,7 @@ useBackButton(-1, () => {
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <div class="date-section ion-padding">
+      <div class="date-section">
         <DateAndCelebration/>
       </div>
 
@@ -126,7 +126,7 @@ useBackButton(-1, () => {
 <style scoped>
 .date-section {
   text-align: center;
-  margin-bottom: 1rem;
+  padding: 1rem 0.4rem 0;
 }
 
 .prayer-grid {

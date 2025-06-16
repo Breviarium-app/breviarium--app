@@ -2,7 +2,7 @@
   <ion-item class="prayer-item" @click="router.push('/popular-prayers')">
     <ion-label>
       <h2>Oraciones populares</h2>
-      <p>Ángelus y Rosario</p>
+      <p>Ángelus, rosario y más</p>
     </ion-label>
   </ion-item>
 </template>
