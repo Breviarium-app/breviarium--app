@@ -96,6 +96,7 @@ body {
     --background-color-card: #222222;
     --border-color-light: #1b1a1a; /* navbar & ion-item border */
     --background-card-shadow: #be4747;
+    --ion-tab-bar-color: #989898;
     --ion-color-primary: var(--background-card-shadow);
 }
 
@@ -123,7 +124,7 @@ body {
     --background-color-card: #1b2e42;
     --border-color-light: #162637; /* navbar & ion-item border */
     --background-card-shadow: #4e82b8;
-    --ion-tab-bar-color: #516f8e;
+    --ion-tab-bar-color: #5a7c9f;
     --ion-color-primary: var(--background-card-shadow);
 }
 

@@ -29,15 +29,28 @@ import {rankTranslate} from "@/constants/utils.ts";
 const {t} = useI18n()
 
 onMounted(async () => {
-  await useBreviariumStore().getLectures().then((data) => {
-    prayers.value = data;
-    console.log("lectures!", prayers.value);
-  });
+
   await useBreviariumStore().getLiturgyInformation().then((data) => {
     liturgyInfo.value = data;
-
   });
   rank.value = await rankTranslate(liturgyInfo.value?.rank)
+
+  await useBreviariumStore().getLectures().then((data) => {
+    prayers.value = data?.filter(x => x.cycle == 'YEAR_' + liturgyInfo.value.cycle);
+    if (prayers.value?.length === 0) {
+      const isEven: boolean = liturgyInfo.value.calendar.endOfLiturgycalSeason.split('-')[0] % 2 == 0;
+      if (isEven) {
+        prayers.value = data?.filter(x => x.cycle == "EVEN");
+      } else {
+        prayers.value = data?.filter(x => x.cycle == "ODD");
+      }
+    }
+    //check memory
+    if (prayers.value?.length === 0) {
+      prayers.value = data;
+    }
+  });
+
 });
 
 const prayers = ref<LecturesSchemaOutput[]>();
