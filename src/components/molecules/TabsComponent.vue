@@ -19,5 +19,7 @@ import {IonIcon, IonLabel, IonTabBar, IonTabButton} from '@ionic/vue';
 import {bonfireOutline, listOutline, settingsOutline} from 'ionicons/icons';
 </script>
 <style>
-
+ion-tab-bar {
+  backdrop-filter: blur(2px);
+}
 </style>

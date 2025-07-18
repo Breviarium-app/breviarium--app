@@ -58,7 +58,8 @@ body {
     --background-accent: #d5d5d5;
     --border-color-light: #e8e8e8;
     --ion-background-color: var(--background);
-    --ion-tab-bar-background: var(--ion-background-color);
+    /*--ion-tab-bar-background: var(--ion-background-color);*/
+    --ion-tab-bar-background: #12121294;
     --ion-toolbar-background: var(--ion-background-color);
     --ion-overlay-background-color: var(--ion-background-color);
     --ion-tab-bar-border-color: var(--border-color-light);
