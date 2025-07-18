@@ -22,4 +22,8 @@ import {bonfireOutline, listOutline, settingsOutline} from 'ionicons/icons';
 ion-tab-bar {
   backdrop-filter: blur(2px);
 }
+
+ion-tab-button {
+  background: transparent;
+}
 </style>
