@@ -28,15 +28,15 @@
       </ion-card>
       <ion-list v-if="intentions.length > 0">
         <ion-item v-for="(intention, index) in intentions" :key="index">
-          <ion-label v-if="!editingIndex || editingIndex !== index">{{ intention }}</ion-label>
-          <ion-input
+          <ion-label v-if="editingIndex == null || editingIndex !== index">{{ intention }}</ion-label>
+          <ion-textarea
               v-else
               v-model="editedIntention"
               :placeholder="$t('prayer_intentions_edit_placeholder')"
               @keyup.enter="updateIntention(index)"
-          ></ion-input>
+          ></ion-textarea>
           <ion-button
-              v-if="!editingIndex || editingIndex !== index"
+              v-if="editingIndex == null || editingIndex !== index"
               slot="end"
               color="warning"
               @click="startEditing(index, intention)"
@@ -77,8 +77,9 @@ import {
   IonList,
   IonPage,
   IonText,
+  IonTextarea,
   IonTitle,
-  IonToolbar,
+  IonToolbar
 } from '@ionic/vue';
 import {checkmark, pencil, trash} from 'ionicons/icons';
 import {onMounted, ref} from 'vue';
@@ -113,6 +114,7 @@ const deleteIntention = (index: number) => {
 const startEditing = (index: number, intention: string) => {
   editingIndex.value = index;
   editedIntention.value = intention;
+  console.log("editingIndex", editingIndex.value, "intention", editedIntention.value)
 };
 
 // Update an intention
