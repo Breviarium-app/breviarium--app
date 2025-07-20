@@ -22,11 +22,13 @@ const {t} = useI18n()
 
 onMounted(async () => {
   await useBreviariumStore().getEvangelium().then((data) => {
-
+    console.log("gospel", data)
     if (data && data.evangelium_lectiones.length > 0) {
       gospel.value = data.evangelium_lectiones[0]
     }
   });
+
+
 });
 
 let gospel = ref()
