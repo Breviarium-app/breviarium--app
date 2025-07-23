@@ -36,6 +36,7 @@ onMounted(async () => {
   rank.value = await rankTranslate(liturgyInfo.value?.rank)
 
   await useBreviariumStore().getLectures().then((data) => {
+    // console.log("data", data)
     prayers.value = data?.filter(x => x.cycle == 'YEAR_' + liturgyInfo.value.cycle);
     if (prayers.value?.length === 0) {
       const isEven: boolean = liturgyInfo.value.calendar.endOfLiturgycalSeason.split('-')[0] % 2 == 0;
@@ -49,6 +50,7 @@ onMounted(async () => {
     if (prayers.value?.length === 0) {
       prayers.value = data;
     }
+    // console.log("prayers.value", prayers.value)
   });
 
 });
