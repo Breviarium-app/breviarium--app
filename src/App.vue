@@ -9,7 +9,6 @@ const store = useSettingsStore();
 
 onMounted(() => {
   store.loadSettings().then(() => {
-    console.log("Settings store loaded");
     store.saveSettings();
     store.applyTheme(store.settings.theme);
     // document.documentElement.style.fontSize = `${store.settings.fontSize}px`;

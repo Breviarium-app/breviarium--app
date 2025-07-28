@@ -50,7 +50,6 @@ import {chevronBackOutline, chevronForwardOutline} from "ionicons/icons";
 const modal = ref();
 const dateStore = useDateStore();
 const datetimeModel = ref(dateStore.getCurrentDate || new Date());
-console.log("datetimeModel", datetimeModel)
 const printableDate = computed(() => new Date(datetimeModel.value))
 const isOpen = ref(false);
 
