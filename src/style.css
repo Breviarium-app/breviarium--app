@@ -239,3 +239,12 @@ button:focus-visible {
     --background: var(--background-color-card);
     border: 0 solid var(--border-color);
 }
+
+.btn {
+    transition: all 0.15s ease-out;
+
+    &:active {
+        transform: scale(0.98);
+    }
+;
+}
