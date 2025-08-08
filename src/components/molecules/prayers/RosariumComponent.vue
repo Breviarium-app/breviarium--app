@@ -1,9 +1,33 @@
 <script lang="ts" setup>
-
 import {formatText} from "@/constants/formatText.ts";
 import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
-</script>
+import {getRosaryMysteriesForToday} from "@/constants/utils.ts";
+import {computed, ref} from "vue";
+import {IonIcon} from "@ionic/vue";
+import {eye} from 'ionicons/icons';
 
+const todaysMysteries = ref(getRosaryMysteriesForToday());
+const showAllMysteries = ref(false);
+
+const toggleMysteries = () => {
+  showAllMysteries.value = !showAllMysteries.value;
+};
+
+const dayText = computed(() => {
+  switch (todaysMysteries.value) {
+    case 'joyful':
+      return "Hoy rezamos los Misterios Gozosos (lunes y sábado)";
+    case 'sorrowful':
+      return "Hoy rezamos los Misterios Dolorosos (martes y viernes)";
+    case 'glorious':
+      return "Hoy rezamos los Misterios Gloriosos (miércoles y domingo)";
+    case 'luminous':
+      return "Hoy rezamos los Misterios Luminosos (jueves)";
+    default:
+      return "";
+  }
+});
+</script>
 <template>
   <h4 class="title title-color">
     {{ $t("rosary") }}
@@ -20,41 +44,59 @@ import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
 
   <p v-html="formatText($t('contritionActText'))"></p>
 
-  <h3 class="title-color">Misterios Gozosos (lunes y sábado):</h3>
-  <ol>
-    <li>La Encarnación del Hijo de Dios</li>
-    <li>La Visitación de Nuestra Señora a su prima Santa Isabel</li>
-    <li>El Nacimiento del Hijo de Dios en el portal de Belén</li>
-    <li>La presentación de Jesús en el Templo</li>
-    <li>El Niño Jesús perdido y hallado en el Templo</li>
-  </ol>
+  <div class="mysteries-container">
+    <p class="day-indicator ion-text-center">
+      <strong>{{ dayText }}</strong>
+    </p>
+    <ion-button class="button-show btn" fill="clear" size="small" @click="toggleMysteries">
+      <ion-icon :icon="eye"></ion-icon>
+      {{ showAllMysteries ? 'Mostrar solo misterios de hoy' : 'Mostrar todos los misterios' }}
+    </ion-button>
 
-  <h3 class="title-color">Misterios Dolorosos (martes y viernes):</h3>
-  <ol>
-    <li>La oración en el Huerto</li>
-    <li>La flagelación de Jesús atado a la columna</li>
-    <li>La coronación de espinas</li>
-    <li>Jesús con la Cruz a cuestas camino del Calvario</li>
-    <li>La crucifixión y muerte de Jesús</li>
-  </ol>
+    <div v-if="showAllMysteries || todaysMysteries === 'joyful'">
+      <h3 class="title-color">Misterios Gozosos</h3>
+      <ol>
+        <li>La Encarnación del Hijo de Dios</li>
+        <li>La Visitación de Nuestra Señora a su prima Santa Isabel</li>
+        <li>El Nacimiento del Hijo de Dios en el portal de Belén</li>
+        <li>La presentación de Jesús en el Templo</li>
+        <li>El Niño Jesús perdido y hallado en el Templo</li>
+      </ol>
+    </div>
 
-  <h3 class="title-color">Misterios Gloriosos (miércoles y domingo):</h3>
-  <ol>
-    <li>La resurrección del Hijo de Dios</li>
-    <li>La Ascensión del Señor al cielo</li>
-    <li>La venida del Espíritu Santo</li>
-    <li>La Asunción de María al cielo</li>
-    <li>La coronación de María como Reina y Señora de todo lo creado</li>
-  </ol>
+    <div v-if="showAllMysteries || todaysMysteries === 'sorrowful'">
+      <h3 class="title-color">Misterios Dolorosos</h3>
+      <ol>
+        <li>La oración en el Huerto</li>
+        <li>La flagelación de Jesús atado a la columna</li>
+        <li>La coronación de espinas</li>
+        <li>Jesús con la Cruz a cuestas camino del Calvario</li>
+        <li>La crucifixión y muerte de Jesús</li>
+      </ol>
+    </div>
 
-  <h3 class="title-color">Misterios Luminosos (jueves):</h3>
-  <ol>
-    <li>El Bautismo en el Jordán</li>
-    <li>Las bodas de Caná</li>
-    <li>El anuncio del Reino de Dios</li>
-    <li>La Transfiguración</li>
-    <li>La institución de la Eucaristía</li>
-  </ol>
+    <div v-if="showAllMysteries || todaysMysteries === 'glorious'">
+      <h3 class="title-color">Misterios Gloriosos</h3>
+      <ol>
+        <li>La resurrección del Hijo de Dios</li>
+        <li>La Ascensión del Señor al cielo</li>
+        <li>La venida del Espíritu Santo</li>
+        <li>La Asunción de María al cielo</li>
+        <li>La coronación de María como Reina y Señora de todo lo creado</li>
+      </ol>
+    </div>
+
+    <div v-if="showAllMysteries || todaysMysteries === 'luminous'">
+      <h3 class="title-color">Misterios Luminosos</h3>
+      <ol>
+        <li>El Bautismo en el Jordán</li>
+        <li>Las bodas de Caná</li>
+        <li>El anuncio del Reino de Dios</li>
+        <li>La Transfiguración</li>
+        <li>La institución de la Eucaristía</li>
+      </ol>
+    </div>
+  </div>
 
   <p>En cada misterio:</p>
   <p>
@@ -76,3 +118,23 @@ import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
     Defiéndenos del enemigo y ampáranos ahora, y en la hora de nuestra muerte. Amén.
   </p>
 </template>
+
+<style scoped>
+.mysteries-container {
+  margin: 20px 0;
+}
+
+.day-indicator {
+  margin: 10px 0;
+  color: var(--breviarium-primary);
+}
+
+.button-show {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.6em 1.2em;
+  cursor: pointer;
+  transition: all ease-out 0.25s;
+  background-color: var(--border-color-light);
+}
+</style>
