@@ -32,7 +32,6 @@
           <ion-textarea
               v-else
               v-model="editedIntention"
-              :placeholder="$t('prayer_intentions_edit_placeholder')"
               @keyup.enter="updateIntention(index)"
           ></ion-textarea>
           <ion-button
@@ -114,7 +113,7 @@ const deleteIntention = (index: number) => {
 const startEditing = (index: number, intention: string) => {
   editingIndex.value = index;
   editedIntention.value = intention;
-  console.log("editingIndex", editingIndex.value, "intention", editedIntention.value)
+  // TODO: focus textarea
 };
 
 // Update an intention
