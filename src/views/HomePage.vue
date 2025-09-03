@@ -22,6 +22,7 @@ import SaintBannerComponent from "@/components/molecules/home-banners/SaintBanne
 import PopularPrayers from "@/components/molecules/home-banners/PopularPrayers.vue";
 import JerusalemBibleBanner from "@/views/JerusalemBibleBanner.vue";
 import EvangeliumBanner from "@/views/EvangeliumBanner.vue";
+import AnimatedComponent from "@/components/molecules/AnimatedComponent.vue";
 
 const {t} = useI18n()
 
@@ -50,70 +51,95 @@ useBackButton(-1, () => {
         <ion-grid>
           <ion-row>
             <ion-col>
-              <EvangeliumBanner/>
+              <AnimatedComponent :delay="300">
+                <EvangeliumBanner/>
+              </AnimatedComponent>
             </ion-col>
             <ion-col>
-              <ion-item :class="currentLiturgyHour() == 'Laudes' ? 'selected_hour' : ''" class="prayer-item"
-                        @click="router.push('/prayer/laudes')">
-                <ion-label>
-                  <h2>{{ t('breviarium.laudes') }}</h2>
-                  <p>Oración de la mañana</p>
-                </ion-label>
-              </ion-item>
+              <AnimatedComponent :delay="400">
+                <ion-item :class="currentLiturgyHour() == 'Laudes' ? 'selected_hour' : ''" class="prayer-item"
+                          @click="router.push('/prayer/laudes')">
+                  <ion-label>
+                    <h2>{{ t('breviarium.laudes') }}</h2>
+                    <p>Oración de la mañana</p>
+                  </ion-label>
+                </ion-item>
+              </AnimatedComponent>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <AnimatedComponent :delay="500">
+                <ion-item class="prayer-item" @click="router.push('/prayer/officium')">
+                  <ion-label>{{ t('breviarium.officium') }}</ion-label>
+                </ion-item>
+              </AnimatedComponent>
+            </ion-col>
+            <ion-col>
+              <AnimatedComponent :delay="600">
+                <ion-item :class="currentLiturgyHour() == 'Tercia' ? 'selected_hour' : ''" class="prayer-item"
+                          @click="router.push('/prayer/tertia')">
+                  <ion-label>{{ t('breviarium.tercia') }}</ion-label>
+                </ion-item>
+              </AnimatedComponent>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <AnimatedComponent :delay="700">
+                <ion-item :class="currentLiturgyHour() == 'Sexta' ? 'selected_hour' : ''" class="prayer-item"
+                          @click="router.push('/prayer/sexta')">
+                  <ion-label>{{ t('breviarium.sexta') }}</ion-label>
+                </ion-item>
+              </AnimatedComponent>
+            </ion-col>
+            <ion-col>
+              <AnimatedComponent :delay="800">
+                <ion-item :class="currentLiturgyHour() == 'Nona' ? 'selected_hour' : ''" class="prayer-item"
+                          @click="router.push('/prayer/nona')">
+                  <ion-label>{{ t('breviarium.nona') }}</ion-label>
+                </ion-item>
+              </AnimatedComponent>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-item class="prayer-item" @click="router.push('/prayer/officium')">
-                <ion-label>{{ t('breviarium.officium') }}</ion-label>
-              </ion-item>
+              <AnimatedComponent :delay="900">
+                <ion-item :class="currentLiturgyHour() == 'Vesperae' ? 'selected_hour' : ''" class="prayer-item"
+                          @click="router.push('/prayer/vesperae')">
+                  <ion-label>{{ t('breviarium.vesperae') }}</ion-label>
+                </ion-item>
+              </AnimatedComponent>
             </ion-col>
             <ion-col>
-              <ion-item :class="currentLiturgyHour() == 'Tercia' ? 'selected_hour' : ''" class="prayer-item"
-                        @click="router.push('/prayer/tertia')">
-                <ion-label>{{ t('breviarium.tercia') }}</ion-label>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <ion-item :class="currentLiturgyHour() == 'Sexta' ? 'selected_hour' : ''" class="prayer-item"
-                        @click="router.push('/prayer/sexta')">
-                <ion-label>{{ t('breviarium.sexta') }}</ion-label>
-              </ion-item>
-            </ion-col>
-            <ion-col>
-              <ion-item :class="currentLiturgyHour() == 'Nona' ? 'selected_hour' : ''" class="prayer-item"
-                        @click="router.push('/prayer/nona')">
-                <ion-label>{{ t('breviarium.nona') }}</ion-label>
-              </ion-item>
+              <AnimatedComponent :delay="1000">
+                <ion-item :class="currentLiturgyHour() == 'Completorium' ? 'selected_hour' : ''" class="prayer-item"
+                          @click="router.push('/prayer/completorium')">
+                  <ion-label>{{ t('breviarium.completorium') }}</ion-label>
+                </ion-item>
+              </AnimatedComponent>
+
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-item :class="currentLiturgyHour() == 'Vesperae' ? 'selected_hour' : ''" class="prayer-item"
-                        @click="router.push('/prayer/vesperae')">
-                <ion-label>{{ t('breviarium.vesperae') }}</ion-label>
-              </ion-item>
-            </ion-col>
-            <ion-col>
-              <ion-item :class="currentLiturgyHour() == 'Completorium' ? 'selected_hour' : ''" class="prayer-item"
-                        @click="router.push('/prayer/completorium')">
-                <ion-label>{{ t('breviarium.completorium') }}</ion-label>
-              </ion-item>
+              <AnimatedComponent :delay="1100">
+                <JerusalemBibleBanner/>
+              </AnimatedComponent>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <JerusalemBibleBanner/>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <SaintBannerComponent/>
+              <AnimatedComponent :delay="1200">
+                <SaintBannerComponent/>
+              </AnimatedComponent>
             </ion-col>
             <ion-col>
-              <PopularPrayers/>
+              <AnimatedComponent :delay="1300">
+                <PopularPrayers/>
+              </AnimatedComponent>
             </ion-col>
           </ion-row>
         </ion-grid>
