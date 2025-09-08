@@ -238,6 +238,7 @@ button:focus-visible {
     --border-radius: 8px;
     --background: var(--background-color-card);
     border: 0 solid var(--border-color);
+    cursor: pointer;
 }
 
 .btn {
