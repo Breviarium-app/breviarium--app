@@ -1,4 +1,5 @@
-import {SaintInfo, Sanctus} from "sanctus";
+import Sanctus, {SaintInfo} from "sanctus";
+
 import {defineStore} from "pinia";
 import {Ref, ref} from "vue";
 
