@@ -1,23 +1,23 @@
 <template>
   <!-- Only one reading option -->
-  <div v-if="!hasTwoReadings">
+  <div v-if="!false">
     <p>
-      {{ lecturaCita?.split("$")[0] }}
+      {{ officium?.lectura_biblica_cita_a?.split("$")[0] }}
     </p>
     <p class="title-color">
       <span class="reference-bible cita">
-        {{ lecturaCita?.split("$")[1] }}
+        {{ officium?.lectura_biblica_cita_a?.split("$")[1] }}
       </span>
       <i class="text-center cita">
-        {{ formatText(lecturaTitulo) }}
+        {{ formatText(officium?.lectura_biblica_titulo_a) }}
       </i>
     </p>
-    <p v-html="formatText(lecturaTexto)"></p>
+    <p v-html="formatText(officium?.lectura_biblica_texto_a)"></p>
     <br/>
-    <p><span v-html="formatText(officium?.responsorio2[0])?.replace('℟.','℣.')"></span></p>
-    <p><span v-html="formatText(officium?.responsorio2[0])?.replace('℣.','℟.')"></span></p>
-    <p><span v-html="formatText(officium?.responsorio2[1])?.replace('℟.','℣.')"></span></p>
-    <p><span v-html="formatText(officium?.responsorio2[2])?.replace('℣.','℟.')"></span></p>
+    <p><span v-html="formatText(officium?.responsorio2_a[0])?.replace('℟.','℣.')"></span></p>
+    <p><span v-html="formatText(officium?.responsorio2_a[0])?.replace('℣.','℟.')"></span></p>
+    <p><span v-html="formatText(officium?.responsorio2_a[1])?.replace('℟.','℣.')"></span></p>
+    <p><span v-html="formatText(officium?.responsorio2_a[2])?.replace('℣.','℟.')"></span></p>
   </div>
   <div v-else>
     <ion-segment v-model="selectedInvitatorium">
@@ -54,25 +54,25 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, onMounted, ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import {formatText} from "@/constants/formatText.ts";
 import {OfficiumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
 import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 const officium = ref<OfficiumSchemaOutput>();
-const lecturaCita = ref<string | undefined>()
-const lecturaTitulo = ref<string | undefined>()
-const lecturaTexto = ref<string | undefined>()
-const hasTwoReadings = computed(() => officium.value?.lectura_biblica_cita.length === 2);
+// const lecturaCita = ref<string | undefined>()
+// const lecturaTitulo = ref<string | undefined>()
+// const lecturaTexto = ref<string | undefined>()
+// const hasTwoReadings = computed(() => officium.value?.lectura_biblica_cita.length === 2);
 const selectedInvitatorium = ref("ordinary");
 
 onMounted(async () => {
   await useBreviariumStore().getOfficium().then(data => {
     officium.value = data;
-    lecturaCita.value = Array.isArray(officium.value?.lectura_biblica_cita) ? officium.value?.lectura_biblica_cita[0] : officium.value?.lectura_biblica_cita;
-    lecturaTitulo.value = Array.isArray(officium.value?.lectura_biblica_titulo) ? officium.value?.lectura_biblica_titulo[0] : officium.value?.lectura_biblica_titulo;
-    lecturaTexto.value = Array.isArray(officium.value?.lectura_biblica_texto) ? officium.value?.lectura_biblica_texto[0] : officium.value?.lectura_biblica_texto;
+    // lecturaCita.value = Array.isArray(officium.value?.lectura_biblica_cita) ? officium.value?.lectura_biblica_cita[0] : officium.value?.lectura_biblica_cita;
+    // lecturaTitulo.value = Array.isArray(officium.value?.lectura_biblica_titulo) ? officium.value?.lectura_biblica_titulo[0] : officium.value?.lectura_biblica_titulo;
+    // lecturaTexto.value = Array.isArray(officium.value?.lectura_biblica_texto) ? officium.value?.lectura_biblica_texto[0] : officium.value?.lectura_biblica_texto;
   });
 });
 
