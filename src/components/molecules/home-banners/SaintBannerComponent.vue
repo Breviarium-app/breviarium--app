@@ -19,7 +19,9 @@ const saintsOfDayPrint = ref();
 const updateSaintData = async () => {
   const {selectedSaint, saintsOfDay} = useSanctusStore();
   todaySaint.value = selectedSaint;
-  saintsOfDayPrint.value = saintsOfDay?.length - 1;
+  if (saintsOfDay) {
+    saintsOfDayPrint.value = saintsOfDay?.length - 1;
+  }
 };
 
 watch(

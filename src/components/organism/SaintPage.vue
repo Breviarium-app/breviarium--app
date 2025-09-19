@@ -21,11 +21,11 @@ let todaySaint = ref<any | undefined>(selectedSaint);
       <p v-if="todaySaint?.description"><b>HISTORIA</b><br/>{{ todaySaint?.description }}</p>
     </div>
 
-    <div v-if="saintsOfDay.length > 1">
+    <div v-if="saintsOfDay && saintsOfDay?.length > 1">
       <h4>Más santos</h4>
       <p>En el día de hoy se celebra:</p>
       <ul>
-        <li v-for="(saint, index) in saintsOfDay.slice(1)" :key="index">{{ saint.name }}</li>
+        <li v-for="(saint, index) in saintsOfDay?.slice(1)" :key="index">{{ saint.name }}</li>
       </ul>
     </div>
 
