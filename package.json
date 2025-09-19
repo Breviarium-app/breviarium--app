@@ -1,7 +1,7 @@
 {
   "name": "breviarium",
   "private": true,
-  "version": "1.32.0",
+  "version": "1.32.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -22,10 +22,10 @@
     "@ionic/vue": "^8.4.3",
     "@ionic/vue-router": "^8.4.3",
     "biblia-de-jerusalen": "^1.0.8",
-    "breviarium": "^1.0.19",
+    "breviarium": "1.0.19-dev.2",
     "date-fns": "^4.1.0",
     "pinia": "^3.0.2",
-    "sanctus": "^1.0.10",
+    "sanctus": "^1.0.15",
     "vue": "^3.4.38",
     "vue-i18n": "^11.1.2",
     "vue-router": "^4.2.5"

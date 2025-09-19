@@ -3,7 +3,7 @@ import {formatText} from "@/constants/formatText.ts";
 import CrossComponent from "@/components/molecules/prayers/CrossComponent.vue";
 import {getRosaryMysteriesForToday} from "@/constants/utils.ts";
 import {computed, ref} from "vue";
-import {IonIcon} from "@ionic/vue";
+import {IonButton, IonIcon} from "@ionic/vue";
 import {eye} from 'ionicons/icons';
 
 const todaysMysteries = ref(getRosaryMysteriesForToday());

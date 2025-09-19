@@ -1,33 +1,35 @@
 import {DAYS_SPANISH, MONTH_SPANISH} from "@/constants/index.ts";
 import {LiturgicalColors, LiturgicalPeriods, LiturgicalSeasons, Ranks, RANKS_SPANISH} from "@/constants/types.ts";
 import {useBreviariumStore} from "@/stores/breviarium.ts";
+
 /**
  * Returns the type of rosary mysteries for the current day of the week
  * @returns {string} The name of the mysteries for today
  */
 export function getRosaryMysteriesForToday(): string {
-  const day = new Date().getDay();
-  
-  // 0: Sunday, 1: Monday, 2: Tuesday, 3: Wednesday, 4: Thursday, 5: Friday, 6: Saturday
-  switch (day) {
-    case 0: // Sunday
-      return 'glorious';
-    case 1: // Monday
-      return 'joyful';
-    case 2: // Tuesday
-      return 'sorrowful';
-    case 3: // Wednesday
-      return 'glorious';
-    case 4: // Thursday
-      return 'luminous';
-    case 5: // Friday
-      return 'sorrowful';
-    case 6: // Saturday
-      return 'joyful';
-    default:
-      return 'joyful';
-  }
+    const day = new Date().getDay();
+
+    // 0: Sunday, 1: Monday, 2: Tuesday, 3: Wednesday, 4: Thursday, 5: Friday, 6: Saturday
+    switch (day) {
+        case 0: // Sunday
+            return 'glorious';
+        case 1: // Monday
+            return 'joyful';
+        case 2: // Tuesday
+            return 'sorrowful';
+        case 3: // Wednesday
+            return 'glorious';
+        case 4: // Thursday
+            return 'luminous';
+        case 5: // Friday
+            return 'sorrowful';
+        case 6: // Saturday
+            return 'joyful';
+        default:
+            return 'joyful';
+    }
 }
+
 export const currentLiturgyHour = () => {
     const hour = new Date().getHours();
     if (hour < 3) {
@@ -176,3 +178,16 @@ export async function rankTranslate(rankCode: string) {
     }
     return rank;
 }
+
+// TODO: do this
+// export async function isEvenLiturgicalYear(): Promise<boolean> {
+//     let result: boolean = false;
+//     await useBreviariumStore().getLiturgyInformation().then((data) => {
+//         console.log(data)
+//         if (data.calendar?.endOfLiturgycalSeason) {
+//             result = data?.calendar?.endOfLiturgycalSeason?.split('-')[0] % 2 == 0;
+//         }
+//     });
+//     console.log("easter?", result)
+//     return result;
+// }

@@ -86,7 +86,7 @@ watch(prayers, () => {
       if ([LectureTypes.SECOND_LECTURE, LectureTypes.SECOND_LECTURE_ALTERNATIVE, LectureTypes.SECOND_LECTURE_CELEBRATION].includes(lecture.type as LectureTypes)) {
         secondLectures.value?.push(lecture)
       }
-      if ([LectureTypes.GOSPEL, LectureTypes.GOSPEL_SHORT, LectureTypes.GOSPEL_CELEBRATION].includes(lecture.type as LectureTypes)) {
+      if ([LectureTypes.GOSPEL, LectureTypes.GOSPEL_SHORT, LectureTypes.GOSPEL_CELEBRATION, LectureTypes.GOSPEL_ALTERNATIVE_CELEBRATION].includes(lecture.type as LectureTypes)) {
         gospelLectures.value?.push(lecture)
       }
     })

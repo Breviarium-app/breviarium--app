@@ -93,30 +93,25 @@ const intentions = ref<string[]>([]);
 const editingIndex = ref<number | null>(null);
 const editedIntention = ref<string>('');
 
-// Load intentions from localStorage on component mount
 onMounted(() => {
   intentions.value = storageManager.loadIntentions();
 });
 
-// Add a new intention
 const addIntention = () => {
   intentions.value = storageManager.addIntention(intentions.value, newIntention.value);
   newIntention.value = '';
 };
 
-// Delete an intention
 const deleteIntention = (index: number) => {
   intentions.value = storageManager.deleteIntention(intentions.value, index);
 };
 
-// Start editing an intention
 const startEditing = (index: number, intention: string) => {
   editingIndex.value = index;
   editedIntention.value = intention;
   // TODO: focus textarea
 };
 
-// Update an intention
 const updateIntention = (index: number) => {
   intentions.value = storageManager.updateIntention(intentions.value, index, editedIntention.value);
   editingIndex.value = null;
