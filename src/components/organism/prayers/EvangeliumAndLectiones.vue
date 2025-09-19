@@ -28,6 +28,10 @@ import {useI18n} from 'vue-i18n'
 import {useBreviariumStore} from "@/stores/breviarium.ts";
 import {rankTranslate} from "@/constants/utils.ts";
 import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
+import { useDateStore } from "@/stores/useDateStore.ts";
+
+const dateStore = useDateStore();
+dateStore.setup();
 
 const {t} = useI18n()
 

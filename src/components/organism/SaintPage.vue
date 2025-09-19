@@ -4,6 +4,10 @@ import {useSanctusStore} from "@/stores/sanctus.ts";
 import {MONTH_SPANISH} from "@/constants";
 import {ref} from "vue";
 import PrayerPage from "@/components/organism/PrayerPage.vue";
+import { useDateStore } from "@/stores/useDateStore.ts";
+
+const dateStore = useDateStore();
+dateStore.setup();
 
 const {selectedSaint, saintsOfDay} = useSanctusStore();
 let todaySaint = ref<any | undefined>(selectedSaint);
