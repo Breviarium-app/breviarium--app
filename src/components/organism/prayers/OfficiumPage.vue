@@ -90,6 +90,10 @@ import InvitatoryComponent from "@/components/molecules/prayers/InvitatoryCompon
 import {isTodayLent} from "@/constants/utils.ts";
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
 import {useBreviariumStore} from "@/stores/breviarium.ts";
+import { useDateStore } from "@/stores/useDateStore.ts";
+
+const dateStore = useDateStore();
+dateStore.setup();
 
 const prayer = ref<OfficiumSchemaOutput>();
 const isTodayLentCondition = ref();

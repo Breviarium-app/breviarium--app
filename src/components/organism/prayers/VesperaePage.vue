@@ -142,6 +142,10 @@ import MagnificatPrayer from "@/components/molecules/prayers/MagnificatPrayer.vu
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
 import CustomPrayersBlock from "@/components/organism/prayers/CustomPrayersBlock.vue";
 import {useBreviariumStore} from "@/stores/breviarium.ts";
+import { useDateStore } from "@/stores/useDateStore.ts";
+
+const dateStore = useDateStore();
+dateStore.setup();
 
 const prayer = ref<LaudesSchemaOutput>();
 const isModalInvocationOpen = ref(false);

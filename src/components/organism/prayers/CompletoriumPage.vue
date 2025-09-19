@@ -218,7 +218,10 @@ import {isEaster, isInAlbis, isTodayLent, isTriduum} from "@/constants/utils.ts"
 import HymnComponent from "@/components/molecules/prayers/HymnComponent.vue";
 import {IonSegment, IonSegmentButton} from "@ionic/vue";
 import {useBreviariumStore} from "@/stores/breviarium.ts";
+import { useDateStore } from "@/stores/useDateStore.ts";
 
+const dateStore = useDateStore();
+dateStore.setup();
 
 const prayer = ref<CompletoriumSchemaOutput>();
 const selectedSegment = ref('firstFormula.body');

@@ -86,6 +86,42 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'Saint',
                 component: () => import('../components/organism/SaintPage.vue')
             }, {
+                path: '/:year/:month/:day',
+                name: 'Date',
+                component: HomePage,
+            }, {
+                path: '/:year/:month/:day/laudes',
+                name: 'DateLaudes',
+                component: () => import('../components/organism/prayers/LaudesPage.vue')
+            }, {
+                path: '/:year/:month/:day/vesperae',
+                name: 'DateVesperae',
+                component: () => import('../components/organism/prayers/VesperaePage.vue')
+            }, {
+                path: '/:year/:month/:day/tertia',
+                name: 'DateTertia',
+                component: () => import('../components/organism/prayers/TertiaPage.vue')
+            }, {
+                path: '/:year/:month/:day/sexta',
+                name: 'DateSexta',
+                component: () => import('../components/organism/prayers/SextaPage.vue')
+            }, {
+                path: '/:year/:month/:day/nona',
+                name: 'DateNona',
+                component: () => import('../components/organism/prayers/NonaPage.vue')
+            }, {
+                path: '/:year/:month/:day/officium',
+                name: 'DateOfficium',
+                component: () => import('../components/organism/prayers/OfficiumPage.vue')
+            }, {
+                path: '/:year/:month/:day/completorium',
+                name: 'DateCompletorium',
+                component: () => import('../components/organism/prayers/CompletoriumPage.vue')
+            }, {
+                path: '/:year/:month/:day/evangelium',
+                name: 'DateEvangelium',
+                component: () => import('../components/organism/prayers/EvangeliumAndLectiones.vue')
+            }, {
                 path: '/:pathMatch(.*)*',
                 redirect: '/home'
             }

@@ -88,6 +88,9 @@ import {isOrdinaryTime, isTodayLent} from "@/constants/utils.ts";
 import Breviarium from "breviarium";
 import {useDateStore} from "@/stores/useDateStore.ts";
 
+const dateStore = useDateStore();
+dateStore.setup();
+
 const prayer = ref<IntermediateSchemaOutput>();
 const isOrdinaryTimeCondition = ref()
 const isTodayLentCondition = ref()
