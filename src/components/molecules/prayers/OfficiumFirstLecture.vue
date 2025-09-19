@@ -1,26 +1,6 @@
 <template>
-  <!-- Only one reading option -->
-  <div v-if="!false">
-    <p>
-      {{ officium?.lectura_biblica_cita_a?.split("$")[0] }}
-    </p>
-    <p class="title-color">
-      <span class="reference-bible cita">
-        {{ officium?.lectura_biblica_cita_a?.split("$")[1] }}
-      </span>
-      <i class="text-center cita">
-        {{ formatText(officium?.lectura_biblica_titulo_a) }}
-      </i>
-    </p>
-    <p v-html="formatText(officium?.lectura_biblica_texto_a)"></p>
-    <br/>
-    <p><span v-html="formatText(officium?.responsorio2_a[0])?.replace('℟.','℣.')"></span></p>
-    <p><span v-html="formatText(officium?.responsorio2_a[0])?.replace('℣.','℟.')"></span></p>
-    <p><span v-html="formatText(officium?.responsorio2_a[1])?.replace('℟.','℣.')"></span></p>
-    <p><span v-html="formatText(officium?.responsorio2_a[2])?.replace('℣.','℟.')"></span></p>
-  </div>
-  <div v-else>
-    <ion-segment v-model="selectedInvitatorium">
+  <div>
+    <ion-segment v-model="selectedCycle">
       <ion-segment-button value="ordinary">
         <ion-label>{{ $t('ordinaryCycle') }}</ion-label>
       </ion-segment-button>
@@ -29,25 +9,64 @@
       </ion-segment-button>
     </ion-segment>
     <div>
-      <div v-if="selectedInvitatorium == 'ordinary'">
-        <div class="title-color" v-html="formatText(officium?.lectura_biblica_cita[0])"></div>
-        <div class="title-color center italic" v-html="formatText(officium?.lectura_biblica_titulo[0])"></div>
-        <div v-html="formatText(officium?.lectura_biblica_texto[0])"></div>
+      <div v-if="selectedCycle == 'ordinary'">
+        <p>
+          {{ officium?.lectura_biblica_cita_a?.split("$")[0] }}
+        </p>
+        <p class="title-color">
+      <span class="reference-bible cita">
+        {{ officium?.lectura_biblica_cita_a?.split("$")[1] }}
+      </span>
+          <i class="text-center cita">
+            {{ formatText(officium?.lectura_biblica_titulo_a) }}
+          </i>
+        </p>
+        <p v-html="formatText(officium?.lectura_biblica_texto_a)"></p>
         <br/>
-        <p><span v-html="formatText(officium?.responsorio2[0])?.replace('℟.','℣.')"></span></p>
-        <p><span v-html="formatText(officium?.responsorio2[0])?.replace('℣.','℟.')"></span></p>
-        <p><span v-html="formatText(officium?.responsorio2[1])?.replace('℟.','℣.')"></span></p>
-        <p><span v-html="formatText(officium?.responsorio2[2])?.replace('℣.','℟.')"></span></p>
+        <p><span v-html="formatText(officium?.responsorio2_a[0])?.replace('℟.','℣.')"></span></p>
+        <p><span v-html="formatText(officium?.responsorio2_a[0])?.replace('℣.','℟.')"></span></p>
+        <p><span v-html="formatText(officium?.responsorio2_a[1])?.replace('℟.','℣.')"></span></p>
+        <p><span v-html="formatText(officium?.responsorio2_a[2])?.replace('℣.','℟.')"></span></p>
       </div>
-      <div v-if="selectedInvitatorium == 'bienal'">
-        <div class="title-color" v-html="formatText(officium?.lectura_biblica_cita[1])"></div>
-        <div class="title-color center italic" v-html="formatText(officium?.lectura_biblica_titulo[1])"></div>
-        <div v-html="formatText(officium?.lectura_biblica_texto[1])"></div>
-        <br/>
-        <p><span v-html="formatText(officium?.responsorio2B[0])?.replace('℟.','℣.')"></span></p>
-        <p><span v-html="formatText(officium?.responsorio2B[0])?.replace('℣.','℟.')"></span></p>
-        <p><span v-html="formatText(officium?.responsorio2B[1])?.replace('℟.','℣.')"></span></p>
-        <p><span v-html="formatText(officium?.responsorio2B[2])?.replace('℣.','℟.')"></span></p>
+      <div v-if="selectedCycle == 'bienal'">
+        <div v-if="true">
+          <p>
+            {{ officium?.lectura_biblica_cita_i?.split("$")[0] }}
+          </p>
+          <p class="title-color">
+          <span class="reference-bible cita">
+          {{ officium?.lectura_biblica_cita_i?.split("$")[1] }}
+          </span>
+            <i class="text-center cita">
+              {{ formatText(officium?.lectura_biblica_titulo_i) }}
+            </i>
+          </p>
+          <p v-html="formatText(officium?.lectura_biblica_texto_i)"></p>
+          <br/>
+          <p><span v-html="formatText(officium?.responsorio2_i[0])?.replace('℟.','℣.')"></span></p>
+          <p><span v-html="formatText(officium?.responsorio2_i[0])?.replace('℣.','℟.')"></span></p>
+          <p><span v-html="formatText(officium?.responsorio2_i[1])?.replace('℟.','℣.')"></span></p>
+          <p><span v-html="formatText(officium?.responsorio2_i[2])?.replace('℣.','℟.')"></span></p>
+        </div>
+        <div v-else>
+          <p>
+            {{ officium?.lectura_biblica_cita_p?.split("$")[0] }}
+          </p>
+          <p class="title-color">
+          <span class="reference-bible cita">
+          {{ officium?.lectura_biblica_cita_p?.split("$")[1] }}
+          </span>
+            <i class="text-center cita">
+              {{ formatText(officium?.lectura_biblica_titulo_p) }}
+            </i>
+          </p>
+          <p v-html="formatText(officium?.lectura_biblica_texto_p)"></p>
+          <br/>
+          <p><span v-html="formatText(officium?.responsorio2_p[0])?.replace('℟.','℣.')"></span></p>
+          <p><span v-html="formatText(officium?.responsorio2_p[0])?.replace('℣.','℟.')"></span></p>
+          <p><span v-html="formatText(officium?.responsorio2_p[1])?.replace('℟.','℣.')"></span></p>
+          <p><span v-html="formatText(officium?.responsorio2_p[2])?.replace('℣.','℟.')"></span></p>
+        </div>
       </div>
     </div>
   </div>
@@ -65,7 +84,7 @@ const officium = ref<OfficiumSchemaOutput>();
 // const lecturaTitulo = ref<string | undefined>()
 // const lecturaTexto = ref<string | undefined>()
 // const hasTwoReadings = computed(() => officium.value?.lectura_biblica_cita.length === 2);
-const selectedInvitatorium = ref("ordinary");
+const selectedCycle = ref("ordinary");
 
 onMounted(async () => {
   await useBreviariumStore().getOfficium().then(data => {
