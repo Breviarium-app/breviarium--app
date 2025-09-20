@@ -22,7 +22,7 @@
     "@ionic/vue": "^8.4.3",
     "@ionic/vue-router": "^8.4.3",
     "biblia-de-jerusalen": "^1.0.8",
-    "breviarium": "1.0.19-dev.2",
+    "breviarium": "^2.0.2",
     "date-fns": "^4.1.0",
     "pinia": "^3.0.2",
     "sanctus": "^1.0.15",

@@ -89,6 +89,7 @@ const selectedCycle = ref("ordinary");
 onMounted(async () => {
   await useBreviariumStore().getOfficium().then(data => {
     officium.value = data;
+    console.log("officium", officium.value)
     // lecturaCita.value = Array.isArray(officium.value?.lectura_biblica_cita) ? officium.value?.lectura_biblica_cita[0] : officium.value?.lectura_biblica_cita;
     // lecturaTitulo.value = Array.isArray(officium.value?.lectura_biblica_titulo) ? officium.value?.lectura_biblica_titulo[0] : officium.value?.lectura_biblica_titulo;
     // lecturaTexto.value = Array.isArray(officium.value?.lectura_biblica_texto) ? officium.value?.lectura_biblica_texto[0] : officium.value?.lectura_biblica_texto;

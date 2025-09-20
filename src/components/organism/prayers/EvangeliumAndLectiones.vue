@@ -4,6 +4,7 @@
     <h3 class="center">{{ liturgyInfo?.celebration }}, {{ rank }}</h3>
     <div v-for="item in lecturesBlocks">
       <ion-segment v-if="item.lectures.value.length > 1" v-model="item.selected.value">
+        <!--  && item.lectures.value[1].texto -->
         <ion-segment-button v-for="(_item, index) in item.lectures.value" :value="(index)">
           <ion-label>Opción {{ index + 1 }}</ion-label>
         </ion-segment-button>
@@ -78,16 +79,16 @@ watch(prayers, () => {
   prayers.value?.forEach(prayer => {
     prayer.lecturas.forEach(lecture => {
       if ([LectureTypes.FIRST_LECTURE, LectureTypes.FIRST_LECTURE_ALTERNATIVE, LectureTypes.FIRST_LECTURE_CELEBRATION].includes(lecture.type as LectureTypes)) {
-        firstLectures.value?.push(lecture)
+        if (lecture.texto?.length > 0) firstLectures.value?.push(lecture)
       }
       if ([LectureTypes.PSALM, LectureTypes.PSALM_CELEBRATION].includes(lecture.type as LectureTypes)) {
-        psalmLectures.value?.push(lecture)
+        if (lecture.texto?.length > 0) psalmLectures.value?.push(lecture)
       }
       if ([LectureTypes.SECOND_LECTURE, LectureTypes.SECOND_LECTURE_ALTERNATIVE, LectureTypes.SECOND_LECTURE_CELEBRATION].includes(lecture.type as LectureTypes)) {
-        secondLectures.value?.push(lecture)
+        if (lecture.texto?.length > 0) secondLectures.value?.push(lecture)
       }
       if ([LectureTypes.GOSPEL, LectureTypes.GOSPEL_SHORT, LectureTypes.GOSPEL_CELEBRATION, LectureTypes.GOSPEL_ALTERNATIVE_CELEBRATION].includes(lecture.type as LectureTypes)) {
-        gospelLectures.value?.push(lecture)
+        if (lecture.texto?.length > 0) gospelLectures.value?.push(lecture)
       }
     })
   });
@@ -96,7 +97,6 @@ watch(prayers, () => {
   console.log("psalm", psalmLectures.value)
   console.log("second", secondLectures.value)
   console.log("gospel", gospelLectures.value)
-
 })
 
 const lecturesBlocks = [
