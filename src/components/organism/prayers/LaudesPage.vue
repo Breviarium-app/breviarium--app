@@ -175,6 +175,10 @@ import OfficiumLectures from "@/components/molecules/prayers/OfficiumLectures.vu
 import CustomPrayersBlock from "@/components/organism/prayers/CustomPrayersBlock.vue";
 import EvangeliumLecture from "@/components/molecules/prayers/EvangeliumLecture.vue";
 import {useBreviariumStore} from "@/stores/breviarium.ts";
+import { useDateStore } from "@/stores/useDateStore.ts";
+
+const dateStore = useDateStore();
+dateStore.setup();
 
 const laudesMultiple = ref<LaudesSchemaOutput[]>();
 const selectedOption = ref<number>(0);

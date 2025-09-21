@@ -23,8 +23,12 @@ import PopularPrayers from "@/components/molecules/home-banners/PopularPrayers.v
 import JerusalemBibleBanner from "@/views/JerusalemBibleBanner.vue";
 import EvangeliumBanner from "@/views/EvangeliumBanner.vue";
 import AnimatedComponent from "@/components/molecules/AnimatedComponent.vue";
+import { useDateStore } from '@/stores/useDateStore';
 
 const {t} = useI18n()
+const dateStore = useDateStore()
+
+dateStore.setup();
 
 const ionRouter = useIonRouter();
 useBackButton(-1, () => {
