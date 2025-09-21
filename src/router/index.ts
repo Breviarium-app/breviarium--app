@@ -118,7 +118,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'DateCompletorium',
                 component: () => import('../components/organism/prayers/CompletoriumPage.vue')
             }, {
-                path: '/:year/:month/:day/evangelium',
+                path: '/:year/:month/:day/evangelium-lectiones',
                 name: 'DateEvangelium',
                 component: () => import('../components/organism/prayers/EvangeliumAndLectiones.vue')
             }, {
