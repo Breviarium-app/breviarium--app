@@ -184,7 +184,6 @@ const settings = useSettingsStore().settings;
 onMounted(async () => {
   await useBreviariumStore().getLaudes().then((data) => {
     laudesMultiple.value = data;
-    console.log(data)
   });
 
 
