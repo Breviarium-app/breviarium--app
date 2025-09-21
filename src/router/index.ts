@@ -125,7 +125,7 @@ const routes: Array<RouteRecordRaw> = [
                 path: '/:year/:month/:day/saint',
                 name: 'DateSaint',
                 component: () => import('../components/organism/SaintPage.vue')
-            } {
+            }, {
                 path: '/:pathMatch(.*)*',
                 redirect: '/home'
             }
