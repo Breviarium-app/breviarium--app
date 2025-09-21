@@ -1,4 +1,4 @@
-name: Build & Patch Version 🚀
+name: Build & Patch Version 🛠️
 
 on: workflow_dispatch
 
