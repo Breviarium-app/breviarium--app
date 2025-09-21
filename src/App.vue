@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import {IonApp, IonRouterOutlet} from '@ionic/vue';
 import {onMounted} from "vue";
-import {useSettingsStore} from "@/stores/settingsStore.ts";
-import {useBreviariumStore} from "@/stores/breviarium.ts";
-import {useDateStore} from "@/stores/useDateStore.ts";
+import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
+import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
+import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 
 const store = useSettingsStore();
 

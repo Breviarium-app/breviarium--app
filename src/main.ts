@@ -1,6 +1,6 @@
 import {createApp} from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './modules/app/router'
 import {IonicVue} from '@ionic/vue'
 import {createPinia} from "pinia";
 
@@ -22,8 +22,8 @@ import '@ionic/vue/css/display.css'
 
 import '@/style.css'
 import {createI18n} from "vue-i18n";
-import es from '@/locales/es.json'
-import en from '@/locales/en.json'
+import es from '@/modules/app/locales/es.json'
+import en from '@/modules/app/locales/en.json'
 import {welcomeMsg} from "@/modules/onboarding/welcome.ts";
 
 const pinia = createPinia();

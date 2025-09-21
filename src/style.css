@@ -1,27 +1,27 @@
 @font-face {
     font-family: 'BreviariumSerif';
-    src: url('/src/assets/fonts/NotoSerif-Regular.ttf') format('truetype');
+    src: url('/src/modules/app/assets/fonts/NotoSerif-Regular.ttf') format('truetype');
     font-weight: 100 400; /* Variable font range, adjust as needed */
     font-style: normal;
 }
 
 @font-face {
     font-family: 'BreviariumSerif';
-    src: url('/src/assets/fonts/NotoSerif-SemiBold.ttf') format('truetype');
+    src: url('/src/modules/app/assets/fonts/NotoSerif-SemiBold.ttf') format('truetype');
     font-weight: 500 900; /* Variable font range, adjust as needed */
     font-style: normal;
 }
 
 @font-face {
     font-family: 'BreviariumSerif';
-    src: url('/src/assets/fonts/NotoSerif-Italic.ttf') format('truetype');
+    src: url('/src/modules/app/assets/fonts/NotoSerif-Italic.ttf') format('truetype');
     font-weight: 100 400; /* Variable font range, adjust as needed */
     font-style: italic;
 }
 
 @font-face {
     font-family: 'BreviariumSerif';
-    src: url('/src/assets/fonts/NotoSerif-SemiBoldItalic.ttf') format('truetype');
+    src: url('/src/modules/app/assets/fonts/NotoSerif-SemiBoldItalic.ttf') format('truetype');
     font-weight: 500 900; /* Variable font range, adjust as needed */
     font-style: italic;
 }
