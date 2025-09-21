@@ -5,7 +5,7 @@ on:
     branches: [ main, dev ]
     types: [ opened, reopened, closed ]
   push:
-    branches: [ feat/*, feature/*, fix/*, hotfix/* ]
+    branches: [ main, dev, feat/*, feature/*, fix/*, hotfix/* ]
 
 permissions:
   contents: write
