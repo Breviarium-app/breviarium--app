@@ -33,7 +33,7 @@ export const useBreviariumStore = defineStore("breviarium", () => {
         return await breviarium.getLaudes(date || useDateStore().getCurrentDate);
     }
 
-    const getVesperae = async (date?: Date): Promise<VesperaeSchemaOutput | undefined> => {
+    const getVesperae = async (date?: Date): Promise<VesperaeSchemaOutput[] | undefined> => {
         return await breviarium.getVesperae(date || useDateStore().getCurrentDate);
     }
 
