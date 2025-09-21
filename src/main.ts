@@ -24,6 +24,7 @@ import '@/style.css'
 import {createI18n} from "vue-i18n";
 import es from '@/locales/es.json'
 import en from '@/locales/en.json'
+import {welcomeMsg} from "@/modules/onboarding/welcome.ts";
 
 const pinia = createPinia();
 
@@ -48,3 +49,5 @@ router.isReady().then(() => {
     app.mount('#app')
     // perpetualCalendar(2025).then(console.log)
 })
+
+welcomeMsg();
