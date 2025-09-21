@@ -88,9 +88,7 @@ export async function isEaster(): Promise<boolean> {
     let result: boolean = false;
     await useBreviariumStore().getLiturgyInformation().then((data) => {
         if (data.seasons) result = data.seasons?.includes(LiturgicalSeasons.EASTER);
-        console.log("data", data)
     })
-    console.log("easter?", result)
     return result;
 }
 
@@ -108,7 +106,6 @@ export async function isInAlbis(): Promise<boolean> {
     await useBreviariumStore().getLiturgyInformation().then((data) => {
         if (data.periods) result = data.periods?.includes(LiturgicalPeriods.EASTER_OCTAVE);
     })
-    console.log(result)
     return result;
 }
 

@@ -83,21 +83,11 @@ import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
 import {useBreviariumStore} from "@/stores/breviarium.ts";
 
 const officium = ref<OfficiumSchemaOutput>();
-// const lecturaCita = ref<string | undefined>()
-// const lecturaTitulo = ref<string | undefined>()
-// const lecturaTexto = ref<string | undefined>()
-// const hasTwoReadings = computed(() => officium.value?.lectura_patristica_cita.length === 2);
 const selectedCycle = ref("ordinary");
 
 onMounted(async () => {
   await useBreviariumStore().getOfficium().then(data => {
     officium.value = data;
-
-    // lecturaCita.value = Array.isArray(officium.value?.lectura_patristica_cita) ? officium.value?.lectura_patristica_cita[0] : officium.value?.lectura_patristica_cita;
-    // lecturaTitulo.value = Array.isArray(officium.value?.lectura_patristica_titulo) ? officium.value?.lectura_patristica_titulo[0] : officium.value?.lectura_patristica_titulo;
-    // lecturaTexto.value = Array.isArray(officium.value?.lectura_patristica_texto) ? officium.value?.lectura_patristica_texto[0] : officium.value?.lectura_patristica_texto;
-    // console.log("lecturaCita", lecturaCita.value)
-    // console.log("lecturaTitulo", lecturaTitulo.value)
   });
 });
 
