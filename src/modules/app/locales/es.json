@@ -25,7 +25,8 @@
     "haptics_active": "Vibración en la aplicación",
     "keepAwake": "Pantalla activa durante oración",
     "font_size": "Tamaño de letra",
-    "sample_text": "Texto de ejemplo"
+    "sample_text": "Texto de ejemplo",
+    "hide_invitatorium": "Ocultar Invitatorio en Laudes"
   },
   "breviarium": {
     "evangelium_lectiones": "Evangelio y lecturas",

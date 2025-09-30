@@ -14,7 +14,10 @@
     "vesperae_and_office": "Vespers + Office",
     "office_deceased": "Office of the Dead",
     "haptics_active": "Vibration in the app",
-    "keepAwake": "Keep the screen awake in prayer"
+    "keepAwake": "Keep the screen awake in prayer",
+    "font_size": "Font size",
+    "sample_text": "Example text",
+    "hide_invitatorium": "Hide invitatory in Lauds"
   },
   "breviarium": {
     "evangelium_lectiones": "Gospel and Readings",

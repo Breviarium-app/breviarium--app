@@ -28,17 +28,19 @@
         <!--        v-html="formatTextIn18('initialInvocationBodyLent')"-->
         <!--    ></span>-->
         <span v-html="formatText($t('initialInvocationBody'))"></span>
-        <h4 class="title title-color">
-          {{ formatText($t("invitatory")) }}
-        </h4>
-        <p class="margin-y-md title-color ion-align-items-center ion-text-center"
-           @click="() => isModalInvocationOpen = true">
-          <CrossComponent/>
-          <small>{{ formatText($t("signOfTheCrossInvitatory")) }}</small>
-        </p>
-        <p><span class="title-color"> ℣.</span>{{ $t("firstVersiculumOffice") }}</p>
-        <p><span class="title-color"> ℟.</span>{{ $t("firstResponseOffice") }}</p>
-        <InvitatoryComponent/>
+        <div v-if="!settings.hideInvitatorium">
+          <h4 class="title title-color">
+            {{ formatText($t("invitatory")) }}
+          </h4>
+          <p class="margin-y-md title-color ion-align-items-center ion-text-center"
+             @click="() => isModalInvocationOpen = true">
+            <CrossComponent/>
+            <small>{{ formatText($t("signOfTheCrossInvitatory")) }}</small>
+          </p>
+          <p><span class="title-color"> ℣.</span>{{ $t("firstVersiculumOffice") }}</p>
+          <p><span class="title-color"> ℟.</span>{{ $t("firstResponseOffice") }}</p>
+          <InvitatoryComponent/>
+        </div>
         <HymnComponent :text="laudes?.himno"/>
         <h4 class="title title-color">
           {{ $t("salmodia") }}

@@ -55,6 +55,13 @@ const handleToggleChange = () => {
           </ion-toggle>
         </ion-item>
         <ion-item>
+          <ion-toggle v-model="settingsStore.settings.hideInvitatorium" :ionChange="handleToggleChange()"
+                      justify="space-between"
+                      label-placement="start">
+            {{ $t('settings.hide_invitatorium') }}
+          </ion-toggle>
+        </ion-item>
+        <ion-item>
           <ion-toggle v-model="settingsStore.settings.deceased" :ionChange="handleToggleChange()"
                       disabled="true"
                       justify="space-between" label-placement="start">
