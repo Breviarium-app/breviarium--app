@@ -25,7 +25,7 @@ onMounted(() => {
 
 <style scoped>
 .animated-element {
-  transition: all 0.2s ease-out;
+  transition: all 0.150s ease-out;
   transform: translateY(15px);
   opacity: 0;
 }

@@ -33,6 +33,13 @@ useBackButton(-1, () => {
   }
 });
 
+const baseDelay = 250;
+const delayIncrement = 50;
+
+// Use a function to calculate the delay for each component
+const getDelay = (index: number) => baseDelay + (index * delayIncrement);
+
+
 </script>
 
 <template>
@@ -51,12 +58,12 @@ useBackButton(-1, () => {
         <ion-grid>
           <ion-row>
             <ion-col>
-              <AnimatedComponent :delay="300">
+              <AnimatedComponent :delay="getDelay(1)">
                 <EvangeliumBanner/>
               </AnimatedComponent>
             </ion-col>
             <ion-col>
-              <AnimatedComponent :delay="400">
+              <AnimatedComponent :delay="getDelay(2)">
                 <ion-item :class="currentLiturgyHour() == 'Laudes' ? 'selected_hour' : ''" class="prayer-item"
                           @click="router.push('/prayer/laudes')">
                   <ion-label>
@@ -70,14 +77,14 @@ useBackButton(-1, () => {
 
           <ion-row>
             <ion-col>
-              <AnimatedComponent :delay="500">
+              <AnimatedComponent :delay="getDelay(3)">
                 <ion-item class="prayer-item" @click="router.push('/prayer/officium')">
                   <ion-label>{{ t('breviarium.officium') }}</ion-label>
                 </ion-item>
               </AnimatedComponent>
             </ion-col>
             <ion-col>
-              <AnimatedComponent :delay="600">
+              <AnimatedComponent :delay="getDelay(4)">
                 <ion-item :class="currentLiturgyHour() == 'Tercia' ? 'selected_hour' : ''" class="prayer-item"
                           @click="router.push('/prayer/tertia')">
                   <ion-label>{{ t('breviarium.tercia') }}</ion-label>
@@ -88,7 +95,7 @@ useBackButton(-1, () => {
 
           <ion-row>
             <ion-col>
-              <AnimatedComponent :delay="700">
+              <AnimatedComponent :delay="getDelay(5)">
                 <ion-item :class="currentLiturgyHour() == 'Sexta' ? 'selected_hour' : ''" class="prayer-item"
                           @click="router.push('/prayer/sexta')">
                   <ion-label>{{ t('breviarium.sexta') }}</ion-label>
@@ -96,7 +103,7 @@ useBackButton(-1, () => {
               </AnimatedComponent>
             </ion-col>
             <ion-col>
-              <AnimatedComponent :delay="800">
+              <AnimatedComponent :delay="getDelay(6)">
                 <ion-item :class="currentLiturgyHour() == 'Nona' ? 'selected_hour' : ''" class="prayer-item"
                           @click="router.push('/prayer/nona')">
                   <ion-label>{{ t('breviarium.nona') }}</ion-label>
@@ -106,7 +113,7 @@ useBackButton(-1, () => {
           </ion-row>
           <ion-row>
             <ion-col>
-              <AnimatedComponent :delay="900">
+              <AnimatedComponent :delay="getDelay(7)">
                 <ion-item :class="currentLiturgyHour() == 'Vesperae' ? 'selected_hour' : ''" class="prayer-item"
                           @click="router.push('/prayer/vesperae')">
                   <ion-label>{{ t('breviarium.vesperae') }}</ion-label>
@@ -114,7 +121,7 @@ useBackButton(-1, () => {
               </AnimatedComponent>
             </ion-col>
             <ion-col>
-              <AnimatedComponent :delay="1000">
+              <AnimatedComponent :delay="getDelay(8)">
                 <ion-item :class="currentLiturgyHour() == 'Completorium' ? 'selected_hour' : ''" class="prayer-item"
                           @click="router.push('/prayer/completorium')">
                   <ion-label>{{ t('breviarium.completorium') }}</ion-label>
@@ -125,19 +132,19 @@ useBackButton(-1, () => {
           </ion-row>
           <ion-row>
             <ion-col>
-              <AnimatedComponent :delay="1100">
+              <AnimatedComponent :delay="getDelay(9)">
                 <JerusalemBibleBanner/>
               </AnimatedComponent>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <AnimatedComponent :delay="1200">
+              <AnimatedComponent :delay="getDelay(10)">
                 <SaintBannerComponent/>
               </AnimatedComponent>
             </ion-col>
             <ion-col>
-              <AnimatedComponent :delay="1300">
+              <AnimatedComponent :delay="getDelay(11)">
                 <PopularPrayers/>
               </AnimatedComponent>
             </ion-col>
