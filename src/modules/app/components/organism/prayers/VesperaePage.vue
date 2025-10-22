@@ -100,15 +100,27 @@
         <h4 class="title title-color">{{ $t('preces') }}</h4>
         <p v-html="formatText(prayer?.preces_intro)"></p>
         <p v-html="formatText(prayer?.preces_respuesta)"></p>
-        <div v-for="item in prayer?.preces_contenido"
-             v-bind:key="item" class="preces">
+
+        <div 
+          v-for="(item, index) in prayer?.preces_contenido.slice(0, -1)" 
+          :key="`preces-${index}`" 
+          class="preces"
+        >
           <p v-html="formatPrayers(item)"></p>
         </div>
 
         <div class="preces">
           <p class="title-color">{{ $t('explanationPreces') }}</p>
         </div>
+
         <CustomPrayersBlock/>
+
+        <div 
+          v-if="prayer?.preces_contenido?.length" 
+          class="preces"
+        >
+          <p v-html="formatPrayers(prayer.preces_contenido[prayer.preces_contenido.length - 1])"></p>
+        </div>
 
         <h4 class="title title-color">{{ $t('ourLord') }}</h4>
         <p class="margin-y-md">
