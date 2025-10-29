@@ -218,6 +218,7 @@ import {isEaster, isInAlbis, isTodayLent, isTriduum} from "@/modules/app/constan
 import HymnComponent from "@/modules/app/components/molecules/prayers/HymnComponent.vue";
 import {IonSegment, IonSegmentButton} from "@ionic/vue";
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
+import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 
 
 const prayer = ref<CompletoriumSchemaOutput>();
@@ -231,6 +232,7 @@ const isEasterCondition = ref();
 const isTriduumCondition = ref();
 const isInAlbisCondition = ref();
 const isLentCondition = ref();
+useDateStore().updateDateParams()
 
 onMounted(async () => {
   await useBreviariumStore().getCompletorium().then((data) => {
