@@ -98,6 +98,7 @@ const props = defineProps({
     required: true
   },
 })
+useDateStore().updateDateParams()
 
 onMounted(async () => {
   const brev = new Breviarium(useDateStore().getCurrentDate);

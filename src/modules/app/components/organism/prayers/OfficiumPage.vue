@@ -90,9 +90,11 @@ import InvitatoryComponent from "@/modules/app/components/molecules/prayers/Invi
 import {isTodayLent} from "@/modules/app/constants/utils.ts";
 import HymnComponent from "@/modules/app/components/molecules/prayers/HymnComponent.vue";
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
+import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 
 const prayer = ref<OfficiumSchemaOutput>();
 const isTodayLentCondition = ref();
+useDateStore().updateDateParams()
 onMounted(async () => {
   await useBreviariumStore().getOfficium().then((data) => {
     prayer.value = data;

@@ -157,11 +157,13 @@ import MagnificatPrayer from "@/modules/app/components/molecules/prayers/Magnifi
 import HymnComponent from "@/modules/app/components/molecules/prayers/HymnComponent.vue";
 import CustomPrayersBlock from "@/modules/app/components/organism/prayers/CustomPrayersBlock.vue";
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
+import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 
 const isModalInvocationOpen = ref(false);
 const settings = useSettingsStore().settings;
 const prayerMultiple = ref<VesperaeSchemaOutput[]>();
 const selectedOption = ref<number>(0);
+useDateStore().updateDateParams()
 
 onMounted(async () => {
   await useBreviariumStore().getVesperae().then((data) => {

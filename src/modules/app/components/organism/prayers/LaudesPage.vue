@@ -177,11 +177,13 @@ import OfficiumLectures from "@/modules/app/components/molecules/prayers/Officiu
 import CustomPrayersBlock from "@/modules/app/components/organism/prayers/CustomPrayersBlock.vue";
 import EvangeliumLecture from "@/modules/app/components/molecules/prayers/EvangeliumLecture.vue";
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
+import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 
 const laudesMultiple = ref<LaudesSchemaOutput[]>();
 const selectedOption = ref<number>(0);
 const isModalInvocationOpen = ref(false);
 const settings = useSettingsStore().settings;
+useDateStore().updateDateParams()
 
 onMounted(async () => {
   await useBreviariumStore().getLaudes().then((data) => {

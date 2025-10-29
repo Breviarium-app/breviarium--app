@@ -29,6 +29,7 @@ import {useI18n} from 'vue-i18n'
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
 import {rankTranslate} from "@/modules/app/constants/utils.ts";
 import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
+import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 
 const {t} = useI18n()
 
@@ -36,6 +37,8 @@ const selectedFirst = ref<number>(0);
 const selectedPsalm = ref<number>(0);
 const selectedSecond = ref<number>(0);
 const selectedGospel = ref<number>(0);
+
+useDateStore().updateDateParams()
 
 onMounted(async () => {
 
