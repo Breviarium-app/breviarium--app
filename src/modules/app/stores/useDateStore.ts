@@ -9,7 +9,6 @@ export const useDateStore = defineStore('dateStore', () => {
 
     const getCurrentDate = computed(() => currentDate.value)
 
-
     const updateDateParams = () => {
         const route = useRoute();
 
@@ -25,18 +24,18 @@ export const useDateStore = defineStore('dateStore', () => {
             return;
         }
         const newDate = new Date(`${year.toString()}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`);
-        setDate(newDate);
+        setDate(newDate, false);
     }
 
 
-    const setDate = (newDate: Date) => {
+    const setDate = (newDate: Date, _updateUrl: boolean = true) => {
         currentDate.value = newDate;
         useSanctusStore().updateSaint(newDate);
         useBreviariumStore().setBreviariumDate(newDate);
     }
 
     const resetDate = () => {
-        currentDate.value = new Date()
+        currentDate.value = new Date();
     }
 
     return {
