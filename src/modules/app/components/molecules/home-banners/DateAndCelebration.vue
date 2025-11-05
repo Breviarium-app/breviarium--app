@@ -26,6 +26,7 @@
 
       <div class="modal-wrapper">
         <ion-datetime
+          ref="datetimeRef"
           v-model="datetimeModel"
           :first-day-of-week="1"
           :prefer-wheel="false"
@@ -33,9 +34,12 @@
           min="1990-01-01"
           presentation="date"
           size="cover"
-          preferWheel="false"
           show-adjacent-days="true"
-        ></ion-datetime>
+        >
+          <ion-buttons slot="buttons">
+            <ion-button color="primary" @click="confirmCalendar()">Confirmar</ion-button>
+          </ion-buttons>
+        </ion-datetime>
       </div>
     </ion-modal>
   </Teleport>
@@ -43,9 +47,10 @@
 
 <script lang="ts" setup>
 import { buildLocalDate, rankTranslate } from "@/modules/app/constants/utils.ts";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref } from "vue";
 import {
   IonButton,
+  IonButtons,
   IonDatetime,
   IonHeader,
   IonIcon,
@@ -58,7 +63,6 @@ import { useDateStore } from "@/modules/app/stores/useDateStore.ts";
 import { useBreviariumStore } from "@/modules/app/stores/breviarium.ts";
 import { chevronBackOutline, chevronForwardOutline } from "ionicons/icons";
 
-/* --- Utilidades --- */
 const pad = (n: number) => String(n).padStart(2, "0");
 const toIsoDateString = (d: Date) =>
   `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
@@ -75,6 +79,7 @@ const isOpen = ref(false);
 const datetimeModel = ref<string>(
   toIsoDateString(dateStore.getCurrentDate || new Date())
 );
+const datetimeRef = ref();
 const printableDate = computed(() => parseIsoDateString(datetimeModel.value));
 
 const liturgyInformationData = ref();
@@ -95,13 +100,15 @@ const updateLiturgy = async (newDate: Date) => {
   rank.value = await rankTranslate(data?.rank);
 };
 
-watch(datetimeModel, async (newVal, oldVal) => {
-  if (!newVal || newVal === oldVal) return;
-  const selectedDate = parseIsoDateString(newVal);
+async function confirmCalendar() {
+  datetimeRef.value.$el.confirm();
+  const newDate = datetimeModel.value;
+  const selectedDate = parseIsoDateString(newDate);
+ 
   await updateLiturgy(selectedDate);
-  setOpen(false);
+  isOpen.value = false;
   HapticsService.light();
-});
+}
 
 const goToday = async () => {
   const today = new Date();
@@ -174,8 +181,9 @@ ion-datetime {
   --wheel-highlight-background: var(--ion-background-color);
   --wheel-fade-background-rgb: var(--ion-background-color);
 }
+
 ion-datetime::part(wheel-item active) {
     color: var(--ion-tab-bar-color);
-  }
+}
   
 </style>
