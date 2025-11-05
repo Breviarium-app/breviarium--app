@@ -23,6 +23,7 @@ import PopularPrayers from "@/modules/app/components/molecules/home-banners/Popu
 import JerusalemBibleBanner from "@/modules/app/views/JerusalemBibleBanner.vue";
 import EvangeliumBanner from "@/modules/app/views/EvangeliumBanner.vue";
 import AnimatedComponent from "@/modules/app/components/molecules/AnimatedComponent.vue";
+import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 
 const {t} = useI18n()
 
@@ -39,7 +40,7 @@ const delayIncrement = 50;
 // Use a function to calculate the delay for each component
 const getDelay = (index: number) => baseDelay + (index * delayIncrement);
 
-
+useDateStore().updateDateParams()
 </script>
 
 <template>
