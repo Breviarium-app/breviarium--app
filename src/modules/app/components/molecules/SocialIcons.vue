@@ -8,6 +8,9 @@ const {t} = useI18n();
 const openWhatsAppChannel = () => {
   window.open('https://whatsapp.com/channel/0029VbBM3QuAInPuD8nIU436', '_blank');
 };
+const openWeb = () => {
+  window.open('https://breviarium.es', '_blank');
+};
 const openTelegramChannel = () => {
   window.open('https://t.me/breviariumapp', '_blank');
 };
@@ -54,7 +57,7 @@ const openX = () => {
       <ion-button
           class="social-button web-button"
           fill="outline"
-          @click="openWhatsAppChannel"
+          @click="openWeb"
       >
         <ion-icon :icon="globeOutline"></ion-icon>
         <!--        WhatsApp-->
