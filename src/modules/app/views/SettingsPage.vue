@@ -6,6 +6,7 @@ import VersionNumber from "@/modules/app/components/molecules/VersionNumber.vue"
 import SelectorTheme from "@/modules/app/components/molecules/SelectorTheme.vue";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 import FontSizeSelector from "@/modules/app/components/molecules/FontSizeSelector.vue";
+import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue";
 
 const settingsStore = useSettingsStore();
 
@@ -94,9 +95,8 @@ const handleToggleChange = () => {
             <VersionNumber/>
           </ion-label>
         </ion-item>
-
-
       </ion-list>
+      <SocialIcons></SocialIcons>
     </ion-content>
   </ion-page>
 </template>

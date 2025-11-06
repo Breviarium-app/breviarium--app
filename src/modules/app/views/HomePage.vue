@@ -24,6 +24,7 @@ import JerusalemBibleBanner from "@/modules/app/views/JerusalemBibleBanner.vue";
 import EvangeliumBanner from "@/modules/app/views/EvangeliumBanner.vue";
 import AnimatedComponent from "@/modules/app/components/molecules/AnimatedComponent.vue";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
+import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue";
 
 const {t} = useI18n()
 
@@ -150,6 +151,14 @@ useDateStore().updateDateParams()
               </AnimatedComponent>
             </ion-col>
           </ion-row>
+          <ion-row>
+            <ion-col>
+              <AnimatedComponent :delay="getDelay(12)">
+                <SocialIcons/>
+              </AnimatedComponent>
+            </ion-col>
+          </ion-row>
+
         </ion-grid>
       </div>
 

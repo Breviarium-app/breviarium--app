@@ -58,6 +58,7 @@
       <ion-text v-else class="no-intentions">
         <p>{{ $t('prayer_intentions_empty') }}</p>
       </ion-text>
+      <SocialIcons/>
     </ion-content>
   </ion-page>
 </template>
@@ -82,7 +83,8 @@ import {
 } from '@ionic/vue';
 import {checkmark, pencil, trash} from 'ionicons/icons';
 import {onMounted, ref} from 'vue';
-import {IntentionsStorageManager} from '@/modules/app/services/IntentionsStorageManager.ts'; // Adjust the path as needed
+import {IntentionsStorageManager} from '@/modules/app/services/IntentionsStorageManager.ts';
+import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue"; // Adjust the path as needed
 
 // Initialize IntentionsStorageManager
 const storageManager = new IntentionsStorageManager('prayerIntentions');
