@@ -62,7 +62,6 @@ onMounted(async () => {
     if (prayers.value?.length === 0) {
       prayers.value = data;
     }
-    console.log("prayers.value", prayers.value)
   });
 
 });
@@ -77,7 +76,6 @@ const secondLectures = ref<SingleLectureSchemaOutput[]>([]);
 const gospelLectures = ref<SingleLectureSchemaOutput[]>([]);
 
 watch(prayers, () => {
-  console.log("prayers", prayers.value)
 
   prayers.value?.forEach(prayer => {
     prayer.lecturas.forEach(lecture => {
@@ -96,10 +94,6 @@ watch(prayers, () => {
     })
   });
 
-  console.log("firstLectures", firstLectures.value)
-  console.log("psalm", psalmLectures.value)
-  console.log("second", secondLectures.value)
-  console.log("gospel", gospelLectures.value)
 })
 
 const lecturesBlocks = [
