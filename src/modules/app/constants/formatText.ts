@@ -45,7 +45,6 @@ const format$ToVRRed = (text: string) => {
 
 export const formatTextIn18__ = (key: string, lang: string | undefined = 'es'): string => {
     const translatedText = t(key, {lng: lang});
-    console.log("translatedText", translatedText);
     return formatText(translatedText);
 }
 

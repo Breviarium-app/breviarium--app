@@ -131,7 +131,16 @@ export async function isOrdinaryTime(): Promise<boolean> {
     return result;
 }
 
-export function showTeDeum(rank: string, season: string) {
+export async function showTeDeum() {
+    let season = ''
+    let rank = ''
+    await useBreviariumStore().getLiturgyInformation().then((data) => {
+        if (data?.seasons) {
+            season = data?.seasons[0]
+        }
+        rank = data.rank || ''
+    });
+
     if (season === LiturgicalSeasons.CHRISTMAS_TIME) {
         return true;
     }

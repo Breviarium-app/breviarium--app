@@ -58,10 +58,10 @@
     <OfficiumLectures></OfficiumLectures>
 
     <!--    TODO: te deum display from romcal rank/season-->
-    <!--    <div v-if="showTeDeum()">-->
-    <!--      <h4 class="title title-liturgyInformationData">{{ $t('teDeum') }}</h4>-->
-    <!--      <TeDeum/>-->
-    <!--    </div>-->
+    <div v-if="showTeDeumCondition">
+      <h4 class="title title-liturgyInformationData">{{ $t('teDeum') }}</h4>
+      <TeDeum/>
+    </div>
 
     <h4 class="title title-color">{{ $t('oratio') }}</h4>
 
@@ -87,14 +87,17 @@ import {OfficiumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import OfficiumLectures from "@/modules/app/components/molecules/prayers/OfficiumLectures.vue";
 import CrossComponent from "@/modules/app/components/molecules/prayers/CrossComponent.vue";
 import InvitatoryComponent from "@/modules/app/components/molecules/prayers/InvitatoryComponent.vue";
-import {isTodayLent} from "@/modules/app/constants/utils.ts";
+import {isTodayLent, showTeDeum} from "@/modules/app/constants/utils.ts";
 import HymnComponent from "@/modules/app/components/molecules/prayers/HymnComponent.vue";
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
+import TeDeum from "@/modules/app/components/molecules/prayers/TeDeum.vue";
 
 const prayer = ref<OfficiumSchemaOutput>();
 const isTodayLentCondition = ref();
-useDateStore().updateDateParams()
+const showTeDeumCondition = ref(false);
+useDateStore().updateDateParams();
+
 onMounted(async () => {
   await useBreviariumStore().getOfficium().then((data) => {
     prayer.value = data;
@@ -102,6 +105,11 @@ onMounted(async () => {
 
   await isTodayLent().then(value => isTodayLentCondition.value = value);
 
+  await showTeDeum().then(value => {
+    if (value) {
+      showTeDeumCondition.value = true;
+    }
+  });
 });
 
 </script>

@@ -236,7 +236,6 @@ useDateStore().updateDateParams()
 
 onMounted(async () => {
   await useBreviariumStore().getCompletorium().then((data) => {
-    console.log("getCompletorium", data);
     prayer.value = data;
   }).catch(error => {
     console.error(error);

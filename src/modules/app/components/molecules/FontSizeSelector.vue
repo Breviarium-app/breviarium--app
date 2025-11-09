@@ -41,7 +41,6 @@ const handleFontSizeChange = (event: CustomEvent) => {
   const newSize = event.detail.value;
   settingsStore.settings.fontSize = newSize;
   document.documentElement.style.fontSize = `${newSize}px`;
-  console.log(`Font size changed to ${newSize}px`);
   settingsStore.saveSettings();
   HapticsService.light();
 };
