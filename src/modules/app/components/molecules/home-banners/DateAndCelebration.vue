@@ -5,8 +5,8 @@
     </ion-button>
 
     <div class="date-button" @click="setOpen(true)">
-      <CircleLiturgicalColor :liturgical-color-var="color" />
-      {{ liturgyInformationData?.celebration }}<br />
+      <CircleLiturgicalColor :liturgical-color-var="color"/>
+      {{ liturgyInformationData?.celebration }}<br/>
       <small class="title-color">{{ buildLocalDate(printableDate) }} - {{ rank }}</small>
     </div>
 
@@ -26,15 +26,15 @@
 
       <div class="modal-wrapper">
         <ion-datetime
-          ref="datetimeRef"
-          v-model="datetimeModel"
-          :first-day-of-week="1"
-          :prefer-wheel="false"
-          max="2100-12-31"
-          min="1990-01-01"
-          presentation="date"
-          size="cover"
-          show-adjacent-days="true"
+            ref="datetimeRef"
+            v-model="datetimeModel"
+            :first-day-of-week="1"
+            :prefer-wheel="false"
+            max="2100-12-31"
+            min="1990-01-01"
+            presentation="date"
+            show-adjacent-days="true"
+            size="cover"
         >
           <ion-buttons slot="buttons">
             <ion-button color="primary" @click="confirmCalendar()">Confirmar</ion-button>
@@ -46,26 +46,18 @@
 </template>
 
 <script lang="ts" setup>
-import { buildLocalDate, rankTranslate } from "@/modules/app/constants/utils.ts";
-import { computed, onMounted, ref } from "vue";
-import {
-  IonButton,
-  IonButtons,
-  IonDatetime,
-  IonHeader,
-  IonIcon,
-  IonModal,
-  IonToolbar,
-} from "@ionic/vue";
+import {buildLocalDate, rankTranslate} from "@/modules/app/constants/utils.ts";
+import {computed, onMounted, ref} from "vue";
+import {IonButton, IonButtons, IonDatetime, IonHeader, IonIcon, IonModal, IonToolbar,} from "@ionic/vue";
 import CircleLiturgicalColor from "@/modules/app/components/atoms/CircleLiturgicalColor.vue";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
-import { useDateStore } from "@/modules/app/stores/useDateStore.ts";
-import { useBreviariumStore } from "@/modules/app/stores/breviarium.ts";
-import { chevronBackOutline, chevronForwardOutline } from "ionicons/icons";
+import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
+import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
+import {chevronBackOutline, chevronForwardOutline} from "ionicons/icons";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 const toIsoDateString = (d: Date) =>
-  `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 const parseIsoDateString = (s: string) => {
   const datePart = s.split("T")[0];
   const [y, m, d] = datePart.split("-");
@@ -77,7 +69,7 @@ const breviariumStore = useBreviariumStore();
 
 const isOpen = ref(false);
 const datetimeModel = ref<string>(
-  toIsoDateString(dateStore.getCurrentDate || new Date())
+    toIsoDateString(dateStore.getCurrentDate || new Date())
 );
 const datetimeRef = ref();
 const printableDate = computed(() => parseIsoDateString(datetimeModel.value));
@@ -97,14 +89,16 @@ const updateLiturgy = async (newDate: Date) => {
   const data = await breviariumStore.getLiturgyInformation();
   liturgyInformationData.value = data;
   color.value = data?.color;
-  rank.value = await rankTranslate(data?.rank);
+  if (data?.rank) {
+    rank.value = await rankTranslate(data?.rank);
+  }
 };
 
 async function confirmCalendar() {
   datetimeRef.value.$el.confirm();
   const newDate = datetimeModel.value;
   const selectedDate = parseIsoDateString(newDate);
- 
+
   await updateLiturgy(selectedDate);
   isOpen.value = false;
   HapticsService.light();
@@ -183,7 +177,7 @@ ion-datetime {
 }
 
 ion-datetime::part(wheel-item active) {
-    color: var(--ion-tab-bar-color);
+  color: var(--ion-tab-bar-color);
 }
-  
+
 </style>
