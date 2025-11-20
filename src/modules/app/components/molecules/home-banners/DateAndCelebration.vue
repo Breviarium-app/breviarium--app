@@ -30,11 +30,13 @@
             v-model="datetimeModel"
             :first-day-of-week="1"
             :prefer-wheel="false"
+            locale="es-ES"
             max="2100-12-31"
             min="1990-01-01"
             presentation="date"
             show-adjacent-days="true"
             size="cover"
+            @ionChange="onDateChange($event)"
         >
           <ion-buttons slot="buttons">
             <ion-button color="primary" @click="confirmCalendar()">Confirmar</ion-button>
@@ -47,7 +49,7 @@
 
 <script lang="ts" setup>
 import {buildLocalDate, rankTranslate} from "@/modules/app/constants/utils.ts";
-import {computed, onMounted, ref} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import {IonButton, IonButtons, IonDatetime, IonHeader, IonIcon, IonModal, IonToolbar,} from "@ionic/vue";
 import CircleLiturgicalColor from "@/modules/app/components/atoms/CircleLiturgicalColor.vue";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
@@ -77,6 +79,15 @@ const printableDate = computed(() => parseIsoDateString(datetimeModel.value));
 const liturgyInformationData = ref();
 const color = ref();
 const rank = ref();
+
+async function onDateChange(event: any) {
+  console.log(event.detail.value);
+  const newDate = event.detail.value;
+  datetimeModel.value = newDate;
+  const selectedDate = parseIsoDateString(newDate);
+  await updateLiturgy(selectedDate);
+  HapticsService.light();
+}
 
 /* Calendar funtions */
 const setOpen = (open: boolean) => {
@@ -123,6 +134,10 @@ const changeDate = (days: number) => {
 onMounted(async () => {
   const start = parseIsoDateString(datetimeModel.value);
   await updateLiturgy(start);
+});
+
+watch(datetimeModel, async (newDate) => {
+  console.log("datetimeModel", newDate);
 });
 </script>
 
