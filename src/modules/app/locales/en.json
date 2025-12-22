@@ -45,5 +45,7 @@
   "paper": "Paper",
   "opensource_join_us": "Open-source project, ¡join us!",
   "cancel": "Cancel",
-  "accept": "Accept"
+  "accept": "Accept",
+  "copyLink": "Copy link",
+  "copyLinkDescription": "Copy link to the texts of this day"
 }

@@ -246,5 +246,7 @@
   "saintOfDay": "santo del día",
   "invocationCrossSignExplanation": "Ordenamiento General de la Liturgia de las Horas (OGLH) 266a (<a href=\"https://liturgiapapal.org/attachments/article/602/OGLH.pdf#page=57\" target=\"_blank\">fuente</a>):<br/><br/>\"Todos harán la señal de la cruz, desde la frente hasta el pecho y desde el hombro izquierdo al derecho:<br/>a) al comienzo de las Horas, cuando se dice Dios mío, ven en mi auxilio;<br>b) al comienzo de los cánticos evangélicos de Laudes, Vísperas y Completas.\"",
   "followUs": "Síguenos",
-  "socialMediaDescription": "Únete para recibir actualizaciones"
+  "socialMediaDescription": "Únete para recibir actualizaciones",
+  "copyLink": "Copiar enlace",
+  "copyLinkDescription": "Copia enlace a los textos de hoy"
 }

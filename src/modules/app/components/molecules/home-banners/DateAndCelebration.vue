@@ -38,9 +38,6 @@
             size="cover"
             @ionChange="onDateChange($event)"
         >
-          <ion-buttons slot="buttons">
-            <ion-button color="primary" @click="confirmCalendar()">Confirmar</ion-button>
-          </ion-buttons>
         </ion-datetime>
       </div>
     </ion-modal>
@@ -50,7 +47,7 @@
 <script lang="ts" setup>
 import {buildLocalDate, rankTranslate} from "@/modules/app/constants/utils.ts";
 import {computed, onMounted, ref, watch} from "vue";
-import {IonButton, IonButtons, IonDatetime, IonHeader, IonIcon, IonModal, IonToolbar,} from "@ionic/vue";
+import {IonButton, IonDatetime, IonHeader, IonIcon, IonModal, IonToolbar} from "@ionic/vue";
 import CircleLiturgicalColor from "@/modules/app/components/atoms/CircleLiturgicalColor.vue";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
@@ -81,12 +78,23 @@ const color = ref();
 const rank = ref();
 
 async function onDateChange(event: any) {
+
+  // Auto-confirm and close the modal when a day is clicked
+  try {
+    // Ensure the internal value of ion-datetime is committed
+    datetimeRef.value?.$el?.confirm?.();
+  } catch (e) {
+  }
+
   console.log(event.detail.value);
   const newDate = event.detail.value;
+  console.log("new date", newDate)
   datetimeModel.value = newDate;
   const selectedDate = parseIsoDateString(newDate);
   await updateLiturgy(selectedDate);
   HapticsService.light();
+
+  isOpen.value = false;
 }
 
 /* Calendar funtions */

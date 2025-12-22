@@ -122,6 +122,10 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'DateEvangelium',
                 component: () => import('../components/organism/prayers/EvangeliumAndLectiones.vue')
             }, {
+                path: '/:year/:month/:day/evangelium',
+                name: 'DateEvangelium',
+                component: () => import('../components/organism/prayers/EvangeliumAndLectiones.vue')
+            }, {
                 path: '/:year/:month/:day/saint',
                 name: 'DateSaint',
                 component: () => import('../components/organism/SaintPage.vue')
