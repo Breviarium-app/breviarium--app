@@ -81,6 +81,8 @@ body {
     --background-rgb: var(--background);
     --ion-toolbar-color: var(--ion-color-primary);
 
+    --ion-color-step-200: var(--ion-background-color);
+
     ion-item::part(native) {
         --border-color: var(--border-color-light); /* navbar & ion-item border */
     }

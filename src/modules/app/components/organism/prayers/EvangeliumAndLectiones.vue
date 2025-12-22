@@ -1,7 +1,14 @@
 <template>
   <PrayerPage title="Evangelio y lecturas">
-    <h3 class="center">{{ $t('cycle') }} {{ liturgyInfo?.cycle }}</h3>
-    <h3 class="center">{{ liturgyInfo?.celebration }}, {{ rank }}</h3>
+    <div class="">
+      <div>
+        <h3 class="center">{{ $t('cycle') }} {{ liturgyInfo?.cycle }}</h3>
+        <h3 class="center">{{ liturgyInfo?.celebration }}, {{ rank }}</h3>
+      </div>
+      <CopyLink :link="shareLink" show-description/>
+    </div>
+
+
     <div v-for="item in lecturesBlocks">
       <ion-segment v-if="item.lectures.value.length > 1" v-model="item.selected.value">
         <!--  && item.lectures.value[1].texto -->
@@ -20,7 +27,7 @@
   </PrayerPage>
 </template>
 <script lang="ts" setup>
-import {onMounted, ref, watch} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import PrayerPage from "@/modules/app/components/organism/PrayerPage.vue";
 import {LecturesSchemaOutput, SingleLectureSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import {formatText, formatTextLecture} from "@/modules/app/constants/formatText.ts";
@@ -30,8 +37,18 @@ import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
 import {rankTranslate} from "@/modules/app/constants/utils.ts";
 import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
+import CopyLink from "@/modules/app/components/molecules/CopyLink.vue";
 
 const {t} = useI18n()
+
+const dateStore = useDateStore();
+const shareLink = computed(() => {
+  const date = dateStore.currentDate;
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${window.location.origin}/${year}/${month}/${day}/evangelium`;
+});
 
 const selectedFirst = ref<number>(0);
 const selectedPsalm = ref<number>(0);
