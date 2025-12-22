@@ -79,7 +79,6 @@ const rank = ref();
 
 async function onDateChange(event: any) {
 
-  // Auto-confirm and close the modal when a day is clicked
   try {
     // Ensure the internal value of ion-datetime is committed
     datetimeRef.value?.$el?.confirm?.();
@@ -112,16 +111,6 @@ const updateLiturgy = async (newDate: Date) => {
     rank.value = await rankTranslate(data?.rank);
   }
 };
-
-async function confirmCalendar() {
-  datetimeRef.value.$el.confirm();
-  const newDate = datetimeModel.value;
-  const selectedDate = parseIsoDateString(newDate);
-
-  await updateLiturgy(selectedDate);
-  isOpen.value = false;
-  HapticsService.light();
-}
 
 const goToday = async () => {
   const today = new Date();
