@@ -5,7 +5,7 @@
         <h3 class="center">{{ $t('cycle') }} {{ liturgyInfo?.cycle }}</h3>
         <h3 class="center">{{ liturgyInfo?.celebration }}, {{ rank }}</h3>
       </div>
-      <CopyLink :link="shareLink" show-description/>
+      <CopyLink link="evangelium" show-description/>
     </div>
 
 
@@ -40,8 +40,6 @@ import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 import CopyLink from "@/modules/app/components/molecules/CopyLink.vue";
 
 const {t} = useI18n()
-
-const shareLink = "evangelium"
 
 const selectedFirst = ref<number>(0);
 const selectedPsalm = ref<number>(0);
