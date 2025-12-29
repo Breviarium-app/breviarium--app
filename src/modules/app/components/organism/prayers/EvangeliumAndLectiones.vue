@@ -5,7 +5,7 @@
         <h3 class="center">{{ $t('cycle') }} {{ liturgyInfo?.cycle }}</h3>
         <h3 class="center">{{ liturgyInfo?.celebration }}, {{ rank }}</h3>
       </div>
-      <CopyLink :link="shareLink" show-description/>
+      <CopyLink link="evangelium" show-description/>
     </div>
 
 
@@ -27,7 +27,7 @@
   </PrayerPage>
 </template>
 <script lang="ts" setup>
-import {computed, onMounted, ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 import PrayerPage from "@/modules/app/components/organism/PrayerPage.vue";
 import {LecturesSchemaOutput, SingleLectureSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import {formatText, formatTextLecture} from "@/modules/app/constants/formatText.ts";
@@ -40,15 +40,6 @@ import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 import CopyLink from "@/modules/app/components/molecules/CopyLink.vue";
 
 const {t} = useI18n()
-
-const dateStore = useDateStore();
-const shareLink = computed(() => {
-  const date = dateStore.currentDate;
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  return `${window.location.origin}/${year}/${month}/${day}/evangelium`;
-});
 
 const selectedFirst = ref<number>(0);
 const selectedPsalm = ref<number>(0);
