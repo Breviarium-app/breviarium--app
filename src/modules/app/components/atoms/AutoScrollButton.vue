@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, computed, getCurrentInstance } from 'vue';
 import { IonFab, IonFabButton, IonIcon } from '@ionic/vue';
 import { playOutline, pauseOutline } from 'ionicons/icons';
 import { useSettingsStore } from '@/modules/app/stores/settingsStore';
@@ -66,10 +66,13 @@ const stopScroll = () => {
 };
 
 onMounted(() => {
+  const instance = getCurrentInstance();
+  const componentEl = instance?.proxy?.$el;
+
   if (props.scrollContainer) {
     scrollElement = document.querySelector(props.scrollContainer);
   } else {
-    const ionContent = document.querySelector('ion-content');
+    const ionContent = componentEl?.closest?.('ion-content') as HTMLIonContentElement | null;
     if (ionContent) {
       ionContent.getScrollElement().then((element) => {
         scrollElement = element;
