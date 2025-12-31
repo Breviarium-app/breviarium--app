@@ -29,7 +29,7 @@ To run the app:
 # linux and mac users:
 make install
 # for windows users:
-npm i
+pnpm i
 ```
 
 and run the ionic web app
@@ -38,7 +38,7 @@ and run the ionic web app
 # linux and mac users:
 make run
 # for windows users:
-npm run dev
+pnpm run dev
 ```
 
 ## CI/CD flow

@@ -15,11 +15,16 @@ jobs:
           node-version: 20
           registry-url: 'https://registry.npmjs.org/'
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Install dependencies 🔨
-        run: npm ci
+        run: pnpm install
 
       - name: Build package 📦
-        run: npm run build
+        run: pnpm run build
 
   update-version:
     name: update version ⚒️️
@@ -36,15 +41,20 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Increment version in package.json & Commit
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          npm version patch --git-tag-version false
+          pnpm version patch --git-tag-version false
           chmod +x ./.github/workflows/script.sh
           ./.github/workflows/script.sh
           echo "Script executed ✅"
-          git add package.json package-lock.json android/app/build.gradle ios/App/App.xcodeproj/project.pbxproj
+          git add package.json pnpm-lock.yaml android/app/build.gradle ios/App/App.xcodeproj/project.pbxproj
           git commit -m "ci: ⚙️ bump version to $(node -p "require('./package.json').version")"
           git push origin main
         env:
