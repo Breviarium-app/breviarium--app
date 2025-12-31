@@ -58,7 +58,7 @@ Automatic fnm switching: [Configuration](https://github.com/Schniz/fnm)
 After that, you just have to install dependencies:
 
 ```shell
-$ npm ci
+$ pnpm install
 ```
 
 And you're bootstrapped. **Thanks for contributing**!

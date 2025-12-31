@@ -39,10 +39,10 @@ const filteredBooks = computed(() => {
     <ion-content>
       <ion-searchbar
           v-model="searchQuery"
+          :animated="true"
           :cancel-button-text="$t('cancel')"
           :debounce="200"
           :placeholder="$t('bible.search_books')"
-          animated="true"
           show-cancel-button="focus"
       ></ion-searchbar>
 

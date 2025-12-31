@@ -6,6 +6,7 @@ import VersionNumber from "@/modules/app/components/molecules/VersionNumber.vue"
 import SelectorTheme from "@/modules/app/components/molecules/SelectorTheme.vue";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 import FontSizeSelector from "@/modules/app/components/molecules/FontSizeSelector.vue";
+import AutoScrollSpeedSelector from "@/modules/app/components/molecules/AutoScrollSpeedSelector.vue";
 import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue";
 
 const settingsStore = useSettingsStore();
@@ -30,7 +31,7 @@ const handleToggleChange = () => {
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-list>
+      <ion-list v-if="settingsStore.isLoaded">
         <!--        <ion-item>-->
         <!--          <LanguageSelector></LanguageSelector>-->
         <!--        </ion-item>-->
@@ -63,8 +64,8 @@ const handleToggleChange = () => {
           </ion-toggle>
         </ion-item>
         <ion-item>
-          <ion-toggle v-model="settingsStore.settings.deceased" :ionChange="handleToggleChange()"
-                      disabled="true"
+          <ion-toggle v-model="settingsStore.settings.deceased" :disabled="true"
+                      :ionChange="handleToggleChange()"
                       justify="space-between" label-placement="start">
             {{ $t('settings.office_deceased') }}
           </ion-toggle>
@@ -84,6 +85,7 @@ const handleToggleChange = () => {
           </ion-toggle>
         </ion-item>
         <FontSizeSelector/>
+        <AutoScrollSpeedSelector/>
         <ion-item lines="none">
           <ion-label>{{ $t('settings.theme') }}</ion-label>
         </ion-item>
