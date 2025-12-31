@@ -25,6 +25,8 @@
     "biblia-de-jerusalen": "^1.0.8",
     "breviarium": "^3.0.8",
     "date-fns": "^4.1.0",
+    "i18next": "^25.7.3",
+    "ionicons": "^8.0.13",
     "pinia": "^3.0.2",
     "sanctus": "^1.0.15",
     "vue": "^3.4.38",
