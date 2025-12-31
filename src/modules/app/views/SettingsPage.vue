@@ -64,8 +64,8 @@ const handleToggleChange = () => {
           </ion-toggle>
         </ion-item>
         <ion-item>
-          <ion-toggle v-model="settingsStore.settings.deceased" :ionChange="handleToggleChange()"
-                      disabled="true"
+          <ion-toggle v-model="settingsStore.settings.deceased" :disabled="true"
+                      :ionChange="handleToggleChange()"
                       justify="space-between" label-placement="start">
             {{ $t('settings.office_deceased') }}
           </ion-toggle>

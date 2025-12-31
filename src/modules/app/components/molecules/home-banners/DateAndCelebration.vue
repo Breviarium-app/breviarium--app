@@ -30,11 +30,11 @@
             v-model="datetimeModel"
             :first-day-of-week="1"
             :prefer-wheel="false"
+            :show-adjacent-days="true"
             locale="es-ES"
             max="2100-12-31"
             min="1990-01-01"
             presentation="date"
-            show-adjacent-days="true"
             size="cover"
             @ionChange="onDateChange($event)"
         >
