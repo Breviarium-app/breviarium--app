@@ -27,7 +27,7 @@
     "font_size": "Tamaño de letra",
     "sample_text": "Texto de ejemplo",
     "hide_invitatorium": "Ocultar Invitatorio en Laudes",
-    "show_auto_scroll": "Mostrar scroll automático",
+    "show_auto_scroll": "Mostrar botón de scroll automático",
     "auto_scroll_speed": "Velocidad de scroll automático"
   },
   "breviarium": {

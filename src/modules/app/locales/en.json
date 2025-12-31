@@ -18,7 +18,7 @@
     "font_size": "Font size",
     "sample_text": "Example text",
     "hide_invitatorium": "Hide invitatory in Lauds",
-    "show_auto_scroll": "Show auto-scroll",
+    "show_auto_scroll": "Show auto-scroll button",
     "auto_scroll_speed": "Auto-scroll speed"
   },
   "breviarium": {

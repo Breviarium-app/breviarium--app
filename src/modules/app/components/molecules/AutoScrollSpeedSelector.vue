@@ -17,14 +17,14 @@
       <div class="speed-control">
         <ion-range
             v-model="settingsStore.settings.autoScrollSpeed"
-            :max="40"
-            :min="10"
+            :max="20"
+            :min="1"
             :onIonChange="handleSpeedChange"
-            :step="5"
+            :step="1"
             color="primary"
         >
-          <ion-icon :icon="playCircleOutline" slot="start" size="medium"></ion-icon>
-          <ion-icon :icon="playForwardCircleOutline" slot="end" size="medium"></ion-icon>
+          <ion-icon slot="start" :icon="playCircleOutline" size="medium"></ion-icon>
+          <ion-icon slot="end" :icon="playForwardCircleOutline" size="medium"></ion-icon>
         </ion-range>
       </div>
     </ion-item>
@@ -32,11 +32,11 @@
 </template>
 
 <script lang="ts" setup>
-import {IonItem, IonLabel, IonRange, IonIcon, IonToggle} from '@ionic/vue';
+import {IonIcon, IonItem, IonLabel, IonRange, IonToggle} from '@ionic/vue';
 import {useSettingsStore} from '@/modules/app/stores/settingsStore.ts';
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 import {useI18n} from 'vue-i18n';
-import { playCircleOutline, playForwardCircleOutline } from 'ionicons/icons';
+import {playCircleOutline, playForwardCircleOutline} from 'ionicons/icons';
 
 const {t} = useI18n()
 const settingsStore = useSettingsStore();

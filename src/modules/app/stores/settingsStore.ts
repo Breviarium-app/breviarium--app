@@ -16,7 +16,7 @@ export const useSettingsStore = defineStore('settings', () => {
         fontSize: 14,
         hideInvitatorium: false,
         showAutoScroll: true,
-        autoScrollSpeed: 20,
+        autoScrollSpeed: 7,
     });
 
     const isLoaded = ref(false);
