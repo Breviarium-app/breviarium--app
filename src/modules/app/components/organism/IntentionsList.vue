@@ -36,9 +36,7 @@
       </ion-text>
       <SocialIcons/>
     </ion-content>
-  </ion-page>
 
-  <Teleport to="body">
     <ion-modal :is-open="isModalOpen" @didDismiss="closeModal">
       <div class="modal-header">
         <span class="modal-title">{{ isEditing ? $t('prayer_intentions_edit_title') : $t('prayer_intentions_add_title') }}</span>
@@ -61,7 +59,7 @@
         </div>
       </div>
     </ion-modal>
-  </Teleport>
+  </ion-page>
 </template>
 
 <script lang="ts" setup>
@@ -83,7 +81,7 @@ import {
   IonToolbar
 } from '@ionic/vue';
 import {addOutline, closeOutline, pencil, trash} from 'ionicons/icons';
-import {computed, onMounted, ref} from 'vue';
+import {computed, onBeforeUnmount, onMounted, ref} from 'vue';
 import {IntentionsStorageManager} from '@/modules/app/services/IntentionsStorageManager.ts';
 import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
@@ -101,6 +99,12 @@ const isEditing = computed(() => editingIndex.value !== null);
 
 onMounted(() => {
   intentions.value = storageManager.loadIntentions();
+});
+
+onBeforeUnmount(() => {
+  if (isModalOpen.value) {
+    isModalOpen.value = false;
+  }
 });
 
 const openModalForAdd = () => {
