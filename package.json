@@ -9,8 +9,8 @@
     "test": "vitest run",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
-    "ionic:build": "npm run build",
-    "ionic:serve": "npm run dev"
+    "ionic:build": "pnpm run build",
+    "ionic:serve": "pnpm run dev"
   },
   "dependencies": {
     "@capacitor-community/keep-awake": "^7.0.0",
