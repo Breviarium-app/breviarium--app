@@ -14,43 +14,19 @@
       </ion-item>
       <ion-card>
         <ion-card-content>
-          <ion-item>
-            <ion-input
-                v-model="newIntention"
-                :placeholder="$t('prayer_intentions_add_placeholder')"
-                @keyup.enter="addIntention"
-            ></ion-input>
-          </ion-item>
-          <ion-button color="primary" expand="block" @click="addIntention">
+          <ion-button color="primary" expand="block" @click="openModalForAdd">
+            <ion-icon :icon="addOutline" slot="start"></ion-icon>
             {{ $t('prayer_intentions_add_button') }}
           </ion-button>
         </ion-card-content>
       </ion-card>
       <ion-list v-if="intentions.length > 0">
         <ion-item v-for="(intention, index) in intentions" :key="index">
-          <ion-label v-if="editingIndex == null || editingIndex !== index">{{ intention }}</ion-label>
-          <ion-textarea
-              v-else
-              v-model="editedIntention"
-              @keyup.enter="updateIntention(index)"
-          ></ion-textarea>
-          <ion-button
-              v-if="editingIndex == null || editingIndex !== index"
-              slot="end"
-              color="warning"
-              @click="startEditing(index, intention)"
-          >
+          <ion-label class="ion-text-wrap">{{ intention }}</ion-label>
+          <ion-button slot="end" fill="clear" @click="openModalForEdit(index, intention)">
             <ion-icon :icon="pencil"></ion-icon>
           </ion-button>
-          <ion-button
-              v-else
-              slot="end"
-              color="success"
-              @click="updateIntention(index)"
-          >
-            <ion-icon :icon="checkmark"></ion-icon>
-          </ion-button>
-          <ion-button slot="end" color="danger" @click="deleteIntention(index)">
+          <ion-button slot="end" fill="clear" color="danger" @click="deleteIntention(index)">
             <ion-icon :icon="trash"></ion-icon>
           </ion-button>
         </ion-item>
@@ -61,6 +37,31 @@
       <SocialIcons/>
     </ion-content>
   </ion-page>
+
+  <Teleport to="body">
+    <ion-modal :is-open="isModalOpen" @didDismiss="closeModal">
+      <div class="modal-header">
+        <span class="modal-title">{{ isEditing ? $t('prayer_intentions_edit_title') : $t('prayer_intentions_add_title') }}</span>
+        <ion-button fill="clear" class="close-button" @click="closeModal">
+          <ion-icon :icon="closeOutline"></ion-icon>
+        </ion-button>
+      </div>
+      <div class="modal-content">
+        <ion-textarea
+            v-model="modalIntention"
+            :placeholder="$t('prayer_intentions_add_placeholder')"
+            :auto-grow="true"
+            :rows="4"
+            class="intention-textarea"
+        />
+        <div class="modal-actions">
+          <ion-button color="primary" @click="saveIntention" :disabled="!modalIntention.trim()">
+            {{ $t('save') }}
+          </ion-button>
+        </div>
+      </div>
+    </ion-modal>
+  </Teleport>
 </template>
 
 <script lang="ts" setup>
@@ -71,63 +72,79 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
-  IonInput,
   IonItem,
   IonLabel,
   IonList,
+  IonModal,
   IonPage,
   IonText,
   IonTextarea,
   IonTitle,
   IonToolbar
 } from '@ionic/vue';
-import {checkmark, pencil, trash} from 'ionicons/icons';
-import {onMounted, ref} from 'vue';
+import {addOutline, closeOutline, pencil, trash} from 'ionicons/icons';
+import {computed, onMounted, ref} from 'vue';
 import {IntentionsStorageManager} from '@/modules/app/services/IntentionsStorageManager.ts';
-import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue"; // Adjust the path as needed
+import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue";
+import HapticsService from "@/modules/app/services/HapticsService.ts";
 
 // Initialize IntentionsStorageManager
 const storageManager = new IntentionsStorageManager('prayerIntentions');
 
-// State for new intention input, list of intentions, and editing
-const newIntention = ref<string>('');
+// State
 const intentions = ref<string[]>([]);
+const isModalOpen = ref(false);
+const modalIntention = ref('');
 const editingIndex = ref<number | null>(null);
-const editedIntention = ref<string>('');
+
+const isEditing = computed(() => editingIndex.value !== null);
 
 onMounted(() => {
   intentions.value = storageManager.loadIntentions();
 });
 
-const addIntention = () => {
-  intentions.value = storageManager.addIntention(intentions.value, newIntention.value);
-  newIntention.value = '';
+const openModalForAdd = () => {
+  modalIntention.value = '';
+  editingIndex.value = null;
+  isModalOpen.value = true;
+  HapticsService.light();
+};
+
+const openModalForEdit = (index: number, intention: string) => {
+  modalIntention.value = intention;
+  editingIndex.value = index;
+  isModalOpen.value = true;
+  HapticsService.light();
+};
+
+const saveIntention = () => {
+  if (!modalIntention.value.trim()) return;
+
+  if (isEditing.value && editingIndex.value !== null) {
+    intentions.value = storageManager.updateIntention(intentions.value, editingIndex.value, modalIntention.value);
+  } else {
+    intentions.value = storageManager.addIntention(intentions.value, modalIntention.value);
+  }
+
+  closeModal();
+  HapticsService.light();
+};
+
+const closeModal = () => {
+  isModalOpen.value = false;
+  modalIntention.value = '';
+  editingIndex.value = null;
 };
 
 const deleteIntention = (index: number) => {
   intentions.value = storageManager.deleteIntention(intentions.value, index);
-};
-
-const startEditing = (index: number, intention: string) => {
-  editingIndex.value = index;
-  editedIntention.value = intention;
-  // TODO: focus textarea
-};
-
-const updateIntention = (index: number) => {
-  intentions.value = storageManager.updateIntention(intentions.value, index, editedIntention.value);
-  editingIndex.value = null;
-  editedIntention.value = '';
+  HapticsService.light();
 };
 </script>
 
 <style scoped>
 ion-card {
   margin: 16px;
-}
-
-ion-button {
-  margin-top: 8px;
 }
 
 .no-intentions {
@@ -144,5 +161,58 @@ ion-list {
 ion-item {
   --padding-start: 16px;
   --padding-end: 16px;
+}
+
+ion-modal {
+  --height: auto;
+  --width: 90%;
+  --max-width: 400px;
+  --border-radius: 16px;
+  --background: var(--ion-background-color);
+  margin: auto;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 16px 16px 0 16px;
+}
+
+.modal-title {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--breviarium-primary);
+}
+
+.close-button {
+  position: absolute;
+  right: 8px;
+  top: 70%;
+  transform: translateY(-50%);
+  --padding-start: 8px;
+  --padding-end: 8px;
+  margin: 0;
+}
+
+.modal-content {
+  padding: 16px;
+}
+
+.intention-textarea {
+  --background: var(--background-color-card);
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  border-radius: 8px;
+  min-height: 120px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
 }
 </style>
