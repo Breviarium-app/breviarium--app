@@ -15,7 +15,11 @@ export const useSettingsStore = defineStore('settings', () => {
         keepAwake: true,
         fontSize: 14,
         hideInvitatorium: false,
+        showAutoScroll: true,
+        autoScrollSpeed: 20,
     });
+
+    const isLoaded = ref(false);
 
     const themes = [
         // {value: 'system', label: 'System'},
@@ -29,6 +33,7 @@ export const useSettingsStore = defineStore('settings', () => {
         settings.value.hapticsActive = state;
     }
     const saveSettings = async () => {
+        if (!isLoaded.value) return;
         await Preferences.set({
             key: 'settings',
             value: JSON.stringify(settings.value)
@@ -55,7 +60,11 @@ export const useSettingsStore = defineStore('settings', () => {
             const {value} = await Preferences.get({key: 'settings'});
 
             if (value) {
-                settings.value = JSON.parse(value);
+                const savedSettings = JSON.parse(value);
+                settings.value = {
+                    ...settings.value,
+                    ...savedSettings,
+                };
                 applyTheme(settings.value.theme);
 
                 const keepAwake = settings.value.keepAwake ?? false;
@@ -68,6 +77,7 @@ export const useSettingsStore = defineStore('settings', () => {
                 }
 
             }
+            isLoaded.value = true;
         } catch (error) {
             console.error("error loading settings:", error);
         }
@@ -76,6 +86,7 @@ export const useSettingsStore = defineStore('settings', () => {
 
     return {
         settings,
+        isLoaded,
         themes,
         saveSettings,
         applyTheme,

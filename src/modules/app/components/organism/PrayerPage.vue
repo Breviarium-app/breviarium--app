@@ -4,6 +4,7 @@ import {useRoute} from 'vue-router';
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
 import {computed} from "vue";
 import LiturgyInformation from "@/modules/app/components/molecules/home-banners/LiturgyInformation.vue";
+import AutoScrollButton from "@/modules/app/components/atoms/AutoScrollButton.vue";
 
 const route = useRoute();
 const prayerType = route.params.type;
@@ -62,6 +63,7 @@ const prayerWrapperStyle = computed(() => ({
           <slot></slot>
         </div>
       </div>
+      <AutoScrollButton />
     </ion-content>
   </ion-page>
 </template>
