@@ -1,46 +1,46 @@
 PODS:
-  - Capacitor (7.0.1):
+  - Capacitor (7.4.4):
     - CapacitorCordova
-  - CapacitorApp (7.0.0):
+  - CapacitorApp (7.1.1):
     - Capacitor
-  - CapacitorCommunityKeepAwake (7.0.0):
+  - CapacitorCommunityKeepAwake (7.1.0):
     - Capacitor
-  - CapacitorCordova (7.0.1)
-  - CapacitorHaptics (7.0.0):
+  - CapacitorCordova (7.4.4)
+  - CapacitorHaptics (7.0.3):
     - Capacitor
-  - CapacitorPreferences (7.0.0):
+  - CapacitorPreferences (7.0.3):
     - Capacitor
 
 DEPENDENCIES:
-  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
-  - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
-  - "CapacitorCommunityKeepAwake (from `../../node_modules/@capacitor-community/keep-awake`)"
-  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
-  - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
-  - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
+  - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@7.4.4_@capacitor+core@7.4.4/node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@7.1.1_@capacitor+core@7.4.4/node_modules/@capacitor/app`)"
+  - "CapacitorCommunityKeepAwake (from `../../node_modules/.pnpm/@capacitor-community+keep-awake@7.1.0_@capacitor+core@7.4.4/node_modules/@capacitor-community/keep-awake`)"
+  - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@7.4.4_@capacitor+core@7.4.4/node_modules/@capacitor/ios`)"
+  - "CapacitorHaptics (from `../../node_modules/.pnpm/@capacitor+haptics@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/haptics`)"
+  - "CapacitorPreferences (from `../../node_modules/.pnpm/@capacitor+preferences@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/preferences`)"
 
 EXTERNAL SOURCES:
   Capacitor:
-    :path: "../../node_modules/@capacitor/ios"
+    :path: "../../node_modules/.pnpm/@capacitor+ios@7.4.4_@capacitor+core@7.4.4/node_modules/@capacitor/ios"
   CapacitorApp:
-    :path: "../../node_modules/@capacitor/app"
+    :path: "../../node_modules/.pnpm/@capacitor+app@7.1.1_@capacitor+core@7.4.4/node_modules/@capacitor/app"
   CapacitorCommunityKeepAwake:
-    :path: "../../node_modules/@capacitor-community/keep-awake"
+    :path: "../../node_modules/.pnpm/@capacitor-community+keep-awake@7.1.0_@capacitor+core@7.4.4/node_modules/@capacitor-community/keep-awake"
   CapacitorCordova:
-    :path: "../../node_modules/@capacitor/ios"
+    :path: "../../node_modules/.pnpm/@capacitor+ios@7.4.4_@capacitor+core@7.4.4/node_modules/@capacitor/ios"
   CapacitorHaptics:
-    :path: "../../node_modules/@capacitor/haptics"
+    :path: "../../node_modules/.pnpm/@capacitor+haptics@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/haptics"
   CapacitorPreferences:
-    :path: "../../node_modules/@capacitor/preferences"
+    :path: "../../node_modules/.pnpm/@capacitor+preferences@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/preferences"
 
 SPEC CHECKSUMS:
-  Capacitor: 23fff43571a4d1e3ee7d67b5a3588c6e757c2913
-  CapacitorApp: 45cb7cbef4aa380b9236fd6980033eb5cde6fcd2
-  CapacitorCommunityKeepAwake: 00dfd8fa3cca0df003c9a3e2cd7bee678aeec68b
-  CapacitorCordova: 63d476958d5022d76f197031e8b7ea3519988c64
-  CapacitorHaptics: 1fba3e460e7614349c6d5f868b1fccdc5c87b66d
-  CapacitorPreferences: e24a50a936f0e4f54a6b43be6121f923b4d91c27
+  Capacitor: 09d9ff8e9618e8c4b3cab2bbee34a17215dd2fef
+  CapacitorApp: 3ddbd30ac18c321531c3da5e707b60873d89dd60
+  CapacitorCommunityKeepAwake: 36e0cfbc6ae293d93f828724e6d5388a5f02ed5a
+  CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
+  CapacitorHaptics: d17da7dd984cae34111b3f097ccd3e21f9feec62
+  CapacitorPreferences: 688a15748e6fb91d52c7563e5f2df3be503dd694
 
-PODFILE CHECKSUM: c74895ca17fb9f3171d103a048f1766816f01708
+PODFILE CHECKSUM: 6a96194b910f07ed444f0a4627c9f191cca0fee7
 
 COCOAPODS: 1.12.1
