@@ -48,6 +48,16 @@
   "opensource_join_us": "Open-source project, ¡join us!",
   "cancel": "Cancel",
   "accept": "Accept",
+  "save": "Save",
+  "prayer_intentions": "Intentions",
+  "prayer_intentions_title": "Prayer intentions",
+  "prayer_intentions_empty": "No intentions",
+  "prayer_intentions_add_placeholder": "Write here...",
+  "prayer_intentions_add_button": "Add intention",
+  "prayer_intentions_add_title": "New intention",
+  "prayer_intentions_edit_title": "Edit intention",
+  "prayer_intentions_explanation_1": "You will see the intentions next to the Lauds and Vespers preces so you don't forget to pray every day.",
+  "prayer_intentions_explanation_offline": "Intentions are not stored on any server, available only on your device",
   "copyLink": "Copy link",
   "copyLinkDescription": "Copy link to the texts of this day"
 }
