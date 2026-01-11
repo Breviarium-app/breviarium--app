@@ -4,11 +4,11 @@
       <h5 class="title-color">{{ $t('selectDuration') }}</h5>
       <div class="preset-buttons">
         <ion-button
-          v-for="preset in presets"
-          :key="preset"
-          @click="selectPreset(preset)"
-          :color="selectedMinutes === preset ? 'primary' : 'medium'"
-          fill="outline"
+            v-for="preset in presets"
+            :key="preset"
+            :color="selectedMinutes === preset ? 'primary' : 'medium'"
+            fill="outline"
+            @click="selectPreset(preset)"
         >
           {{ preset }} min
         </ion-button>
@@ -18,21 +18,21 @@
         <ion-item lines="none">
           <ion-label>{{ $t('customTime') }}:</ion-label>
           <ion-input
-            v-model.number="customMinutes"
-            type="number"
-            min="1"
-            max="120"
-            @ionChange="selectCustomTime"
-            :placeholder="$t('minutes')"
+              v-model.number="customMinutes"
+              :placeholder="$t('minutes')"
+              max="120"
+              min="1"
+              type="number"
+              @ionChange="selectCustomTime"
           ></ion-input>
         </ion-item>
       </div>
 
       <ion-button
-        expand="block"
-        @click="startTimer"
-        :disabled="!selectedMinutes || selectedMinutes <= 0"
-        class="start-button"
+          :disabled="!selectedMinutes || selectedMinutes <= 0"
+          class="start-button"
+          expand="block"
+          @click="startTimer"
       >
         {{ $t('startTimer') }}
       </ion-button>
@@ -40,19 +40,19 @@
 
     <div v-else class="timer-display">
       <div class="timer-circle">
-        <svg viewBox="0 0 100 100" class="progress-ring">
+        <svg class="progress-ring" viewBox="0 0 100 100">
           <circle
-            class="progress-ring__background"
-            cx="50"
-            cy="50"
-            r="45"
+              class="progress-ring__background"
+              cx="50"
+              cy="50"
+              r="45"
           />
           <circle
-            class="progress-ring__circle"
-            cx="50"
-            cy="50"
-            r="45"
-            :style="{ strokeDashoffset: progressOffset }"
+              :style="{ strokeDashoffset: progressOffset }"
+              class="progress-ring__circle"
+              cx="50"
+              cy="50"
+              r="45"
           />
         </svg>
         <div class="timer-text">
@@ -62,25 +62,25 @@
 
       <div class="timer-controls">
         <ion-button
-          @click="pauseTimer"
-          v-if="!isPaused"
-          color="warning"
-          fill="outline"
+            v-if="!isPaused"
+            color="warning"
+            fill="outline"
+            @click="pauseTimer"
         >
           {{ $t('pause') }}
         </ion-button>
         <ion-button
-          @click="resumeTimer"
-          v-else
-          color="success"
-          fill="outline"
+            v-else
+            color="success"
+            fill="outline"
+            @click="resumeTimer"
         >
           {{ $t('resume') }}
         </ion-button>
         <ion-button
-          @click="stopTimer"
-          color="danger"
-          fill="outline"
+            color="danger"
+            fill="outline"
+            @click="stopTimer"
         >
           {{ $t('stop') }}
         </ion-button>
@@ -90,11 +90,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { IonButton, IonItem, IonLabel, IonInput } from '@ionic/vue';
-import { App } from '@capacitor/app';
-import { Preferences } from '@capacitor/preferences';
-import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import {computed, onMounted, onUnmounted, ref} from 'vue';
+import {IonButton, IonInput, IonItem, IonLabel} from '@ionic/vue';
+import {App} from '@capacitor/app';
+import {Preferences} from '@capacitor/preferences';
+import {Haptics, ImpactStyle, NotificationType} from '@capacitor/haptics';
 
 const presets = [5, 10, 15];
 const selectedMinutes = ref<number>(0);
@@ -146,7 +146,7 @@ const startTimer = async () => {
 
   // Haptic feedback
   try {
-    await Haptics.impact({ style: ImpactStyle.Medium });
+    await Haptics.impact({style: ImpactStyle.Medium});
   } catch (e) {
     console.log('Haptics not available');
   }
@@ -171,7 +171,7 @@ const pauseTimer = async () => {
   await saveTimerState();
 
   try {
-    await Haptics.impact({ style: ImpactStyle.Light });
+    await Haptics.impact({style: ImpactStyle.Light});
   } catch (e) {
     console.log('Haptics not available');
   }
@@ -183,7 +183,7 @@ const resumeTimer = async () => {
   await saveTimerState();
 
   try {
-    await Haptics.impact({ style: ImpactStyle.Light });
+    await Haptics.impact({style: ImpactStyle.Light});
   } catch (e) {
     console.log('Haptics not available');
   }
@@ -203,7 +203,7 @@ const stopTimer = async () => {
   await clearTimerState();
 
   try {
-    await Haptics.impact({ style: ImpactStyle.Light });
+    await Haptics.impact({style: ImpactStyle.Light});
   } catch (e) {
     console.log('Haptics not available');
   }
@@ -214,7 +214,7 @@ const timerComplete = async () => {
   await playCompletionSound();
 
   try {
-    await Haptics.notification({ type: 'SUCCESS' });
+    await Haptics.notification({type: NotificationType.Success});
   } catch (e) {
     console.log('Haptics not available');
   }
@@ -222,7 +222,6 @@ const timerComplete = async () => {
 
 const playCompletionSound = async () => {
   try {
-    // Play the mp3 file from public folder
     audio.value = new Audio('/meditation-bell.mp3');
     await audio.value.play();
   } catch (error) {
@@ -247,12 +246,12 @@ const saveTimerState = async () => {
 };
 
 const clearTimerState = async () => {
-  await Preferences.remove({ key: TIMER_STORAGE_KEY });
+  await Preferences.remove({key: TIMER_STORAGE_KEY});
 };
 
 const restoreTimerState = async () => {
   try {
-    const { value } = await Preferences.get({ key: TIMER_STORAGE_KEY });
+    const {value} = await Preferences.get({key: TIMER_STORAGE_KEY});
 
     if (value) {
       const state = JSON.parse(value);
@@ -288,7 +287,7 @@ onMounted(async () => {
   await restoreTimerState();
 
   // Listen for app state changes
-  App.addListener('appStateChange', async ({ isActive }) => {
+  App.addListener('appStateChange', async ({isActive}) => {
     if (isActive) {
       // App came to foreground
       await restoreTimerState();
