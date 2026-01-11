@@ -254,5 +254,12 @@
   "followUs": "Síguenos",
   "socialMediaDescription": "Únete para recibir actualizaciones",
   "copyLink": "Copiar enlace",
-  "copyLinkDescription": "Copia enlace a los textos de hoy"
+  "copyLinkDescription": "Copia enlace a los textos de hoy",
+  "selectDuration": "Selecciona la duración",
+  "customTime": "Tiempo personalizado",
+  "minutes": "minutos",
+  "startTimer": "Iniciar temporizador",
+  "pause": "Pausar",
+  "resume": "Reanudar",
+  "stop": "Detener"
 }

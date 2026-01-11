@@ -93,14 +93,13 @@
         <div v-if="settings.laudesEvangelium">
           <EvangeliumLecture/>
         </div>
-        <!--    <TimerMeditation/> TODO: handle timer working in the background -->
-
         <h4 class="title title-color">
           {{ $t("meditationTime") }}
         </h4>
         <p class="title-color">
           <i>{{ $t("meditationTimeNote") }}</i>
         </p>
+        <TimerMeditation/>
         <h4 class="title title-color">
           {{ $t("canticumEvangelicum") }}
         </h4>
@@ -176,6 +175,7 @@ import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
 import OfficiumLectures from "@/modules/app/components/molecules/prayers/OfficiumLectures.vue";
 import CustomPrayersBlock from "@/modules/app/components/organism/prayers/CustomPrayersBlock.vue";
 import EvangeliumLecture from "@/modules/app/components/molecules/prayers/EvangeliumLecture.vue";
+import TimerMeditation from "@/modules/app/components/molecules/prayers/TimerMeditation.vue";
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 
