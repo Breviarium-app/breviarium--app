@@ -60,5 +60,20 @@
   "prayer_intentions_explanation_1": "You will see the intentions next to the Lauds and Vespers preces so you don't forget to pray every day.",
   "prayer_intentions_explanation_offline": "Intentions are not stored on any server, available only on your device",
   "copyLink": "Copy link",
-  "copyLinkDescription": "Copy link to the texts of this day"
+  "copyLinkDescription": "Copy link to the texts of this day",
+  "selectDuration": "Select duration",
+  "customTime": "Custom time",
+  "custom": "Custom",
+  "minutes": "minutes",
+  "seconds": "seconds",
+  "startTimer": "Start timer",
+  "pause": "Pause",
+  "resume": "Resume",
+  "stop": "Stop",
+  "paused": "Paused",
+  "remaining": "Remaining",
+  "selectCustomDuration": "Select custom duration",
+  "totalTime": "Total time",
+  "reset": "Reset",
+  "confirm": "Confirm"
 }
