@@ -455,7 +455,7 @@ const restoreTimerState = async () => {
 onMounted(async () => {
   await restoreTimerState();
 
-  App.addListener('appStateChange', async ({isActive}) => {
+  await App.addListener('appStateChange', async ({isActive}) => {
     if (isActive) {
       await restoreTimerState();
     } else {
@@ -473,7 +473,7 @@ onUnmounted(async () => {
     await saveTimerState();
   }
 
-  App.removeAllListeners();
+  await App.removeAllListeners();
 });
 </script>
 
