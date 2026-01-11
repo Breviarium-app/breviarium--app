@@ -2,7 +2,7 @@
   <!-- Only one reading option -->
 
   <div>
-    <ion-segment v-model="selectedCycle">
+    <ion-segment v-model="selectedCycle" class="office-lecture-selector">
       <ion-segment-button value="ordinary">
         <ion-label>{{ $t('ordinaryCycle') }}</ion-label>
       </ion-segment-button>
@@ -81,9 +81,12 @@ import {formatText} from "@/modules/app/constants/formatText.ts";
 import {OfficiumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
 import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
+import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
 
 const officium = ref<OfficiumSchemaOutput>();
-const selectedCycle = ref("ordinary");
+
+const settingsStore = useSettingsStore()
+const selectedCycle = ref(settingsStore.settings.bienalOfficiumDefault ? "bienal" : "ordinary");
 
 onMounted(async () => {
   await useBreviariumStore().getOfficium().then(data => {

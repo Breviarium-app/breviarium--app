@@ -17,6 +17,7 @@ export const useSettingsStore = defineStore('settings', () => {
         hideInvitatorium: false,
         showAutoScroll: true,
         autoScrollSpeed: 7,
+        bienalOfficiumDefault: false
     });
 
     const isLoaded = ref(false);
