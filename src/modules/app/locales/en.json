@@ -63,9 +63,17 @@
   "copyLinkDescription": "Copy link to the texts of this day",
   "selectDuration": "Select duration",
   "customTime": "Custom time",
+  "custom": "Custom",
   "minutes": "minutes",
+  "seconds": "seconds",
   "startTimer": "Start timer",
   "pause": "Pause",
   "resume": "Resume",
-  "stop": "Stop"
+  "stop": "Stop",
+  "paused": "Paused",
+  "remaining": "Remaining",
+  "selectCustomDuration": "Select custom duration",
+  "totalTime": "Total time",
+  "reset": "Reset",
+  "confirm": "Confirm"
 }

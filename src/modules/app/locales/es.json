@@ -257,9 +257,17 @@
   "copyLinkDescription": "Copia enlace a los textos de hoy",
   "selectDuration": "Selecciona la duración",
   "customTime": "Tiempo personalizado",
+  "custom": "Configurar",
   "minutes": "minutos",
+  "seconds": "segundos",
   "startTimer": "Iniciar temporizador",
   "pause": "Pausar",
   "resume": "Reanudar",
-  "stop": "Detener"
+  "stop": "Detener",
+  "paused": "Pausado",
+  "remaining": "Restante",
+  "selectCustomDuration": "Selecciona la duración personalizada",
+  "totalTime": "Tiempo total",
+  "reset": "Reiniciar",
+  "confirm": "Confirmar"
 }
