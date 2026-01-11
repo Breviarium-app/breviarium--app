@@ -19,7 +19,8 @@
     "sample_text": "Example text",
     "hide_invitatorium": "Hide invitatory in Lauds",
     "show_auto_scroll": "Show auto-scroll button",
-    "auto_scroll_speed": "Auto-scroll speed"
+    "auto_scroll_speed": "Auto-scroll speed",
+    "bienal_office_by_default": "Bienal office by default"
   },
   "breviarium": {
     "evangelium_lectiones": "Gospel and Readings",

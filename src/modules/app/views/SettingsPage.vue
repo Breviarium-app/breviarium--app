@@ -57,6 +57,13 @@ const handleToggleChange = () => {
           </ion-toggle>
         </ion-item>
         <ion-item>
+          <ion-toggle v-model="settingsStore.settings.bienalOfficiumDefault" :ionChange="handleToggleChange()"
+                      justify="space-between"
+                      label-placement="start">
+            {{ $t('settings.bienal_office_by_default') }}
+          </ion-toggle>
+        </ion-item>
+        <ion-item>
           <ion-toggle v-model="settingsStore.settings.hideInvitatorium" :ionChange="handleToggleChange()"
                       justify="space-between"
                       label-placement="start">

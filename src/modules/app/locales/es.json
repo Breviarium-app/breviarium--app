@@ -30,7 +30,8 @@
     "sample_text": "Texto de ejemplo",
     "hide_invitatorium": "Ocultar Invitatorio en Laudes",
     "show_auto_scroll": "Mostrar botón de scroll automático",
-    "auto_scroll_speed": "Velocidad de scroll automático"
+    "auto_scroll_speed": "Velocidad de scroll automático",
+    "bienal_office_by_default": "Oficio: Ciclo Bienal por defecto"
   },
   "breviarium": {
     "evangelium_lectiones": "Evangelio y lecturas",
