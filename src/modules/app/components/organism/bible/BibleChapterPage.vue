@@ -80,9 +80,6 @@ const currentChapterNumber = computed(() => {
 
 const totalChapters = computed(() => {
   try {
-    // decodeURI might be needed depending on how the ID is passed.
-    // The template uses decodeURI($route.params?.id?.toString())
-    // Let's match that behavior.
     const id = decodeURI(currentBookName.value || '');
     const chapters = store.getChapters(id);
     return chapters ? chapters.length : 0;
