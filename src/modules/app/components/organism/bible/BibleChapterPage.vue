@@ -27,6 +27,18 @@
           </p>
         </ion-list>
       </div>
+
+      <ion-fab slot="fixed" vertical="bottom" horizontal="start">
+        <ion-fab-button v-if="hasPrev" @click="navigateToChapter(currentChapterNumber - 1)">
+          <ion-icon :icon="chevronBack"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+
+      <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+        <ion-fab-button v-if="hasNext" @click="navigateToChapter(currentChapterNumber + 1)">
+          <ion-icon :icon="chevronForward"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
     </ion-content>
   </ion-page>
 </template>
@@ -41,11 +53,48 @@ import {
   IonList,
   IonPage,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  IonFab,
+  IonFabButton,
+  IonIcon
 } from '@ionic/vue';
+import { useRoute, useRouter } from 'vue-router';
+import { chevronBack, chevronForward } from 'ionicons/icons';
+import { computed } from 'vue';
 import {bibleStore} from "@/modules/app/stores/bibleStore.ts";
 
 const store = bibleStore();
+const route = useRoute();
+const router = useRouter();
+
+const currentBookName = computed(() => {
+  const paramId = route.params.id;
+  return Array.isArray(paramId) ? paramId[0] : paramId;
+});
+
+const currentChapterNumber = computed(() => {
+  const paramChapter = route.params.chapter;
+  const num = Array.isArray(paramChapter) ? paramChapter[0] : paramChapter;
+  return parseInt(num || '1');
+});
+
+const totalChapters = computed(() => {
+  try {
+    const id = decodeURI(currentBookName.value || '');
+    const chapters = store.getChapters(id);
+    return chapters ? chapters.length : 0;
+  } catch (e) {
+    console.error(e);
+    return 0;
+  }
+});
+
+const hasPrev = computed(() => currentChapterNumber.value > 1);
+const hasNext = computed(() => currentChapterNumber.value < totalChapters.value);
+
+const navigateToChapter = (chapterDef: number) => {
+  router.push(`/bible/${route.params.id}/${chapterDef}`);
+};
 
 
 </script>
@@ -53,7 +102,7 @@ const store = bibleStore();
 <style scoped>
 #container {
   text-align: left;
-  padding: 1em 1.5em;
+  padding: 1em 1.5em 5em 1.5em;
 }
 
 #container strong {
