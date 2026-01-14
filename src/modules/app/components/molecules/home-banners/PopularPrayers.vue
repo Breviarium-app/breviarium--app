@@ -1,6 +1,7 @@
 <template>
   <ion-item class="prayer-item" @click="router.push('/popular-prayers')">
     <ion-label>
+      <div class="hour-tag">DEVOCIONES</div>
       <h2>Oraciones populares</h2>
       <p>Ángelus, rosario y más</p>
     </ion-label>

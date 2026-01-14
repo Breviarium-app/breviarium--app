@@ -69,8 +69,9 @@ useDateStore().updateDateParams()
                 <ion-item :class="currentLiturgyHour() == 'Laudes' ? 'selected_hour' : ''" class="prayer-item"
                           @click="router.push('/prayer/laudes')">
                   <ion-label>
+                    <div class="hour-tag">MAÑANA</div>
                     <h2>{{ t('breviarium.laudes') }}</h2>
-                    <p>Oración de la mañana</p>
+                    <!--                    <p>Oración de la mañana</p>-->
                   </ion-label>
                 </ion-item>
               </AnimatedComponent>
@@ -81,6 +82,7 @@ useDateStore().updateDateParams()
             <ion-col>
               <AnimatedComponent :delay="getDelay(3)">
                 <ion-item class="prayer-item" @click="router.push('/prayer/officium')">
+                  <div class="hour-tag">LECTURAS</div>
                   <ion-label>{{ t('breviarium.officium') }}</ion-label>
                 </ion-item>
               </AnimatedComponent>
@@ -89,6 +91,7 @@ useDateStore().updateDateParams()
               <AnimatedComponent :delay="getDelay(4)">
                 <ion-item :class="currentLiturgyHour() == 'Tercia' ? 'selected_hour' : ''" class="prayer-item"
                           @click="router.push('/prayer/tertia')">
+                  <div class="hour-tag">9:00</div>
                   <ion-label>{{ t('breviarium.tercia') }}</ion-label>
                 </ion-item>
               </AnimatedComponent>
@@ -100,6 +103,7 @@ useDateStore().updateDateParams()
               <AnimatedComponent :delay="getDelay(5)">
                 <ion-item :class="currentLiturgyHour() == 'Sexta' ? 'selected_hour' : ''" class="prayer-item"
                           @click="router.push('/prayer/sexta')">
+                  <div class="hour-tag">12:00</div>
                   <ion-label>{{ t('breviarium.sexta') }}</ion-label>
                 </ion-item>
               </AnimatedComponent>
@@ -108,6 +112,7 @@ useDateStore().updateDateParams()
               <AnimatedComponent :delay="getDelay(6)">
                 <ion-item :class="currentLiturgyHour() == 'Nona' ? 'selected_hour' : ''" class="prayer-item"
                           @click="router.push('/prayer/nona')">
+                  <div class="hour-tag">15:00</div>
                   <ion-label>{{ t('breviarium.nona') }}</ion-label>
                 </ion-item>
               </AnimatedComponent>
@@ -118,6 +123,7 @@ useDateStore().updateDateParams()
               <AnimatedComponent :delay="getDelay(7)">
                 <ion-item :class="currentLiturgyHour() == 'Vesperae' ? 'selected_hour' : ''" class="prayer-item"
                           @click="router.push('/prayer/vesperae')">
+                  <div class="hour-tag">TARDE</div>
                   <ion-label>{{ t('breviarium.vesperae') }}</ion-label>
                 </ion-item>
               </AnimatedComponent>
@@ -126,6 +132,7 @@ useDateStore().updateDateParams()
               <AnimatedComponent :delay="getDelay(8)">
                 <ion-item :class="currentLiturgyHour() == 'Completorium' ? 'selected_hour' : ''" class="prayer-item"
                           @click="router.push('/prayer/completorium')">
+                  <div class="hour-tag">NOCHE</div>
                   <ion-label>{{ t('breviarium.completorium') }}</ion-label>
                 </ion-item>
               </AnimatedComponent>
@@ -180,6 +187,16 @@ useDateStore().updateDateParams()
   font-weight: bold;
   box-shadow: 1px 1px 5px var(--background-card-shadow);
   border-radius: 7px;
+}
+
+.hour-tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  opacity: 0.6;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  display: block;
 }
 
 @keyframes slideIn {
