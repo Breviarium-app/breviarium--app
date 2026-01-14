@@ -1,6 +1,7 @@
 <template>
   <ion-item class="prayer-item" @click="router.push('/prayer/evangelium')">
     <ion-label>
+      <div class="hour-tag">EVANGELIO DEL DÍA</div>
       <h2>{{ $t('breviarium.evangelium_lectiones') }}</h2>
       <p>{{ gospelQuote }}</p>
     </ion-label>

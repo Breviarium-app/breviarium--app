@@ -2,8 +2,8 @@
   <ion-item class="prayer-item" @click="router.push('/saint')">
     <ion-label>
       <div class="hour-tag">SANTORAL</div>
-      <h2>Santoral</h2>
-      <p>{{ todaySaint?.name }} y {{ saintsOfDayPrint }} más</p>
+      <h2>{{ todaySaint?.name }}</h2>
+      <p>y {{ saintsOfDayPrint }} más</p>
     </ion-label>
   </ion-item>
 </template>
