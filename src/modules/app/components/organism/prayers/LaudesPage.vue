@@ -23,11 +23,11 @@
           <CrossComponent/>
           <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
         </p>
-        <!--    <span-->
-        <!--        v-if="dateStore.isTodayLent"-->
-        <!--        v-html="formatTextIn18('initialInvocationBodyLent')"-->
-        <!--    ></span>-->
-        <span v-html="formatText($t('initialInvocationBody'))"></span>
+        <span
+            v-if="isLent"
+            v-html="formatText($t('initialInvocationBodyLent'))"
+        ></span>
+        <span v-else v-html="formatText($t('initialInvocationBody'))"></span>
         <div v-if="!settings.hideInvitatorium">
           <h4 class="title title-color">
             {{ formatText($t("invitatory")) }}
@@ -178,6 +178,7 @@ import EvangeliumLecture from "@/modules/app/components/molecules/prayers/Evange
 import TimerMeditation from "@/modules/app/components/molecules/prayers/TimerMeditation.vue";
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
+import {isTodayLent} from "@/modules/app/constants/utils.ts";
 
 const laudesMultiple = ref<LaudesSchemaOutput[]>();
 const selectedOption = ref<number>(0);
@@ -185,6 +186,11 @@ const isModalInvocationOpen = ref(false);
 const settings = useSettingsStore().settings;
 useDateStore().updateDateParams()
 
+const isLent = ref(false);
+
+isTodayLent().then((value) => {
+  isLent.value = value;
+})
 onMounted(async () => {
   await useBreviariumStore().getLaudes().then((data) => {
     laudesMultiple.value = data;
