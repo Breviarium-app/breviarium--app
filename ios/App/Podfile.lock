@@ -34,13 +34,13 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/.pnpm/@capacitor+preferences@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/preferences"
 
 SPEC CHECKSUMS:
-  Capacitor: 09d9ff8e9618e8c4b3cab2bbee34a17215dd2fef
-  CapacitorApp: 3ddbd30ac18c321531c3da5e707b60873d89dd60
-  CapacitorCommunityKeepAwake: 36e0cfbc6ae293d93f828724e6d5388a5f02ed5a
+  Capacitor: 358dd1c3fdd71d969547b17e159fd8a7736cb45f
+  CapacitorApp: 63b237168fc869e758481dba283315a85743ee78
+  CapacitorCommunityKeepAwake: 05c75aab989f60e621870cf03b24a144a5544c30
   CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
-  CapacitorHaptics: d17da7dd984cae34111b3f097ccd3e21f9feec62
-  CapacitorPreferences: 688a15748e6fb91d52c7563e5f2df3be503dd694
+  CapacitorHaptics: ce15be8f287fa2c61c7d2d9e958885b90cf0bebc
+  CapacitorPreferences: 913eef88272c13eb6445b21e51fe8ef6635412cc
 
 PODFILE CHECKSUM: 6a96194b910f07ed444f0a4627c9f191cca0fee7
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.16.2
