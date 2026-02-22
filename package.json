@@ -2,7 +2,7 @@
   "name": "breviarium",
   "description": "App for meditation and pray with the Liturgy of the Hours, gospel of the day and much more!",
   "private": true,
-  "version": "2.7.0",
+  "version": "2.7.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
