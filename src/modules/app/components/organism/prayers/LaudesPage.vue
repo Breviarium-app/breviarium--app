@@ -167,7 +167,7 @@ import {formatPrayers, formatText} from "@/modules/app/constants/formatText.ts";
 import CrossComponent from "@/modules/app/components/molecules/prayers/CrossComponent.vue";
 import InvitatoryComponent from "@/modules/app/components/molecules/prayers/InvitatoryComponent.vue";
 import HymnComponent from "@/modules/app/components/molecules/prayers/HymnComponent.vue";
-import {LaudesSchemaOutput} from "breviarium/dist/prayer-manager-interface";
+import type {LaudesSchemaOutput} from "breviarium";
 import BenedictusPrayer from "@/modules/app/components/molecules/prayers/Benedictus.vue";
 import PadreNuestro from "@/modules/app/components/molecules/prayers/PadreNuestro.vue";
 import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
