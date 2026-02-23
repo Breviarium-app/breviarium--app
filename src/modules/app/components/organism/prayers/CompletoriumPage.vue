@@ -212,7 +212,7 @@
 import {onMounted, ref} from "vue";
 import PrayerPage from "@/modules/app/components/organism/PrayerPage.vue";
 import {formatText} from "@/modules/app/constants/formatText.ts";
-import {CompletoriumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
+import type {CompletoriumSchemaOutput} from "breviarium/dist/prayer-manager-interface.d.ts";
 import CrossComponent from "@/modules/app/components/molecules/prayers/CrossComponent.vue";
 import {isEaster, isInAlbis, isTodayLent, isTriduum} from "@/modules/app/constants/utils.ts";
 import HymnComponent from "@/modules/app/components/molecules/prayers/HymnComponent.vue";

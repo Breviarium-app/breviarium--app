@@ -80,7 +80,7 @@
 import {onMounted, ref} from "vue";
 import PrayerPage from "@/modules/app/components/organism/PrayerPage.vue";
 import {formatText} from "@/modules/app/constants/formatText.ts";
-import {IntermediateSchemaOutput} from "breviarium/dist/prayer-manager-interface";
+import type {IntermediateSchemaOutput} from "breviarium/dist/prayer-manager-interface.d.ts";
 import {IonLabel, IonText} from "@ionic/vue";
 import HymnComponent from "@/modules/app/components/molecules/prayers/HymnComponent.vue";
 import CrossComponent from "@/modules/app/components/molecules/prayers/CrossComponent.vue";

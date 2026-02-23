@@ -101,10 +101,10 @@
         <p v-html="formatText(prayer?.preces_intro)"></p>
         <p v-html="formatText(prayer?.preces_respuesta)"></p>
 
-        <div 
-          v-for="(item, index) in prayer?.preces_contenido.slice(0, -1)" 
-          :key="`preces-${index}`" 
-          class="preces"
+        <div
+            v-for="(item, index) in prayer?.preces_contenido.slice(0, -1)"
+            :key="`preces-${index}`"
+            class="preces"
         >
           <p v-html="formatPrayers(item)"></p>
         </div>
@@ -115,9 +115,9 @@
 
         <CustomPrayersBlock/>
 
-        <div 
-          v-if="prayer?.preces_contenido?.length" 
-          class="preces"
+        <div
+            v-if="prayer?.preces_contenido?.length"
+            class="preces"
         >
           <p v-html="formatPrayers(prayer.preces_contenido[prayer.preces_contenido.length - 1])"></p>
         </div>
@@ -160,7 +160,7 @@ import {onMounted, ref} from "vue";
 import PrayerPage from "@/modules/app/components/organism/PrayerPage.vue";
 import {formatPrayers, formatText} from "@/modules/app/constants/formatText.ts";
 import CrossComponent from "@/modules/app/components/molecules/prayers/CrossComponent.vue";
-import {VesperaeSchemaOutput} from "breviarium/dist/prayer-manager-interface";
+import type {VesperaeSchemaOutput} from "breviarium/dist/prayer-manager-interface.d.ts";
 import PadreNuestro from "@/modules/app/components/molecules/prayers/PadreNuestro.vue";
 import {IonLabel, IonSegment, IonSegmentButton, IonText} from "@ionic/vue";
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";

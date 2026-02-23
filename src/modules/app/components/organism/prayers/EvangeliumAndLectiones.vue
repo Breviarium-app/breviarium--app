@@ -29,7 +29,7 @@
 <script lang="ts" setup>
 import {onMounted, ref, watch} from "vue";
 import PrayerPage from "@/modules/app/components/organism/PrayerPage.vue";
-import {LecturesSchemaOutput, SingleLectureSchemaOutput} from "breviarium/dist/prayer-manager-interface";
+import type {LecturesSchemaOutput, SingleLectureSchemaOutput} from "breviarium/dist/prayer-manager-interface.d.ts";
 import {formatText, formatTextLecture} from "@/modules/app/constants/formatText.ts";
 import {LectureTypes} from "@/modules/app/constants/types.ts";
 import {useI18n} from 'vue-i18n'

@@ -38,7 +38,7 @@
 <script lang="ts" setup>
 import {onMounted, ref, Ref} from "vue";
 import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
-import {InvitatoriumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
+import type {InvitatoriumSchemaOutput} from "breviarium/dist/prayer-manager-interface.d.ts";
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
 
 const invitatorium_psalms: Ref<any[] | undefined> = ref();

@@ -75,7 +75,7 @@
 <script lang="ts" setup>
 import {onMounted, ref} from 'vue';
 import {formatText} from "@/modules/app/constants/formatText.ts";
-import {OfficiumSchemaOutput} from "breviarium/dist/prayer-manager-interface";
+import type {OfficiumSchemaOutput} from "breviarium/dist/prayer-manager-interface.d.ts";
 import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
