@@ -17,7 +17,8 @@ export const useSettingsStore = defineStore('settings', () => {
         hideInvitatorium: false,
         showAutoScroll: true,
         autoScrollSpeed: 7,
-        bienalOfficiumDefault: false
+        bienalOfficiumDefault: false,
+        latinPrayers: 'es'
     });
 
     const isLoaded = ref(false);

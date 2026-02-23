@@ -128,8 +128,7 @@
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>
-    <div v-html="formatText($t('luc2'))">
-    </div>
+    <NuncDimittis/>
     <p>
       <span class="title-color">Ant. </span>
       <span v-html="formatText(prayer?.cantico_evangelico_antifona)"></span>
@@ -151,25 +150,6 @@
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>
     <div v-html="formatText($t('complineFinalPrayer'))"></div>
-    <div v-if="isEasterCondition">
-      <h4 class="title title-color">
-        {{ $t("complineFinalAntiphonReginaCoeli") }}
-      </h4>
-      <p>
-        <span class="text-red">℣.</span> {{ $t('firstVersiculumReginaCoeli') }}<br/>
-        <span class="text-red">℟.</span> {{ $t('firstResponseReginaCoeli') }}
-      </p>
-
-      <p>
-        <span class="text-red">℣.</span> {{ $t('secondVersiculumReginaCoeli') }}<br/>
-        <span class="text-red">℟.</span> {{ $t('secondResponseReginaCoeli') }}
-      </p>
-
-      <p>
-        <span class="text-red">℣.</span> {{ $t('thirdVersiculumReginaCoeli') }}<br/>
-        <span class="text-red">℟.</span> {{ $t('thirdResponseReginaCoeli') }}
-      </p>
-    </div>
 
     <!-- Mary Antiphon -->
     <div>
@@ -190,18 +170,43 @@
           <ion-label>{{ $t("fourthFormulaMaryAntiphon") }}</ion-label>
         </ion-segment-button>
       </ion-segment>
-      <div class="segment-view">
+      <ion-segment v-model="settingsStore.settings.latinPrayers" @ionChange="settingsStore.saveSettings()">
+        <ion-segment-button value="es">
+          <ion-label>Español</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="la">
+          <ion-label>Latin</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+      <div class="segment-view prayer-content">
         <div v-if="selectedMaryAntiphonCode=='theHailMary'" id="theHailMary">
-          <div v-html="$t('theHailMary')"></div>
+          <div v-if="settingsStore.settings.latinPrayers === 'es'" v-html="$t('theHailMary')"></div>
+          <div v-else>
+            Ave, María, grátia plena, Dóminus tecum. Benedícta tu in muliéribus, et benedíctus fructus ventris tui,
+            Iesus. Sancta María, Mater Dei, ora pro nobis peccatóribus, nunc et in hora mortis nostræ. Amen.
+          </div>
         </div>
         <div v-if="selectedMaryAntiphonCode=='motherOfTheRedeemer'" id="motherOfTheRedeemer">
-          <div v-html="$t('motherOfTheRedeemer')"></div>
+          <div v-if="settingsStore.settings.latinPrayers === 'es'" v-html="$t('motherOfTheRedeemer')"></div>
+          <div v-else>
+            Alma Redemptóris Mater, quæ pérvia cæli porta manes, et stella maris, succúrre cadénti, súrgere qui curat,
+            pópulo: tu quæ genuísti, natúra miránte, tuum sanctum Genitórem, Virgo prius ac postérius, Gabriélis ab ore
+            sumens illud Ave, peccatórum miserére.
+          </div>
         </div>
         <div v-if="selectedMaryAntiphonCode=='queenOfHeaven'" id="queenOfHeaven">
-          <div v-html="$t('queenOfHeaven')"></div>
+          <div v-if="settingsStore.settings.latinPrayers === 'es'" v-html="$t('queenOfHeaven')"></div>
+          <div v-else>
+            Ave, Regína cælórum, ave, Dómina Angelórum: Salve, radix, salve, porta, ex qua mundo lux est orta: Gaude,
+            Virgo gloriósa, super omnes speciósa, vale, o valde decóra, et pro nobis Christum exóra.
+          </div>
         </div>
         <div v-if="selectedMaryAntiphonCode=='toThyProtection'" id="toThyProtection">
-          <div v-html="$t('toThyProtection')"></div>
+          <div v-if="settingsStore.settings.latinPrayers === 'es'" v-html="$t('toThyProtection')"></div>
+          <div v-else>
+            Sub tuum præsídium confúgimus, sancta Dei Génetrix; nostras deprecatiónes ne despícias in necessitátibus,
+            sed a perículis cunctis líbera nos semper, Virgo gloriósa et benedícta.
+          </div>
         </div>
       </div>
     </div>
@@ -214,15 +219,19 @@ import PrayerPage from "@/modules/app/components/organism/PrayerPage.vue";
 import {formatText} from "@/modules/app/constants/formatText.ts";
 import type {CompletoriumSchemaOutput} from "breviarium";
 import CrossComponent from "@/modules/app/components/molecules/prayers/CrossComponent.vue";
+import NuncDimittis from "@/modules/app/components/molecules/prayers/NuncDimittis.vue";
 import {isEaster, isInAlbis, isTodayLent, isTriduum} from "@/modules/app/constants/utils.ts";
 import HymnComponent from "@/modules/app/components/molecules/prayers/HymnComponent.vue";
 import {IonSegment, IonSegmentButton} from "@ionic/vue";
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
+import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
 
 
 const prayer = ref<CompletoriumSchemaOutput>();
 const selectedSegment = ref('firstFormula.body');
+
+const settingsStore = useSettingsStore();
 
 const selectedMaryAntiphonCode = ref<
     "theHailMary" | "motherOfTheRedeemer" | "queenOfHeaven" | "toThyProtection"
@@ -263,6 +272,10 @@ onMounted(async () => {
 
 .segment-view {
   overflow-y: hidden; /* Prevent scrolling issues */
+}
+
+.prayer-content {
+  padding-top: 1em;
 }
 
 </style>
