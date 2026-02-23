@@ -7,6 +7,9 @@
       <ion-segment-button value="angelus">
         <ion-label>{{ $t('angelus') }}</ion-label>
       </ion-segment-button>
+      <ion-segment-button value="reginaCoeli">
+        <ion-label>Regina Coeli</ion-label>
+      </ion-segment-button>
       <ion-segment-button value="chapletDivineMercy">
         <ion-label>{{ $t('chapletDivineMercyShort') }}</ion-label>
       </ion-segment-button>
@@ -16,6 +19,9 @@
     </div>
     <div v-if="selectedPrayer == 'angelus'">
       <AngelusComponent/>
+    </div>
+    <div v-if="selectedPrayer == 'reginaCoeli'">
+      <ReginaCoeliComponent/>
     </div>
     <div v-if="selectedPrayer == 'chapletDivineMercy'">
       <ChapletDivineMercyComponent/>
@@ -29,6 +35,7 @@ import RosariumComponent from "@/modules/app/components/molecules/prayers/Rosari
 import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
 import {ref} from "vue";
 import AngelusComponent from "@/modules/app/components/molecules/prayers/AngelusComponent.vue";
+import ReginaCoeliComponent from "@/modules/app/components/molecules/prayers/ReginaCoeliComponent.vue";
 import ChapletDivineMercyComponent from "@/modules/app/components/molecules/prayers/ChapletDivineMercyComponent.vue";
 
 const selectedPrayer = ref<string>('rosary');
