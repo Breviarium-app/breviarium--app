@@ -80,12 +80,12 @@
 import {onMounted, ref} from "vue";
 import PrayerPage from "@/modules/app/components/organism/PrayerPage.vue";
 import {formatText} from "@/modules/app/constants/formatText.ts";
-import type {IntermediateSchemaOutput} from "breviarium/dist/prayer-manager-interface.d.ts";
+import type {IntermediateSchemaOutput} from "breviarium";
+import Breviarium from "breviarium";
 import {IonLabel, IonText} from "@ionic/vue";
 import HymnComponent from "@/modules/app/components/molecules/prayers/HymnComponent.vue";
 import CrossComponent from "@/modules/app/components/molecules/prayers/CrossComponent.vue";
 import {isOrdinaryTime, isTodayLent} from "@/modules/app/constants/utils.ts";
-import Breviarium from "breviarium";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 
 const prayer = ref<IntermediateSchemaOutput>();

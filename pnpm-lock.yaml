@@ -39,8 +39,8 @@ importers:
         specifier: ^1.0.8
         version: 1.0.10
       breviarium:
-        specifier: ^3.0.8
-        version: 3.0.8(typescript@5.9.3)
+        specifier: 3.0.16
+        version: 3.0.16(typescript@5.9.3)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -1117,8 +1117,8 @@ packages:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
 
-  breviarium@3.0.8:
-    resolution: {integrity: sha512-ZlQyE+TPp3x1BTQ9lpFomCKiDcBe1LeU27x6yH6EzEf5UdRFFOGtThKHMGi4m3WswMmdtsJTzOIcdJApYBJ9hw==}
+  breviarium@3.0.16:
+    resolution: {integrity: sha512-ZCroofCevqb9HrZpim3IwVCj42A1WCX1VpPKD05PKMIbe5bqmv5C8Zz+a+/JoXjX3OHzrOqAgCAGr3aJ/uHUig==}
 
   browserslist@4.28.1:
     resolution: {integrity: sha512-ZC5Bd0LgJXgwGqUknZY/vkUQ04r8NXnJZ3yYi4vDmSiZmC/pdSN0NbNRPxZpbtO4uAfDUAFffO8IZoM3Gj8IkA==}
@@ -2318,8 +2318,8 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
-  romcal@3.0.0-dev.115:
-    resolution: {integrity: sha512-WLjq7rpOetyssr4mD0VdmxExnQdOg1kZPVpfJjkuJkENN3GnHPDihYw9y+jlEyH9SraN6Oaa6KiTsPg5e9+Pxw==}
+  romcal@3.0.0-dev.119:
+    resolution: {integrity: sha512-T1V4wBt7LT8ItKuinhglBAFG6tJ0hQaxepO5331IMPtswx/8Pd9Oc++gam70tDVNc3m5pabh8ITYEI/nVcJQCg==}
     engines: {node: '>=18.0.0'}
 
   run-applescript@7.1.0:
@@ -3623,9 +3623,9 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.55.1':
     optional: true
 
-  '@romcal/calendar.spain@3.0.0-dev.119(romcal@3.0.0-dev.115(typescript@5.9.3))':
+  '@romcal/calendar.spain@3.0.0-dev.119(romcal@3.0.0-dev.119(typescript@5.9.3))':
     dependencies:
-      romcal: 3.0.0-dev.115(typescript@5.9.3)
+      romcal: 3.0.0-dev.119(typescript@5.9.3)
 
   '@sec-ant/readable-stream@0.4.1': {}
 
@@ -4059,10 +4059,10 @@ snapshots:
     dependencies:
       fill-range: 7.1.1
 
-  breviarium@3.0.8(typescript@5.9.3):
+  breviarium@3.0.16(typescript@5.9.3):
     dependencies:
-      '@romcal/calendar.spain': 3.0.0-dev.119(romcal@3.0.0-dev.115(typescript@5.9.3))
-      romcal: 3.0.0-dev.115(typescript@5.9.3)
+      '@romcal/calendar.spain': 3.0.0-dev.119(romcal@3.0.0-dev.119(typescript@5.9.3))
+      romcal: 3.0.0-dev.119(typescript@5.9.3)
     optionalDependencies:
       '@rollup/rollup-linux-x64-gnu': 4.9.5
     transitivePeerDependencies:
@@ -5278,7 +5278,7 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.55.1
       fsevents: 2.3.3
 
-  romcal@3.0.0-dev.115(typescript@5.9.3):
+  romcal@3.0.0-dev.119(typescript@5.9.3):
     dependencies:
       i18next: 25.7.3(typescript@5.9.3)
     transitivePeerDependencies:

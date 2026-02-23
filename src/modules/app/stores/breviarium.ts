@@ -1,7 +1,5 @@
 import {defineStore} from "pinia";
 
-import Breviarium from "breviarium";
-import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 import type {
     CompletoriumSchemaOutput,
     EvangeliumSchemaOutput,
@@ -12,7 +10,9 @@ import type {
     LiturgyInformationOutput,
     OfficiumSchemaOutput,
     VesperaeSchemaOutput
-} from "breviarium/dist/prayer-manager-interface.d.ts";
+} from "breviarium";
+import Breviarium from "breviarium";
+import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 
 export const useBreviariumStore = defineStore("breviarium", () => {
     const breviarium = new Breviarium(useDateStore().getCurrentDate);

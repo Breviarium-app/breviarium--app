@@ -160,7 +160,7 @@ import {onMounted, ref} from "vue";
 import PrayerPage from "@/modules/app/components/organism/PrayerPage.vue";
 import {formatPrayers, formatText} from "@/modules/app/constants/formatText.ts";
 import CrossComponent from "@/modules/app/components/molecules/prayers/CrossComponent.vue";
-import type {VesperaeSchemaOutput} from "breviarium/dist/prayer-manager-interface.d.ts";
+import type {VesperaeSchemaOutput} from "breviarium";
 import PadreNuestro from "@/modules/app/components/molecules/prayers/PadreNuestro.vue";
 import {IonLabel, IonSegment, IonSegmentButton, IonText} from "@ionic/vue";
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
