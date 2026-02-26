@@ -13,3 +13,6 @@ project(':capacitor-haptics').projectDir = new File('../node_modules/.pnpm/@capa
 
 include ':capacitor-preferences'
 project(':capacitor-preferences').projectDir = new File('../node_modules/.pnpm/@capacitor+preferences@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/preferences/android')
+
+include ':chiwek-capacitor-active-progress'
+project(':chiwek-capacitor-active-progress').projectDir = new File('../node_modules/.pnpm/@chiwek+capacitor-active-progress@1.0.8_@capacitor+core@7.4.4/node_modules/@chiwek/capacitor-active-progress/android')

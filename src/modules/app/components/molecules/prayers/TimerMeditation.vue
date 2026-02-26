@@ -222,6 +222,9 @@ import {
 import {App} from '@capacitor/app';
 import {Preferences} from '@capacitor/preferences';
 import {Haptics, ImpactStyle, NotificationType} from '@capacitor/haptics';
+import {LiveActivity} from 'capacitor-live-activity';
+import {ActiveProgress} from '@chiwek/capacitor-active-progress';
+import {Capacitor} from '@capacitor/core';
 
 const presets = [5, 10, 15];
 const selectedMinutes = ref<number>(0);
@@ -241,6 +244,94 @@ const modalMinutes = ref<number>(0);
 const modalSeconds = ref<number>(0);
 
 const TIMER_STORAGE_KEY = 'meditation_timer_state';
+
+const liveActivityId = ref<string | null>(null);
+
+const startLiveActivity = async () => {
+  if (Capacitor.getPlatform() === 'ios') {
+    try {
+      const endTime = new Date(Date.now() + remainingSeconds.value * 1000).toISOString();
+      await LiveActivity.startActivity({
+        id: 'meditation-timer',
+        attributes: {
+          name: 'Meditation'
+        },
+        contentState: {
+          remainingTime: remainingSeconds.value.toString(),
+          endTime: endTime
+        }
+      });
+      liveActivityId.value = 'meditation-timer';
+    } catch (e) {
+      console.error('Error starting Live Activity', e);
+    }
+  } else if (Capacitor.getPlatform() === 'android') {
+    try {
+      await ActiveProgress.start({
+        orderId: 'meditation-timer',
+        title: 'Meditation',
+        text: 'Meditation in progress',
+        progress: 1 - (remainingSeconds.value / totalSeconds.value),
+        indeterminate: false
+      });
+    } catch (e) {
+      console.error('Error starting Active Progress', e);
+    }
+  }
+};
+
+const updateLiveActivity = async () => {
+  if (Capacitor.getPlatform() === 'ios' && liveActivityId.value) {
+    try {
+      const endTime = new Date(Date.now() + remainingSeconds.value * 1000).toISOString();
+      await LiveActivity.updateActivity({
+        id: liveActivityId.value,
+        contentState: {
+          remainingTime: remainingSeconds.value.toString(),
+          endTime: endTime
+        }
+      });
+    } catch (e) {
+      console.error('Error updating Live Activity', e);
+    }
+  } else if (Capacitor.getPlatform() === 'android') {
+    try {
+      await ActiveProgress.update({
+        orderId: 'meditation-timer',
+        progress: 1 - (remainingSeconds.value / totalSeconds.value),
+        text: `Remaining: ${formattedTime.value}`
+      });
+    } catch (e) {
+      console.error('Error updating Active Progress', e);
+    }
+  }
+};
+
+const stopLiveActivity = async () => {
+  if (Capacitor.getPlatform() === 'ios' && liveActivityId.value) {
+    try {
+      const endTime = new Date(Date.now() + remainingSeconds.value * 1000).toISOString();
+      await LiveActivity.endActivity({
+        id: liveActivityId.value,
+        contentState: {
+          remainingTime: remainingSeconds.value.toString(),
+          endTime: endTime
+        }
+      });
+      liveActivityId.value = null;
+    } catch (e) {
+      console.error('Error stopping Live Activity', e);
+    }
+  } else if (Capacitor.getPlatform() === 'android') {
+    try {
+      await ActiveProgress.stop({
+        orderId: 'meditation-timer'
+      });
+    } catch (e) {
+      console.error('Error stopping Active Progress', e);
+    }
+  }
+};
 
 const formattedTime = computed(() => {
   const minutes = Math.floor(remainingSeconds.value / 60);
@@ -314,6 +405,7 @@ const startTimer = async () => {
 
   await saveTimerState();
   runTimer();
+  await startLiveActivity();
 
   try {
     await Haptics.impact({style: ImpactStyle.Medium});
@@ -331,6 +423,9 @@ const runTimer = () => {
         await timerComplete();
       } else {
         await saveTimerState();
+        if (remainingSeconds.value % 10 === 0) {
+          await updateLiveActivity();
+        }
       }
     }
   }, 1000);
@@ -339,6 +434,7 @@ const runTimer = () => {
 const pauseTimer = async () => {
   isPaused.value = true;
   await saveTimerState();
+  await stopLiveActivity();
 
   try {
     await Haptics.impact({style: ImpactStyle.Light});
@@ -351,6 +447,7 @@ const resumeTimer = async () => {
   isPaused.value = false;
   backgroundStartTime = Date.now();
   await saveTimerState();
+  await startLiveActivity();
 
   try {
     await Haptics.impact({style: ImpactStyle.Light});
@@ -370,6 +467,7 @@ const stopTimer = async () => {
   remainingSeconds.value = 0;
   backgroundStartTime = null;
 
+  await stopLiveActivity();
   await clearTimerState();
 
   try {

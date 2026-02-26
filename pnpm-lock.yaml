@@ -29,6 +29,9 @@ importers:
       '@capacitor/preferences':
         specifier: ^7.0.0
         version: 7.0.3(@capacitor/core@7.4.4)
+      '@chiwek/capacitor-active-progress':
+        specifier: ^1.0.8
+        version: 1.0.8(@capacitor/core@7.4.4)
       '@ionic/vue':
         specifier: ^8.4.3
         version: 8.7.15(@stencil/core@4.40.1)(vue-router@4.6.4(vue@3.5.26(typescript@5.9.3)))(vue@3.5.26(typescript@5.9.3))
@@ -41,6 +44,9 @@ importers:
       breviarium:
         specifier: 3.0.16
         version: 3.0.16(typescript@5.9.3)
+      capacitor-live-activity:
+        specifier: ^8.1.0
+        version: 8.1.0(@capacitor/core@7.4.4)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -287,6 +293,11 @@ packages:
     resolution: {integrity: sha512-s8u2PCnxCj6auvZZaFb//KJSyvgwwtKu6aFA7PQ1FQULhZw+3zCb78biyWcl71KF0iBuC2jYlj4PjTeaF5OIGQ==}
     peerDependencies:
       '@capacitor/core': '>=7.0.0'
+
+  '@chiwek/capacitor-active-progress@1.0.8':
+    resolution: {integrity: sha512-+a/Xzv3tA8L4Q/gBqe4mxD/BP2MbbTUaJMu+Tej1h6gRLzdY///CqMnD0UK4eES6JiWDU8vb5xogjgiNwbK2Vw==}
+    peerDependencies:
+      '@capacitor/core': ^6.0.0 || ^7.0.0
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -1149,6 +1160,11 @@ packages:
 
   caniuse-lite@1.0.30001762:
     resolution: {integrity: sha512-PxZwGNvH7Ak8WX5iXzoK1KPZttBXNPuaOvI2ZYU7NrlM+d9Ov+TUvlLOBNGzVXAntMSMMlJPd+jY6ovrVjSmUw==}
+
+  capacitor-live-activity@8.1.0:
+    resolution: {integrity: sha512-n9XN/S8cEDcR8S2EzA9K7B4xcOmQzPZGNhiHZT5VMiAucGRf6OlD4G3iWpwG7YnKxwF0jOd8mAON37RdCfYrIA==}
+    peerDependencies:
+      '@capacitor/core': '>=8.0.0'
 
   chai@5.3.3:
     resolution: {integrity: sha512-4zNhdJD/iOjSH0A05ea+Ke6MU5mmpQcbQsSOkgdaUMJ9zTlDTD/GYlwohmIE2u0gaxHYiVHEn1Fw9mZ/ktJWgw==}
@@ -3217,6 +3233,10 @@ snapshots:
     dependencies:
       '@capacitor/core': 7.4.4
 
+  '@chiwek/capacitor-active-progress@1.0.8(@capacitor/core@7.4.4)':
+    dependencies:
+      '@capacitor/core': 7.4.4
+
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
@@ -4098,6 +4118,10 @@ snapshots:
   camelcase@5.3.1: {}
 
   caniuse-lite@1.0.30001762: {}
+
+  capacitor-live-activity@8.1.0(@capacitor/core@7.4.4):
+    dependencies:
+      '@capacitor/core': 7.4.4
 
   chai@5.3.3:
     dependencies:
