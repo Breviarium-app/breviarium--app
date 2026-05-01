@@ -23,10 +23,18 @@ struct TimerMeditationLiveActivity: Widget {
             // Lock Screen UI
             VStack {
                 HStack {
-                    Image(systemName: "timer")
-                        .foregroundColor(.orange)
-                    Text(context.attributes.name)
-                        .font(.headline)
+                    Image("AppIcon")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .cornerRadius(8)
+
+                    VStack(alignment: .leading) {
+                        Text(context.attributes.name)
+                            .font(.headline)
+                        Text("Remaining")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
                     Spacer()
                     Text(dateFrom(isoString: context.state.endTime), style: .timer)
                         .font(.title2)
@@ -41,8 +49,11 @@ struct TimerMeditationLiveActivity: Widget {
             DynamicIsland {
                 // Expanded UI
                 DynamicIslandExpandedRegion(.leading) {
-                    Label("Meditation", systemImage: "timer")
-                        .foregroundColor(.orange)
+                    Image("AppIcon")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .cornerRadius(8)
+                        .padding(.leading, 8)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     Text(dateFrom(isoString: context.state.endTime), style: .timer)
@@ -55,15 +66,19 @@ struct TimerMeditationLiveActivity: Widget {
                         .foregroundColor(.secondary)
                 }
             } compactLeading: {
-                Image(systemName: "timer")
-                    .foregroundColor(.orange)
+                Image("AppIcon")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .cornerRadius(4)
             } compactTrailing: {
                 Text(dateFrom(isoString: context.state.endTime), style: .timer)
                     .monospacedDigit()
                     .frame(width: 45)
             } minimal: {
-                Image(systemName: "timer")
-                    .foregroundColor(.orange)
+                Image("AppIcon")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .cornerRadius(4)
             }
             .widgetURL(URL(string: "breviarium://timer"))
             .keylineTint(Color.orange)

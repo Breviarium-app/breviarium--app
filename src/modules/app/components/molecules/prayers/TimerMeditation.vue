@@ -269,10 +269,11 @@ const startLiveActivity = async () => {
     try {
       await ActiveProgress.start({
         orderId: 'meditation-timer',
-        title: 'Meditation',
+        title: 'Breviarium',
         text: 'Meditation in progress',
         progress: 1 - (remainingSeconds.value / totalSeconds.value),
-        indeterminate: false
+        indeterminate: false,
+        smallIcon: 'ic_launcher_foreground'
       });
     } catch (e) {
       console.error('Error starting Active Progress', e);
@@ -299,6 +300,7 @@ const updateLiveActivity = async () => {
       await ActiveProgress.update({
         orderId: 'meditation-timer',
         progress: 1 - (remainingSeconds.value / totalSeconds.value),
+        title: 'Breviarium',
         text: `Remaining: ${formattedTime.value}`
       });
     } catch (e) {
