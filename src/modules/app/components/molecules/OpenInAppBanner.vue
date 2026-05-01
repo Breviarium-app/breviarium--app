@@ -1,7 +1,7 @@
 <template>
   <div v-if="showBanner" class="open-in-app-banner">
     <span class="banner-text">Abrir en la app de Breviarium</span>
-    <a class="banner-open-btn" :href="deeplink">Abrir</a>
+    <a class="banner-open-btn" :href="deeplink" @click="openApp">Abrir</a>
     <button class="banner-close-btn" @click="dismiss" aria-label="Cerrar">&times;</button>
   </div>
 </template>
@@ -28,6 +28,17 @@ const deeplink = computed(() => {
   const path = route.fullPath === '/' ? '' : route.fullPath;
   return 'breviarium:/' + path;
 });
+
+function openApp(e: Event) {
+  e.preventDefault();
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  const storeUrl = isAndroid
+    ? 'https://play.google.com/store/apps/details?id=com.breviarium.app'
+    : 'https://apps.apple.com/us/app/breviarium/id6745237300';
+  const timeout = setTimeout(() => { window.location.href = storeUrl; }, 1500);
+  window.addEventListener('blur', () => clearTimeout(timeout), {once: true});
+  window.location.href = deeplink.value;
+}
 
 function dismiss() {
   dismissed.value = true;
