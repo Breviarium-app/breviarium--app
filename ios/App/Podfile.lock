@@ -8,6 +8,8 @@ PODS:
   - CapacitorCordova (7.4.4)
   - CapacitorHaptics (7.0.3):
     - Capacitor
+  - CapacitorLiveActivity (8.1.0):
+    - Capacitor
   - CapacitorPreferences (7.0.3):
     - Capacitor
 
@@ -17,6 +19,7 @@ DEPENDENCIES:
   - "CapacitorCommunityKeepAwake (from `../../node_modules/.pnpm/@capacitor-community+keep-awake@7.1.0_@capacitor+core@7.4.4/node_modules/@capacitor-community/keep-awake`)"
   - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@7.4.4_@capacitor+core@7.4.4/node_modules/@capacitor/ios`)"
   - "CapacitorHaptics (from `../../node_modules/.pnpm/@capacitor+haptics@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/haptics`)"
+  - "CapacitorLiveActivity (from `../../node_modules/.pnpm/capacitor-live-activity@8.1.0_@capacitor+core@7.4.4/node_modules/capacitor-live-activity`)"
   - "CapacitorPreferences (from `../../node_modules/.pnpm/@capacitor+preferences@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/preferences`)"
 
 EXTERNAL SOURCES:
@@ -30,6 +33,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/.pnpm/@capacitor+ios@7.4.4_@capacitor+core@7.4.4/node_modules/@capacitor/ios"
   CapacitorHaptics:
     :path: "../../node_modules/.pnpm/@capacitor+haptics@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/haptics"
+  CapacitorLiveActivity:
+    :path: "../../node_modules/.pnpm/capacitor-live-activity@8.1.0_@capacitor+core@7.4.4/node_modules/capacitor-live-activity"
   CapacitorPreferences:
     :path: "../../node_modules/.pnpm/@capacitor+preferences@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/preferences"
 
@@ -39,8 +44,9 @@ SPEC CHECKSUMS:
   CapacitorCommunityKeepAwake: 05c75aab989f60e621870cf03b24a144a5544c30
   CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
   CapacitorHaptics: ce15be8f287fa2c61c7d2d9e958885b90cf0bebc
+  CapacitorLiveActivity: a85f59d683949393bbb0cc979fc97e24dd6a10ec
   CapacitorPreferences: 913eef88272c13eb6445b21e51fe8ef6635412cc
 
-PODFILE CHECKSUM: 6a96194b910f07ed444f0a4627c9f191cca0fee7
+PODFILE CHECKSUM: 0c9adb24b30b907218bb5af29b10f4c881f82eaf
 
 COCOAPODS: 1.16.2
