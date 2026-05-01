@@ -6,6 +6,7 @@ import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 import {App as CapacitorApp} from '@capacitor/app';
 import {useRouter} from 'vue-router';
+import OpenInAppBanner from '@/modules/app/components/molecules/OpenInAppBanner.vue';
 
 const store = useSettingsStore();
 const router = useRouter();
@@ -40,6 +41,7 @@ onMounted(() => {
 
 <template>
   <ion-app>
+    <OpenInAppBanner/>
     <div class="safe-area">
       <ion-router-outlet/>
     </div>
