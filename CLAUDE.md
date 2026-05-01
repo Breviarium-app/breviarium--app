@@ -1,0 +1,2 @@
+- This is a project made with vue and capacitor. mobile app.
+- pnpm used for package manager.
