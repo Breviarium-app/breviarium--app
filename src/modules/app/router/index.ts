@@ -82,6 +82,10 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'popular-prayers',
                 component: () => import('../components/organism/prayers/PopularPrayers.vue')
             }, {
+                path: '/popular-prayers/:prayer',
+                name: 'popular-prayer',
+                component: () => import('../components/organism/prayers/PopularPrayerPage.vue')
+            }, {
                 path: '/saint',
                 name: 'Saint',
                 component: () => import('../components/organism/SaintPage.vue')
