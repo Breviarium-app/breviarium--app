@@ -52,7 +52,7 @@ const prayers = [
   justify-content: center;
   padding: 20px 12px;
   border-radius: 12px;
-  background: var(--ion-color-light);
+  background: var(--background-color-card);
   border: none;
   cursor: pointer;
   min-height: 120px;
