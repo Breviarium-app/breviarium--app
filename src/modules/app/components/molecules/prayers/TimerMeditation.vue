@@ -232,7 +232,8 @@ const isPaused = ref(false);
 const remainingSeconds = ref(0);
 const totalSeconds = ref(0);
 let intervalId: number | null = null;
-let backgroundStartTime: number | null = null;
+let targetEndTime: number | null = null;
+let pausedRemaining: number | null = null;
 const audio = ref<HTMLAudioElement | null>(null);
 
 // Modal state
@@ -310,7 +311,8 @@ const startTimer = async () => {
   remainingSeconds.value = totalSeconds.value;
   timerRunning.value = true;
   isPaused.value = false;
-  backgroundStartTime = Date.now();
+  targetEndTime = Date.now() + totalSeconds.value * 1000;
+  pausedRemaining = null;
 
   await saveTimerState();
   runTimer();
@@ -322,22 +324,31 @@ const startTimer = async () => {
   }
 };
 
+const updateRemainingFromTarget = () => {
+  if (targetEndTime === null) return;
+  remainingSeconds.value = Math.max(0, Math.ceil((targetEndTime - Date.now()) / 1000));
+};
+
 const runTimer = () => {
+  if (intervalId !== null) {
+    clearInterval(intervalId);
+  }
   intervalId = window.setInterval(async () => {
     if (!isPaused.value) {
-      remainingSeconds.value--;
+      updateRemainingFromTarget();
 
       if (remainingSeconds.value <= 0) {
         await timerComplete();
-      } else {
-        await saveTimerState();
       }
     }
-  }, 1000);
+  }, 250);
 };
 
 const pauseTimer = async () => {
   isPaused.value = true;
+  updateRemainingFromTarget();
+  pausedRemaining = remainingSeconds.value;
+  targetEndTime = null;
   await saveTimerState();
 
   try {
@@ -349,7 +360,9 @@ const pauseTimer = async () => {
 
 const resumeTimer = async () => {
   isPaused.value = false;
-  backgroundStartTime = Date.now();
+  const remaining = pausedRemaining ?? remainingSeconds.value;
+  targetEndTime = Date.now() + remaining * 1000;
+  pausedRemaining = null;
   await saveTimerState();
 
   try {
@@ -368,7 +381,8 @@ const stopTimer = async () => {
   timerRunning.value = false;
   isPaused.value = false;
   remainingSeconds.value = 0;
-  backgroundStartTime = null;
+  targetEndTime = null;
+  pausedRemaining = null;
 
   await clearTimerState();
 
@@ -403,10 +417,9 @@ const saveTimerState = async () => {
   const state = {
     running: timerRunning.value,
     paused: isPaused.value,
-    remainingSeconds: remainingSeconds.value,
+    targetEndTime: targetEndTime,
+    pausedRemaining: pausedRemaining ?? remainingSeconds.value,
     totalSeconds: totalSeconds.value,
-    backgroundStartTime: backgroundStartTime,
-    timestamp: Date.now()
   };
 
   await Preferences.set({
@@ -427,23 +440,22 @@ const restoreTimerState = async () => {
       const state = JSON.parse(value);
 
       if (state.running) {
-        const elapsed = Math.floor((Date.now() - state.timestamp) / 1000);
-
         timerRunning.value = true;
         isPaused.value = state.paused;
         totalSeconds.value = state.totalSeconds;
 
-        if (!state.paused) {
-          remainingSeconds.value = Math.max(0, state.remainingSeconds - elapsed);
+        if (!state.paused && state.targetEndTime) {
+          targetEndTime = state.targetEndTime;
+          updateRemainingFromTarget();
 
           if (remainingSeconds.value <= 0) {
             await timerComplete();
           } else {
-            backgroundStartTime = Date.now();
             runTimer();
           }
         } else {
-          remainingSeconds.value = state.remainingSeconds;
+          remainingSeconds.value = state.pausedRemaining || 0;
+          pausedRemaining = remainingSeconds.value;
         }
       }
     }
@@ -456,9 +468,12 @@ onMounted(async () => {
   await restoreTimerState();
 
   await App.addListener('appStateChange', async ({isActive}) => {
-    if (isActive) {
-      await restoreTimerState();
-    } else {
+    if (isActive && timerRunning.value && !isPaused.value) {
+      updateRemainingFromTarget();
+      if (remainingSeconds.value <= 0) {
+        await timerComplete();
+      }
+    } else if (!isActive) {
       await saveTimerState();
     }
   });
