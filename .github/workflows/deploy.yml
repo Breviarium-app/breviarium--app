@@ -1,8 +1,17 @@
-name: Deploy to Google Play🚀
+name: Deploy to Stores
 
 on:
   workflow_dispatch:
     inputs:
+      platform:
+        description: 'Platform to deploy'
+        required: true
+        default: 'both'
+        type: choice
+        options:
+          - both
+          - android
+          - ios
       environment:
         description: 'Deployment environment'
         required: true
@@ -12,17 +21,14 @@ on:
           - internal
           - production
 
+permissions:
+  contents: write
 
 jobs:
-  build-and-deploy:
+  build-web:
+    name: Build web assets
     runs-on: ubuntu-latest
     steps:
-      - name: Validate secrets
-        run: |
-          if [ -z "${{ secrets.KEYSTORE_BASE64 }}" ] || [ -z "${{ secrets.KEY_ALIAS }}" ] || [ -z "${{ secrets.KEY_PASSWORD }}" ] || [ -z "${{ secrets.GOOGLE_PLAY_JSON }}" ]; then
-            echo "Error: One or more secrets are missing"
-            exit 1
-          fi
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -39,11 +45,50 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Install Ionic CLI
-        run: pnpm install -g @ionic/cli
-
       - name: Build app
         run: pnpm run build
+
+      - name: Upload web build
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-dist
+          path: dist/
+          retention-days: 1
+
+  deploy-android:
+    name: Deploy Android
+    needs: build-web
+    if: inputs.platform == 'both' || inputs.platform == 'android'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate secrets
+        run: |
+          if [ -z "${{ secrets.KEYSTORE_BASE64 }}" ] || [ -z "${{ secrets.KEY_ALIAS }}" ] || [ -z "${{ secrets.KEY_PASSWORD }}" ] || [ -z "${{ secrets.GOOGLE_PLAY_JSON }}" ]; then
+            echo "Error: One or more Android secrets are missing"
+            exit 1
+          fi
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Download web build
+        uses: actions/download-artifact@v4
+        with:
+          name: web-dist
+          path: dist/
 
       - name: Sync Capacitor
         run: npx cap sync android
@@ -59,8 +104,7 @@ jobs:
 
       - name: Build Android App Bundle
         working-directory: android
-        run: |
-          ./gradlew bundleRelease
+        run: ./gradlew bundleRelease
 
       - name: Sign AAB
         id: sign
@@ -75,26 +119,37 @@ jobs:
       - name: Create service_account.json
         run: echo '${{ secrets.GOOGLE_PLAY_JSON }}' > service_account.json
 
-      # Deploy to Google Play
       - name: Deploy to Play Store
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJson: service_account.json
           packageName: com.breviarium.app
           releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
-          track: ${{ github.event_name == 'workflow_dispatch' && inputs.environment }}
+          track: ${{ inputs.environment }}
           whatsNewDirectory: distribution/
 
-  update-version-minor:
-    name: update minor version ⚒️️
-    runs-on: ubuntu-latest
-    needs: build-and-deploy
-    if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'production')
+  deploy-ios:
+    name: Deploy iOS
+    needs: build-web
+    if: inputs.platform == 'both' || inputs.platform == 'ios'
+    runs-on: macos-latest
     steps:
+      - name: Validate secrets
+        run: |
+          if [ -z "${{ secrets.IOS_CERTIFICATE_BASE64 }}" ] || \
+             [ -z "${{ secrets.IOS_CERTIFICATE_PASSWORD }}" ] || \
+             [ -z "${{ secrets.IOS_PROVISION_PROFILE_BASE64 }}" ] || \
+             [ -z "${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}" ] || \
+             [ -z "${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}" ] || \
+             [ -z "${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}" ]; then
+            echo "Error: One or more iOS secrets are missing"
+            exit 1
+          fi
+
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -104,32 +159,121 @@ jobs:
         with:
           version: 9
 
-      - name: Increment version in package.json & Commit
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          pnpm version minor --git-tag-version false
-          chmod +x ./.github/workflows/script.sh
-          ./.github/workflows/script.sh
-          echo "Script executed ✅"
-          git add package.json pnpm-lock.yaml android/app/build.gradle ios/App/App.xcodeproj/project.pbxproj
-          git commit -m "ci: ⚙️ bump version to $(node -p "require('./package.json').version")"
-          git push origin ${GITHUB_REF#refs/heads/}
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Download web build
+        uses: actions/download-artifact@v4
+        with:
+          name: web-dist
+          path: dist/
+
+      - name: Sync Capacitor
+        run: npx cap sync ios
+
+      - name: Install CocoaPods
+        working-directory: ios/App
+        run: pod install
+
+      - name: Install Apple certificate and provisioning profile
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          IOS_CERTIFICATE_BASE64: ${{ secrets.IOS_CERTIFICATE_BASE64 }}
+          IOS_CERTIFICATE_PASSWORD: ${{ secrets.IOS_CERTIFICATE_PASSWORD }}
+          IOS_PROVISION_PROFILE_BASE64: ${{ secrets.IOS_PROVISION_PROFILE_BASE64 }}
+        run: |
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          PROFILE_PATH=$RUNNER_TEMP/build_profile.mobileprovision
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          KEYCHAIN_PASSWORD=$(openssl rand -base64 32)
 
-  update-version-patch:
-    name: update patch version ⚒️️
+          echo -n "$IOS_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+          echo -n "$IOS_PROVISION_PROFILE_BASE64" | base64 --decode -o $PROFILE_PATH
+
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          security import $CERTIFICATE_PATH -P "$IOS_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $PROFILE_PATH ~/Library/MobileDevice/Provisioning\ Profiles/
+
+      - name: Build and archive iOS app
+        working-directory: ios/App
+        run: |
+          xcodebuild archive \
+            -workspace App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -archivePath $RUNNER_TEMP/App.xcarchive \
+            -destination 'generic/platform=iOS' \
+            CODE_SIGN_STYLE=Manual \
+            -allowProvisioningUpdates
+
+      - name: Create ExportOptions.plist
+        run: |
+          cat > $RUNNER_TEMP/ExportOptions.plist << 'PLIST'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store-connect</string>
+            <key>destination</key>
+            <string>upload</string>
+            <key>signingStyle</key>
+            <string>manual</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>com.breviarium.app</key>
+              <string>${{ secrets.IOS_PROVISION_PROFILE_NAME }}</string>
+            </dict>
+          </dict>
+          </plist>
+          PLIST
+
+      - name: Export IPA
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath $RUNNER_TEMP/App.xcarchive \
+            -exportOptionsPlist $RUNNER_TEMP/ExportOptions.plist \
+            -exportPath $RUNNER_TEMP/export
+
+      - name: Upload to App Store Connect
+        env:
+          API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          API_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
+        run: |
+          mkdir -p ~/private_keys
+          echo -n "$API_KEY_BASE64" | base64 --decode -o ~/private_keys/AuthKey_${API_KEY_ID}.p8
+
+          xcrun altool --upload-app \
+            -f $RUNNER_TEMP/export/App.ipa \
+            -t ios \
+            --apiKey "$API_KEY_ID" \
+            --apiIssuer "$API_ISSUER_ID"
+
+      - name: Clean up keychain
+        if: always()
+        run: security delete-keychain $RUNNER_TEMP/app-signing.keychain-db 2>/dev/null || true
+
+  bump-version:
+    name: Bump version
     runs-on: ubuntu-latest
-    needs: build-and-deploy
-    if: github.ref == 'refs/heads/dev' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'internal')
+    needs: [deploy-android, deploy-ios]
+    if: |
+      always() &&
+      (needs.deploy-android.result == 'success' || needs.deploy-android.result == 'skipped') &&
+      (needs.deploy-ios.result == 'success' || needs.deploy-ios.result == 'skipped') &&
+      !(needs.deploy-android.result == 'skipped' && needs.deploy-ios.result == 'skipped')
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: dev
 
-      - name: Set up Node
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -139,16 +283,23 @@ jobs:
         with:
           version: 9
 
-      - name: Increment version in package.json & Commit
+      - name: Bump version and commit
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          pnpm version patch --git-tag-version false
+
+          if [ "${{ inputs.environment }}" = "production" ]; then
+            pnpm version minor --git-tag-version false
+          else
+            pnpm version patch --git-tag-version false
+          fi
+
           chmod +x ./.github/workflows/script.sh
           ./.github/workflows/script.sh
-          echo "Script executed ✅"
+
           git add package.json pnpm-lock.yaml android/app/build.gradle ios/App/App.xcodeproj/project.pbxproj
-          git commit -m "ci: ⚙️ bump version to $(node -p "require('./package.json').version")"
+          VERSION=$(node -p "require('./package.json').version")
+          git commit -m "ci: bump version to $VERSION"
           git push origin ${GITHUB_REF#refs/heads/}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

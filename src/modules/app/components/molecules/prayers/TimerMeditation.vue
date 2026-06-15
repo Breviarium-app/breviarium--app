@@ -234,7 +234,8 @@ const totalSeconds = ref(0);
 let intervalId: number | null = null;
 let targetEndTime: number | null = null;
 let pausedRemaining: number | null = null;
-const audio = ref<HTMLAudioElement | null>(null);
+let completionInProgress = false;
+let audio: HTMLAudioElement | null = null;
 
 // Modal state
 const isModalOpen = ref(false);
@@ -378,6 +379,8 @@ const stopTimer = async () => {
     intervalId = null;
   }
 
+  stopAudio();
+
   timerRunning.value = false;
   isPaused.value = false;
   remainingSeconds.value = 0;
@@ -394,6 +397,9 @@ const stopTimer = async () => {
 };
 
 const timerComplete = async () => {
+  if (completionInProgress) return;
+  completionInProgress = true;
+
   await stopTimer();
   await playCompletionSound();
 
@@ -402,12 +408,26 @@ const timerComplete = async () => {
   } catch (e) {
     console.log('Haptics not available');
   }
+
+  completionInProgress = false;
+};
+
+const stopAudio = () => {
+  if (audio) {
+    audio.pause();
+    audio.src = '';
+    audio.load();
+    audio = null;
+  }
 };
 
 const playCompletionSound = async () => {
   try {
-    audio.value = new Audio('/meditation-bell.mp3');
-    await audio.value.play();
+    stopAudio();
+    audio = new Audio('/meditation-bell.mp3');
+    audio.loop = false;
+    audio.addEventListener('ended', stopAudio, {once: true});
+    await audio.play();
   } catch (error) {
     console.error('Error playing completion sound:', error);
   }
@@ -483,6 +503,8 @@ onUnmounted(async () => {
   if (intervalId !== null) {
     clearInterval(intervalId);
   }
+
+  stopAudio();
 
   if (timerRunning.value) {
     await saveTimerState();
