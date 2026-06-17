@@ -24,7 +24,7 @@ const handleToggleChange = () => {
 </script>
 
 <template>
-  <ion-page>
+  <ion-page class="settings-page">
     <ion-header>
       <ion-toolbar>
         <ion-title>{{ $t('settings.title') }}</ion-title>
@@ -118,5 +118,9 @@ const handleToggleChange = () => {
   to {
     transform: translateX(0);
   }
+}
+
+.settings-page {
+  margin-bottom: 4rem;
 }
 </style>

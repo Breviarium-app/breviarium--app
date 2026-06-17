@@ -63,7 +63,7 @@ const prayerWrapperStyle = computed(() => ({
           <slot></slot>
         </div>
       </div>
-      <AutoScrollButton />
+      <AutoScrollButton/>
     </ion-content>
   </ion-page>
 </template>
@@ -81,6 +81,7 @@ const prayerWrapperStyle = computed(() => ({
   -moz-user-select: auto !important;
   -ms-user-select: auto !important;
   user-select: auto !important;
+  margin-bottom: 4rem;
 }
 
 :deep(.prayer-wrapper p) {

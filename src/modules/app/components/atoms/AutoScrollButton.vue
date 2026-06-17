@@ -104,6 +104,7 @@ onUnmounted(() => {
 <style scoped>
 ion-fab {
   margin: 16px;
+  bottom: 72px !important;
 }
 
 .custom-fab-button {
@@ -142,6 +143,7 @@ ion-fab {
 @media (min-width: 768px) {
   ion-fab {
     margin: 24px;
+    bottom: 72px !important;
   }
 }
 </style>
