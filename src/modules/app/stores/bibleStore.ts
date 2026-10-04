@@ -1,4 +1,5 @@
 import {defineStore} from "pinia";
+import {ref} from "vue";
 import {resultBible} from "@/modules/app/constants/types.ts";
 import {Bible} from "biblia-de-jerusalen";
 
@@ -69,5 +70,90 @@ export const bibleStore = defineStore('bible', () => {
         return result
     }
 
-    return {all_bible, getListOfBooks: keys, getBook, getChapters, getVersiculums, allVersiculums, getBookByAbreviation}
+    const books: BibleBookMeta[] = keys.map((name) => {
+        const book = getBook(name)
+        return {
+            name,
+            abbreviation: book.abreviacion,
+            testament: book.testamento === 'Nuevo' ? 'new' : 'old',
+            chapters: book.ctd_chapters,
+            verses: book.ctd_verses,
+            searchKey: normalizeSearch(`${name} ${romanToArabic(name)} ${book.abreviacion}`),
+        }
+    })
+
+    const getBookMeta = (name: string): BibleBookMeta | undefined => books.find((book) => book.name === name)
+
+    const searchBooks = (query: string): BibleBookMeta[] => {
+        const normalized = normalizeSearch(query)
+        if (!normalized) return books
+        return books.filter((book) => book.searchKey.includes(normalized))
+    }
+
+    // Crosses book boundaries so reading can continue from Génesis 50 to Éxodo 1.
+    const getAdjacentChapter = (name: string, chapter: number, step: 1 | -1): BiblePosition | undefined => {
+        const index = books.findIndex((book) => book.name === name)
+        if (index === -1) return undefined
+        const target = chapter + step
+        if (target >= 1 && target <= books[index].chapters) return {book: name, chapter: target}
+        const neighbour = books[index + step]
+        if (!neighbour) return undefined
+        return {book: neighbour.name, chapter: step === 1 ? 1 : neighbour.chapters}
+    }
+
+    const lastRead = ref<BiblePosition | null>(readLastRead())
+
+    const setLastRead = (position: BiblePosition) => {
+        lastRead.value = position
+        localStorage.setItem(LAST_READ_KEY, JSON.stringify(position))
+    }
+
+    return {
+        all_bible,
+        getListOfBooks: keys,
+        getBook,
+        getChapters,
+        getVersiculums,
+        allVersiculums,
+        getBookByAbreviation,
+        books,
+        getBookMeta,
+        searchBooks,
+        getAdjacentChapter,
+        lastRead,
+        setLastRead,
+    }
 })
+
+export type BibleBookMeta = {
+    name: string;
+    abbreviation: string;
+    testament: 'old' | 'new';
+    chapters: number;
+    verses: number;
+    searchKey: string;
+}
+
+export type BiblePosition = {
+    book: string;
+    chapter: number;
+}
+
+const LAST_READ_KEY = 'bible.lastRead'
+
+function readLastRead(): BiblePosition | null {
+    try {
+        const raw = localStorage.getItem(LAST_READ_KEY)
+        return raw ? JSON.parse(raw) : null
+    } catch {
+        return null
+    }
+}
+
+function normalizeSearch(text: string): string {
+    return text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim()
+}
+
+function romanToArabic(name: string): string {
+    return name.replace(/^(III|II|I) /, (numeral) => `${numeral.trim().length} `)
+}

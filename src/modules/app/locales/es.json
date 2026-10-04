@@ -44,7 +44,21 @@
     "completorium": "Completas"
   },
   "bible": {
-    "search_books": "Buscar libros..."
+    "search_books": "Buscar libros...",
+    "old_testament": "Antiguo Testamento",
+    "new_testament": "Nuevo Testamento",
+    "chapters_count": "{n} capítulo | {n} capítulos",
+    "verses_count": "{n} versículo | {n} versículos",
+    "chapter": "Capítulo",
+    "chapters": "Capítulos",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "continue_reading": "Continuar leyendo",
+    "all_chapters": "Todos los capítulos",
+    "no_results": "Ningún libro coincide con «{query}»",
+    "not_found": "No hemos encontrado este libro o capítulo.",
+    "back_to_bible": "Volver a la Biblia",
+    "chapter_nav": "Navegación entre capítulos"
   },
   "common": {
     "languages": {
