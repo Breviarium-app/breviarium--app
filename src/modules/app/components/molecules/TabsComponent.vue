@@ -1,5 +1,5 @@
 <template>
-  <nav :class="['floating-tabbar', { hidden: !visible }]">
+  <nav :class="['floating-tabbar', { hidden: !visible }]" @click="reveal" @focusin="reveal">
     <a
         v-for="tab in tabs"
         :key="tab.path"
@@ -38,6 +38,10 @@ const tabs = computed(() => [
 
 const isActive = (path: string) => {
   return route.path === path || route.path.startsWith(path + '/');
+};
+
+const reveal = () => {
+  visible.value = true;
 };
 
 const navigate = (path: string) => {
@@ -127,8 +131,10 @@ onUnmounted(() => {
 </script>
 <style>
 .floating-tabbar {
+  --tabbar-offset: 9px;
+  --tabbar-peek: 10px;
   position: fixed;
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 9px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + var(--tabbar-offset));
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 48px);
@@ -148,10 +154,24 @@ onUnmounted(() => {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
 }
 
+/* Leaves a strip of the bar visible above the safe area; tapping it brings the bar back. */
 .floating-tabbar.hidden {
-  transform: translateX(-50%) translateY(calc(100% + 20px));
-  opacity: 0;
+  transform: translateX(-50%) translateY(calc(100% + var(--tabbar-offset) - var(--tabbar-peek)));
+  cursor: pointer;
+}
+
+.floating-tabbar.hidden .tab-item {
   pointer-events: none;
+}
+
+/* Enlarges the touch target of the visible strip to 24px. */
+.floating-tabbar.hidden::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 0;
+  right: 0;
+  height: 24px;
 }
 
 [data-theme="dark"] .floating-tabbar {

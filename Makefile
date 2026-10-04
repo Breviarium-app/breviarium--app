@@ -47,7 +47,10 @@ sync-all: build
 check-java-version: ## check java version
 	@cd deploy && ./check-java-version.sh
 
-build-release-android: check-java-version sync-android ## build release for Android
+bump-version: ## bump Android versionCode and iOS build number
+	cd deploy && ./bump-version.sh
+
+build-release-android: check-java-version bump-version sync-android ## build release for Android
 	cd deploy && ./build-release-android.sh
 
 build-release-ios: sync-ios ## build release for iOS
