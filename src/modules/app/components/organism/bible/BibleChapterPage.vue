@@ -28,11 +28,11 @@
           <p class="reader-meta">{{ t('bible.verses_count', {n: verses.length}, verses.length) }}</p>
         </header>
 
-        <p class="reader-text">
-          <span v-for="verse in verses" :id="`v${verse.number}`" :key="verse.number" class="verse">
-            <sup class="verse-number">{{ verse.number }}</sup>{{ verse.text }}
-          </span>
-        </p>
+        <div class="reader-text">
+          <p v-for="(verse, index) in verses" :id="`v${verse.number}`" :key="verse.number" class="verse">
+            <sup class="verse-number">{{ verse.number }}</sup><template v-if="index === 0"><span class="verse-initial">{{ verse.text.charAt(0).toUpperCase() }}</span>{{ verse.text.slice(1) }}</template><template v-else>{{ verse.text }}</template>
+          </p>
+        </div>
 
         <nav :aria-label="t('bible.chapter_nav')" class="chapter-nav">
           <router-link
@@ -172,7 +172,14 @@ onIonViewDidEnter(() => {
 }
 
 .verse {
+  margin: 0 0 0.6rem;
   scroll-margin-top: 5rem;
+}
+
+.verse-initial {
+  font-size: 1.6em;
+  line-height: 0;
+  color: var(--ion-color-primary);
 }
 
 .verse:target {
@@ -192,7 +199,6 @@ onIonViewDidEnter(() => {
 .verse:first-child .verse-number {
   margin-left: 0;
 }
-
 .chapter-nav {
   display: grid;
   grid-template-columns: 1fr 1fr;
