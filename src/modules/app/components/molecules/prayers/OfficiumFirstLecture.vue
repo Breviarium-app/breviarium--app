@@ -38,7 +38,7 @@
           {{ officium?.lectura_biblica_cita_i?.split("$")[1] }}
           </span>
             <i class="text-center cita">
-              {{ formatText(officium?.lectura_biblica_titulo_i) }}
+              &nbsp;{{ formatText(officium?.lectura_biblica_titulo_i) }}
             </i>
           </p>
           <p v-html="formatText(officium?.lectura_biblica_texto_i)"></p>
@@ -57,7 +57,7 @@
           {{ officium?.lectura_biblica_cita_p?.split("$")[1] }}
           </span>
             <i class="text-center cita">
-              {{ formatText(officium?.lectura_biblica_titulo_p) }}
+              &nbsp;{{ formatText(officium?.lectura_biblica_titulo_p) }}
             </i>
           </p>
           <p v-html="formatText(officium?.lectura_biblica_texto_p)"></p>
