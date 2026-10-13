@@ -90,6 +90,11 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'Saint',
                 component: () => import('../components/organism/SaintPage.vue')
             }, {
+                path: '/saint/:month/:day/:name',
+                name: 'SaintDetail',
+                component: () => import('../components/organism/SaintDetailPage.vue'),
+                props: true
+            }, {
                 path: '/:year/:month/:day',
                 name: 'Date',
                 component: HomePage,

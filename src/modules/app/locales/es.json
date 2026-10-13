@@ -75,6 +75,28 @@
     "nona": "Nona",
     "completorium": "Completas"
   },
+  "saints": {
+    "title": "Santoral",
+    "of_the_day": "Santo del día",
+    "read_more": "Leer más",
+    "day_saints": "Todos los santos del día ({n})",
+    "day_saints_title": "Santos del {date}",
+    "search_title": "Buscar en el santoral",
+    "search_placeholder": "Nombre del santo",
+    "search_hint": "{n} santos y beatos del Martirologio Romano",
+    "no_results": "Ningún santo coincide con «{query}»",
+    "results_count": "{n} resultado | {n} resultados",
+    "results_limited": "Mostrando {shown} de {n} resultados; afina la búsqueda para ver más",
+    "feast": "Festividad",
+    "birth": "Nacimiento",
+    "death": "Muerte",
+    "meaning": "Significado del nombre",
+    "history": "Historia",
+    "no_bio": "Todavía no tenemos la biografía de este santo.",
+    "also_on": "También el {date}",
+    "not_found": "No hemos encontrado este santo.",
+    "back_to_saints": "Volver al santoral"
+  },
   "bible": {
     "search_books": "Buscar libros...",
     "old_testament": "Antiguo Testamento",

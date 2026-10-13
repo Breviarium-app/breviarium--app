@@ -2,6 +2,7 @@ import {defineStore} from "pinia";
 import {ref} from "vue";
 import {resultBible} from "@/modules/app/constants/types.ts";
 import {Bible} from "biblia-de-jerusalen";
+import {normalizeSearch} from "@/modules/app/constants/search.ts";
 
 export const bibleStore = defineStore('bible', () => {
 
@@ -148,10 +149,6 @@ function readLastRead(): BiblePosition | null {
     } catch {
         return null
     }
-}
-
-function normalizeSearch(text: string): string {
-    return text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim()
 }
 
 function romanToArabic(name: string): string {

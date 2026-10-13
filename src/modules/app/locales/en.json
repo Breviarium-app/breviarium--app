@@ -64,6 +64,28 @@
     "nona": "None",
     "completorium": "Compline"
   },
+  "saints": {
+    "title": "Saints",
+    "of_the_day": "Saint of the day",
+    "read_more": "Read more",
+    "day_saints": "All saints of the day ({n})",
+    "day_saints_title": "Saints of {date}",
+    "search_title": "Search the saints",
+    "search_placeholder": "Saint's name",
+    "search_hint": "{n} saints and blesseds from the Roman Martyrology",
+    "no_results": "No saint matches “{query}”",
+    "results_count": "{n} result | {n} results",
+    "results_limited": "Showing {shown} of {n} results; refine your search to see more",
+    "feast": "Feast",
+    "birth": "Born",
+    "death": "Died",
+    "meaning": "Meaning of the name",
+    "history": "History",
+    "no_bio": "We don't have a biography for this saint yet.",
+    "also_on": "Also on {date}",
+    "not_found": "We couldn't find this saint.",
+    "back_to_saints": "Back to saints"
+  },
   "bible": {
     "search_books": "Search books...",
     "old_testament": "Old Testament",

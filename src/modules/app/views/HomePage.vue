@@ -32,14 +32,24 @@ const delayIncrement = 60;
 const getDelay = (index: number) => baseDelay + (index * delayIncrement);
 
 // Keys match the values returned by currentLiturgyHour()
-const officium = {key: 'Officium', path: '/prayer/officium', label: 'breviarium.officium', hint: 'landing.hours.officium'};
+const officium = {
+  key: 'Officium',
+  path: '/prayer/officium',
+  label: 'breviarium.officium',
+  hint: 'landing.hours.officium'
+};
 const hours = [
   {key: 'Laudes', path: '/prayer/laudes', label: 'breviarium.laudes', hint: 'landing.hours.laudes'},
   {key: 'Tercia', path: '/prayer/tertia', label: 'breviarium.tercia', hint: 'landing.hours.tercia'},
   {key: 'Sexta', path: '/prayer/sexta', label: 'breviarium.sexta', hint: 'landing.hours.sexta'},
   {key: 'Nona', path: '/prayer/nona', label: 'breviarium.nona', hint: 'landing.hours.nona'},
   {key: 'Vesperae', path: '/prayer/vesperae', label: 'breviarium.vesperae', hint: 'landing.hours.vesperae'},
-  {key: 'Completorium', path: '/prayer/completorium', label: 'breviarium.completorium', hint: 'landing.hours.completorium'},
+  {
+    key: 'Completorium',
+    path: '/prayer/completorium',
+    label: 'breviarium.completorium',
+    hint: 'landing.hours.completorium'
+  },
 ];
 
 // The page stays alive in the Ionic stack, so refresh the current hour on every visit
@@ -85,10 +95,6 @@ useDateStore().updateDateParams()
           </div>
           <AnimatedComponent :delay="getDelay(2)">
             <div class="hours-grid">
-              <button class="hour-tile hour-tile--wide btn" @click="router.push(officium.path)">
-                <span class="hour-name">{{ t(officium.label) }}</span>
-                <span class="hour-hint">{{ t(officium.hint) }}</span>
-              </button>
               <button v-for="hour in hours" :key="hour.key"
                       :aria-current="hour.key === currentHourKey ? 'time' : undefined"
                       :class="{ 'hour-tile--current': hour.key === currentHourKey }"
@@ -96,6 +102,10 @@ useDateStore().updateDateParams()
                       @click="router.push(hour.path)">
                 <span class="hour-name">{{ t(hour.label) }}</span>
                 <span class="hour-hint">{{ t(hour.hint) }}</span>
+              </button>
+              <button class="hour-tile hour-tile--wide btn" @click="router.push(officium.path)">
+                <span class="hour-name">{{ t(officium.label) }}</span>
+                <span class="hour-hint">{{ t(officium.hint) }}</span>
               </button>
             </div>
           </AnimatedComponent>
