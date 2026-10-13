@@ -1,14 +1,17 @@
 <template>
-  <nav :class="['floating-tabbar', { hidden: !visible }]" @click="reveal" @focusin="reveal">
+  <nav :aria-label="t('navigation')" :class="['floating-tabbar', { hidden: !visible }]" :style="{ '--tab-count': tabs.length }"
+       @click="reveal" @focusin="reveal">
+    <span :style="{ transform: `translateX(${activeIndex * 100}%)` }" aria-hidden="true" class="tab-indicator"/>
     <a
         v-for="tab in tabs"
         :key="tab.path"
-        :class="{ active: isActive(tab.path) }"
+        :aria-current="tab.path === activeTab ? 'page' : undefined"
+        :class="{ active: tab.path === activeTab }"
         :href="tab.path"
         class="tab-item"
         @click.prevent="navigate(tab.path)"
     >
-      <ion-icon :icon="tab.icon"/>
+      <ion-icon :icon="tab.path === activeTab ? tab.activeIcon : tab.icon" aria-hidden="true"/>
       <span class="tab-label">{{ tab.label }}</span>
     </a>
   </nav>
@@ -17,8 +20,9 @@
 import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 import {IonIcon} from '@ionic/vue';
-import {bonfireOutline, listOutline, settingsOutline} from 'ionicons/icons';
+import {bonfire, bonfireOutline, list, listOutline, settings, settingsOutline} from 'ionicons/icons';
 import {useI18n} from 'vue-i18n';
+import HapticsService from "@/modules/app/services/HapticsService.ts";
 
 const route = useRoute();
 const router = useRouter();
@@ -30,21 +34,35 @@ let currentScrollEl: HTMLElement | null = null;
 let scrollListener: (() => void) | null = null;
 const SCROLL_THRESHOLD = 10;
 
+const HOME_PATH = '/home';
+
 const tabs = computed(() => [
-  {path: '/home', icon: bonfireOutline, label: t('home')},
-  {path: '/prayer-intentions', icon: listOutline, label: t('prayer_intentions')},
-  {path: '/settings', icon: settingsOutline, label: t('settings.title')},
+  {path: HOME_PATH, icon: bonfireOutline, activeIcon: bonfire, label: t('home')},
+  {path: '/prayer-intentions', icon: listOutline, activeIcon: list, label: t('prayer_intentions')},
+  {path: '/settings', icon: settingsOutline, activeIcon: settings, label: t('settings.title')},
 ]);
 
-const isActive = (path: string) => {
-  return route.path === path || route.path.startsWith(path + '/');
-};
+// Prayers, Bible and saints are opened from Home, so Home stays active for any route outside the other tabs
+const activeTab = computed(() => {
+  const match = tabs.value.find((tab) => tab.path !== HOME_PATH
+      && (route.path === tab.path || route.path.startsWith(tab.path + '/')));
+  return match?.path ?? HOME_PATH;
+});
+
+const activeIndex = computed(() => tabs.value.findIndex((tab) => tab.path === activeTab.value));
 
 const reveal = () => {
   visible.value = true;
 };
 
 const navigate = (path: string) => {
+  HapticsService.light();
+  // Tapping the tab of the page already on screen scrolls it back to the top
+  if (route.path === path) {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    findActiveContent()?.scrollToTop(reduceMotion ? 0 : 300);
+    return;
+  }
   router.push(path);
 };
 
@@ -142,7 +160,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 6px 8px;
+  padding: 6px;
   border-radius: 28px;
   background: var(--ion-tab-bar-background);
   backdrop-filter: blur(40px) saturate(1.8);
@@ -192,31 +210,71 @@ onUnmounted(() => {
   0 1px 0 0.5px rgba(255, 255, 255, 0.3) inset;
 }
 
+/* Tinted pill behind the active tab; one tab wide, slid into place by translateX(index * 100%) */
+.floating-tabbar .tab-indicator {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 6px;
+  width: calc((100% - 12px) / var(--tab-count));
+  border-radius: 22px;
+  pointer-events: none;
+  transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.floating-tabbar .tab-indicator::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--ion-color-primary);
+  opacity: 0.12;
+}
+
+[data-theme="dark"] .floating-tabbar .tab-indicator::before,
+[data-theme="moon"] .floating-tabbar .tab-indicator::before {
+  opacity: 0.22;
+}
+
 .floating-tabbar .tab-item {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 3px;
   flex: 1;
-  padding: 8px 4px;
-  border-radius: 20px;
+  min-width: 0;
+  padding: 7px 4px 6px;
+  border-radius: 22px;
   color: var(--ion-tab-bar-color);
   text-decoration: none;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  transition: color 0.2s ease, background 0.2s ease;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 .floating-tabbar .tab-item ion-icon {
-  font-size: 1.35rem;
+  font-size: 1.3rem;
+  transition: transform 0.2s ease;
+}
+
+.floating-tabbar .tab-item:active ion-icon {
+  transform: scale(0.9);
 }
 
 .floating-tabbar .tab-item.active {
-  color: var(--ion-tab-bar-color-selected, var(--ion-color-primary));
-  background: rgba(var(--ion-background-color-rgb, 255, 255, 255), 0.15);
+  color: var(--ion-color-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-tabbar,
+  .floating-tabbar .tab-indicator,
+  .floating-tabbar .tab-item ion-icon {
+    transition: none;
+  }
 }
 
 .floating-tabbar .tab-label {
