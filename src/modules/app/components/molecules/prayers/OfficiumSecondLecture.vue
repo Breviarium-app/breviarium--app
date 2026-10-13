@@ -31,7 +31,7 @@
         <p><span v-html="formatText(officium?.responsorio3_a[2])?.replace('℣.','℟.')"></span></p>
       </div>
       <div v-if="selectedCycle == 'bienal'">
-        <div v-if="true">
+        <div v-if="!isEvenCycle">
           <p>
             {{ officium?.lectura_patristica_cita_i?.split("$")[0] }}
           </p>
@@ -87,11 +87,16 @@ const officium = ref<OfficiumSchemaOutput>();
 
 const settingsStore = useSettingsStore()
 const selectedCycle = ref(settingsStore.settings.bienalOfficiumDefault ? "bienal" : "ordinary");
+const isEvenCycle = ref(true);
 
 onMounted(async () => {
   await useBreviariumStore().getOfficium().then(data => {
     officium.value = data;
   });
+  await useBreviariumStore().getLiturgyInformation().then(data => {
+    const year = data.calendar.endOfLiturgycalSeason.split("-")[0];
+    isEvenCycle.value = year % 2 == 0;
+  })
 });
 
 
