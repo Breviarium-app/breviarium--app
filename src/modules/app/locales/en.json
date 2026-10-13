@@ -1,6 +1,38 @@
 {
   "title": "Breviarium",
   "home": "Home",
+  "landing": {
+    "subtitle": "Liturgy of the Hours",
+    "now": "Now",
+    "hours_title": "Liturgy of the Hours",
+    "info": {
+      "psalm_quote": "Seven times a day I praise you for your upright judgements.",
+      "psalm_ref": "Psalm 119:164",
+      "church_title": "The voice of the Church",
+      "quote_sc": "And the laity, too, are encouraged to recite the divine office, either with the priests, or among themselves, or even individually.",
+      "quote_sc_ref": "Second Vatican Council, Sacrosanctum Concilium, 100",
+      "quote_cec": "The Liturgy of the Hours is intended to become the prayer of the whole People of God.",
+      "quote_cec_ref": "Catechism of the Catholic Church, 1175",
+      "badge": "What is it?",
+      "title": "What is the Liturgy of the Hours?",
+      "what": "It is the official prayer of the Church. Through psalms, canticles, Scripture readings and intercessions, it consecrates the hours of the day to God and unites whoever prays it with the whole Church, praying the same words all over the world. Although priests and religious pray it as an obligation, the Church invites all the faithful to make it their own.",
+      "hours": "Its two hinges are Lauds, in the morning, and Vespers, in the evening. Through the day come Terce, Sext and None; Compline, before sleep; and the Office of Readings, at any time.",
+      "why_title": "How Breviarium helps",
+      "why_complete": "Every day you get the full text following the liturgical calendar, with no page-flipping or switching books.",
+      "why_hour": "It suggests the hour that fits the time of day, so all you have to do is start praying.",
+      "why_offline": "It works offline, and it's free and open source."
+    },
+    "today_title": "For today",
+    "hours": {
+      "officium": "Office of Readings · any time",
+      "laudes": "Morning prayer",
+      "tercia": "Mid-morning",
+      "sexta": "Midday",
+      "nona": "Mid-afternoon",
+      "vesperae": "Evening prayer",
+      "completorium": "Night prayer"
+    }
+  },
   "bible_name": "Bible",
   "bibleOfJerusalem": "Bible of Jerusalem",
   "bibleSubtitle": "Pray with the word of God",

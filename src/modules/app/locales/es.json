@@ -1,6 +1,38 @@
 {
   "title": "Breviarium",
   "home": "Inicio",
+  "landing": {
+    "subtitle": "Liturgia de las Horas",
+    "now": "Ahora",
+    "hours_title": "Liturgia de las Horas",
+    "info": {
+      "psalm_quote": "Siete veces al día te alabo por tus justos juicios.",
+      "psalm_ref": "Salmo 119, 164",
+      "church_title": "La voz de la Iglesia",
+      "quote_sc": "Se recomienda, asimismo, que los laicos recen el Oficio divino o con los sacerdotes o reunidos entre sí e inclusive en particular.",
+      "quote_sc_ref": "Concilio Vaticano II, Sacrosanctum Concilium, 100",
+      "quote_cec": "La Liturgia de las Horas está llamada a ser la oración de todo el Pueblo de Dios.",
+      "quote_cec_ref": "Catecismo de la Iglesia Católica, 1175",
+      "badge": "¿Qué es?",
+      "title": "¿Qué es la Liturgia de las Horas?",
+      "what": "Es la oración oficial de la Iglesia. Con salmos, cánticos, lecturas de la Escritura y preces, consagra a Dios las distintas horas del día y une a quien la reza con toda la Iglesia, que ora en todo el mundo con las mismas palabras. Aunque sacerdotes y consagrados la rezan por obligación, la Iglesia invita a todos los fieles a hacerla suya.",
+      "hours": "Sus dos polos son Laudes, por la mañana, y Vísperas, por la tarde. Durante el día se rezan Tercia, Sexta y Nona; Completas, antes de dormir; y el Oficio de lectura, en cualquier momento.",
+      "why_title": "Cómo te ayuda Breviarium",
+      "why_complete": "Cada día tienes el texto completo según el calendario litúrgico, sin buscar páginas ni cambiar de libro.",
+      "why_hour": "Te propone la hora que corresponde según el momento del día, para que solo tengas que empezar a rezar.",
+      "why_offline": "Funciona sin conexión, es gratuito y de código abierto."
+    },
+    "today_title": "Para hoy",
+    "hours": {
+      "officium": "Oficio de lectura · a cualquier hora",
+      "laudes": "Oración de la mañana",
+      "tercia": "Media mañana",
+      "sexta": "Mediodía",
+      "nona": "Media tarde",
+      "vesperae": "Oración de la tarde",
+      "completorium": "Antes de dormir"
+    }
+  },
   "prayer_intentions": "Intenciones",
   "prayer_intentions_title": "Intenciones de oración",
   "prayer_intentions_empty": "No hay intenciones",

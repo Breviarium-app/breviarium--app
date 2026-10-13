@@ -1,5 +1,6 @@
 <template>
-  <ion-item class="prayer-item" @click="router.push('/prayer/evangelium')">
+  <ion-item :detail="true" class="prayer-item" @click="router.push('/prayer/evangelium')">
+    <ion-icon slot="start" :icon="readerOutline"></ion-icon>
     <ion-label>
       <h2>{{ $t('breviarium.evangelium_lectiones') }}</h2>
       <p>{{ gospelQuote }}</p>
@@ -9,7 +10,8 @@
 
 <script lang="ts" setup>
 import router from "@/modules/app/router";
-import {IonItem, IonLabel} from "@ionic/vue";
+import {IonIcon, IonItem, IonLabel} from "@ionic/vue";
+import {readerOutline} from "ionicons/icons";
 import {computed, onMounted, ref, watch} from "vue";
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";

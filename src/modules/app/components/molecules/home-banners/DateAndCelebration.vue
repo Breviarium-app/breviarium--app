@@ -1,13 +1,16 @@
 <template>
-  <div class="date-navigation">
+  <div :style="{ '--liturgical-color': color }" class="date-navigation">
     <ion-button class="nav-button" fill="clear" @click="changeDate(-1)">
       <ion-icon :icon="chevronBackOutline"></ion-icon>
     </ion-button>
 
     <div class="date-button" @click="setOpen(true)">
-      <CircleLiturgicalColor :liturgical-color-var="color"/>
-      {{ liturgyInformationData?.celebration }}<br/>
-      <small class="title-color">{{ buildLocalDate(printableDate) }} - {{ rank }}</small>
+      <small class="date-label title-color">{{ buildLocalDate(printableDate) }}</small>
+      <span class="celebration">{{ liturgyInformationData?.celebration }}</span>
+      <small v-if="rank" class="rank">
+        <CircleLiturgicalColor :liturgical-color-var="color"/>
+        {{ rank }}
+      </small>
     </div>
 
     <ion-button class="nav-button" fill="clear" @click="changeDate(1)">
@@ -140,10 +143,24 @@ watch(datetimeModel, async (newDate) => {
 
 <style scoped>
 .date-navigation {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 3px;
+  padding: 0.5rem 0.25rem;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--background-color-card);
+}
+
+/* Liturgical color of the day as an accent bar along the top edge */
+.date-navigation::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: var(--liturgical-color, transparent);
 }
 
 .nav-button {
@@ -153,12 +170,33 @@ watch(datetimeModel, async (newDate) => {
 }
 
 .date-button {
-  font-size: 1.1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
   padding: 8px;
   cursor: pointer;
   flex: 1;
   text-align: center;
   touch-action: pan-y pinch-zoom;
+}
+
+.date-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+.celebration {
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+.rank {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  opacity: 0.7;
 }
 
 

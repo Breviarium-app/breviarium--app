@@ -1,6 +1,6 @@
 <template>
-  <ion-item class="prayer-item" @click="router.push('/bible')">
-    <ion-icon slot="start" :icon="bookOutline" style="color: var(--gold-color);"></ion-icon>
+  <ion-item :detail="true" class="prayer-item" @click="router.push('/bible')">
+    <ion-icon slot="start" :icon="bookOutline"></ion-icon>
     <ion-label>
       <h2>{{ t('bibleOfJerusalem') }}</h2>
       <p>{{ t('bibleSubtitle') }}</p>

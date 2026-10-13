@@ -1,5 +1,6 @@
 <template>
-  <ion-item class="prayer-item" @click="router.push('/saint')">
+  <ion-item :detail="true" class="prayer-item" @click="router.push('/saint')">
+    <ion-icon slot="start" :icon="starOutline"></ion-icon>
     <ion-label>
       <h2>Santoral</h2>
       <p>{{ todaySaint?.name }} y {{ saintsOfDayPrint }} más</p>
@@ -10,7 +11,8 @@
 import {useSanctusStore} from "@/modules/app/stores/sanctus.ts";
 import {onMounted, ref, watch} from "vue";
 import router from "@/modules/app/router";
-import {IonItem, IonLabel} from "@ionic/vue";
+import {IonIcon, IonItem, IonLabel} from "@ionic/vue";
+import {starOutline} from "ionicons/icons";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 
 const todaySaint = ref();
