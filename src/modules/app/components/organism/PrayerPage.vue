@@ -1,15 +1,20 @@
 <script lang="ts" setup>
-import {IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
+import {IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
+import {journalOutline} from 'ionicons/icons';
+import {useI18n} from 'vue-i18n';
 import {useRoute} from 'vue-router';
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
-import {computed} from "vue";
+import {computed, ref} from "vue";
 import LiturgyInformation from "@/modules/app/components/molecules/home-banners/LiturgyInformation.vue";
 import AutoScrollButton from "@/modules/app/components/atoms/AutoScrollButton.vue";
+import DiaryEntryModal from "@/modules/app/components/molecules/DiaryEntryModal.vue";
+import {datedPath, type DiaryReference} from "@/modules/app/stores/diaryStore.ts";
+import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 
 const route = useRoute();
 const prayerType = route.params.type;
 
-defineProps({
+const props = defineProps({
   title: {
     required: false,
   },
@@ -36,6 +41,28 @@ const getPrayerTitle = (type: string) => {
 };
 
 const settingsStore = useSettingsStore();
+const {t, locale} = useI18n();
+
+const noteReference = ref<DiaryReference | null>(null);
+let selectedText = '';
+
+// Read on pointerdown: on mobile the selection is cleared by the time the click fires.
+const captureSelection = () => {
+  selectedText = window.getSelection()?.toString().trim().slice(0, 1000) ?? '';
+};
+
+const openNote = () => {
+  const path = datedPath(route.path, useDateStore().currentDate);
+  const title = String(props.title || getPrayerTitle(prayerType as string));
+  const isDated = /^\/\d{4}\/\d{1,2}\/\d{1,2}\//.test(path);
+  const date = useDateStore().currentDate.toLocaleDateString(locale.value, {day: 'numeric', month: 'long', year: 'numeric'});
+  noteReference.value = {
+    label: isDated ? `${title} · ${date}` : title,
+    path,
+    quote: selectedText || undefined,
+  };
+  selectedText = '';
+};
 
 const prayerWrapperStyle = computed(() => ({
   fontSize: `${settingsStore.settings.fontSize * 1.2}px`,
@@ -52,8 +79,11 @@ const prayerWrapperStyle = computed(() => ({
           <ion-back-button default-href="/" text="Atrás"></ion-back-button>
         </ion-buttons>
         <ion-title>{{ title || getPrayerTitle(prayerType as string) }}</ion-title>
-        <ion-buttons v-if="$slots['header-end']" slot="end">
+        <ion-buttons slot="end">
           <slot name="header-end"></slot>
+          <ion-button :aria-label="t('diary.write_note')" @click="openNote" @pointerdown="captureSelection">
+            <ion-icon slot="icon-only" :icon="journalOutline" aria-hidden="true"></ion-icon>
+          </ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -68,6 +98,8 @@ const prayerWrapperStyle = computed(() => ({
       </div>
       <AutoScrollButton/>
     </ion-content>
+
+    <DiaryEntryModal :is-open="noteReference !== null" :reference="noteReference" @close="noteReference = null"/>
   </ion-page>
 </template>
 <style scoped>

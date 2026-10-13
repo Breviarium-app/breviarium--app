@@ -20,7 +20,7 @@
 import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 import {IonIcon} from '@ionic/vue';
-import {bonfire, bonfireOutline, list, listOutline, settings, settingsOutline} from 'ionicons/icons';
+import {bonfire, bonfireOutline, journal, journalOutline, list, listOutline, settings, settingsOutline} from 'ionicons/icons';
 import {useI18n} from 'vue-i18n';
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 
@@ -39,6 +39,7 @@ const HOME_PATH = '/home';
 const tabs = computed(() => [
   {path: HOME_PATH, icon: bonfireOutline, activeIcon: bonfire, label: t('home')},
   {path: '/prayer-intentions', icon: listOutline, activeIcon: list, label: t('prayer_intentions')},
+  {path: '/diary', icon: journalOutline, activeIcon: journal, label: t('diary.tab')},
   {path: '/settings', icon: settingsOutline, activeIcon: settings, label: t('settings.title')},
 ]);
 
