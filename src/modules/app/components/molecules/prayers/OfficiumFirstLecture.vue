@@ -17,7 +17,7 @@
       <span class="reference-bible cita">
         {{ officium?.lectura_biblica_cita_a?.split("$")[1] }}
       </span>
-          <i class="text-center cita">
+          <i class="text-center cita lecture-title">
             {{ formatText(officium?.lectura_biblica_titulo_a) }}
           </i>
         </p>
@@ -37,7 +37,7 @@
           <span class="reference-bible cita">
           {{ officium?.lectura_biblica_cita_i?.split("$")[1] }}
           </span>
-            <i class="text-center cita">
+            <i class="text-center cita lecture-title">
               &nbsp;{{ formatText(officium?.lectura_biblica_titulo_i) }}
             </i>
           </p>
@@ -56,7 +56,7 @@
           <span class="reference-bible cita">
           {{ officium?.lectura_biblica_cita_p?.split("$")[1] }}
           </span>
-            <i class="text-center cita">
+            <i class="text-center cita lecture-title">
               &nbsp;{{ formatText(officium?.lectura_biblica_titulo_p) }}
             </i>
           </p>

@@ -19,7 +19,8 @@
       <span class="reference-bible cita">
         {{ officium?.lectura_patristica_cita_a?.split("$")[1] }}
       </span>
-          <i class="text-center cita">
+          <br/>
+          <i class="text-center cita lecture-title">
             {{ formatText(officium?.lectura_patristica_titulo_a) }}
           </i>
         </p>
@@ -39,7 +40,8 @@
           <span class="reference-bible cita">
           {{ officium?.lectura_patristica_cita_i?.split("$")[1] }}
           </span>
-            <i class="text-center cita">
+            <br/>
+            <i class="text-center cita lecture-title">
               {{ formatText(officium?.lectura_patristica_titulo_i) }}
             </i>
           </p>
@@ -58,7 +60,8 @@
           <span class="reference-bible cita">
           {{ officium?.lectura_patristica_cita_p?.split("$")[1] }}
           </span>
-            <i class="text-center cita">
+            <br/>
+            <i class="text-center cita lecture-title">
               {{ formatText(officium?.lectura_patristica_titulo_p) }}
             </i>
           </p>

@@ -222,6 +222,7 @@ button:focus-visible {
 
 .text-center, .center {
     text-align: center;
+    display: block;
 }
 
 .light-1 {
@@ -261,4 +262,8 @@ button:focus-visible {
 .office-lecture-selector {
     margin-top: 1em;
     margin-bottom: 1em;
+}
+
+.lecture-title {
+    margin: 1em 0;
 }
