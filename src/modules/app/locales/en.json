@@ -64,6 +64,11 @@
     "nona": "None",
     "completorium": "Compline"
   },
+  "community": {
+    "title": "Join the community",
+    "subtitle": "Get Breviarium news on your phone",
+    "follow": "Follow us on {network}"
+  },
   "saints": {
     "title": "Saints",
     "of_the_day": "Saint of the day",

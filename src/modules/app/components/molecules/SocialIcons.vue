@@ -1,148 +1,126 @@
 <script lang="ts" setup>
-import {IonButton, IonIcon} from '@ionic/vue';
+import {IonIcon} from '@ionic/vue';
 import {globeOutline, logoLinkedin, logoWhatsapp, logoX, paperPlane} from 'ionicons/icons';
 import {useI18n} from 'vue-i18n';
+import HapticsService from "@/modules/app/services/HapticsService.ts";
 
 const {t} = useI18n();
 
-const openWhatsAppChannel = () => {
-  window.open('https://whatsapp.com/channel/0029VbBM3QuAInPuD8nIU436', '_blank');
-};
-const openWeb = () => {
-  window.open('https://breviarium.es', '_blank');
-};
-const openTelegramChannel = () => {
-  window.open('https://t.me/breviariumapp', '_blank');
-};
-const openLinkedIn = () => {
-  window.open('https://www.linkedin.com/company/breviarium-project/', '_blank');
-};
-const openX = () => {
-  window.open('https://x.com/BreviariumApp', '_blank');
+// Channels that deliver updates, shown as primary buttons
+const channels = [
+  {name: 'WhatsApp', icon: logoWhatsapp, color: '#25D366', url: 'https://whatsapp.com/channel/0029VbBM3QuAInPuD8nIU436'},
+  {name: 'Telegram', icon: paperPlane, color: '#229ED9', url: 'https://t.me/breviariumapp'},
+];
+
+const profiles = [
+  {name: 'X', icon: logoX, url: 'https://x.com/BreviariumApp'},
+  {name: 'LinkedIn', icon: logoLinkedin, url: 'https://www.linkedin.com/company/breviarium-project/'},
+  {name: 'breviarium.es', icon: globeOutline, url: 'https://breviarium.es'},
+];
+
+const open = (url: string) => {
+  HapticsService.light();
+  window.open(url, '_blank');
 };
 </script>
 
 <template>
-  <div class="social-links-container">
-    <div class="social-buttons">
-      <ion-button
-          class="social-button whatsapp-button"
-          fill="outline"
-          @click="openWhatsAppChannel"
-      >
-        <ion-icon :icon="logoWhatsapp"></ion-icon>
-      </ion-button>
+  <section class="community">
+    <h2 class="community-title">{{ t('community.title') }}</h2>
+    <p class="community-subtitle">{{ t('community.subtitle') }}</p>
 
-      <ion-button
-          class="social-button telegram-button"
-          fill="outline"
-          @click="openTelegramChannel"
-      >
-        <ion-icon :icon="paperPlane"></ion-icon>
-      </ion-button>
-      <ion-button
-          class="social-button linkedin-button"
-          fill="outline"
-          @click="openLinkedIn"
-      >
-        <ion-icon :icon="logoLinkedin"></ion-icon>
-      </ion-button>
-      <ion-button
-          class="social-button telegram-button"
-          fill="outline"
-          @click="openX"
-      >
-        <ion-icon :icon="logoX"></ion-icon>
-      </ion-button>
-      <ion-button
-          class="social-button web-button"
-          fill="outline"
-          @click="openWeb"
-      >
-        <ion-icon :icon="globeOutline"></ion-icon>
-        <!--        WhatsApp-->
-      </ion-button>
+    <div class="channels">
+      <button v-for="channel in channels" :key="channel.name" class="channel btn" @click="open(channel.url)">
+        <ion-icon :icon="channel.icon" :style="{color: channel.color}" aria-hidden="true"/>
+        {{ channel.name }}
+      </button>
     </div>
-    <p class="social-description">
-      {{
-        t('socialMediaDescription') || 'Únete para recibir actualizaciones'
-      }}
-    </p>
-  </div>
+
+    <div class="profiles">
+      <button v-for="profile in profiles" :key="profile.name" :aria-label="t('community.follow', {network: profile.name})"
+              class="profile btn" @click="open(profile.url)">
+        <ion-icon :icon="profile.icon" aria-hidden="true"/>
+      </button>
+    </div>
+  </section>
 </template>
 
 <style scoped>
-.social-links-container {
-  padding: 1rem 0;
-  margin: 1rem 0;
-  border-radius: 12px;
-  background-color: var(--background);
+.community {
+  margin: 2rem auto 1rem;
+  padding: 0 1rem;
+  max-width: 420px;
   text-align: center;
 }
 
-.social-buttons {
-  display: flex;
-  gap: 0.4rem;
-  justify-content: center;
-  margin: 0.5rem 0;
+.community-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 400;
 }
 
-.social-button {
-  --border-radius: 8px;
-  --padding-start: 14px;
-  --padding-end: 14px;
-}
-
-.whatsapp-button {
-  --color: #25D366;
-  --border-color: var(--border-color-light);
-  filter: saturate(0);
-
-  &:hover {
-    filter: saturate(1);
-    --background: #25D366;
-    --color: white;
-  }
-
-  &:active {
-    --background: #25D366;
-  }
-}
-
-
-.telegram-button, .linkedin-button, .web-button {
-  --color: #0088cc;
-  --border-color: var(--border-color-light);
-  filter: saturate(0);
-
-  &:hover {
-    filter: saturate(1);
-    --border-color: #0088cc;
-    --background: #0088cc;
-    --color: white;
-  }
-
-  &:active {
-    --background: #0088cc;
-  }
-}
-
-.linkedin-button:hover {
-  --border-color: #063b78;
-  --background: #063b78;
-}
-
-.web-button:hover {
-  --border-color: #fa9898;
-  --background: #be4747;
-}
-
-.social-description {
-  font-size: 0.9rem;
-  color: var(--ion-text-color);
-  opacity: 0.7;
-  margin-top: 0.5rem;
+.community-subtitle {
+  margin: 0.25rem 0 1rem;
+  font-size: 0.85rem;
   line-height: 1.4;
+  opacity: 0.65;
 }
 
+button {
+  font-family: inherit;
+  font-weight: 400;
+  color: inherit;
+  border: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.channels {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.channel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.15rem 0.6rem 0.95rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  background: var(--background-color-card);
+}
+
+.channel ion-icon {
+  font-size: 1.25rem;
+}
+
+.profiles {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-top: 0.6rem;
+}
+
+.profile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+  opacity: 0.55;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+
+.profile:hover,
+.profile:focus-visible {
+  opacity: 1;
+  background: var(--background-color-card);
+}
+
+.profile ion-icon {
+  font-size: 1.2rem;
+}
 </style>
