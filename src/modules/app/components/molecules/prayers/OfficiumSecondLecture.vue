@@ -25,6 +25,7 @@
           </i>
         </p>
         <p v-html="formatText(officium?.lectura_patristica_texto_a)"></p>
+        <p class="text-right text-red">{{ officium?.lectura_patristica_cita_a?.split("$")[0] }}</p>
         <br/>
         <p><span v-html="formatText(officium?.responsorio3_a[0])?.replace('℟.','℣.')"></span></p>
         <p><span v-html="formatText(officium?.responsorio3_a[0])?.replace('℣.','℟.')"></span></p>
@@ -46,6 +47,7 @@
             </i>
           </p>
           <p v-html="formatText(officium?.lectura_patristica_texto_i)"></p>
+          <p class="text-right text-red">{{ officium?.lectura_patristica_cita_i?.split("$")[0] }}</p>
           <br/>
           <p><span v-html="formatText(officium?.responsorio3_i[0])?.replace('℟.','℣.')"></span></p>
           <p><span v-html="formatText(officium?.responsorio3_i[0])?.replace('℣.','℟.')"></span></p>
@@ -66,6 +68,7 @@
             </i>
           </p>
           <p v-html="formatText(officium?.lectura_patristica_texto_p)"></p>
+          <p class="text-right text-red">{{ officium?.lectura_patristica_cita_p?.split("$")[0] }}</p>
           <br/>
           <p><span v-html="formatText(officium?.responsorio3_p[0])?.replace('℟.','℣.')"></span></p>
           <p><span v-html="formatText(officium?.responsorio3_p[0])?.replace('℣.','℟.')"></span></p>
