@@ -1,6 +1,9 @@
 require_relative '../../node_modules/.pnpm/@capacitor+ios@7.4.4_@capacitor+core@7.4.4/node_modules/@capacitor/ios/scripts/pods_helpers'
 
-platform :ios, '14.0'
+# Minimum iOS version for the app and every pod; keep in sync with IPHONEOS_DEPLOYMENT_TARGET in Xcode
+IOS_DEPLOYMENT_TARGET = '17.0'
+
+platform :ios, IOS_DEPLOYMENT_TARGET
 use_frameworks!
 
 # workaround to avoid Xcode caching of Pods that requires
@@ -24,4 +27,15 @@ end
 
 post_install do |installer|
   assertDeploymentTarget(installer)
+
+  # Capacitor plugin podspecs declare iOS 14.0, which recent Xcode versions reject,
+  # and `cap sync` regenerates the Pods project on every run, so set it here
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = IOS_DEPLOYMENT_TARGET
+  end
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = IOS_DEPLOYMENT_TARGET
+    end
+  end
 end
