@@ -17,6 +17,7 @@ import CopyIcon from "@/modules/app/components/atoms/CopyIcon.vue";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 import {computed, ref} from "vue";
 import CircleCheckIcon from "@/modules/app/components/atoms/CircleCheckIcon.vue";
+import {datedShareUrl} from "@/modules/app/constants/share.ts";
 
 const props = defineProps<{
   link: string;
@@ -25,20 +26,12 @@ const props = defineProps<{
 
 const copied = ref(false)
 const dateStore = useDateStore();
-const base_url = "https://app.breviarium.es"
-const urlAndDate = computed(() => {
-  const date = dateStore.currentDate;
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-
-  return `${base_url}/${year}/${month}/${day}/`;
-});
+const shareUrl = computed(() => datedShareUrl(dateStore.currentDate, props.link));
 
 const copyToClipboard = async () => {
   copied.value = true
   try {
-    await navigator.clipboard.writeText(urlAndDate.value + props.link);
+    await navigator.clipboard.writeText(shareUrl.value);
     // TODO: toast
   } catch (err) {
     console.error('Failed to copy: ', err);

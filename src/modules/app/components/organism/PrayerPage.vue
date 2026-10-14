@@ -52,6 +52,9 @@ const prayerWrapperStyle = computed(() => ({
           <ion-back-button default-href="/" text="Atrás"></ion-back-button>
         </ion-buttons>
         <ion-title>{{ title || getPrayerTitle(prayerType as string) }}</ion-title>
+        <ion-buttons v-if="$slots['header-end']" slot="end">
+          <slot name="header-end"></slot>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true" class="ion-padding">
