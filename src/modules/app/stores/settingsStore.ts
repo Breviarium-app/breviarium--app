@@ -9,7 +9,7 @@ export const useSettingsStore = defineStore('settings', () => {
         laudesOfficium: false,
         laudesEvangelium: false,
         vesperaeOfficium: false,
-        theme: 'system',
+        theme: 'paper',
         deceased: false,
         hapticsActive: false,
         keepAwake: true,
