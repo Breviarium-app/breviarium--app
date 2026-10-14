@@ -1,10 +1,10 @@
 <template>
-  <div :style="{ '--liturgical-color': color }" class="date-navigation">
-    <ion-button class="nav-button" fill="clear" @click="changeDate(-1)">
+  <div ref="cardRef" :style="{ '--liturgical-color': color }" class="date-navigation">
+    <ion-button aria-label="Día anterior" class="nav-button" fill="clear" @click="slideToDay(-1)">
       <ion-icon :icon="chevronBackOutline"></ion-icon>
     </ion-button>
 
-    <div class="date-button" @click="setOpen(true)">
+    <div ref="contentRef" class="date-button" @click="onDateClick">
       <small class="date-label title-color">{{ buildLocalDate(printableDate) }}</small>
       <span class="celebration">{{ liturgyInformationData?.celebration }}</span>
       <small v-if="rank" class="rank">
@@ -13,7 +13,7 @@
       </small>
     </div>
 
-    <ion-button class="nav-button" fill="clear" @click="changeDate(1)">
+    <ion-button aria-label="Día siguiente" class="nav-button" fill="clear" @click="slideToDay(1)">
       <ion-icon :icon="chevronForwardOutline"></ion-icon>
     </ion-button>
   </div>
@@ -49,8 +49,8 @@
 
 <script lang="ts" setup>
 import {buildLocalDate, rankTranslate} from "@/modules/app/constants/utils.ts";
-import {computed, onMounted, ref, watch} from "vue";
-import {IonButton, IonDatetime, IonHeader, IonIcon, IonModal, IonToolbar} from "@ionic/vue";
+import {computed, onBeforeUnmount, onMounted, ref, watch} from "vue";
+import {createGesture, type Gesture, IonButton, IonDatetime, IonHeader, IonIcon, IonModal, IonToolbar} from "@ionic/vue";
 import CircleLiturgicalColor from "@/modules/app/components/atoms/CircleLiturgicalColor.vue";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
@@ -131,10 +131,88 @@ const changeDate = (days: number) => {
   HapticsService.light();
 };
 
+/* Swipe between days */
+const SWIPE_DISTANCE = 60; // px dragged to change day
+const SWIPE_VELOCITY = 0.3; // px/ms, so a quick flick also counts
+const SLIDE_OFFSET = 80; // px the text travels when leaving or entering
+const EASE_OUT = 'cubic-bezier(0.32, 0.72, 0, 1)';
+
+const cardRef = ref<HTMLElement>();
+const contentRef = ref<HTMLElement>();
+let gesture: Gesture | undefined;
+let isSliding = false;
+// A drag ends with a click on desktop; this keeps it from opening the calendar
+let suppressClick = false;
+
+const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const setContentPosition = (x: number, opacity: number, transition = 'none') => {
+  const el = contentRef.value;
+  if (!el) return;
+  el.style.transition = transition;
+  el.style.transform = x ? `translateX(${x}px)` : '';
+  el.style.opacity = opacity === 1 ? '' : String(opacity);
+};
+
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// Slides the current day out and the new one in from the opposite side
+const slideToDay = async (days: number) => {
+  if (isSliding) return;
+  if (prefersReducedMotion()) {
+    changeDate(days);
+    return;
+  }
+  isSliding = true;
+  const direction = days > 0 ? -1 : 1;
+  setContentPosition(direction * SLIDE_OFFSET, 0, 'transform 0.15s ease-in, opacity 0.15s ease-in');
+  await wait(150);
+  changeDate(days);
+  setContentPosition(-direction * SLIDE_OFFSET, 0);
+  contentRef.value?.getBoundingClientRect(); // commit the start position before animating
+  setContentPosition(0, 1, `transform 0.3s ${EASE_OUT}, opacity 0.3s ease-out`);
+  await wait(300);
+  isSliding = false;
+};
+
+const onDateClick = () => {
+  if (!suppressClick) setOpen(true);
+};
+
 onMounted(async () => {
+  if (cardRef.value) {
+    gesture = createGesture({
+      el: cardRef.value,
+      gestureName: 'date-swipe',
+      direction: 'x',
+      threshold: 10,
+      canStart: () => !isSliding,
+      onMove: (detail) => {
+        // Follows the finger with resistance and fades as it moves away
+        const x = detail.deltaX * 0.6;
+        setContentPosition(x, 1 - Math.min(Math.abs(x) / 200, 0.5));
+      },
+      onEnd: (detail) => {
+        suppressClick = true;
+        setTimeout(() => suppressClick = false, 50);
+        const committed = Math.abs(detail.deltaX) > SWIPE_DISTANCE || Math.abs(detail.velocityX) > SWIPE_VELOCITY;
+        if (!committed) {
+          setContentPosition(0, 1, `transform 0.3s ${EASE_OUT}, opacity 0.3s ease-out`);
+          return;
+        }
+        // Swiping left shows the next day, like turning a page
+        const towardsLeft = (detail.deltaX || detail.velocityX) < 0;
+        slideToDay(towardsLeft ? 1 : -1);
+      },
+    });
+    gesture.enable();
+  }
+
   const start = parseIsoDateString(datetimeModel.value);
   await updateLiturgy(start);
 });
+
+onBeforeUnmount(() => gesture?.destroy());
 
 watch(datetimeModel, async (newDate) => {
   console.log("datetimeModel", newDate);
@@ -152,6 +230,10 @@ watch(datetimeModel, async (newDate) => {
   border-radius: 16px;
   overflow: hidden;
   background: var(--background-color-card);
+  /* Horizontal drags belong to the swipe gesture; vertical ones still scroll the page */
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* Liturgical color of the day as an accent bar along the top edge */
@@ -178,7 +260,7 @@ watch(datetimeModel, async (newDate) => {
   cursor: pointer;
   flex: 1;
   text-align: center;
-  touch-action: pan-y pinch-zoom;
+  will-change: transform;
 }
 
 .date-label {
