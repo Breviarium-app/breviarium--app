@@ -13,6 +13,7 @@ import AngelusComponent from "@/modules/app/components/molecules/prayers/Angelus
 import ReginaCoeliComponent from "@/modules/app/components/molecules/prayers/ReginaCoeliComponent.vue";
 import ChapletDivineMercyComponent from "@/modules/app/components/molecules/prayers/ChapletDivineMercyComponent.vue";
 import LitaniesHumilityComponent from "@/modules/app/components/molecules/prayers/LitaniesHumilityComponent.vue";
+import SanMiguelComponent from "@/modules/app/components/molecules/prayers/SanMiguelComponent.vue";
 
 const route = useRoute();
 
@@ -22,6 +23,7 @@ const prayers: Record<string, { title: string; component: any }> = {
   "regina-coeli": {title: "Regina Coeli", component: ReginaCoeliComponent},
   "chaplet-divine-mercy": {title: "Coronilla de la Divina Misericordia", component: ChapletDivineMercyComponent},
   "litanies-humility": {title: "Letanías de la Humildad", component: LitaniesHumilityComponent},
+  "san-miguel": {title: "San Miguel Arcángel", component: SanMiguelComponent},
 };
 
 const prayerKey = computed(() => route.params.prayer as string);

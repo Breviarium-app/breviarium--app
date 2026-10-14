@@ -8,71 +8,193 @@
         <ion-title>Oraciones Populares</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content :fullscreen="true" class="ion-padding">
-      <div class="prayers-grid">
-        <button
-            v-for="prayer in prayers"
-            :key="prayer.route"
-            class="prayer-card"
-            @click="router.push(`/popular-prayers/${prayer.route}`)"
-        >
-          <span class="prayer-icon">{{ prayer.icon }}</span>
-          <span class="prayer-name">{{ prayer.name }}</span>
-        </button>
+    <ion-content :fullscreen="true">
+      <div class="popular-prayers">
+        <p class="intro">Devociones de la tradición de la Iglesia para rezar en cualquier momento del día.</p>
+
+        <section v-for="group in groups" :key="group.title">
+          <h2 class="section-title">{{ group.title }}</h2>
+          <div class="prayer-list">
+            <ion-item v-for="prayer in group.prayers" :key="prayer.route" :button="true" :detail="true"
+                      class="prayer-row" @click="openPrayer(prayer.route)">
+              <ion-label>
+                <h2>{{ prayer.name }}</h2>
+                <p>{{ prayer.description }}</p>
+              </ion-label>
+              <span v-if="prayer.route === seasonalPrayer" slot="end" class="now-badge">Ahora</span>
+            </ion-item>
+          </div>
+        </section>
+
+        <aside class="suggest">
+          <ion-icon :icon="mailOutline" aria-hidden="true" class="suggest-icon"/>
+          <div>
+            <h2 class="suggest-title">¿Echas en falta alguna oración?</h2>
+            <p class="suggest-text">
+              Si quieres que añadamos una oración, escríbenos por correo electrónico a
+              <a href="mailto:info@breviarium.es" target="_blank">info@breviarium.es</a>
+            </p>
+          </div>
+        </aside>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts" setup>
-import {IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
+import {
+  IonBackButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonPage,
+  IonTitle,
+  IonToolbar
+} from "@ionic/vue";
+import {computed, onMounted, ref} from "vue";
+import {useI18n} from "vue-i18n";
+import {mailOutline} from "ionicons/icons";
 import router from "@/modules/app/router";
+import {getRosaryMysteriesForToday, isEaster} from "@/modules/app/constants/utils.ts";
+import HapticsService from "@/modules/app/services/HapticsService.ts";
 
-const prayers = [
-  {name: "Rosario", route: "rosary", icon: "📿"},
-  {name: "Ángelus", route: "angelus", icon: "🔔"},
-  {name: "Regina Coeli", route: "regina-coeli", icon: "👑"},
-  {name: "Coronilla de la Divina Misericordia", route: "chaplet-divine-mercy", icon: "✝️"},
-  {name: "Letanías de la Humildad", route: "litanies-humility", icon: "🙏"},
-];
+const {t} = useI18n();
+
+const mysteryNameKeys: Record<string, string> = {
+  joyful: 'joyfulName',
+  sorrowful: 'sorrowfulName',
+  glorious: 'gloriousName',
+  luminous: 'lightName',
+};
+const todaysMysteries = t(mysteryNameKeys[getRosaryMysteriesForToday()]).toLowerCase();
+
+const groups = computed(() => [
+  {
+    title: "A la Virgen María",
+    prayers: [
+      {name: "Rosario", route: "rosary", description: `Hoy, misterios ${todaysMysteries}`},
+      {name: "Ángelus", route: "angelus", description: "Al amanecer, al mediodía y al atardecer"},
+      {name: "Regina Coeli", route: "regina-coeli", description: "Sustituye al Ángelus en el tiempo pascual"},
+    ],
+  },
+  {
+    title: "A Jesucristo",
+    prayers: [
+      {name: "Coronilla de la Divina Misericordia", route: "chaplet-divine-mercy", description: "Revelada a santa Faustina Kowalska"},
+      {name: "Letanías de la Humildad", route: "litanies-humility", description: "Del cardenal Rafael Merry del Val"},
+    ],
+  },
+  {
+    title: "A los ángeles y santos",
+    prayers: [
+      {name: "San Miguel Arcángel", route: "san-miguel", description: "Del papa León XIII"},
+    ],
+  },
+]);
+
+// Regina Coeli replaces the Ángelus during Easter time
+const seasonalPrayer = ref<string>();
+onMounted(async () => {
+  seasonalPrayer.value = await isEaster() ? 'regina-coeli' : 'angelus';
+});
+
+const openPrayer = (route: string) => {
+  HapticsService.light();
+  router.push(`/popular-prayers/${route}`);
+};
 </script>
 
 <style scoped>
-.prayers-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  padding: 16px 0;
+.popular-prayers {
+  max-width: 560px;
+  margin: 0 auto;
+  /* Bottom padding keeps the last card clear of the floating tab bar */
+  padding: 1rem 1rem 96px;
 }
 
-.prayer-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px 12px;
-  border-radius: 12px;
+.intro {
+  margin: 0.25rem 0.25rem 1.5rem;
+  font-style: italic;
+  line-height: 1.5;
+  opacity: 0.75;
+}
+
+section {
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  margin: 0 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.prayer-list {
+  border-radius: 16px;
+  overflow: hidden;
   background: var(--background-color-card);
-  border: none;
-  cursor: pointer;
-  min-height: 120px;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.prayer-card:active {
-  transform: scale(0.96);
+.prayer-row {
+  --background: transparent;
+  --padding-start: 16px;
+  --inner-padding-top: 4px;
+  --inner-padding-bottom: 4px;
 }
 
-.prayer-icon {
-  font-size: 2rem;
-  margin-bottom: 8px;
+.prayer-row:not(:last-child) {
+  --inner-border-width: 0 0 0.5px 0;
+  --border-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.1);
 }
 
-.prayer-name {
-  font-size: 0.9rem;
-  font-weight: 500;
-  text-align: center;
+.now-badge {
+  margin-inline-end: 4px;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--ion-color-primary);
+}
+
+.suggest {
+  display: flex;
+  gap: 0.9rem;
+  margin-top: 2rem;
+  padding: 1rem 1.1rem;
+  border-radius: 16px;
+  border: 1px dashed rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.2);
+}
+
+.suggest-icon {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  font-size: 1.4rem;
   color: var(--ion-color-primary);
-  line-height: 1.3;
+}
+
+.suggest-title {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.suggest-text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+.suggest-text a {
+  font-weight: 400;
+  overflow-wrap: anywhere;
 }
 </style>
