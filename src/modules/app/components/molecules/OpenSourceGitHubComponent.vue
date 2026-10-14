@@ -21,7 +21,8 @@ import {logoGithub} from 'ionicons/icons';
 }
 
 a {
-  color: var(--breviarium-primary)
+  color: var(--ion-color-primary);
+  font-weight: 400;
 }
 
 .colab {

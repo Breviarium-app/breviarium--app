@@ -1,42 +1,35 @@
 <template>
-  <ion-item>
-    <ion-toggle
+  <div>
+    <SettingToggle
         v-model="settingsStore.settings.showAutoScroll"
-        @ionChange="handleToggleChange"
-    >
-      {{ t('settings.show_auto_scroll') }}
-    </ion-toggle>
-  </ion-item>
-  <template v-if="settingsStore.settings.showAutoScroll">
-    <ion-item lines="none">
-      <div class="speed-container">
-        <ion-label>{{ t('settings.auto_scroll_speed') }}</ion-label>
-      </div>
-    </ion-item>
-    <ion-item>
-      <div class="speed-control">
-        <ion-range
-            v-model="settingsStore.settings.autoScrollSpeed"
-            :max="20"
-            :min="1"
-            :onIonChange="handleSpeedChange"
-            :step="1"
-            color="primary"
-        >
-          <ion-icon slot="start" :icon="playCircleOutline" size="medium"></ion-icon>
-          <ion-icon slot="end" :icon="playForwardCircleOutline" size="medium"></ion-icon>
-        </ion-range>
-      </div>
-    </ion-item>
-  </template>
+        :hint="t('settings.hints.show_auto_scroll')"
+        :label="t('settings.show_auto_scroll')"
+        @update:modelValue="saveWithFeedback"
+    />
+    <div v-if="settingsStore.settings.showAutoScroll" class="speed-block">
+      <span class="setting-label">{{ t('settings.auto_scroll_speed') }}</span>
+      <ion-range
+          v-model="settingsStore.settings.autoScrollSpeed"
+          :aria-label="t('settings.auto_scroll_speed')"
+          :max="20"
+          :min="1"
+          :step="1"
+          @ionChange="saveWithFeedback"
+      >
+        <ion-icon slot="start" :icon="playOutline" aria-hidden="true"></ion-icon>
+        <ion-icon slot="end" :icon="playForwardOutline" aria-hidden="true"></ion-icon>
+      </ion-range>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
-import {IonIcon, IonItem, IonLabel, IonRange, IonToggle} from '@ionic/vue';
+import {IonIcon, IonRange} from '@ionic/vue';
 import {useSettingsStore} from '@/modules/app/stores/settingsStore.ts';
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 import {useI18n} from 'vue-i18n';
-import {playCircleOutline, playForwardCircleOutline} from 'ionicons/icons';
+import {playForwardOutline, playOutline} from 'ionicons/icons';
+import SettingToggle from "@/modules/app/components/molecules/settings/SettingToggle.vue";
 
 const {t} = useI18n()
 const settingsStore = useSettingsStore();
@@ -45,32 +38,16 @@ const saveWithFeedback = () => {
   settingsStore.saveSettings();
   HapticsService.light();
 };
-
-const handleToggleChange = () => saveWithFeedback();
-
-const handleSpeedChange = (event: CustomEvent) => {
-  settingsStore.settings.autoScrollSpeed = event.detail.value;
-  saveWithFeedback();
-};
 </script>
 
 <style scoped>
-.speed-control {
-  width: 100%;
+.speed-block {
+  padding: 0.8rem 1rem 0.25rem;
+  border-top: 0.5px solid rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.1);
 }
 
-.speed-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.preview-text {
-  text-align: center;
-  width: 100%;
-  padding: 0 0 0.5rem 0;
-  font-size: 0.85rem;
+.speed-block ion-icon {
+  font-size: 1.1rem;
   opacity: 0.7;
 }
 </style>

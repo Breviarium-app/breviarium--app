@@ -1,42 +1,37 @@
 <template>
-  <ion-grid class="selector-theme">
-    <ion-row class="selector-columns">
-      <!--      <ion-col>-->
-      <!--        <ion-icon :icon="phonePortrait"></ion-icon>-->
-      <!--        <ion-label>{{ $t('system') }}</ion-label>-->
-      <!--      </ion-col>-->
-      <ion-col :class="theme == 'system' ? 'active-theme' : ''" @click="apply('system')">
-        <ion-icon :icon="phonePortrait"></ion-icon>
-        <ion-label>{{ $t('system') }}</ion-label>
-      </ion-col>
-      <ion-col :class="theme == 'light' ? 'active-theme' : ''" @click="apply('light')">
-        <ion-icon :icon="sunny"></ion-icon>
-        <ion-label>{{ $t('light') }}</ion-label>
-      </ion-col>
-      <ion-col :class="theme == 'paper' ? 'active-theme' : ''" @click="apply('paper')">
-        <ion-icon :icon="document"></ion-icon>
-        <ion-label>{{ $t('paper') }}</ion-label>
-      </ion-col>
-      <ion-col :class="theme == 'moon' ? 'active-theme' : ''" @click="apply('moon')">
-        <ion-icon :icon="moon"></ion-icon>
-        <ion-label>{{ $t('moon') }}</ion-label>
-      </ion-col>
-      <ion-col :class="theme == 'dark' ? 'active-theme' : ''" @click="apply('dark')">
-        <ion-icon :icon="contrast"></ion-icon>
-        <ion-label>{{ $t('dark') }}</ion-label>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <div class="setting-block">
+    <span id="theme-label" class="setting-label">{{ t('settings.theme') }}</span>
+    <div aria-labelledby="theme-label" class="themes" role="radiogroup">
+      <button v-for="option in options" :key="option.value" :aria-checked="theme === option.value"
+              :class="{ active: theme === option.value }" class="theme-option btn" role="radio"
+              @click="apply(option.value)">
+        <span :style="{ background: option.background }" aria-hidden="true" class="swatch">
+          <span :style="{ background: option.card }" class="swatch-card"/>
+          <span :style="{ background: option.accent }" class="swatch-dot"/>
+        </span>
+        <span class="theme-name">{{ t(option.value) }}</span>
+      </button>
+    </div>
+  </div>
 </template>
 <script lang="ts" setup>
-import {IonCol, IonGrid, IonIcon, IonLabel, IonRow} from '@ionic/vue';
-import {contrast, document, moon, phonePortrait, sunny} from 'ionicons/icons'
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
 import {ref} from "vue";
+import {useI18n} from "vue-i18n";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 
+const {t} = useI18n();
 const {applyTheme, settings} = useSettingsStore();
 const theme = ref(settings.theme);
+
+// Miniature of each theme's background, card and accent colours (see style.css)
+const options = [
+  {value: 'system', background: 'linear-gradient(135deg, #f8f9fb 50%, #121212 50%)', card: 'rgba(128, 128, 128, 0.35)', accent: '#be4747'},
+  {value: 'light', background: '#f8f9fb', card: '#e9ebed', accent: '#be4747'},
+  {value: 'paper', background: '#f5e6d3', card: '#e1d0ba', accent: '#b1773c'},
+  {value: 'moon', background: '#15202b', card: '#1b2e42', accent: '#4e82b8'},
+  {value: 'dark', background: '#121212', card: '#222222', accent: '#be4747'},
+];
 
 const apply = (x: string) => {
   theme.value = x;
@@ -45,28 +40,75 @@ const apply = (x: string) => {
 }
 </script>
 <style scoped>
-
-ion-grid {
-  --ion-grid-padding: 0px;
+.setting-block {
+  padding: 0.8rem 1rem 1rem;
 }
 
-.selector-columns ion-col {
-  background-color: var(--border-color-light);
-  border-radius: 11px;
-  padding: 10px 0 9px 0;
-  text-align: center;
-  cursor: pointer;
+.themes {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.75rem;
 }
 
-.active-theme {
-  background-color: var(--background-accent) !important;
+.theme-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-weight: 400;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.selector-columns ion-icon {
-  font-size: 1.8em;
+.swatch {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.12);
+  transition: box-shadow 0.15s ease;
 }
 
-.selector-columns {
-  gap: 1.5vw;
+.swatch-card {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 18%;
+  height: 26%;
+  border-radius: 5px;
+}
+
+.swatch-dot {
+  position: absolute;
+  top: 16%;
+  left: 18%;
+  width: 22%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.active .swatch {
+  box-shadow: 0 0 0 2px var(--ion-background-color), 0 0 0 4px var(--ion-color-primary);
+}
+
+.theme-name {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.active .theme-name {
+  opacity: 1;
+  color: var(--ion-color-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swatch {
+    transition: none;
+  }
 }
 </style>

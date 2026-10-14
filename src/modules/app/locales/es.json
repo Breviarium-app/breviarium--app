@@ -65,11 +65,28 @@
     "haptics_active": "Vibración en la aplicación",
     "keepAwake": "Pantalla activa durante oración",
     "font_size": "Tamaño de letra",
-    "sample_text": "Texto de ejemplo",
+    "sample_text": "Dios mío, ven en mi auxilio. Señor, date prisa en socorrerme.",
     "hide_invitatorium": "Ocultar Invitatorio en Laudes",
     "show_auto_scroll": "Mostrar botón de scroll automático",
     "auto_scroll_speed": "Velocidad de scroll automático",
-    "bienal_office_by_default": "Oficio: Ciclo Bienal por defecto"
+    "bienal_office_by_default": "Oficio: Ciclo Bienal por defecto",
+    "sections": {
+      "prayer": "Oración",
+      "reading": "Lectura",
+      "appearance": "Apariencia",
+      "general": "General"
+    },
+    "hints": {
+      "laudes_and_evangelium": "Incluye el Evangelio del día en Laudes, después del responsorio.",
+      "laudes_and_office": "Incluye el Oficio de lectura en Laudes, después del responsorio.",
+      "vesperae_and_office": "Incluye el Oficio de lectura en Vísperas, después del responsorio.",
+      "hide_invitatorium": "Laudes empieza sin el salmo invitatorio.",
+      "bienal_office_by_default": "El Oficio de lectura muestra primero las lecturas del ciclo bienal.",
+      "office_deceased": "Próximamente.",
+      "show_auto_scroll": "Muestra un botón para desplazar el texto de las oraciones automáticamente.",
+      "keepAwake": "La pantalla no se apaga mientras usas la aplicación.",
+      "haptics_active": "Vibración al pulsar botones y navegar."
+    }
   },
   "breviarium": {
     "evangelium_lectiones": "Evangelio y lecturas",

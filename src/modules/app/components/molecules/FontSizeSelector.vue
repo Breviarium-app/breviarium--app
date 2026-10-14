@@ -1,30 +1,23 @@
 <template>
-  <ion-item lines="none">
-    <div class="preview-container">
-      <ion-label>{{ t('settings.font_size') }}</ion-label>
-      <div :style="previewStyle" class="preview-text">
-        {{ t('settings.sample_text') }}
-      </div>
-    </div>
-  </ion-item>
-  <ion-item>
-    <div class="font-size-control">
-      <ion-range
-          v-model="settingsStore.settings.fontSize"
-          :max="30  "
-          :min="12"
-          :onIonChange="handleFontSizeChange"
-          :step="1"
-      >
-        <div slot="start">A</div>
-        <div slot="end" style="font-size: 1.5em">A</div>
-      </ion-range>
-    </div>
-  </ion-item>
+  <div class="setting-block">
+    <span class="setting-label">{{ t('settings.font_size') }}</span>
+    <p :style="previewStyle" class="preview-text">{{ t('settings.sample_text') }}</p>
+    <ion-range
+        v-model="settingsStore.settings.fontSize"
+        :aria-label="t('settings.font_size')"
+        :max="30"
+        :min="12"
+        :step="1"
+        @ionChange="handleFontSizeChange"
+    >
+      <span slot="start" aria-hidden="true" class="size-small">A</span>
+      <span slot="end" aria-hidden="true" class="size-large">A</span>
+    </ion-range>
+  </div>
 </template>
 
 <script lang="ts" setup>
-import {IonItem, IonLabel, IonRange} from '@ionic/vue';
+import {IonRange} from '@ionic/vue';
 import {useSettingsStore} from '@/modules/app/stores/settingsStore.ts';
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 import {useI18n} from 'vue-i18n'
@@ -33,34 +26,36 @@ import {computed} from 'vue';
 const {t} = useI18n()
 const settingsStore = useSettingsStore();
 
+// Same scale PrayerPage applies, so the preview matches the prayer text
 const previewStyle = computed(() => ({
-  fontSize: `${settingsStore.settings.fontSize}px`
+  fontSize: `${settingsStore.settings.fontSize * 1.2}px`,
+  lineHeight: `${settingsStore.settings.fontSize * 1.7}px`
 }));
 
-const handleFontSizeChange = (event: CustomEvent) => {
-  const newSize = event.detail.value;
-  settingsStore.settings.fontSize = newSize;
-  document.documentElement.style.fontSize = `${newSize}px`;
+const handleFontSizeChange = () => {
   settingsStore.saveSettings();
   HapticsService.light();
 };
 </script>
 
 <style scoped>
-.font-size-control {
-  width: 100%;
-}
-
-.preview-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.setting-block {
+  padding: 0.8rem 1rem 0.25rem;
 }
 
 .preview-text {
+  margin: 0.75rem 0 0.25rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: var(--ion-background-color);
   text-align: center;
-  width: 100%;
-  padding: 0 0 0.7rem 0;
+}
+
+.size-small {
+  font-size: 0.85rem;
+}
+
+.size-large {
+  font-size: 1.4rem;
 }
 </style>

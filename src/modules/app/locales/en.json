@@ -49,11 +49,28 @@
     "haptics_active": "Vibration in the app",
     "keepAwake": "Keep the screen awake in prayer",
     "font_size": "Font size",
-    "sample_text": "Example text",
+    "sample_text": "O God, come to my assistance. O Lord, make haste to help me.",
     "hide_invitatorium": "Hide invitatory in Lauds",
     "show_auto_scroll": "Show auto-scroll button",
     "auto_scroll_speed": "Auto-scroll speed",
-    "bienal_office_by_default": "Bienal office by default"
+    "bienal_office_by_default": "Bienal office by default",
+    "sections": {
+      "prayer": "Prayer",
+      "reading": "Reading",
+      "appearance": "Appearance",
+      "general": "General"
+    },
+    "hints": {
+      "laudes_and_evangelium": "Adds the Gospel of the day to Lauds, after the responsory.",
+      "laudes_and_office": "Adds the Office of Readings to Lauds, after the responsory.",
+      "vesperae_and_office": "Adds the Office of Readings to Vespers, after the responsory.",
+      "hide_invitatorium": "Lauds starts without the invitatory psalm.",
+      "bienal_office_by_default": "The Office of Readings shows the two-year cycle readings first.",
+      "office_deceased": "Coming soon.",
+      "show_auto_scroll": "Shows a button that scrolls prayer text automatically.",
+      "keepAwake": "The screen stays on while you use the app.",
+      "haptics_active": "Vibrates when you tap buttons and navigate."
+    }
   },
   "breviarium": {
     "evangelium_lectiones": "Gospel and Readings",
