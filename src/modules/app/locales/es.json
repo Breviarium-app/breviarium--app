@@ -98,6 +98,11 @@
     "nona": "Nona",
     "completorium": "Completas"
   },
+  "whats_new": {
+    "title": "Novedades en la aplicación",
+    "version": "Versión {version}",
+    "close": "Entendido"
+  },
   "community": {
     "title": "Únete a la comunidad",
     "subtitle": "Recibe las novedades de Breviarium en tu móvil",

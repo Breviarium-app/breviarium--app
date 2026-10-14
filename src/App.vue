@@ -7,6 +7,7 @@ import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 import {App as CapacitorApp} from '@capacitor/app';
 import {useRouter} from 'vue-router';
 import OpenInAppBanner from '@/modules/app/components/molecules/OpenInAppBanner.vue';
+import WhatsNewModal from '@/modules/onboarding/WhatsNewModal.vue';
 
 const store = useSettingsStore();
 const router = useRouter();
@@ -45,6 +46,7 @@ onMounted(() => {
     <div class="safe-area">
       <ion-router-outlet/>
     </div>
+    <WhatsNewModal/>
   </ion-app>
 </template>
 <style>

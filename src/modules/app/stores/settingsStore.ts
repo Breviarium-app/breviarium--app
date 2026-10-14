@@ -18,10 +18,14 @@ export const useSettingsStore = defineStore('settings', () => {
         showAutoScroll: true,
         autoScrollSpeed: 7,
         bienalOfficiumDefault: false,
-        latinPrayers: 'es'
+        latinPrayers: 'es',
+        // App version whose "what's new" popup the user already closed
+        whatsNewSeenVersion: ''
     });
 
     const isLoaded = ref(false);
+    // True when no settings were stored yet, i.e. a fresh install
+    const isFirstLaunch = ref(false);
 
     const themes = [
         // {value: 'system', label: 'System'},
@@ -60,6 +64,7 @@ export const useSettingsStore = defineStore('settings', () => {
     const loadSettings = async () => {
         try {
             const {value} = await Preferences.get({key: 'settings'});
+            isFirstLaunch.value = !value;
 
             if (value) {
                 const savedSettings = JSON.parse(value);
@@ -89,6 +94,7 @@ export const useSettingsStore = defineStore('settings', () => {
     return {
         settings,
         isLoaded,
+        isFirstLaunch,
         themes,
         saveSettings,
         applyTheme,

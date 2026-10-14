@@ -82,6 +82,11 @@
     "nona": "None",
     "completorium": "Compline"
   },
+  "whats_new": {
+    "title": "What's new in the app",
+    "version": "Version {version}",
+    "close": "Got it"
+  },
   "community": {
     "title": "Join the community",
     "subtitle": "Get Breviarium news on your phone",
