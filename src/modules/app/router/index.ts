@@ -23,6 +23,11 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import('../views/PrayerIntentionsPage.vue'),
             },
             {
+                path: "diary",
+                name: "diary",
+                component: () => import('../views/DiaryPage.vue'),
+            },
+            {
                 path: '/bible',
                 name: 'Bible',
                 component: () => import('../components/organism/BiblePage.vue')

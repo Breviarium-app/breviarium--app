@@ -180,5 +180,26 @@
   "selectCustomDuration": "Select custom duration",
   "totalTime": "Total time",
   "reset": "Reset",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "diary": {
+    "tab": "Diary",
+    "title": "Diary",
+    "explanation": "Write your thoughts, inspirations and notes while you pray. You can create a note from a Bible verse or from the readings and prayers.",
+    "explanation_offline": "Your diary is not stored on any server, it is only available on your device",
+    "add_button": "New note",
+    "new_title": "New note",
+    "edit_title": "Edit note",
+    "placeholder": "What is the Lord telling you today?",
+    "prompts": [
+      "What is the Lord telling you today?",
+      "What are you grateful for today?",
+      "What are you reflecting on right now?"
+    ],
+    "empty": "There are no notes in your diary yet",
+    "empty_hint": "Tap the diary icon on a prayer or a Bible verse to write about that text.",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "write_note": "Write in the diary",
+    "delete_confirm": "Delete this note?"
+  }
 }

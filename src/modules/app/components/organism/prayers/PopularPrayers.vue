@@ -21,7 +21,7 @@
                 <h2>{{ prayer.name }}</h2>
                 <p>{{ prayer.description }}</p>
               </ion-label>
-              <span v-if="prayer.route === seasonalPrayer" slot="end" class="now-badge">Ahora</span>
+              <span v-if="prayer.route === seasonalPrayer && isMiddayNow" slot="end" class="now-badge">Ahora</span>
             </ion-item>
           </div>
         </section>
@@ -54,7 +54,7 @@ import {
   IonTitle,
   IonToolbar
 } from "@ionic/vue";
-import {computed, onMounted, ref} from "vue";
+import {computed, onBeforeUnmount, onMounted, ref} from "vue";
 import {useI18n} from "vue-i18n";
 import {mailOutline} from "ionicons/icons";
 import router from "@/modules/app/router";
@@ -97,8 +97,28 @@ const groups = computed(() => [
 
 // Regina Coeli replaces the Ángelus during Easter time
 const seasonalPrayer = ref<string>();
+
+// Both are prayed at midday, so "Ahora" only shows in that window, not all day
+const MIDDAY_START_MINUTES = 11 * 60 + 50;
+const MIDDAY_END_MINUTES = 12 * 60 + 30;
+const isMiddayNow = ref(false);
+const updateIsMiddayNow = () => {
+  const now = new Date();
+  const minutesSinceMidnight = now.getHours() * 60 + now.getMinutes();
+  isMiddayNow.value = minutesSinceMidnight >= MIDDAY_START_MINUTES && minutesSinceMidnight <= MIDDAY_END_MINUTES;
+};
+
+let middayCheckInterval: ReturnType<typeof setInterval> | undefined;
+
 onMounted(async () => {
   seasonalPrayer.value = await isEaster() ? 'regina-coeli' : 'angelus';
+  updateIsMiddayNow();
+  // Keeps the badge in sync if the page is left open across 11:50 or 12:30
+  middayCheckInterval = setInterval(updateIsMiddayNow, 60_000);
+});
+
+onBeforeUnmount(() => {
+  clearInterval(middayCheckInterval);
 });
 
 const openPrayer = (route: string) => {

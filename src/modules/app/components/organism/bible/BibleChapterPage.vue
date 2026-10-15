@@ -19,7 +19,7 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <article v-if="verses" :style="readingStyle" class="reader">
+      <article v-if="verses" ref="reader" :style="readingStyle" class="reader">
         <header class="reader-heading">
           <h1>
             <span class="reader-book">{{ bookName }}</span>
@@ -29,7 +29,14 @@
         </header>
 
         <div class="reader-text">
-          <p v-for="(verse, index) in verses" :id="`v${verse.number}`" :key="verse.number" class="verse">
+          <p
+              v-for="(verse, index) in verses"
+              :id="`v${verse.number}`"
+              :key="verse.number"
+              :class="{'is-highlighted': verse.number === highlightedVerse}"
+              class="verse"
+              @click="onVerseTap(verse)"
+          >
             <sup class="verse-number">{{ verse.number }}</sup><template v-if="index === 0"><span class="verse-initial">{{ verse.text.charAt(0).toUpperCase() }}</span>{{ verse.text.slice(1) }}</template><template v-else>{{ verse.text }}</template>
           </p>
         </div>
@@ -69,12 +76,15 @@
 
       <AutoScrollButton v-if="verses"/>
     </ion-content>
+
+    <DiaryEntryModal :is-open="noteReference !== null" :reference="noteReference" @close="noteReference = null"/>
   </ion-page>
 </template>
 
 <script lang="ts" setup>
-import {computed} from 'vue';
+import {computed, nextTick, ref} from 'vue';
 import {
+  actionSheetController,
   IonBackButton,
   IonButton,
   IonButtons,
@@ -86,12 +96,14 @@ import {
   IonToolbar,
   onIonViewDidEnter
 } from '@ionic/vue';
-import {chevronBack, chevronForward, gridOutline} from 'ionicons/icons';
+import {chevronBack, chevronForward, gridOutline, journalOutline} from 'ionicons/icons';
 import {useRoute} from 'vue-router';
 import {useI18n} from 'vue-i18n';
 import {bibleStore} from '@/modules/app/stores/bibleStore.ts';
 import {useSettingsStore} from '@/modules/app/stores/settingsStore.ts';
 import AutoScrollButton from '@/modules/app/components/atoms/AutoScrollButton.vue';
+import DiaryEntryModal from '@/modules/app/components/molecules/DiaryEntryModal.vue';
+import type {DiaryReference} from '@/modules/app/stores/diaryStore.ts';
 
 const {t} = useI18n();
 const store = bibleStore();
@@ -119,8 +131,45 @@ const readingStyle = computed(() => ({
   lineHeight: 1.7,
 }));
 
-onIonViewDidEnter(() => {
+const reader = ref<HTMLElement>();
+const highlightedVerse = ref<number | null>(null);
+const noteReference = ref<DiaryReference | null>(null);
+
+type Verse = { number: number; text: string };
+
+const onVerseTap = async (verse: Verse) => {
+  // A tap that ends a text selection should not open the menu.
+  if (window.getSelection()?.toString()) return;
+  highlightedVerse.value = verse.number;
+  const sheet = await actionSheetController.create({
+    header: `${bookName} ${chapterNumber}, ${verse.number}`,
+    buttons: [
+      {text: t('diary.write_note'), icon: journalOutline, data: 'note'},
+      {text: t('cancel'), role: 'cancel'},
+    ],
+  });
+  await sheet.present();
+  const {data} = await sheet.onDidDismiss();
+  if (data === 'note') {
+    noteReference.value = {
+      label: `${bookName} ${chapterNumber}, ${verse.number}`,
+      path: `/bible/${bookName}/${chapterNumber}#v${verse.number}`,
+      quote: verse.text,
+    };
+  } else {
+    highlightedVerse.value = null;
+  }
+};
+
+onIonViewDidEnter(async () => {
   if (isValidChapter) store.setLastRead({book: bookName, chapter: chapterNumber});
+
+  // Diary notes link to a verse as #v<number>; Ionic does not scroll to hashes on its own.
+  const verse = Number(route.hash.replace('#v', '')) || null;
+  highlightedVerse.value = verse;
+  if (!verse) return;
+  await nextTick();
+  reader.value?.querySelector(`#v${verse}`)?.scrollIntoView({behavior: 'smooth', block: 'center'});
 });
 </script>
 
@@ -182,7 +231,7 @@ onIonViewDidEnter(() => {
   color: var(--ion-color-primary);
 }
 
-.verse:target {
+.verse.is-highlighted {
   background: var(--background-color-card);
   border-radius: 4px;
 }

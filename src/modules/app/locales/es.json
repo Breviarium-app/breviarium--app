@@ -372,5 +372,26 @@
   "selectCustomDuration": "Selecciona la duración personalizada",
   "totalTime": "Tiempo total",
   "reset": "Reiniciar",
-  "confirm": "Confirmar"
+  "confirm": "Confirmar",
+  "diary": {
+    "tab": "Diario",
+    "title": "Diario",
+    "explanation": "Escribe tus pensamientos, inspiraciones y notas mientras rezas. Puedes crear una nota desde un versículo de la Biblia o desde las lecturas y oraciones.",
+    "explanation_offline": "Tu diario no se almacena en ningún servidor, solo está disponible en tu dispositivo",
+    "add_button": "Nueva nota",
+    "new_title": "Nueva nota",
+    "edit_title": "Editar nota",
+    "placeholder": "¿Qué te dice el Señor hoy?",
+    "prompts": [
+      "¿Qué te dice el Señor hoy?",
+      "¿Por qué estás agradecido hoy?",
+      "¿Qué reflexionas en este momento?"
+    ],
+    "empty": "Aún no hay notas en tu diario",
+    "empty_hint": "Toca el icono del diario en una oración o un versículo de la Biblia para anotar sobre ese texto.",
+    "today": "Hoy",
+    "yesterday": "Ayer",
+    "write_note": "Escribir en el diario",
+    "delete_confirm": "¿Eliminar esta nota?"
+  }
 }
