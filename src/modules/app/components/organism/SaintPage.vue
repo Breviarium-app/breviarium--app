@@ -82,20 +82,24 @@ const scrollToSearch = () => {
     <ion-content ref="contentRef" :fullscreen="true">
       <div class="saints">
         <section v-if="selectedSaint" class="saint-card">
-          <button class="saint-card-body btn" @click="openSaint(selectedSaint)">
-            <span class="eyebrow">{{ t('saints.of_the_day') }} · {{ feastDay }}</span>
-            <span class="saint-name">{{ selectedSaint.name }}</span>
-            <span v-if="selectedSaint.description" class="saint-excerpt">{{ selectedSaint.description }}</span>
-            <span class="read-more">
-              {{ t('saints.read_more') }}
-              <ion-icon :icon="arrowForward" aria-hidden="true"/>
-            </span>
-          </button>
+          <span class="eyebrow">{{ t('saints.of_the_day') }} · {{ feastDay }}</span>
+          <h2 class="saint-name">
+            <button class="saint-name-link btn" @click="openSaint(selectedSaint)">{{ selectedSaint.name }}</button>
+          </h2>
 
-          <button v-if="saintsOfDay?.length" class="day-badge btn" @click="setDayListOpen(true)">
-            <ion-icon :icon="peopleOutline" aria-hidden="true"/>
-            {{ t('saints.day_saints', {n: saintsOfDay.length}) }}
-          </button>
+          <p v-if="selectedSaint.description" class="saint-history">{{ selectedSaint.description }}</p>
+          <p v-else class="saint-no-bio">{{ t('saints.no_bio') }}</p>
+
+          <div class="saint-card-actions">
+            <button v-if="saintsOfDay?.length" class="day-badge btn" @click="setDayListOpen(true)">
+              <ion-icon :icon="peopleOutline" aria-hidden="true"/>
+              {{ t('saints.day_saints', {n: saintsOfDay.length}) }}
+            </button>
+            <button class="details-link btn" @click="openSaint(selectedSaint)">
+              {{ t('saints.view_details') }}
+              <ion-icon :icon="arrowForward" aria-hidden="true"/>
+            </button>
+          </div>
         </section>
 
         <section ref="searchSectionRef" class="search-section">
@@ -168,6 +172,7 @@ button {
   color: inherit;
   text-align: left;
   border: 0;
+  background: transparent;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -180,14 +185,6 @@ button {
   background: var(--background-color-card);
 }
 
-.saint-card-body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: 0;
-  background: transparent;
-}
-
 .eyebrow {
   font-size: 0.75rem;
   letter-spacing: 0.1em;
@@ -196,32 +193,50 @@ button {
 }
 
 .saint-name {
+  margin: 0;
   font-size: 1.6rem;
   font-weight: 600;
   line-height: 1.2;
 }
 
-.saint-excerpt {
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  font-size: 0.95rem;
-  line-height: 1.55;
-  opacity: 0.8;
+.saint-name-link {
+  display: inline;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-underline-offset: 0.2em;
+  text-decoration-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.3);
 }
 
-.read-more {
-  display: inline-flex;
+.saint-name-link:hover,
+.saint-name-link:focus-visible {
+  text-decoration: underline;
+}
+
+.saint-history {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.85;
+  /* The text is the point of the card, so it can be selected and copied like any other paragraph */
+  user-select: text;
+}
+
+.saint-no-bio {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.6;
+}
+
+.saint-card-actions {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.35rem;
-  margin-top: 0.15rem;
-  font-size: 0.9rem;
-  color: var(--ion-color-primary);
+  gap: 0.5rem;
+  margin-top: 0.1rem;
 }
 
 .day-badge {
-  align-self: flex-start;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -234,6 +249,15 @@ button {
 
 .day-badge ion-icon {
   font-size: 1.05rem;
+}
+
+.details-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0;
+  font-size: 0.9rem;
+  color: var(--ion-color-primary);
 }
 
 .search-section {

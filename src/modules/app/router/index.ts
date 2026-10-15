@@ -28,6 +28,11 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import('../views/DiaryPage.vue'),
             },
             {
+                path: "about",
+                name: "about",
+                component: () => import('../components/organism/AboutPage.vue'),
+            },
+            {
                 path: '/bible',
                 name: 'Bible',
                 component: () => import('../components/organism/BiblePage.vue')

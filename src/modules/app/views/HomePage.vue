@@ -15,8 +15,14 @@ import AnimatedComponent from "@/modules/app/components/molecules/AnimatedCompon
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue";
 import LiturgyHoursInfo from "@/modules/app/components/molecules/home-banners/LiturgyHoursInfo.vue";
+import HapticsService from "@/modules/app/services/HapticsService.ts";
 
 const {t} = useI18n()
+
+const openAbout = () => {
+  HapticsService.light();
+  router.push('/about');
+};
 
 const ionRouter = useIonRouter();
 useBackButton(-1, () => {
@@ -67,13 +73,13 @@ useDateStore().updateDateParams()
   <ion-page>
     <ion-content>
       <div class="home">
-        <header class="masthead">
+        <button :aria-label="t('about.title')" class="masthead btn" @click="openAbout">
           <img alt="" class="masthead-logo" height="52" src="/breviarium-favicon-small.png" width="52"/>
           <div>
             <h1 class="masthead-title">{{ t('title') }}</h1>
             <p class="masthead-subtitle">{{ t('landing.subtitle') }}</p>
           </div>
-        </header>
+        </button>
 
         <AnimatedComponent :delay="getDelay(0)">
           <DateAndCelebration/>
@@ -146,8 +152,15 @@ useDateStore().updateDateParams()
 .masthead {
   display: flex;
   align-items: center;
+  width: 100%;
   gap: 0.85rem;
   padding: 0.25rem 0.25rem 0.5rem;
+  border-radius: 14px;
+  transition: opacity 0.15s ease-out;
+}
+
+.masthead:active {
+  opacity: 0.7;
 }
 
 .masthead-logo {
@@ -198,6 +211,7 @@ button {
   color: inherit;
   text-align: left;
   border: 0;
+  background: transparent;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -322,7 +336,7 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hour-tile, .btn {
+  .hour-tile, .masthead, .btn {
     transition: none;
   }
 }

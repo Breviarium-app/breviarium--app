@@ -108,10 +108,25 @@
     "subtitle": "Recibe las novedades de Breviarium en tu móvil",
     "follow": "Síguenos en {network}"
   },
+  "about": {
+    "title": "Acerca de Breviarium",
+    "what_title": "¿Qué es Breviarium?",
+    "what_text": "Breviarium es una aplicación gratuita y de código abierto para rezar la Liturgia de las Horas cada día. Incluye también la Biblia de Jerusalén completa y el santoral del Martirologio Romano.",
+    "feature_fast": "Rápida",
+    "feature_light": "Ligera y sin anuncios",
+    "feature_complete": "Completa y sin conexión",
+    "feature_intentions": "Lista de intenciones de oración",
+    "feature_diary": "Diario de notas y reflexiones",
+    "mission_title": "Misión",
+    "mission_text": "La misión de Breviarium es ayudarte a cultivar tu vida espiritual, uniendo tu oración a la de toda la Iglesia, que reza las mismas horas en el mundo entero.",
+    "learn_more": "Más información en breviarium.es",
+    "release_notes_button": "Ver historial de novedades",
+    "release_notes_title": "Historial de novedades"
+  },
   "saints": {
     "title": "Santoral",
     "of_the_day": "Santo del día",
-    "read_more": "Leer más",
+    "view_details": "Ver ficha completa",
     "day_saints": "Todos los santos del día ({n})",
     "day_saints_title": "Santos del {date}",
     "search_title": "Buscar en el santoral",

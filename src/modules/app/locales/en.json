@@ -92,10 +92,25 @@
     "subtitle": "Get Breviarium news on your phone",
     "follow": "Follow us on {network}"
   },
+  "about": {
+    "title": "About Breviarium",
+    "what_title": "What is Breviarium?",
+    "what_text": "Breviarium is a free, open-source app for praying the Liturgy of the Hours every day. It also includes the complete Bible of Jerusalem and the saints of the Roman Martyrology.",
+    "feature_fast": "Fast",
+    "feature_light": "Light and ad-free",
+    "feature_complete": "Complete and offline",
+    "feature_intentions": "Prayer intentions list",
+    "feature_diary": "Diary for notes and reflections",
+    "mission_title": "Mission",
+    "mission_text": "Breviarium's mission is to help you cultivate your spiritual life, joining your prayer to that of the whole Church, which prays the same hours all over the world.",
+    "learn_more": "More information at breviarium.es",
+    "release_notes_button": "View release notes history",
+    "release_notes_title": "Release notes history"
+  },
   "saints": {
     "title": "Saints",
     "of_the_day": "Saint of the day",
-    "read_more": "Read more",
+    "view_details": "View full profile",
     "day_saints": "All saints of the day ({n})",
     "day_saints_title": "Saints of {date}",
     "search_title": "Search the saints",
