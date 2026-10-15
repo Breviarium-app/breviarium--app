@@ -1,29 +1,25 @@
 <template>
   <ion-modal :is-open="isOpen" @didDismiss="emit('close')" @didPresent="focusTextarea">
-    <div class="modal-header">
-      <span class="modal-title">{{ entry ? $t('diary.edit_title') : $t('diary.new_title') }}</span>
-      <ion-button class="close-button" fill="clear" @click="emit('close')">
-        <ion-icon :icon="closeOutline"></ion-icon>
-      </ion-button>
-    </div>
     <div class="modal-content">
-      <DiaryReferenceCard v-if="currentReference" :reference="currentReference" :link="false"/>
-      <ion-textarea
-          ref="textarea"
-          v-model="text"
-          :auto-grow="true"
-          :placeholder="$t('diary.placeholder')"
-          :rows="6"
-          class="diary-textarea"
-      />
+      <h2 class="modal-title">{{ entry ? t('diary.edit_title') : t('diary.new_title') }}</h2>
+      <DiaryReferenceCard v-if="currentReference" :link="false" :reference="currentReference"/>
+      <div class="textarea-wrap">
+        <ion-textarea
+            ref="textarea"
+            v-model="text"
+            :aria-label="entry ? t('diary.edit_title') : t('diary.new_title')"
+            :auto-grow="true"
+            :placeholder="t('diary.placeholder')"
+            :rows="5"
+            class="diary-textarea"
+        />
+      </div>
       <div class="modal-actions">
-        <ion-button v-if="entry" color="danger" fill="clear" @click="remove">
-          <ion-icon slot="start" :icon="trashOutline"></ion-icon>
-          {{ $t('delete') }}
-        </ion-button>
-        <ion-button :disabled="!text.trim()" color="primary" @click="save">
-          {{ $t('save') }}
-        </ion-button>
+        <button v-if="entry" :aria-label="t('delete')" class="delete-button btn" @click="remove">
+          <ion-icon :icon="trashOutline" aria-hidden="true"/>
+        </button>
+        <button class="cancel-button btn" @click="emit('close')">{{ t('cancel') }}</button>
+        <button :disabled="!text.trim()" class="save-button btn" @click="save">{{ t('save') }}</button>
       </div>
     </div>
   </ion-modal>
@@ -31,9 +27,9 @@
 
 <script lang="ts" setup>
 import {computed, ref, watch} from 'vue';
-import {alertController, IonButton, IonIcon, IonModal, IonTextarea} from '@ionic/vue';
+import {alertController, IonIcon, IonModal, IonTextarea} from '@ionic/vue';
 import {useI18n} from 'vue-i18n';
-import {closeOutline, trashOutline} from 'ionicons/icons';
+import {trashOutline} from 'ionicons/icons';
 import {type DiaryEntry, type DiaryReference, useDiaryStore} from '@/modules/app/stores/diaryStore.ts';
 import DiaryReferenceCard from '@/modules/app/components/molecules/DiaryReferenceCard.vue';
 import HapticsService from '@/modules/app/services/HapticsService.ts';
@@ -57,6 +53,7 @@ watch(() => props.isOpen, (open) => {
   if (open) text.value = props.entry?.text ?? '';
 });
 
+// Opens the keyboard straight away instead of needing a second tap on the field
 const focusTextarea = () => {
   textarea.value?.$el.setFocus();
 };
@@ -72,9 +69,11 @@ const save = async () => {
   emit('close');
 };
 
+// Deleting cannot be undone, so it asks first
 const remove = async () => {
   const entry = props.entry;
   if (!entry) return;
+  HapticsService.light();
   const alert = await alertController.create({
     header: t('diary.delete_confirm'),
     buttons: [
@@ -86,7 +85,6 @@ const remove = async () => {
   const {role} = await alert.onDidDismiss();
   if (role !== 'destructive') return;
   await store.deleteEntry(entry.id);
-  HapticsService.light();
   emit('close');
 };
 </script>
@@ -95,56 +93,102 @@ const remove = async () => {
 ion-modal {
   --height: auto;
   --width: 90%;
-  --max-width: 500px;
-  --border-radius: 16px;
+  --max-width: 460px;
+  --border-radius: 20px;
   --background: var(--ion-background-color);
   margin: auto;
-}
-
-.modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  padding: 16px 16px 0 16px;
-}
-
-.modal-title {
-  font-size: 1.1em;
-  font-weight: 600;
-  color: var(--breviarium-primary);
-}
-
-.close-button {
-  position: absolute;
-  right: 8px;
-  top: 70%;
-  transform: translateY(-50%);
-  --padding-start: 8px;
-  --padding-end: 8px;
-  margin: 0;
 }
 
 .modal-content {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 16px;
+  gap: 0.9rem;
+  padding: 1.25rem;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+}
+
+/* Wrapper draws the rounded field and focus ring, which ion-textarea does not clip itself */
+.textarea-wrap {
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--background-color-card);
+  box-shadow: inset 0 0 0 1.5px transparent;
+  transition: box-shadow 0.15s ease;
+}
+
+.textarea-wrap:focus-within {
+  box-shadow: inset 0 0 0 1.5px var(--ion-color-primary);
 }
 
 .diary-textarea {
-  --background: var(--background-color-card);
+  --background: transparent;
   --padding-start: 16px;
   --padding-end: 16px;
-  --padding-top: 12px;
-  --padding-bottom: 12px;
-  border-radius: 8px;
-  min-height: 160px;
+  --padding-top: 14px;
+  --padding-bottom: 14px;
+  min-height: 140px;
+  line-height: 1.5;
+}
+
+button {
+  font-family: inherit;
+  font-weight: 400;
+  color: inherit;
+  border: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .modal-actions {
   display: flex;
-  justify-content: flex-end;
-  gap: 8px;
+  gap: 0.6rem;
+  margin-top: 0.35rem;
+}
+
+.cancel-button,
+.save-button {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.cancel-button {
+  background: var(--background-color-card);
+}
+
+.save-button {
+  color: #fff;
+  background: var(--ion-color-primary);
+}
+
+.save-button:disabled {
+  opacity: 0.4;
+}
+
+.delete-button {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 1.15rem;
+  background: var(--background-color-card);
+  color: var(--ion-color-danger);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .textarea-wrap {
+    transition: none;
+  }
 }
 </style>

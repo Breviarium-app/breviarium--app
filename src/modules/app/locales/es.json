@@ -382,7 +382,15 @@
     "new_title": "Nueva nota",
     "edit_title": "Editar nota",
     "placeholder": "¿Qué te dice el Señor hoy?",
+    "prompts": [
+      "¿Qué te dice el Señor hoy?",
+      "¿Por qué estás agradecido hoy?",
+      "¿Qué reflexionas en este momento?"
+    ],
     "empty": "Aún no hay notas en tu diario",
+    "empty_hint": "Toca el icono del diario en una oración o un versículo de la Biblia para anotar sobre ese texto.",
+    "today": "Hoy",
+    "yesterday": "Ayer",
     "write_note": "Escribir en el diario",
     "delete_confirm": "¿Eliminar esta nota?"
   }

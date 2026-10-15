@@ -190,7 +190,15 @@
     "new_title": "New note",
     "edit_title": "Edit note",
     "placeholder": "What is the Lord telling you today?",
+    "prompts": [
+      "What is the Lord telling you today?",
+      "What are you grateful for today?",
+      "What are you reflecting on right now?"
+    ],
     "empty": "There are no notes in your diary yet",
+    "empty_hint": "Tap the diary icon on a prayer or a Bible verse to write about that text.",
+    "today": "Today",
+    "yesterday": "Yesterday",
     "write_note": "Write in the diary",
     "delete_confirm": "Delete this note?"
   }
