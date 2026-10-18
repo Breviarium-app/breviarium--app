@@ -1,5 +1,8 @@
 <template>
   <PrayerPage :display-liturgical-info="true" :title="props.prayerTitle">
+    <template #header-end>
+      <ShareButton :page="pageSegment"/>
+    </template>
     <p class="margin-y-md title-color ion-align-items-center ion-text-center">
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
@@ -77,7 +80,7 @@
   </PrayerPage>
 </template>
 <script lang="ts" setup>
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import PrayerPage from "@/modules/app/components/organism/PrayerPage.vue";
 import {formatText} from "@/modules/app/constants/formatText.ts";
 import type {IntermediateSchemaOutput} from "breviarium";
@@ -87,6 +90,7 @@ import HymnComponent from "@/modules/app/components/molecules/prayers/HymnCompon
 import CrossComponent from "@/modules/app/components/molecules/prayers/CrossComponent.vue";
 import {isOrdinaryTime, isTodayLent} from "@/modules/app/constants/utils.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
+import ShareButton from "@/modules/app/components/molecules/ShareButton.vue";
 
 const prayer = ref<IntermediateSchemaOutput>();
 const isOrdinaryTimeCondition = ref()
@@ -98,6 +102,12 @@ const props = defineProps({
     required: true
   },
 })
+
+// Matches the dated route segments (tertia, sexta, nona), not the display title
+const pageSegment = computed(() => {
+  const segments: { [key: string]: string } = {tercia: 'tertia', sexta: 'sexta', nona: 'nona'};
+  return segments[props.prayerTitle.toLowerCase()] || props.prayerTitle.toLowerCase();
+});
 useDateStore().updateDateParams()
 
 onMounted(async () => {

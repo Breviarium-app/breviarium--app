@@ -65,6 +65,11 @@ const apply = (x: string) => {
   -webkit-tap-highlight-color: transparent;
 }
 
+.theme-option:focus,
+.theme-option:focus-visible {
+  outline: none;
+}
+
 .swatch {
   position: relative;
   width: 100%;
@@ -90,10 +95,6 @@ const apply = (x: string) => {
   width: 22%;
   aspect-ratio: 1;
   border-radius: 50%;
-}
-
-.active .swatch {
-  box-shadow: 0 0 0 2px var(--ion-background-color), 0 0 0 4px var(--ion-color-primary);
 }
 
 .theme-name {

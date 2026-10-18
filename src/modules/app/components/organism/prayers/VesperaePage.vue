@@ -1,5 +1,8 @@
 <template>
   <PrayerPage :display-liturgical-info="true" title="Vísperas">
+    <template #header-end>
+      <ShareButton page="vesperae"/>
+    </template>
     <div v-if="prayerMultiple && prayerMultiple?.length > 1">
       <ion-segment v-model="selectedOption">
         <ion-segment-button :value="0">
@@ -170,6 +173,7 @@ import HymnComponent from "@/modules/app/components/molecules/prayers/HymnCompon
 import CustomPrayersBlock from "@/modules/app/components/organism/prayers/CustomPrayersBlock.vue";
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
+import ShareButton from "@/modules/app/components/molecules/ShareButton.vue";
 
 const isModalInvocationOpen = ref(false);
 const settings = useSettingsStore().settings;

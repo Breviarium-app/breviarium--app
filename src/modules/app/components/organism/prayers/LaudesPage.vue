@@ -1,5 +1,8 @@
 <template>
   <PrayerPage :display-liturgical-info="true" title="Laudes">
+    <template #header-end>
+      <ShareButton page="laudes"/>
+    </template>
     <div v-if="laudesMultiple && laudesMultiple?.length > 1">
       <ion-segment v-model="selectedOption">
         <ion-segment-button :value="0">
@@ -176,6 +179,7 @@ import OfficiumLectures from "@/modules/app/components/molecules/prayers/Officiu
 import CustomPrayersBlock from "@/modules/app/components/organism/prayers/CustomPrayersBlock.vue";
 import EvangeliumLecture from "@/modules/app/components/molecules/prayers/EvangeliumLecture.vue";
 import TimerMeditation from "@/modules/app/components/molecules/prayers/TimerMeditation.vue";
+import ShareButton from "@/modules/app/components/molecules/ShareButton.vue";
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 import {isTodayLent} from "@/modules/app/constants/utils.ts";
