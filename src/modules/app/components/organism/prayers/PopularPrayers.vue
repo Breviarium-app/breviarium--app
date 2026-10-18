@@ -91,6 +91,8 @@ const groups = computed(() => [
     title: "A los ángeles y santos",
     prayers: [
       {name: "San Miguel Arcángel", route: "san-miguel", description: "Del papa León XIII"},
+      {name: "Letanías de San José", route: "litanies-saint-joseph", description: "Aprobadas por san Pío X"},
+      {name: "Oración a San José", route: "prayer-saint-joseph", description: "Del papa Francisco, Patris Corde"},
     ],
   },
 ]);
