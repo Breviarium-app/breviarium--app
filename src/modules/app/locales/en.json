@@ -223,6 +223,8 @@
     "search_no_results": "No notes found for \"{query}\"",
     "filter_clear": "Show all",
     "filtered_day_empty": "There are no notes on this day",
-    "pagination_hint": "Showing the {shown} most recent notes out of {total}"
+    "previous_page": "Previous page",
+    "next_page": "Next page",
+    "page_indicator": "Page {current} of {total}"
   }
 }

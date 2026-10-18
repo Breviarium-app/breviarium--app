@@ -7,7 +7,6 @@ import {useSettingsStore} from '@/modules/app/stores/settingsStore.ts';
 import VersionNumber from "@/modules/app/components/molecules/VersionNumber.vue";
 import SelectorTheme from "@/modules/app/components/molecules/SelectorTheme.vue";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
-import {KeepAwakeService} from "@/modules/app/services/keepAwakeService.ts";
 import FontSizeSelector from "@/modules/app/components/molecules/FontSizeSelector.vue";
 import AutoScrollSpeedSelector from "@/modules/app/components/molecules/AutoScrollSpeedSelector.vue";
 import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue";
@@ -45,11 +44,7 @@ const updateToggle = async (key: ToggleKey, value: boolean) => {
 
   // The store only applies this on startup, so apply it here to take effect immediately
   if (key === 'keepAwake') {
-    if (!value) {
-      await KeepAwakeService.allowSleep();
-    } else if (await KeepAwakeService.isSupported()) {
-      await KeepAwakeService.keepAwake();
-    }
+    await settingsStore.applyKeepAwake(value);
   }
 };
 </script>

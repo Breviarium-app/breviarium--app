@@ -415,6 +415,8 @@
     "search_no_results": "No se han encontrado notas para \"{query}\"",
     "filter_clear": "Ver todas",
     "filtered_day_empty": "No hay notas en este día",
-    "pagination_hint": "Mostrando las {shown} notas más recientes de {total}"
+    "previous_page": "Página anterior",
+    "next_page": "Página siguiente",
+    "page_indicator": "Página {current} de {total}"
   }
 }

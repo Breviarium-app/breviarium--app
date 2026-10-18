@@ -5,10 +5,10 @@
         <ion-title>{{ t('diary.title') }}</ion-title>
         <ion-buttons slot="end">
           <ion-button :aria-label="t('diary.calendar_button')" @click="openCalendar">
-            <ion-icon :icon="calendarOutline" aria-hidden="true" slot="icon-only"/>
+            <ion-icon slot="icon-only" :icon="calendarOutline" aria-hidden="true"/>
           </ion-button>
           <ion-button :aria-label="t('diary.search_button')" @click="toggleSearch">
-            <ion-icon :icon="isSearchOpen ? closeOutline : searchOutline" aria-hidden="true" slot="icon-only"/>
+            <ion-icon slot="icon-only" :icon="isSearchOpen ? closeOutline : searchOutline" aria-hidden="true"/>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -68,9 +68,19 @@
             </div>
           </section>
 
-          <p v-if="filteredEntries.length > PAGE_SIZE" class="pagination-hint">
-            {{ t('diary.pagination_hint', {shown: PAGE_SIZE, total: filteredEntries.length}) }}
-          </p>
+          <div v-if="totalPages > 1" class="pagination">
+            <button :aria-label="t('diary.previous_page')" :disabled="currentPage === 1" class="page-nav btn"
+                    @click="goToPrevPage">
+              <ion-icon :icon="chevronBackOutline" aria-hidden="true"/>
+            </button>
+            <span class="page-indicator">{{
+                t('diary.page_indicator', {current: currentPage, total: totalPages})
+              }}</span>
+            <button :aria-label="t('diary.next_page')" :disabled="currentPage === totalPages" class="page-nav btn"
+                    @click="goToNextPage">
+              <ion-icon :icon="chevronForwardOutline" aria-hidden="true"/>
+            </button>
+          </div>
         </template>
       </div>
     </ion-content>
@@ -81,10 +91,10 @@
       <ion-modal :is-open="calendarOpen" @didDismiss="calendarOpen = false">
         <ion-header>
           <ion-toolbar>
-            <ion-button fill="clear" slot="start" @click="calendarOpen = false">
+            <ion-button slot="start" fill="clear" @click="calendarOpen = false">
               {{ t('diary.calendar_close') }}
             </ion-button>
-            <ion-button fill="clear" slot="end" @click="clearDayFilterAndClose">
+            <ion-button slot="end" fill="clear" @click="clearDayFilterAndClose">
               {{ t('diary.filter_clear') }}
             </ion-button>
           </ion-toolbar>
@@ -94,9 +104,9 @@
               v-model="datetimeModel"
               :first-day-of-week="1"
               :highlighted-dates="highlightEntryDates"
+              :locale="locale === 'en' ? 'en-US' : 'es-ES'"
               :prefer-wheel="false"
               :show-adjacent-days="true"
-              :locale="locale === 'en' ? 'en-US' : 'es-ES'"
               presentation="date"
               size="cover"
               @ionChange="onCalendarDateChange"
@@ -108,7 +118,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, ref} from 'vue';
+import {computed, ref, watch} from 'vue';
 import {
   IonButton,
   IonButtons,
@@ -123,7 +133,16 @@ import {
   IonToolbar,
   onIonViewWillEnter
 } from '@ionic/vue';
-import {calendarOutline, closeOutline, createOutline, journalOutline, lockClosedOutline, searchOutline} from 'ionicons/icons';
+import {
+  calendarOutline,
+  chevronBackOutline,
+  chevronForwardOutline,
+  closeOutline,
+  createOutline,
+  journalOutline,
+  lockClosedOutline,
+  searchOutline
+} from 'ionicons/icons';
 import {useI18n} from 'vue-i18n';
 import {type DiaryEntry, useDiaryStore} from '@/modules/app/stores/diaryStore.ts';
 import DiaryEntryModal from '@/modules/app/components/molecules/DiaryEntryModal.vue';
@@ -133,8 +152,7 @@ import HapticsService from '@/modules/app/services/HapticsService.ts';
 const {t, tm, locale} = useI18n();
 const store = useDiaryStore();
 
-// Shown while there is no real pagination yet, so long diaries stay fast to render
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 15;
 
 // A different prompt each time the page is opened, to keep the invitation to write feeling fresh
 const prompts = computed<string[]>(() => tm('diary.prompts') as string[]);
@@ -242,7 +260,30 @@ const matchesDay = (entry: DiaryEntry) => {
 
 // Entries are stored newest first, so this stays newest first too
 const filteredEntries = computed(() => store.entries.filter((entry) => matchesDay(entry) && matchesSearch(entry)));
-const visibleEntries = computed(() => filteredEntries.value.slice(0, PAGE_SIZE));
+
+const currentPage = ref(1);
+const totalPages = computed(() => Math.max(1, Math.ceil(filteredEntries.value.length / PAGE_SIZE)));
+const visibleEntries = computed(() => {
+  const start = (currentPage.value - 1) * PAGE_SIZE;
+  return filteredEntries.value.slice(start, start + PAGE_SIZE);
+});
+
+// A narrower filter can leave the current page out of range, so fall back to page 1
+watch([normalizedQuery, selectedDayFilter], () => {
+  currentPage.value = 1;
+});
+
+const goToPrevPage = () => {
+  if (currentPage.value === 1) return;
+  currentPage.value -= 1;
+  HapticsService.light();
+};
+
+const goToNextPage = () => {
+  if (currentPage.value === totalPages.value) return;
+  currentPage.value += 1;
+  HapticsService.light();
+};
 
 const noResultsMessage = computed(() => {
   if (normalizedQuery.value) return t('diary.search_no_results', {query: searchQuery.value.trim()});
@@ -438,11 +479,38 @@ section {
   opacity: 0.55;
 }
 
-.pagination-hint {
-  margin: 0 0.25rem;
-  font-size: 0.8rem;
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.page-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--background-color-card);
+}
+
+.page-nav ion-icon {
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
+
+.page-nav:disabled {
+  opacity: 0.35;
+}
+
+.page-indicator {
+  min-width: 6.5rem;
+  font-size: 0.85rem;
   text-align: center;
-  opacity: 0.55;
+  opacity: 0.65;
 }
 
 @media (prefers-reduced-motion: reduce) {

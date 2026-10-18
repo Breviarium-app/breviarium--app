@@ -48,6 +48,28 @@ export const useSettingsStore = defineStore('settings', () => {
         });
     };
 
+    // The Wake Lock API rejects while the tab isn't visible, so a failed request here
+    // isn't fatal: retry once the tab becomes visible instead of surfacing an error.
+    const applyKeepAwake = async (keepAwake: boolean) => {
+        try {
+            const isSupported = await KeepAwakeService.isSupported();
+            if (keepAwake && isSupported) {
+                await KeepAwakeService.keepAwake();
+            } else if (!keepAwake) {
+                await KeepAwakeService.allowSleep();
+            }
+        } catch (error) {
+            console.error('Error applying keep-awake setting:', error);
+            if (keepAwake && typeof document !== 'undefined' && document.visibilityState === 'hidden') {
+                document.addEventListener('visibilitychange', function retry() {
+                    if (document.visibilityState !== 'visible') return;
+                    document.removeEventListener('visibilitychange', retry);
+                    KeepAwakeService.keepAwake().catch((err) => console.error('Error applying keep-awake setting:', err));
+                });
+            }
+        }
+    };
+
     const applyTheme = (theme: string) => {
         if (theme === 'system') {
             document.documentElement.removeAttribute('data-theme');
@@ -73,16 +95,7 @@ export const useSettingsStore = defineStore('settings', () => {
                     ...savedSettings,
                 };
                 applyTheme(settings.value.theme);
-
-                const keepAwake = settings.value.keepAwake ?? false;
-                const isSupported = await KeepAwakeService.isSupported();
-
-                if (keepAwake && isSupported) {
-                    await KeepAwakeService.keepAwake();
-                } else if (!keepAwake) {
-                    await KeepAwakeService.allowSleep();
-                }
-
+                await applyKeepAwake(settings.value.keepAwake ?? false);
             }
             isLoaded.value = true;
         } catch (error) {
@@ -98,6 +111,7 @@ export const useSettingsStore = defineStore('settings', () => {
         themes,
         saveSettings,
         applyTheme,
+        applyKeepAwake,
         loadSettings,
         setHapticsState
     };
