@@ -1,9 +1,11 @@
 import {
   bookmarkOutline,
   bookOutline,
+  calendarOutline,
   colorPaletteOutline,
   roseOutline,
   searchOutline,
+  shareOutline,
   shieldCheckmarkOutline,
   swapHorizontalOutline,
 } from "ionicons/icons";
@@ -23,5 +25,10 @@ export const RELEASE_NOTES: Record<string, ReleaseNote[]> = {
     { icon: bookOutline, text: "Anota reflexiones desde el Evangelio, las lecturas o la Biblia" },
     { icon: swapHorizontalOutline, text: "Desliza el calendario para cambiar de día" },
     { icon: shieldCheckmarkOutline, text: "Mejoras de estabilidad en iOS" },
+  ],
+  "3.1.2": [
+    { icon: calendarOutline, text: "Busca tus notas del Diario y navega por calendario" },
+    { icon: shareOutline, text: "Comparte Laudes, Vísperas y el resto de horas con un toque" },
+    { icon: roseOutline, text: "Nuevas oraciones a San José: letanías y la oración del papa Francisco" },
   ],
 };
