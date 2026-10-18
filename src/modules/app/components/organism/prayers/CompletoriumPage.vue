@@ -182,30 +182,25 @@
         <div v-if="selectedMaryAntiphonCode=='theHailMary'" id="theHailMary">
           <div v-if="settingsStore.settings.latinPrayers === 'es'" v-html="$t('theHailMary')"></div>
           <div v-else>
-            Ave, María, grátia plena, Dóminus tecum. Benedícta tu in muliéribus, et benedíctus fructus ventris tui,
-            Iesus. Sancta María, Mater Dei, ora pro nobis peccatóribus, nunc et in hora mortis nostræ. Amen.
+            Salve, Regína, Mater misericórdiæ, <br />vita, dulcédo et spes nostra, salve. <br />Ad te clamámus éxsules fílii Hevæ. <br />Ad te suspirámus, geméntes et flentes <br />in hac lacrimárum valle. <br />Eia ergo, advocáta nostra, <br />illos tuos misericórdes óculos ad nos convérte; <br />et Iesum, benedíctum fructum ventris tui, <br />nobis post hoc exsílium osténde. <br />O clemens, o pia, <br />o dulcis Virgo María. <br /><br />Ora pro nobis, sancta Dei Génetrix, <br />ut digni efficiámur promissiónibus Christi. Amen.
           </div>
         </div>
         <div v-if="selectedMaryAntiphonCode=='motherOfTheRedeemer'" id="motherOfTheRedeemer">
           <div v-if="settingsStore.settings.latinPrayers === 'es'" v-html="$t('motherOfTheRedeemer')"></div>
           <div v-else>
-            Alma Redemptóris Mater, quæ pérvia cæli porta manes, et stella maris, succúrre cadénti, súrgere qui curat,
-            pópulo: tu quæ genuísti, natúra miránte, tuum sanctum Genitórem, Virgo prius ac postérius, Gabriélis ab ore
-            sumens illud Ave, peccatórum miserére.
+            Alma Redemptóris Mater, <br />quæ pérvia cæli porta manes, <br />et stella maris, <br />succúrre cadénti, súrgere qui curat, pópulo. <br /> <br /> Tu quæ genuísti, natúra miránte, <br />tuum sanctum Genitórem, <br />Virgo prius ac postérius, <br /> <br /> Gabriélis ab ore sumens illud Ave, <br />peccatórum miserére.
           </div>
         </div>
         <div v-if="selectedMaryAntiphonCode=='queenOfHeaven'" id="queenOfHeaven">
           <div v-if="settingsStore.settings.latinPrayers === 'es'" v-html="$t('queenOfHeaven')"></div>
           <div v-else>
-            Ave, Regína cælórum, ave, Dómina Angelórum: Salve, radix, salve, porta, ex qua mundo lux est orta: Gaude,
-            Virgo gloriósa, super omnes speciósa, vale, o valde decóra, et pro nobis Christum exóra.
+            Ave, Regína cælórum<br /> ave, Dómina Angelórum: <br />Salve, radix, salve, porta, <br />ex qua mundo lux est orta. <br />  <br /> Gaude, Virgo gloriósa, <br />super omnes speciósa; <br />vale, o valde decóra, <br />et pro nobis Christum exóra.<br /><br /><br />
           </div>
         </div>
         <div v-if="selectedMaryAntiphonCode=='toThyProtection'" id="toThyProtection">
           <div v-if="settingsStore.settings.latinPrayers === 'es'" v-html="$t('toThyProtection')"></div>
           <div v-else>
-            Sub tuum præsídium confúgimus, sancta Dei Génetrix; nostras deprecatiónes ne despícias in necessitátibus,
-            sed a perículis cunctis líbera nos semper, Virgo gloriósa et benedícta.
+            Sub tuum præsídium confúgimus, <br />sancta Dei Génetrix. <br /><br />Nostras deprecatiónes ne despícias <br />in necessitátibus, <br />sed a perículis cunctis líbera nos semper, <br />Virgo gloriósa et benedícta.<br /><br /><br /><br />
           </div>
         </div>
       </div>
