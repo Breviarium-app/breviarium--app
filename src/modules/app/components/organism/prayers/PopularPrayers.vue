@@ -85,6 +85,8 @@ const groups = computed(() => [
     prayers: [
       {name: "Coronilla de la Divina Misericordia", route: "chaplet-divine-mercy", description: "Revelada a santa Faustina Kowalska"},
       {name: "Letanías de la Humildad", route: "litanies-humility", description: "Del cardenal Rafael Merry del Val"},
+      {name: "Alma de Cristo", route: "alma-de-cristo", description: "Oración eucarística clásica"},
+      {name: "Comunión espiritual", route: "comunion-espiritual", description: "De san Alfonso María de Ligorio"},
     ],
   },
   {
@@ -93,6 +95,19 @@ const groups = computed(() => [
       {name: "San Miguel Arcángel", route: "san-miguel", description: "Del papa León XIII"},
       {name: "Letanías de San José", route: "litanies-saint-joseph", description: "Aprobadas por san Pío X"},
       {name: "Oración a San José", route: "prayer-saint-joseph", description: "Del papa Francisco, Patris Corde"},
+    ],
+  },
+  {
+    title: "A la Sagrada Familia",
+    prayers: [
+      {name: "Oración a la Sagrada Familia", route: "sagrada-familia", description: "Del papa Francisco, Amoris Laetitia"},
+    ],
+  },
+  {
+    title: "Oraciones básicas",
+    prayers: [
+      {name: "Acto de contrición", route: "acto-contricion", description: "Para examinar la conciencia"},
+      {name: "Credo", route: "credo", description: "Símbolo niceno-constantinopolitano y de los apóstoles"},
     ],
   },
 ]);

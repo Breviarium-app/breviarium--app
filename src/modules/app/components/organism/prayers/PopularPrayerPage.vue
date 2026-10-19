@@ -16,6 +16,11 @@ import LitaniesHumilityComponent from "@/modules/app/components/molecules/prayer
 import SanMiguelComponent from "@/modules/app/components/molecules/prayers/SanMiguelComponent.vue";
 import LitaniesSaintJosephComponent from "@/modules/app/components/molecules/prayers/LitaniesSaintJosephComponent.vue";
 import PrayerSaintJosephComponent from "@/modules/app/components/molecules/prayers/PrayerSaintJosephComponent.vue";
+import ActoContricionComponent from "@/modules/app/components/molecules/prayers/ActoContricionComponent.vue";
+import CredoComponent from "@/modules/app/components/molecules/prayers/CredoComponent.vue";
+import AlmaDeCristoComponent from "@/modules/app/components/molecules/prayers/AlmaDeCristoComponent.vue";
+import ComunionEspiritualComponent from "@/modules/app/components/molecules/prayers/ComunionEspiritualComponent.vue";
+import SagradaFamiliaComponent from "@/modules/app/components/molecules/prayers/SagradaFamiliaComponent.vue";
 
 const route = useRoute();
 
@@ -28,6 +33,11 @@ const prayers: Record<string, { title: string; component: any }> = {
   "san-miguel": {title: "San Miguel Arcángel", component: SanMiguelComponent},
   "litanies-saint-joseph": {title: "Letanías de San José", component: LitaniesSaintJosephComponent},
   "prayer-saint-joseph": {title: "Oración a San José", component: PrayerSaintJosephComponent},
+  "acto-contricion": {title: "Acto de contrición", component: ActoContricionComponent},
+  "credo": {title: "Credo", component: CredoComponent},
+  "alma-de-cristo": {title: "Alma de Cristo", component: AlmaDeCristoComponent},
+  "comunion-espiritual": {title: "Comunión espiritual", component: ComunionEspiritualComponent},
+  "sagrada-familia": {title: "Oración a la Sagrada Familia", component: SagradaFamiliaComponent},
 };
 
 const prayerKey = computed(() => route.params.prayer as string);
