@@ -1,8 +1,10 @@
 <template>
-  <button class="history-button btn" @click="setOpen(true)">
-    <ion-icon :icon="timeOutline" aria-hidden="true"/>
-    {{ t('about.release_notes_button') }}
-  </button>
+  <slot :open="() => setOpen(true)">
+    <button class="history-button btn" @click="setOpen(true)">
+      <ion-icon :icon="timeOutline" aria-hidden="true"/>
+      {{ t('about.release_notes_button') }}
+    </button>
+  </slot>
 
   <Teleport to="body">
     <ion-modal :breakpoints="[0, 0.8, 1]" :expand-to-scroll="false" :initial-breakpoint="0.8" :is-open="isOpen"

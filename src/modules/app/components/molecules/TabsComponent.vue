@@ -35,6 +35,10 @@ let scrollListener: (() => void) | null = null;
 const SCROLL_THRESHOLD = 10;
 
 const HOME_PATH = '/home';
+const MAIN_PATHS = [HOME_PATH, '/prayer-intentions', '/diary', '/settings'];
+
+// On the 4 principal screens the tabbar stays put; it only hides on scroll for secondary/reading screens
+const isMainScreen = computed(() => MAIN_PATHS.includes(route.path));
 
 const tabs = computed(() => [
   {path: HOME_PATH, icon: bonfireOutline, activeIcon: bonfire, label: t('home')},
@@ -69,6 +73,10 @@ const navigate = (path: string) => {
 
 const onScroll = () => {
   if (!currentScrollEl) return;
+  if (isMainScreen.value) {
+    visible.value = true;
+    return;
+  }
   const scrollTop = currentScrollEl.scrollTop;
   const delta = scrollTop - lastScrollTop;
 
@@ -153,7 +161,7 @@ onUnmounted(() => {
   --tabbar-offset: 9px;
   --tabbar-peek: 10px;
   position: fixed;
-  bottom: calc(env(safe-area-inset-bottom, 0px) + var(--tabbar-offset));
+  bottom: calc(var(--ion-safe-area-bottom, 0px) + var(--tabbar-offset));
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 48px);

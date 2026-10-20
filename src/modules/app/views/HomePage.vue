@@ -143,7 +143,7 @@ useDateStore().updateDateParams()
   margin: 0 auto;
   /* The page has no header, so the top padding clears the status bar / notch itself;
      bottom padding keeps the last section clear of the floating tab bar */
-  padding: calc(env(safe-area-inset-top, 0px) + 1.25rem) 1rem 96px;
+  padding: calc(var(--ion-safe-area-top, 0px) + 1.25rem) 1rem 96px;
   display: flex;
   flex-direction: column;
   gap: 1rem;

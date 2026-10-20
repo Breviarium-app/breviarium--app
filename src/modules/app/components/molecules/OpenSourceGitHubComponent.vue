@@ -1,31 +1,54 @@
 <template>
   <div class="colab">
-    <a href="https://breviarium.es/?utm_source=app_config_page" target="_blank">
-      <ion-icon :icon="logoGithub" class="icon-github"/>
-      <br/>
-      {{ $t('opensource') }}
+    <a class="chip" href="https://breviarium.es/?utm_source=app_config_page" rel="noopener" target="_blank">
+      <ion-icon :icon="logoGithub" aria-hidden="true"/>
+      <span>{{ $t('opensource') }}</span>
     </a>
-    <p>Contacto: <a class="ion-color-primary" href="mailto:info@breviarium.es" target="_blank">info@breviarium.es</a>
-    </p>
+    <a aria-label="Contacto" class="chip" href="mailto:info@breviarium.es">
+      <ion-icon :icon="mailOutline" aria-hidden="true"/>
+      <span>info@breviarium.es</span>
+    </a>
   </div>
 </template>
 <script lang="ts" setup>
 import {IonIcon} from "@ionic/vue";
-import {logoGithub} from 'ionicons/icons';
+import {logoGithub, mailOutline} from 'ionicons/icons';
 </script>
 <style scoped>
-.icon-github {
-  width: 26px;
-  height: 26px;
-  vertical-align: -7px;
-}
-
-a {
-  color: var(--ion-color-primary);
-  font-weight: 400;
-}
-
 .colab {
-  margin-top: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: var(--background-color-card);
+  color: var(--ion-color-primary);
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.2s ease;
+}
+
+.chip:active {
+  opacity: 0.6;
+}
+
+.chip ion-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip {
+    transition: none;
+  }
 }
 </style>

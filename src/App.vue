@@ -51,6 +51,8 @@ onMounted(() => {
 </template>
 <style>
 .safe-area {
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  /* --ion-safe-area-* resolves to Capacitor's injected inset values on Android (older WebViews
+     don't report env(safe-area-inset-*) correctly) and falls back to env() elsewhere */
+  padding: var(--ion-safe-area-top) var(--ion-safe-area-right) var(--ion-safe-area-bottom) var(--ion-safe-area-left);
 }
 </style>

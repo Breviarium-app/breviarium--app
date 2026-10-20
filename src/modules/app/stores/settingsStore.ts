@@ -2,7 +2,17 @@
 import {defineStore} from 'pinia';
 import {ref} from 'vue';
 import {Preferences} from '@capacitor/preferences';
+import {Capacitor, SystemBars, SystemBarsStyle} from '@capacitor/core';
 import {KeepAwakeService} from "@/modules/app/services/keepAwakeService.ts";
+
+// Themes with a dark background need light system bar icons, the rest need dark icons
+const DARK_BACKGROUND_THEMES = ['dark', 'moon'];
+
+const applySystemBarsStyle = (resolvedTheme: string) => {
+    if (!Capacitor.isNativePlatform()) return;
+    const style = DARK_BACKGROUND_THEMES.includes(resolvedTheme) ? SystemBarsStyle.Dark : SystemBarsStyle.Light;
+    SystemBars.setStyle({style}).catch((error) => console.error('Error setting system bars style:', error));
+};
 
 export const useSettingsStore = defineStore('settings', () => {
     const settings = ref({
@@ -71,13 +81,16 @@ export const useSettingsStore = defineStore('settings', () => {
     };
 
     const applyTheme = (theme: string) => {
+        let resolvedTheme = theme;
         if (theme === 'system') {
             document.documentElement.removeAttribute('data-theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-            document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+            resolvedTheme = prefersDark ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', resolvedTheme);
         } else {
             document.documentElement.setAttribute('data-theme', theme);
         }
+        applySystemBarsStyle(resolvedTheme);
         if (settings.value.theme != theme) {
             settings.value.theme = theme;
         }
