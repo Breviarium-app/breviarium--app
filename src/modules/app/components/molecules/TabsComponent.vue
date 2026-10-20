@@ -1,4 +1,5 @@
 <template>
+  <div aria-hidden="true" class="safe-area-fade"/>
   <nav :aria-label="t('navigation')" :class="['floating-tabbar', { hidden: !visible }]" :style="{ '--tab-count': tabs.length }"
        @click="reveal" @focusin="reveal">
     <span :style="{ transform: `translateX(${activeIndex * 100}%)` }" aria-hidden="true" class="tab-indicator"/>
@@ -157,6 +158,23 @@ onUnmounted(() => {
 });
 </script>
 <style>
+/* Themed gradient + progressive blur over the bottom safe area, so content fades out behind the system navigation bar */
+.safe-area-fade {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(var(--ion-safe-area-bottom, 0px) + 56px);
+  pointer-events: none;
+  z-index: 998;
+  background: linear-gradient(to top, var(--background), transparent);
+  background: linear-gradient(to top, var(--background) 0%, color-mix(in srgb, var(--background) 75%, transparent) 45%, transparent 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  -webkit-mask-image: linear-gradient(to top, #000 35%, transparent 100%);
+  mask-image: linear-gradient(to top, #000 35%, transparent 100%);
+}
+
 .floating-tabbar {
   --tabbar-offset: 9px;
   --tabbar-peek: 10px;
