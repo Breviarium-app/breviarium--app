@@ -6,6 +6,8 @@ import {
   colorPaletteOutline,
   contrastOutline,
   informationCircleOutline,
+  languageOutline,
+  playCircleOutline,
   phonePortraitOutline,
   roseOutline,
   searchOutline,
@@ -73,6 +75,24 @@ export const RELEASE_NOTES: Record<string, ReleaseNote[]> = {
     {
       icon: roseOutline,
       text: "Nuevas oraciones populares: a San José, Acto de contrición, Credo, Alma de Cristo, Comunión espiritual y oración a la Sagrada Familia",
+    },
+  ],
+  "3.3.0": [
+    {
+      icon: bookOutline,
+      text: "Nuevo Padre nuestro en latín (Pater noster)",
+    },
+    {
+      icon: languageOutline,
+      text: "Nuevo ajuste en Ajustes para preferir las oraciones en latín cuando haya versión disponible",
+    },
+    {
+      icon: appsOutline,
+      text: "En la app móvil, la barra de pestañas se oculta por completo al bajar y reaparece al subir",
+    },
+    {
+      icon: playCircleOutline,
+      text: "El botón de desplazamiento automático se ajusta a la barra de pestañas y ya no se solapa con ella",
     },
   ],
 };
