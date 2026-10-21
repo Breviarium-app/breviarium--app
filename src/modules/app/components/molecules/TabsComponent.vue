@@ -1,6 +1,7 @@
 <template>
   <div aria-hidden="true" class="safe-area-fade"/>
-  <nav :aria-label="t('navigation')" :class="['floating-tabbar', { hidden: !visible, native: isNative }]" :style="{ '--tab-count': tabs.length }"
+  <nav :aria-label="t('navigation')" :class="['floating-tabbar', { hidden: !visible, native: isNative }]"
+       :style="{ '--tab-count': tabs.length }"
        @click="reveal" @focusin="reveal">
     <span :style="{ transform: `translateX(${activeIndex * 100}%)` }" aria-hidden="true" class="tab-indicator"/>
     <a
@@ -18,19 +19,29 @@
   </nav>
 </template>
 <script lang="ts" setup>
-import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
+import {computed, onMounted, onUnmounted, watch} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 import {IonIcon} from '@ionic/vue';
-import {bonfire, bonfireOutline, journal, journalOutline, list, listOutline, settings, settingsOutline} from 'ionicons/icons';
+import {
+  bonfire,
+  bonfireOutline,
+  journal,
+  journalOutline,
+  list,
+  listOutline,
+  settings,
+  settingsOutline
+} from 'ionicons/icons';
 import {useI18n} from 'vue-i18n';
 import {Capacitor} from '@capacitor/core';
 import HapticsService from "@/modules/app/services/HapticsService.ts";
+import {useTabbarVisibility} from '@/modules/app/composables/useTabbarVisibility.ts';
 
 const route = useRoute();
 const router = useRouter();
 const {t} = useI18n();
 
-const visible = ref(true);
+const visible = useTabbarVisibility();
 // Native apps hide the tabbar completely on scroll down; web keeps a peek strip that can be tapped to bring it back
 const isNative = Capacitor.isNativePlatform();
 let lastScrollTop = 0;

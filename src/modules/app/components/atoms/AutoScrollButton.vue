@@ -2,9 +2,13 @@
 import { ref, onMounted, onUnmounted, computed, getCurrentInstance } from 'vue';
 import { IonFab, IonFabButton, IonIcon } from '@ionic/vue';
 import { playOutline, pauseOutline } from 'ionicons/icons';
+import { Capacitor } from '@capacitor/core';
 import { useSettingsStore } from '@/modules/app/stores/settingsStore';
+import { useTabbarVisibility } from '@/modules/app/composables/useTabbarVisibility';
 
 const settingsStore = useSettingsStore();
+const tabbarVisible = useTabbarVisibility();
+const isNative = Capacitor.isNativePlatform();
 
 const props = defineProps({
   scrollContainer: {
@@ -87,7 +91,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <ion-fab v-if="settingsStore.settings.showAutoScroll" vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab
+      v-if="settingsStore.settings.showAutoScroll"
+      :class="{ 'tabbar-hidden': !tabbarVisible, 'tabbar-gone': !tabbarVisible && isNative }"
+      vertical="bottom"
+      horizontal="end"
+      slot="fixed"
+  >
     <ion-fab-button
       @click="toggleScroll"
       size="small"
@@ -102,9 +112,27 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+/* The fab sits just above the tabbar: tabbar top = safe area + 9px offset + ~60px bar height.
+   When hidden, web leaves a 10px peek strip; native hides it completely. */
 ion-fab {
+  --tabbar-top: calc(var(--ion-safe-area-bottom, 0px) + 69px);
   margin: 16px;
-  bottom: 72px !important;
+  bottom: var(--tabbar-top) !important;
+  transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+ion-fab.tabbar-hidden {
+  --tabbar-top: calc(var(--ion-safe-area-bottom, 0px) + 19px);
+}
+
+ion-fab.tabbar-gone {
+  --tabbar-top: var(--ion-safe-area-bottom, 0px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ion-fab {
+    transition: none;
+  }
 }
 
 .custom-fab-button {
@@ -143,7 +171,6 @@ ion-fab {
 @media (min-width: 768px) {
   ion-fab {
     margin: 24px;
-    bottom: 72px !important;
   }
 }
 </style>
