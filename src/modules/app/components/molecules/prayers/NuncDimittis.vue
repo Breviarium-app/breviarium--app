@@ -1,13 +1,6 @@
 <template>
   <div>
-    <ion-segment v-model="settingsStore.settings.latinPrayers" @ionChange="settingsStore.saveSettings()">
-      <ion-segment-button value="es">
-        <ion-label>Español</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="la">
-        <ion-label>Latin</ion-label>
-      </ion-segment-button>
-    </ion-segment>
+    <LatinPrayerSelector/>
     <div v-if="settingsStore.settings.latinPrayers === 'es'" class="prayer-content">
       <p>
         Ahora, Señor, según tu promesa,<br/>
@@ -51,7 +44,7 @@
 
 <script lang="ts" setup>
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
-import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
+import LatinPrayerSelector from "@/modules/app/components/molecules/prayers/LatinPrayerSelector.vue";
 
 const settingsStore = useSettingsStore();
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div aria-hidden="true" class="safe-area-fade"/>
-  <nav :aria-label="t('navigation')" :class="['floating-tabbar', { hidden: !visible }]" :style="{ '--tab-count': tabs.length }"
+  <nav :aria-label="t('navigation')" :class="['floating-tabbar', { hidden: !visible, native: isNative }]" :style="{ '--tab-count': tabs.length }"
        @click="reveal" @focusin="reveal">
     <span :style="{ transform: `translateX(${activeIndex * 100}%)` }" aria-hidden="true" class="tab-indicator"/>
     <a
@@ -23,6 +23,7 @@ import {useRoute, useRouter} from 'vue-router';
 import {IonIcon} from '@ionic/vue';
 import {bonfire, bonfireOutline, journal, journalOutline, list, listOutline, settings, settingsOutline} from 'ionicons/icons';
 import {useI18n} from 'vue-i18n';
+import {Capacitor} from '@capacitor/core';
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 
 const route = useRoute();
@@ -30,6 +31,8 @@ const router = useRouter();
 const {t} = useI18n();
 
 const visible = ref(true);
+// Native apps hide the tabbar completely on scroll down; web keeps a peek strip that can be tapped to bring it back
+const isNative = Capacitor.isNativePlatform();
 let lastScrollTop = 0;
 let currentScrollEl: HTMLElement | null = null;
 let scrollListener: (() => void) | null = null;
@@ -217,6 +220,18 @@ onUnmounted(() => {
   left: 0;
   right: 0;
   height: 24px;
+}
+
+/* Native: slide fully off screen; scrolling up reveals it again. */
+.floating-tabbar.hidden.native {
+  transform: translateX(-50%) translateY(calc(100% + var(--tabbar-offset) + var(--ion-safe-area-bottom, 0px)));
+  opacity: 0;
+  pointer-events: none;
+  cursor: default;
+}
+
+.floating-tabbar.hidden.native::before {
+  display: none;
 }
 
 [data-theme="dark"] .floating-tabbar {

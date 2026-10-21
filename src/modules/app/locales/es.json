@@ -70,6 +70,7 @@
     "show_auto_scroll": "Mostrar botón de scroll automático",
     "auto_scroll_speed": "Velocidad de scroll automático",
     "bienal_office_by_default": "Oficio: Ciclo Bienal por defecto",
+    "prefer_latin_prayers": "Preferir oraciones en latín",
     "sections": {
       "prayer": "Oración",
       "reading": "Lectura",
@@ -82,6 +83,7 @@
       "vesperae_and_office": "Incluye el Oficio de lectura en Vísperas, después del responsorio.",
       "hide_invitatorium": "Laudes empieza sin el salmo invitatorio.",
       "bienal_office_by_default": "El Oficio de lectura muestra primero las lecturas del ciclo bienal.",
+      "prefer_latin_prayers": "Los textos con versión en latín se muestran en latín por defecto (Padre nuestro, Benedictus, Magníficat, Nunc dimittis, Regina Caeli y antífonas marianas).",
       "office_deceased": "Próximamente.",
       "show_auto_scroll": "Muestra un botón para desplazar el texto de las oraciones automáticamente.",
       "keepAwake": "La pantalla no se apaga mientras usas la aplicación.",

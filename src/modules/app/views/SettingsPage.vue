@@ -47,6 +47,13 @@ const updateToggle = async (key: ToggleKey, value: boolean) => {
     await settingsStore.applyKeepAwake(value);
   }
 };
+
+// Same value the language selectors inside each prayer read and write
+const updateLatinPrayers = async (value: boolean) => {
+  settingsStore.settings.latinPrayers = value ? 'la' : 'es';
+  await settingsStore.saveSettings();
+  HapticsService.light();
+};
 </script>
 
 <template>
@@ -67,6 +74,10 @@ const updateToggle = async (key: ToggleKey, value: boolean) => {
                            :label="t(`settings.${toggle.i18n}`)"
                            :model-value="settingsStore.settings[toggle.key]"
                            @update:model-value="updateToggle(toggle.key, $event)"/>
+            <SettingToggle :hint="t('settings.hints.prefer_latin_prayers')"
+                           :label="t('settings.prefer_latin_prayers')"
+                           :model-value="settingsStore.settings.latinPrayers === 'la'"
+                           @update:model-value="updateLatinPrayers"/>
           </div>
         </section>
 

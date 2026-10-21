@@ -173,14 +173,7 @@
           <ion-label>{{ $t("fourthFormulaMaryAntiphon") }}</ion-label>
         </ion-segment-button>
       </ion-segment>
-      <ion-segment v-model="settingsStore.settings.latinPrayers" @ionChange="settingsStore.saveSettings()">
-        <ion-segment-button value="es">
-          <ion-label>Español</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="la">
-          <ion-label>Latin</ion-label>
-        </ion-segment-button>
-      </ion-segment>
+      <LatinPrayerSelector/>
       <div class="segment-view prayer-content">
         <div v-if="selectedMaryAntiphonCode=='theHailMary'" id="theHailMary">
           <div v-if="settingsStore.settings.latinPrayers === 'es'" v-html="$t('theHailMary')"></div>
@@ -221,6 +214,7 @@ import NuncDimittis from "@/modules/app/components/molecules/prayers/NuncDimitti
 import {isEaster, isInAlbis, isTodayLent, isTriduum} from "@/modules/app/constants/utils.ts";
 import HymnComponent from "@/modules/app/components/molecules/prayers/HymnComponent.vue";
 import {IonSegment, IonSegmentButton} from "@ionic/vue";
+import LatinPrayerSelector from "@/modules/app/components/molecules/prayers/LatinPrayerSelector.vue";
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";

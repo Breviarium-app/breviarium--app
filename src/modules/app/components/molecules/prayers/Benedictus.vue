@@ -4,14 +4,7 @@
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossProclaim")) }}</small>
     </p>
-    <ion-segment v-model="settingsStore.settings.latinPrayers" @ionChange="settingsStore.saveSettings()">
-      <ion-segment-button value="es">
-        <ion-label>Español</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="la">
-        <ion-label>Latin</ion-label>
-      </ion-segment-button>
-    </ion-segment>
+    <LatinPrayerSelector/>
     <div v-if="settingsStore.settings.latinPrayers === 'es'" class="prayer-content">
       <p>
         Bendito sea el Señor, Dios de Israel,<br>
@@ -102,7 +95,7 @@
 import CrossComponent from "@/modules/app/components/molecules/prayers/CrossComponent.vue";
 import {formatText} from "@/modules/app/constants/formatText.ts";
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
-import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
+import LatinPrayerSelector from "@/modules/app/components/molecules/prayers/LatinPrayerSelector.vue";
 
 const settingsStore = useSettingsStore();
 </script>

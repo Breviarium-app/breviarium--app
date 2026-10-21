@@ -129,7 +129,7 @@
           {{ $t("ourLord") }}
         </h4>
         <p class="margin-y-md">
-          <ion-label class="title-color"> ℣.</ion-label>
+          <ion-label class="title-color">℣.&nbsp;</ion-label>
           <span v-html="formatText(laudes?.invitacion_padrenuestro)"></span>
         </p>
         <PadreNuestro/>
