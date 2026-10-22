@@ -15,13 +15,13 @@
     </div>
     <div v-for="(laudes, index) in laudesMultiple">
       <div v-if="selectedOption == index">
-        <p class="title-color">
+        <p class="title-color" data-tts-skip>
           <small>{{ $t("laudesFirstExplanation") }}</small>
         </p>
-        <h4 class="title title-color">
+        <h4 class="title title-color" data-tts-skip>
           {{ formatText($t("initialInvocation")) }}
         </h4>
-        <p class="margin-y-md title-color ion-align-items-center ion-text-center"
+        <p class="margin-y-md title-color ion-align-items-center ion-text-center" data-tts-skip
            @click="() => isModalInvocationOpen = true">
           <CrossComponent/>
           <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
@@ -35,7 +35,7 @@
           <h4 class="title title-color">
             {{ formatText($t("invitatory")) }}
           </h4>
-          <p class="margin-y-md title-color ion-align-items-center ion-text-center"
+          <p class="margin-y-md title-color ion-align-items-center ion-text-center" data-tts-skip
              @click="() => isModalInvocationOpen = true">
             <CrossComponent/>
             <small>{{ formatText($t("signOfTheCrossInvitatory")) }}</small>
@@ -122,7 +122,7 @@
           <p v-html="formatPrayers(item)"></p>
         </div>
         <div class="preces">
-          <p class="title-color">{{ $t("explanationPreces") }}</p>
+          <p class="title-color" data-tts-skip>{{ $t("explanationPreces") }}</p>
         </div>
         <CustomPrayersBlock/>
         <h4 class="title title-color">
@@ -146,7 +146,7 @@
           <span class="title-color">℟.</span>
           Amén.
         </p>
-        <p class="margin-y-md title-color ion-align-items-center ion-text-center">
+        <p class="margin-y-md title-color ion-align-items-center ion-text-center" data-tts-skip>
           <CrossComponent/>
           <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
         </p>

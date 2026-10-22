@@ -4,10 +4,10 @@
       <ShareButton page="completorium"/>
     </template>
 
-    <h4 class="title title-color">
+    <h4 data-tts-skip class="title title-color">
       {{ formatText($t("initialInvocation")) }}
     </h4>
-    <p class="margin-y-md title-color ion-align-items-center ion-text-center">
+    <p data-tts-skip class="margin-y-md title-color ion-align-items-center ion-text-center">
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>
@@ -127,7 +127,7 @@
       <span v-html="formatText(prayer?.cantico_evangelico_antifona)"></span>
     </p>
 
-    <p class="margin-y-md title-color ion-align-items-center ion-text-center">
+    <p data-tts-skip class="margin-y-md title-color ion-align-items-center ion-text-center">
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>
@@ -148,7 +148,7 @@
 
     <p><span class="title-color">℟. </span>Amén.</p>
 
-    <p class="margin-y-md title-color ion-align-items-center ion-text-center">
+    <p data-tts-skip class="margin-y-md title-color ion-align-items-center ion-text-center">
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>

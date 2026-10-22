@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted, computed, getCurrentInstance } from 'vue';
 import { IonFab, IonFabButton, IonIcon } from '@ionic/vue';
-import { playOutline, pauseOutline } from 'ionicons/icons';
+import { arrowDownOutline, pauseOutline } from 'ionicons/icons';
 import { Capacitor } from '@capacitor/core';
 import { useSettingsStore } from '@/modules/app/stores/settingsStore';
 import { useTabbarVisibility } from '@/modules/app/composables/useTabbarVisibility';
@@ -103,10 +103,7 @@ onUnmounted(() => {
       size="small"
       class="custom-fab-button"
     >
-      <ion-icon
-        :icon="isScrolling ? pauseOutline : playOutline"
-        :class="{ 'play-icon': !isScrolling }"
-      />
+      <ion-icon :icon="isScrolling ? pauseOutline : arrowDownOutline"/>
     </ion-fab-button>
   </ion-fab>
 </template>
@@ -162,10 +159,6 @@ ion-fab.tabbar-gone {
 
 .custom-fab-button:hover ion-icon {
   color: #ff4444 !important;
-}
-
-.play-icon {
-  transform: translateX(2px);
 }
 
 @media (min-width: 768px) {

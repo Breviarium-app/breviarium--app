@@ -27,6 +27,11 @@ export const useSettingsStore = defineStore('settings', () => {
         hideInvitatorium: false,
         showAutoScroll: true,
         autoScrollSpeed: 7,
+        showTextToSpeech: true,
+        ttsRate: 1,
+        ttsPitch: 1,
+        // voiceURI of the chosen voice, empty for the device default
+        ttsVoice: '',
         bienalOfficiumDefault: false,
         latinPrayers: 'es',
         // App version whose "what's new" popup the user already closed

@@ -33,7 +33,7 @@ const dayText = computed(() => {
     <h4 class="title title-color">
       {{ $t("rosary") }}
     </h4>
-    <p class="margin-y-md title-color ion-align-items-center ion-text-center">
+    <p data-tts-skip class="margin-y-md title-color ion-align-items-center ion-text-center">
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>

@@ -9,6 +9,7 @@ import SelectorTheme from "@/modules/app/components/molecules/SelectorTheme.vue"
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 import FontSizeSelector from "@/modules/app/components/molecules/FontSizeSelector.vue";
 import AutoScrollSpeedSelector from "@/modules/app/components/molecules/AutoScrollSpeedSelector.vue";
+import TextToSpeechSettings from "@/modules/app/components/molecules/TextToSpeechSettings.vue";
 import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue";
 import SettingToggle from "@/modules/app/components/molecules/settings/SettingToggle.vue";
 
@@ -86,6 +87,7 @@ const updateLatinPrayers = async (value: boolean) => {
           <div class="settings-group">
             <FontSizeSelector/>
             <AutoScrollSpeedSelector/>
+            <TextToSpeechSettings/>
             <SettingToggle :hint="t('settings.hints.keepAwake')"
                            :label="t('settings.keepAwake')"
                            :model-value="settingsStore.settings.keepAwake"

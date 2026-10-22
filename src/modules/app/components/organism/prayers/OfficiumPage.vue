@@ -3,12 +3,12 @@
     <template #header-end>
       <ShareButton page="officium"/>
     </template>
-    <h4 class="title-color">
+    <h4 data-tts-skip class="title-color">
       <small>{{ $t("laudesFirstExplanation") }}</small>
     </h4>
     <h4 class="title title-color">{{ $t('initialInvocation') }}</h4>
 
-    <p class="margin-y-md title-color ion-align-items-center ion-text-center">
+    <p data-tts-skip class="margin-y-md title-color ion-align-items-center ion-text-center">
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>
@@ -17,7 +17,7 @@
     <span v-else v-html="formatText($t('initialInvocationBody'))"></span>
 
     <h4 class="title title-color">{{ $t('invitatory') }}</h4>
-    <p class="margin-y-md title-color ion-align-items-center ion-text-center">
+    <p data-tts-skip class="margin-y-md title-color ion-align-items-center ion-text-center">
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossInvitatory")) }}</small>
     </p>
@@ -74,7 +74,7 @@
     </p>
     <p><span class="title-color">℟. </span>Amén.</p>
 
-    <p class="margin-y-md title-color ion-align-items-center ion-text-center">
+    <p data-tts-skip class="margin-y-md title-color ion-align-items-center ion-text-center">
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>

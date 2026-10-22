@@ -16,7 +16,7 @@
     <div v-for="(prayer, index) in prayerMultiple">
       <div v-if="selectedOption == index">
         <h4 class="title title-color">{{ $t('initialInvocation') }}</h4>
-        <p class="margin-y-md title-color ion-align-items-center ion-text-center"
+        <p class="margin-y-md title-color ion-align-items-center ion-text-center" data-tts-skip
            @click="() => isModalInvocationOpen = true">
           <CrossComponent/>
           <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
@@ -90,7 +90,7 @@
           <span class="title-color">Ant. </span>
           <span v-html="formatText(prayer?.cantico_evangelico_antifona)"></span>
         </p>
-        <p class="margin-y-md title-color ion-align-items-center ion-text-center">
+        <p class="margin-y-md title-color ion-align-items-center ion-text-center" data-tts-skip>
           <CrossComponent/>
           <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
         </p>
@@ -113,7 +113,7 @@
         </div>
 
         <div class="preces">
-          <p class="title-color">{{ $t('explanationPreces') }}</p>
+          <p class="title-color" data-tts-skip>{{ $t('explanationPreces') }}</p>
         </div>
 
         <CustomPrayersBlock/>
@@ -140,7 +140,7 @@
         <p>
           <span class="title-color">℟. </span>Amén.</p>
 
-        <p class="margin-y-md title-color ion-align-items-center ion-text-center">
+        <p class="margin-y-md title-color ion-align-items-center ion-text-center" data-tts-skip>
           <CrossComponent/>
           <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
         </p>

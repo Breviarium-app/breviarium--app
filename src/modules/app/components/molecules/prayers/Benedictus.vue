@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="margin-y-md title-color ion-align-items-center ion-text-center">
+    <p data-tts-skip class="margin-y-md title-color ion-align-items-center ion-text-center">
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossProclaim")) }}</small>
     </p>

@@ -7,6 +7,7 @@ import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
 import {computed, ref} from "vue";
 import LiturgyInformation from "@/modules/app/components/molecules/home-banners/LiturgyInformation.vue";
 import AutoScrollButton from "@/modules/app/components/atoms/AutoScrollButton.vue";
+import TextToSpeechButton from "@/modules/app/components/atoms/TextToSpeechButton.vue";
 import DiaryEntryModal from "@/modules/app/components/molecules/DiaryEntryModal.vue";
 import {datedPath, type DiaryReference} from "@/modules/app/stores/diaryStore.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
@@ -64,6 +65,8 @@ const openNote = () => {
   selectedText = '';
 };
 
+const prayerWrapper = ref<HTMLElement | null>(null);
+
 const prayerWrapperStyle = computed(() => ({
   fontSize: `${settingsStore.settings.fontSize * 1.2}px`,
   lineHeight: `${settingsStore.settings.fontSize * 1.7}px`
@@ -89,13 +92,14 @@ const prayerWrapperStyle = computed(() => ({
     </ion-header>
     <ion-content :fullscreen="true" class="ion-padding">
       <div class="prayer-page">
-        <div :style="prayerWrapperStyle" class="prayer-wrapper">
+        <div ref="prayerWrapper" :style="prayerWrapperStyle" class="prayer-wrapper">
           <div v-if="displayLiturgicalInfo" class="center">
             <LiturgyInformation/>
           </div>
           <slot></slot>
         </div>
       </div>
+      <TextToSpeechButton :target="prayerWrapper"/>
       <AutoScrollButton/>
     </ion-content>
 
