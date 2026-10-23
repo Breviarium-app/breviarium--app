@@ -53,13 +53,22 @@
     "hide_invitatorium": "Hide invitatory in Lauds",
     "show_auto_scroll": "Show auto-scroll button",
     "auto_scroll_speed": "Auto-scroll speed",
+    "show_text_to_speech": "Show read-aloud button",
+    "tts_voice": "Voice",
+    "tts_voice_default": "Device default",
+    "tts_rate": "Reading speed",
+    "tts_pitch": "Voice pitch",
+    "tts_test": "Test voice",
+    "tts_install": "Install voices",
     "bienal_office_by_default": "Bienal office by default",
     "prefer_latin_prayers": "Prefer Latin prayers",
     "sections": {
       "prayer": "Prayer",
       "reading": "Reading",
+      "text_to_speech": "Read aloud",
       "appearance": "Appearance",
-      "general": "General"
+      "general": "General",
+      "alerts": "Notifications"
     },
     "hints": {
       "laudes_and_evangelium": "Adds the Gospel of the day to Lauds, after the responsory.",
@@ -71,7 +80,11 @@
       "office_deceased": "Coming soon.",
       "show_auto_scroll": "Shows a button that scrolls prayer text automatically.",
       "keepAwake": "The screen stays on while you use the app.",
-      "haptics_active": "Vibrates when you tap buttons and navigate."
+      "haptics_active": "Vibrates when you tap buttons and navigate.",
+      "show_text_to_speech": "Shows a button that reads the whole prayer with the device voice, with controls to pause, skip sentences and change the speed.",
+      "tts_voice": "Spanish voices installed on the device.",
+      "tts_install": "Opens the system settings to download voices if there is no Spanish one.",
+      "tts_unsupported": "Reading aloud is not available on this device."
     }
   },
   "breviarium": {
@@ -228,5 +241,64 @@
     "previous_page": "Previous page",
     "next_page": "Next page",
     "page_indicator": "Page {current} of {total}"
+  },
+  "tts": {
+    "start": "Listen to the prayer",
+    "player": "Read aloud",
+    "pause": "Pause reading",
+    "resume": "Continue reading",
+    "previous": "Previous",
+    "next": "Next",
+    "speed": "Change speed",
+    "stop": "Stop reading",
+    "settings": "Reading settings",
+    "error": "The text could not be read. Check the voices installed on the device.",
+    "voice_hint": "The available voices depend on your device."
+  },
+  "prayer_menu": {
+    "share": "Share",
+    "alert": "Daily reminder"
+  },
+  "alerts": {
+    "title": "Prayer reminders",
+    "intro": "Get a daily notification at the time of each prayer. Reminders work offline: they are scheduled on your device.",
+    "settings_hint": "Daily notifications for the Liturgy of the Hours and the Angelus.",
+    "summary_active": "{n} on | {n} on",
+    "summary_off": "Off",
+    "prayers": {
+      "officium": "Office of Readings",
+      "laudes": "Lauds",
+      "tertia": "Terce",
+      "angelus": "Angelus",
+      "sexta": "Sext",
+      "nona": "None",
+      "vesperae": "Vespers",
+      "completorium": "Compline"
+    },
+    "bodies": {
+      "officium": "Time for the Office of Readings.",
+      "laudes": "Lord, open my lips, and my mouth will proclaim your praise.",
+      "tertia": "Time for Terce. O God, come to my aid.",
+      "angelus": "It is noon: a moment to greet the Virgin Mary.",
+      "sexta": "Time for Sext. O God, come to my aid.",
+      "nona": "Time for None. O God, come to my aid.",
+      "vesperae": "Time for Vespers. O God, come to my aid.",
+      "completorium": "May the all-powerful Lord grant us a restful night and a peaceful death."
+    },
+    "hints": {
+      "angelus": "Opens the Regina Coeli during Eastertide."
+    },
+    "time_of": "{prayer} reminder time",
+    "modal_title": "{prayer} reminder",
+    "modal_hint": "Get a notification every day at the time you choose so you don't forget this prayer.",
+    "daily_at": "Every day at",
+    "manage_all": "See all",
+    "done": "Done",
+    "unsupported": "Prayer reminders are available in the Android and iOS app.",
+    "permission_denied": "Notifications are turned off for Breviarium. Turn them on in your device settings to get reminders.",
+    "exact_alarm_hint": "To get reminders at the exact time, allow \"Alarms & reminders\" for Breviarium.",
+    "exact_alarm_button": "Allow exact reminders",
+    "channel_name": "Prayer reminders",
+    "channel_description": "Daily reminders for the Liturgy of the Hours and the Angelus"
   }
 }

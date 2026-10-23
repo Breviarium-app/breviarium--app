@@ -69,13 +69,22 @@
     "hide_invitatorium": "Ocultar Invitatorio en Laudes",
     "show_auto_scroll": "Mostrar botón de scroll automático",
     "auto_scroll_speed": "Velocidad de scroll automático",
+    "show_text_to_speech": "Mostrar botón de lectura en voz alta",
+    "tts_voice": "Voz",
+    "tts_voice_default": "Predeterminada del dispositivo",
+    "tts_rate": "Velocidad de lectura",
+    "tts_pitch": "Tono de voz",
+    "tts_test": "Probar voz",
+    "tts_install": "Instalar voces",
     "bienal_office_by_default": "Oficio: Ciclo Bienal por defecto",
     "prefer_latin_prayers": "Preferir oraciones en latín",
     "sections": {
       "prayer": "Oración",
       "reading": "Lectura",
+      "text_to_speech": "Lectura en voz alta",
       "appearance": "Apariencia",
-      "general": "General"
+      "general": "General",
+      "alerts": "Notificaciones"
     },
     "hints": {
       "laudes_and_evangelium": "Incluye el Evangelio del día en Laudes, después del responsorio.",
@@ -87,7 +96,11 @@
       "office_deceased": "Próximamente.",
       "show_auto_scroll": "Muestra un botón para desplazar el texto de las oraciones automáticamente.",
       "keepAwake": "La pantalla no se apaga mientras usas la aplicación.",
-      "haptics_active": "Vibración al pulsar botones y navegar."
+      "haptics_active": "Vibración al pulsar botones y navegar.",
+      "show_text_to_speech": "Muestra un botón que lee toda la oración con la voz del dispositivo, con controles para pausar, saltar frases y cambiar la velocidad.",
+      "tts_voice": "Voces en español instaladas en el dispositivo.",
+      "tts_install": "Abre los ajustes del sistema para descargar voces si no hay ninguna en español.",
+      "tts_unsupported": "La lectura en voz alta no está disponible en este dispositivo."
     }
   },
   "breviarium": {
@@ -297,7 +310,7 @@
   "initialInvocationBody": "<p> $℣. $Dios mío, ven en mi auxilio. </p> <p> $℟. $Señor, date prisa en socorrerme. </p> <p> $℣. $Gloria al Padre, y al Hijo, y al Espíritu Santo. </p><p> $℟. $Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén. Aleluya. </p>",
   "initialInvocationBodyLent": "<p> $℣. $Dios mío, ven en mi auxilio. </p> <p> $℟. $Señor, date prisa en socorrerme. </p> <p> $℣. $Gloria al Padre, y al Hijo, y al Espíritu Santo. </p><p> $℟. $Como era en el principio ahora y siempre por los siglos de los siglos. Amén. </p>",
   "examinationOfConscience": "Examen de conciencia",
-  "examinationOfConscienceBody": "<p> Hermanos: Llegados al fin de esta jornada que Dios nos ha concedido, reconozcamos humildemente nuestros pecados. </p> $Todos examinan en silencio su conciencia. Después se prosigue con una de las fórmulas siguientes:$ <br /> <br />",
+  "examinationOfConscienceBody": "<p> Hermanos: Llegados al fin de esta jornada que Dios nos ha concedido, reconozcamos humildemente nuestros pecados. </p> <span data-tts-skip>$Todos examinan en silencio su conciencia. Después se prosigue con una de las fórmulas siguientes:$ </span><br /> <br />",
   "firstFormula": {
     "title": "1ª Fórmula",
     "body": "<p> Yo confieso ante Dios todopoderoso y ante vosotros, hermanos, que he pecado mucho de pensamiento, palabra, obra y omisión. <br />Por mi culpa, por mi culpa, por mi gran culpa. <br /> Por eso ruego a santa María, siempre Virgen, a los ángeles, a los santos y a vosotros, hermanos, que intercedáis por mí ante Dios, nuestro Señor. </p>"
@@ -314,7 +327,7 @@
   "secondFormulaMaryAntiphon": "Ant 2",
   "thirdFormulaMaryAntiphon": "Ant 3",
   "fourthFormulaMaryAntiphon": "Ant 4",
-  "complineCommonPresidentPrayer": "$ Si preside la celebración un ministro, él solo dice la conclusión siguiente; en caso contrario, la dicen todos: $ <p> $℣.$ Dios todopoderoso tenga misericordia de nosotros, perdone nuestros pecados y nos lleve a la vida eterna. <br /> $℟.$ Amén. </p>",
+  "complineCommonPresidentPrayer": "<span data-tts-skip>$ Si preside la celebración un ministro, él solo dice la conclusión siguiente; en caso contrario, la dicen todos: $</span> <p> $℣.$ Dios todopoderoso tenga misericordia de nosotros, perdone nuestros pecados y nos lleve a la vida eterna. <br /> $℟.$ Amén. </p>",
   "hymn": "Himno",
   "complineMarianPrayers": "Se canta o se dice una de las siguientes antífonas marianas:",
   "luc2": "<p> Ahora, Señor, según tu promesa, puedes dejar a tu siervo irse en paz. </p> <p> Porque mis ojos han visto a tu Salvador, a quien has presentado ante todos los pueblos: </p> <p>luz para alumbrar a las naciones y gloria de tu pueblo Israel.</p> <p> Gloria al Padre, y al Hijo, y al Espíritu Santo. Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén. </p>",
@@ -420,5 +433,64 @@
     "previous_page": "Página anterior",
     "next_page": "Página siguiente",
     "page_indicator": "Página {current} de {total}"
+  },
+  "tts": {
+    "start": "Escuchar la oración",
+    "player": "Lectura en voz alta",
+    "pause": "Pausar lectura",
+    "resume": "Continuar lectura",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "speed": "Cambiar velocidad",
+    "stop": "Detener lectura",
+    "settings": "Ajustes de lectura",
+    "error": "No se pudo leer el texto. Revisa las voces instaladas en el dispositivo.",
+    "voice_hint": "Las voces disponibles dependen de tu dispositivo."
+  },
+  "prayer_menu": {
+    "share": "Compartir",
+    "alert": "Aviso diario"
+  },
+  "alerts": {
+    "title": "Avisos de oración",
+    "intro": "Recibe cada día una notificación a la hora de cada oración. Los avisos funcionan sin conexión: se programan en tu dispositivo.",
+    "settings_hint": "Notificaciones diarias para la Liturgia de las Horas y el Ángelus.",
+    "summary_active": "{n} activo | {n} activos",
+    "summary_off": "Desactivados",
+    "prayers": {
+      "officium": "Oficio de lectura",
+      "laudes": "Laudes",
+      "tertia": "Tercia",
+      "angelus": "Ángelus",
+      "sexta": "Sexta",
+      "nona": "Nona",
+      "vesperae": "Vísperas",
+      "completorium": "Completas"
+    },
+    "bodies": {
+      "officium": "Es momento del Oficio de lectura.",
+      "laudes": "Señor, ábreme los labios, y mi boca proclamará tu alabanza.",
+      "tertia": "Es la hora de Tercia. Dios mío, ven en mi auxilio.",
+      "angelus": "Es mediodía: un momento para saludar a la Virgen María.",
+      "sexta": "Es la hora de Sexta. Dios mío, ven en mi auxilio.",
+      "nona": "Es la hora de Nona. Dios mío, ven en mi auxilio.",
+      "vesperae": "Es la hora de Vísperas. Dios mío, ven en mi auxilio.",
+      "completorium": "El Señor todopoderoso nos conceda una noche tranquila y una santa muerte."
+    },
+    "hints": {
+      "angelus": "En tiempo pascual abre el Regina Coeli."
+    },
+    "time_of": "Hora del aviso de {prayer}",
+    "modal_title": "Aviso de {prayer}",
+    "modal_hint": "Recibe cada día una notificación a la hora que elijas para no olvidar esta oración.",
+    "daily_at": "Cada día a las",
+    "manage_all": "Ver todos",
+    "done": "Listo",
+    "unsupported": "Los avisos de oración están disponibles en la aplicación para Android e iOS.",
+    "permission_denied": "Las notificaciones están desactivadas para Breviarium. Actívalas en los ajustes del dispositivo para recibir los avisos.",
+    "exact_alarm_hint": "Para que los avisos lleguen a la hora exacta, permite «Alarmas y recordatorios» para Breviarium.",
+    "exact_alarm_button": "Permitir avisos puntuales",
+    "channel_name": "Avisos de oración",
+    "channel_description": "Recordatorios diarios de la Liturgia de las Horas y del Ángelus"
   }
 }

@@ -8,7 +8,7 @@ import CrossComponent from "@/modules/app/components/molecules/prayers/CrossComp
   <h4 class="title title-color">
     {{ $t("chapletDivineMercy") }}
   </h4>
-  <p class="margin-y-md title-color ion-align-items-center ion-text-center">
+  <p data-tts-skip class="margin-y-md title-color ion-align-items-center ion-text-center">
     <CrossComponent/>
     <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
   </p>

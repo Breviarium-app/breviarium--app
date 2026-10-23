@@ -4,15 +4,11 @@ export class KeepAwakeService {
     /**
      * Keeps the screen awake, preventing it from dimming or locking.
      * @returns Promise<void>
-     * @throws Error if the operation fails
+     * @throws Error if the operation fails; not logged here, as on the web it is expected while
+     * the page is hidden and the caller retries
      */
     static async keepAwake(): Promise<void> {
-        try {
-            await KeepAwake.keepAwake();
-        } catch (error) {
-            console.error('Error keeping screen awake:', error);
-            throw error; // Re-throw to allow caller to handle
-        }
+        await KeepAwake.keepAwake();
     }
 
     /**

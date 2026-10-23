@@ -2,7 +2,7 @@
   "name": "breviarium",
   "description": "App for meditation and pray with the Liturgy of the Hours, gospel of the day and much more!",
   "private": true,
-  "version": "3.3.1",
+  "version": "3.4.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,11 +14,13 @@
   },
   "dependencies": {
     "@capacitor-community/keep-awake": "^8.0.1",
+    "@capacitor-community/text-to-speech": "^8.0.2",
     "@capacitor/android": "^8.5.3",
     "@capacitor/app": "^8.1.2",
     "@capacitor/core": "^8.5.3",
     "@capacitor/haptics": "^8.0.2",
     "@capacitor/ios": "^8.5.3",
+    "@capacitor/local-notifications": "^8",
     "@capacitor/preferences": "^8.0.1",
     "@capacitor/share": "^8",
     "@ionic/vue": "^9.0.8",

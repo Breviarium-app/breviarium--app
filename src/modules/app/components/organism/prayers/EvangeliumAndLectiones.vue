@@ -1,14 +1,11 @@
 <template>
-  <PrayerPage title="Evangelio y lecturas">
-    <template #header-end>
-      <ShareButton page="evangelium"/>
-    </template>
+  <PrayerPage share-page="evangelium" title="Evangelio y lecturas">
     <div class="">
       <div>
         <h3 class="center">{{ $t('cycle') }} {{ liturgyInfo?.cycle }}</h3>
         <h3 class="center">{{ liturgyInfo?.celebration }}, {{ rank }}</h3>
       </div>
-      <CopyLink link="evangelium" show-description/>
+      <CopyLink data-tts-skip link="evangelium" show-description/>
     </div>
 
 
@@ -41,7 +38,6 @@ import {rankTranslate} from "@/modules/app/constants/utils.ts";
 import {IonLabel, IonSegment, IonSegmentButton} from "@ionic/vue";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 import CopyLink from "@/modules/app/components/molecules/CopyLink.vue";
-import ShareButton from "@/modules/app/components/molecules/ShareButton.vue";
 
 const {t} = useI18n()
 

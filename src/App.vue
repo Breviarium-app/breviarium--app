@@ -8,9 +8,24 @@ import {App as CapacitorApp} from '@capacitor/app';
 import {useRouter} from 'vue-router';
 import OpenInAppBanner from '@/modules/app/components/molecules/OpenInAppBanner.vue';
 import WhatsNewModal from '@/modules/onboarding/WhatsNewModal.vue';
+import {useAlertsStore} from "@/modules/app/stores/alertsStore.ts";
+import {NotificationService} from "@/modules/app/services/NotificationService.ts";
+import {isEaster} from "@/modules/app/constants/utils.ts";
 
 const store = useSettingsStore();
 const router = useRouter();
+const alertsStore = useAlertsStore();
+
+// Tapping a reminder opens today's prayer, even if another day was being browsed
+const openAlert = async (extra: Record<string, unknown> | undefined) => {
+  useDateStore().setDate(new Date());
+  let route = extra?.route;
+  if (extra?.alert === 'angelus') {
+    const easter = await isEaster().catch(() => false);
+    route = easter ? '/popular-prayers/regina-coeli' : '/popular-prayers/angelus';
+  }
+  if (typeof route === 'string') router.push(route);
+};
 
 onMounted(() => {
   store.loadSettings().then(() => {
@@ -29,6 +44,13 @@ onMounted(() => {
 
   useDateStore();
   useBreviariumStore();
+
+  if (alertsStore.isSupported) {
+    alertsStore.load();
+    NotificationService.onOpened(openAlert);
+    // Notification permissions may have changed in the system settings meanwhile
+    CapacitorApp.addListener('resume', () => alertsStore.refreshPermissions());
+  }
 
   CapacitorApp.addListener('appUrlOpen', (event) => {
     const url = new URL(event.url);
