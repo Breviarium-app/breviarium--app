@@ -81,7 +81,11 @@ const openNote = () => {
   const path = datedPath(route.path, useDateStore().currentDate);
   const title = String(props.title || getPrayerTitle(prayerType as string));
   const isDated = /^\/\d{4}\/\d{1,2}\/\d{1,2}\//.test(path);
-  const date = useDateStore().currentDate.toLocaleDateString(locale.value, {day: 'numeric', month: 'long', year: 'numeric'});
+  const date = useDateStore().currentDate.toLocaleDateString(locale.value, {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
   noteReference.value = {
     label: isDated ? `${title} · ${date}` : title,
     path,
@@ -147,7 +151,8 @@ const prayerWrapperStyle = computed(() => ({
                           ? `${t('prayer_menu.alert')} · ${alertsStore.alerts[alertKey].time}`
                           : t('prayer_menu.alert')"
                       @click="openAlert">
-            <ion-icon slot="icon-only" :icon="alertEnabled ? notifications : notificationsOutline" aria-hidden="true"></ion-icon>
+            <ion-icon slot="icon-only" :icon="alertEnabled ? notifications : notificationsOutline"
+                      aria-hidden="true"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -183,7 +188,9 @@ const prayerWrapperStyle = computed(() => ({
   -moz-user-select: auto !important;
   -ms-user-select: auto !important;
   user-select: auto !important;
-  margin-bottom: 4rem;
+  /* Room to scroll the last lines above the floating tabbar (~70px) and the read-aloud/autoscroll
+     buttons (~56px), plus the device's bottom safe area, so nothing ends up hidden on small screens */
+  margin-bottom: calc(var(--ion-safe-area-bottom, 0px) + 140px);
 }
 
 :deep(.prayer-wrapper p) {
