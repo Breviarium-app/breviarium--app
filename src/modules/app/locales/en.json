@@ -65,6 +65,7 @@
     "sections": {
       "prayer": "Prayer",
       "reading": "Reading",
+      "text_to_speech": "Read aloud",
       "appearance": "Appearance",
       "general": "General"
     },
@@ -79,7 +80,7 @@
       "show_auto_scroll": "Shows a button that scrolls prayer text automatically.",
       "keepAwake": "The screen stays on while you use the app.",
       "haptics_active": "Vibrates when you tap buttons and navigate.",
-      "show_text_to_speech": "Shows a button that reads the prayer aloud with the device voice. Tap to pause and tap again to continue.",
+      "show_text_to_speech": "Shows a button that reads the whole prayer with the device voice, with controls to pause, skip sentences and change the speed.",
       "tts_voice": "Spanish voices installed on the device.",
       "tts_install": "Opens the system settings to download voices if there is no Spanish one.",
       "tts_unsupported": "Reading aloud is not available on this device."
@@ -241,9 +242,14 @@
     "page_indicator": "Page {current} of {total}"
   },
   "tts": {
-    "start": "Read aloud",
+    "start": "Listen to the prayer",
+    "player": "Read aloud",
     "pause": "Pause reading",
     "resume": "Continue reading",
+    "previous": "Previous",
+    "next": "Next",
+    "speed": "Change speed",
+    "stop": "Stop reading",
     "error": "The text could not be read. Check the voices installed on the device."
   }
 }

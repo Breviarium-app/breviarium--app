@@ -81,6 +81,7 @@
     "sections": {
       "prayer": "Oración",
       "reading": "Lectura",
+      "text_to_speech": "Lectura en voz alta",
       "appearance": "Apariencia",
       "general": "General"
     },
@@ -95,7 +96,7 @@
       "show_auto_scroll": "Muestra un botón para desplazar el texto de las oraciones automáticamente.",
       "keepAwake": "La pantalla no se apaga mientras usas la aplicación.",
       "haptics_active": "Vibración al pulsar botones y navegar.",
-      "show_text_to_speech": "Muestra un botón que lee la oración con la voz del dispositivo. Pulsa para pausar y vuelve a pulsar para continuar.",
+      "show_text_to_speech": "Muestra un botón que lee toda la oración con la voz del dispositivo, con controles para pausar, saltar frases y cambiar la velocidad.",
       "tts_voice": "Voces en español instaladas en el dispositivo.",
       "tts_install": "Abre los ajustes del sistema para descargar voces si no hay ninguna en español.",
       "tts_unsupported": "La lectura en voz alta no está disponible en este dispositivo."
@@ -433,9 +434,14 @@
     "page_indicator": "Página {current} de {total}"
   },
   "tts": {
-    "start": "Leer en voz alta",
+    "start": "Escuchar la oración",
+    "player": "Lectura en voz alta",
     "pause": "Pausar lectura",
     "resume": "Continuar lectura",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "speed": "Cambiar velocidad",
+    "stop": "Detener lectura",
     "error": "No se pudo leer el texto. Revisa las voces instaladas en el dispositivo."
   }
 }

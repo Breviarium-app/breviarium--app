@@ -1,5 +1,7 @@
 import {describe, expect, it} from 'vitest';
-import {cleanForSpeech, splitIntoChunks} from './speechText.ts';
+import {cleanForSpeech, splitIntoPieces} from './speechText.ts';
+
+const splitIntoChunks = (text: string, maxLength?: number) => splitIntoPieces(text, maxLength).map((piece) => piece.text);
 
 describe('cleanForSpeech', () => {
     it('removes versicle, response and antiphon marks', () => {
@@ -13,7 +15,7 @@ describe('cleanForSpeech', () => {
     });
 });
 
-describe('splitIntoChunks', () => {
+describe('splitIntoPieces', () => {
     it('keeps short text in one chunk and drops pieces without words', () => {
         expect(splitIntoChunks('℟.\nGloria al Padre.')).toEqual(['Gloria al Padre.']);
     });
@@ -27,5 +29,15 @@ describe('splitIntoChunks', () => {
         const chunks = splitIntoChunks('uno, dos, tres, cuatro, cinco, seis, siete', 15);
         expect(chunks.every((chunk) => chunk.length <= 15)).toBe(true);
         expect(chunks.join(' ')).toBe('uno, dos, tres, cuatro, cinco, seis, siete');
+    });
+
+    it('keeps the offsets of each piece in the raw text, without the response marks', () => {
+        const raw = '℣. Dios mío, ven en mi auxilio.\n℟. Señor, date prisa en socorrerme.';
+        const pieces = splitIntoPieces(raw, 30);
+        expect(pieces.map((piece) => raw.slice(piece.start, piece.end).trim())).toEqual([
+            'Dios mío, ven en mi auxilio.',
+            'Señor, date prisa en',
+            'socorrerme.',
+        ]);
     });
 });

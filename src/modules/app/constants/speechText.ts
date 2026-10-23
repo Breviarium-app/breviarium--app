@@ -1,14 +1,23 @@
 // Turns the rendered prayer into short pieces of text for text-to-speech.
 
 export interface SpeechChunk {
-    // Block element the text belongs to, highlighted while it is read
+    // Block element the text belongs to
     element: HTMLElement;
+    // Exact text being read, for highlighting it
+    range: Range;
+    text: string;
+}
+
+// A piece of a block's raw text: offsets into the raw text, and the cleaned text to speak
+export interface TextPiece {
+    start: number;
+    end: number;
     text: string;
 }
 
 // Long utterances get cut off by some engines (and Chrome stops after ~15s), and pausing
-// restarts the current piece, so the text is read in short pieces.
-const MAX_CHUNK_LENGTH = 220;
+// restarts the current piece, so the text is read in short pieces of a sentence or a few lines.
+const MAX_CHUNK_LENGTH = 160;
 
 // Controls and widgets inside the prayer that are not part of the text
 const SKIP_SELECTOR = 'button, ion-button, ion-segment, ion-fab, ion-icon, ion-modal, input, textarea, select, svg, script, style, [data-tts-skip]';
@@ -25,45 +34,53 @@ export const cleanForSpeech = (text: string): string => text
     .replace(/\s+/g, ' ')
     .trim();
 
+const hasWords = (text: string): boolean => /[\p{L}\p{N}]/u.test(text);
+
 /**
  * Splits the text on sentence ends, colons, semicolons and line breaks,
  * then joins the pieces back up to `maxLength` characters.
  */
-export const splitIntoChunks = (text: string, maxLength = MAX_CHUNK_LENGTH): string[] => {
-    const pieces = text
-        .split(/\n+|(?<=[.!?;:¿¡»])\s+/)
-        .map(cleanForSpeech)
-        .filter((piece) => /[\p{L}\p{N}]/u.test(piece));
+export const splitIntoPieces = (raw: string, maxLength = MAX_CHUNK_LENGTH): TextPiece[] => {
+    const pieces: TextPiece[] = [];
+    let start = 0;
+    const push = (end: number) => {
+        const text = cleanForSpeech(raw.slice(start, end));
+        if (hasWords(text)) pieces.push({start, end, text});
+    };
+    for (const match of raw.matchAll(/\n+|(?<=[.!?;:¿¡»])\s+/g)) {
+        push(match.index);
+        start = match.index + match[0].length;
+    }
+    push(raw.length);
 
-    const chunks: string[] = [];
-    let current = '';
+    const merged: TextPiece[] = [];
     for (const piece of pieces) {
-        if (current && current.length + piece.length + 1 > maxLength) {
-            chunks.push(current);
-            current = piece;
+        const last = merged.at(-1);
+        if (last && last.text.length + piece.text.length + 1 <= maxLength) {
+            merged[merged.length - 1] = {start: last.start, end: piece.end, text: `${last.text} ${piece.text}`};
         } else {
-            current = current ? `${current} ${piece}` : piece;
+            merged.push(piece);
         }
     }
-    if (current) chunks.push(current);
 
-    // A single sentence longer than the limit is split on commas, or on words as a last resort
-    return chunks.flatMap((chunk) => chunk.length <= maxLength ? [chunk] : splitLong(chunk, maxLength));
+    // A single sentence longer than the limit is split on words
+    return merged.flatMap((piece) => piece.text.length <= maxLength ? [piece] : splitLong(raw, piece, maxLength));
 };
 
-const splitLong = (text: string, maxLength: number): string[] => {
-    const chunks: string[] = [];
-    let current = '';
-    for (const word of text.split(/(?<=,)\s+|\s+/)) {
-        if (current && current.length + word.length + 1 > maxLength) {
-            chunks.push(current);
-            current = word;
-        } else {
-            current = current ? `${current} ${word}` : word;
+const splitLong = (raw: string, piece: TextPiece, maxLength: number): TextPiece[] => {
+    const pieces: TextPiece[] = [];
+    let start = piece.start;
+    let end = piece.start;
+    for (const word of raw.slice(piece.start, piece.end).matchAll(/\S+/g)) {
+        const wordEnd = piece.start + word.index + word[0].length;
+        if (end > start && cleanForSpeech(raw.slice(start, wordEnd)).length > maxLength) {
+            pieces.push({start, end, text: cleanForSpeech(raw.slice(start, end))});
+            start = piece.start + word.index;
         }
+        end = wordEnd;
     }
-    if (current) chunks.push(current);
-    return chunks;
+    if (end > start) pieces.push({start, end, text: cleanForSpeech(raw.slice(start, end))});
+    return pieces.filter((p) => hasWords(p.text));
 };
 
 const isBlock = (element: Element): boolean => {
@@ -99,25 +116,45 @@ export const collectSpeechChunks = (root: HTMLElement): SpeechChunk[] => {
                     ? NodeFilter.FILTER_REJECT
                     : NodeFilter.FILTER_ACCEPT;
             }
-            return node.textContent?.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+            return NodeFilter.FILTER_ACCEPT;
         },
     });
 
     const chunks: SpeechChunk[] = [];
     let currentBlock: HTMLElement | null = null;
-    let currentText = '';
+    // Raw text of the current block, and the text nodes it comes from (offsets into it)
+    let raw = '';
+    let segments: { node: Text; start: number }[] = [];
+
+    const toRange = (start: number, end: number): Range => {
+        // Leave the surrounding spaces and line breaks out of the highlight
+        while (start < end && /\s/.test(raw[start])) start++;
+        while (end > start && /\s/.test(raw[end - 1])) end--;
+        const at = (offset: number, isEnd: boolean) => {
+            const segment = segments.findLast((s) => isEnd ? s.start < offset : s.start <= offset) ?? segments[0];
+            return {node: segment.node, offset: Math.min(offset - segment.start, segment.node.length)};
+        };
+        const range = document.createRange();
+        const from = at(start, false);
+        const to = at(end, true);
+        range.setStart(from.node, from.offset);
+        range.setEnd(to.node, to.offset);
+        return range;
+    };
+
     const flush = () => {
-        if (currentBlock && currentText.trim()) {
-            for (const text of splitIntoChunks(currentText)) {
-                chunks.push({element: currentBlock, text});
+        if (currentBlock && hasWords(raw)) {
+            for (const piece of splitIntoPieces(raw)) {
+                chunks.push({element: currentBlock, range: toRange(piece.start, piece.end), text: piece.text});
             }
         }
-        currentText = '';
+        raw = '';
+        segments = [];
     };
 
     for (let node = walker.nextNode(); node; node = walker.nextNode()) {
         if (node instanceof Element) {
-            if (node.tagName === 'BR') currentText += '\n';
+            if (node.tagName === 'BR') raw += '\n';
             continue;
         }
         const block = nearestBlock(node.parentElement ?? root);
@@ -125,7 +162,8 @@ export const collectSpeechChunks = (root: HTMLElement): SpeechChunk[] => {
             flush();
             currentBlock = block;
         }
-        currentText += node.textContent;
+        segments.push({node: node as Text, start: raw.length});
+        raw += node.textContent;
     }
     flush();
 

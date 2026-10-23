@@ -87,11 +87,17 @@ const updateLatinPrayers = async (value: boolean) => {
           <div class="settings-group">
             <FontSizeSelector/>
             <AutoScrollSpeedSelector/>
-            <TextToSpeechSettings/>
             <SettingToggle :hint="t('settings.hints.keepAwake')"
                            :label="t('settings.keepAwake')"
                            :model-value="settingsStore.settings.keepAwake"
                            @update:model-value="updateToggle('keepAwake', $event)"/>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">{{ t('settings.sections.text_to_speech') }}</h2>
+          <div class="settings-group">
+            <TextToSpeechSettings/>
           </div>
         </section>
 
