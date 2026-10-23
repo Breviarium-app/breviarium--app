@@ -8,6 +8,13 @@
         @update:modelValue="saveWithFeedback"
     />
     <template v-if="isSupported && settingsStore.settings.showTextToSpeech">
+      <SettingToggle
+          v-model="settingsStore.settings.ttsFloatingButton"
+          :hint="t('settings.hints.tts_floating_button')"
+          :label="t('settings.tts_floating_button')"
+          class="tts-toggle"
+          @update:modelValue="saveWithFeedback"
+      />
       <div class="tts-block">
         <ion-select
             v-model="settingsStore.settings.ttsVoice"
@@ -106,6 +113,11 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+/* Same divider as the other rows (the toggle's root element gets this class) */
+.tts-toggle {
+  border-top: 0.5px solid rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.1);
+}
+
 .tts-block {
   display: flex;
   flex-direction: column;

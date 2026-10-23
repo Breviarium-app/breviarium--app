@@ -195,6 +195,9 @@ watch(isActive, (active) => {
 // Ionic keeps the page mounted when navigating forward, so stop on any route change
 watch(() => route.fullPath, stop);
 watch(() => settingsStore.settings.showTextToSpeech, (show) => !show && stop());
+// PrayerPage starts the reading from its header when the floating button is hidden
+defineExpose({isShown, isActive, start: togglePlay});
+
 onUnmounted(() => {
   stop();
   textToSpeechActive.value = false;
@@ -216,7 +219,7 @@ onUnmounted(() => {
   >
     <Transition mode="out-in" name="tts-morph">
       <ion-fab-button
-          v-if="!isActive"
+          v-if="!isActive && settingsStore.settings.ttsFloatingButton"
           :aria-label="t('tts.start')"
           class="custom-fab-button"
           size="small"
@@ -225,7 +228,7 @@ onUnmounted(() => {
         <ion-icon :icon="headsetOutline" aria-hidden="true"/>
       </ion-fab-button>
 
-      <div v-else :aria-label="t('tts.player')" class="player" role="group">
+      <div v-else-if="isActive" :aria-label="t('tts.player')" class="player" role="group">
         <button :aria-label="t('tts.previous')" class="player-button" @click="skip(-1)">
           <ion-icon :icon="playSkipBack" aria-hidden="true"/>
         </button>

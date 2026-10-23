@@ -69,7 +69,8 @@
     "hide_invitatorium": "Ocultar Invitatorio en Laudes",
     "show_auto_scroll": "Mostrar botón de scroll automático",
     "auto_scroll_speed": "Velocidad de scroll automático",
-    "show_text_to_speech": "Mostrar botón de lectura en voz alta",
+    "show_text_to_speech": "Lectura en voz alta",
+    "tts_floating_button": "Mostrar botón flotante",
     "tts_voice": "Voz",
     "tts_voice_default": "Predeterminada del dispositivo",
     "tts_rate": "Velocidad de lectura",
@@ -97,10 +98,11 @@
       "show_auto_scroll": "Muestra un botón para desplazar el texto de las oraciones automáticamente.",
       "keepAwake": "La pantalla no se apaga mientras usas la aplicación.",
       "haptics_active": "Vibración al pulsar botones y navegar.",
-      "show_text_to_speech": "Muestra un botón que lee toda la oración con la voz del dispositivo, con controles para pausar, saltar frases y cambiar la velocidad.",
+      "show_text_to_speech": "Lee la oración completa con la voz del dispositivo, con controles para pausar, saltar frases y cambiar la velocidad.",
       "tts_voice": "Voces en español instaladas en el dispositivo.",
       "tts_install": "Abre los ajustes del sistema para descargar voces si no hay ninguna en español.",
-      "tts_unsupported": "La lectura en voz alta no está disponible en este dispositivo."
+      "tts_unsupported": "La lectura en voz alta no está disponible en este dispositivo.",
+      "tts_floating_button": "Si lo ocultas, puedes empezar la lectura desde el icono de auriculares en la parte superior de la oración."
     }
   },
   "breviarium": {

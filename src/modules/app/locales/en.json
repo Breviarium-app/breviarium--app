@@ -53,7 +53,8 @@
     "hide_invitatorium": "Hide invitatory in Lauds",
     "show_auto_scroll": "Show auto-scroll button",
     "auto_scroll_speed": "Auto-scroll speed",
-    "show_text_to_speech": "Show read-aloud button",
+    "show_text_to_speech": "Read aloud",
+    "tts_floating_button": "Show floating button",
     "tts_voice": "Voice",
     "tts_voice_default": "Device default",
     "tts_rate": "Reading speed",
@@ -81,10 +82,11 @@
       "show_auto_scroll": "Shows a button that scrolls prayer text automatically.",
       "keepAwake": "The screen stays on while you use the app.",
       "haptics_active": "Vibrates when you tap buttons and navigate.",
-      "show_text_to_speech": "Shows a button that reads the whole prayer with the device voice, with controls to pause, skip sentences and change the speed.",
+      "show_text_to_speech": "Reads the whole prayer with the device voice, with controls to pause, skip sentences and change the speed.",
       "tts_voice": "Spanish voices installed on the device.",
       "tts_install": "Opens the system settings to download voices if there is no Spanish one.",
-      "tts_unsupported": "Reading aloud is not available on this device."
+      "tts_unsupported": "Reading aloud is not available on this device.",
+      "tts_floating_button": "If you hide it, you can start reading from the headphones icon at the top of the prayer."
     }
   },
   "breviarium": {

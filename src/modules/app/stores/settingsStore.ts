@@ -28,6 +28,8 @@ export const useSettingsStore = defineStore('settings', () => {
         showAutoScroll: true,
         autoScrollSpeed: 7,
         showTextToSpeech: true,
+        // Without the floating button, reading starts from the headphones icon in the prayer header
+        ttsFloatingButton: true,
         ttsRate: 1,
         ttsPitch: 1,
         // voiceURI of the chosen voice, empty for the device default

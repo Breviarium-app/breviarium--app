@@ -10,7 +10,7 @@ import {
   IonTitle,
   IonToolbar
 } from '@ionic/vue';
-import {journalOutline, notifications, notificationsOutline, shareOutline} from 'ionicons/icons';
+import {headsetOutline, journalOutline, notifications, notificationsOutline, shareOutline} from 'ionicons/icons';
 import {useI18n} from 'vue-i18n';
 import {useRoute} from 'vue-router';
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
@@ -124,6 +124,11 @@ const openAlert = () => {
 
 const prayerWrapper = ref<HTMLElement | null>(null);
 
+const reader = ref<InstanceType<typeof TextToSpeechButton> | null>(null);
+// With the floating button hidden in settings, reading starts from the header
+const showHeaderReader = computed(() =>
+    !settingsStore.settings.ttsFloatingButton && reader.value?.isShown && !reader.value?.isActive);
+
 const prayerWrapperStyle = computed(() => ({
   fontSize: `${settingsStore.settings.fontSize * 1.2}px`,
   lineHeight: `${settingsStore.settings.fontSize * 1.7}px`
@@ -140,6 +145,9 @@ const prayerWrapperStyle = computed(() => ({
         </ion-buttons>
         <ion-title>{{ title || getPrayerTitle(prayerType as string) }}</ion-title>
         <ion-buttons slot="end">
+          <ion-button v-if="showHeaderReader" :aria-label="t('tts.start')" @click="reader?.start()">
+            <ion-icon slot="icon-only" :icon="headsetOutline" aria-hidden="true"></ion-icon>
+          </ion-button>
           <ion-button v-if="sharePage" :aria-label="t('prayer_menu.share')" @click="sharePrayer">
             <ion-icon slot="icon-only" :icon="shareOutline" aria-hidden="true"></ion-icon>
           </ion-button>
@@ -166,7 +174,7 @@ const prayerWrapperStyle = computed(() => ({
           <slot></slot>
         </div>
       </div>
-      <TextToSpeechButton :target="prayerWrapper"/>
+      <TextToSpeechButton ref="reader" :target="prayerWrapper"/>
       <AutoScrollButton/>
     </ion-content>
 
