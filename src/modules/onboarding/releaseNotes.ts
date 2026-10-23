@@ -5,8 +5,11 @@ import {
   calendarOutline,
   colorPaletteOutline,
   contrastOutline,
+  headsetOutline,
   informationCircleOutline,
   languageOutline,
+  notificationsOutline,
+  optionsOutline,
   playCircleOutline,
   phonePortraitOutline,
   roseOutline,
@@ -93,6 +96,32 @@ export const RELEASE_NOTES: Record<string, ReleaseNote[]> = {
     {
       icon: playCircleOutline,
       text: "El botón de desplazamiento automático se ajusta a la barra de pestañas y ya no se solapa con ella",
+    },
+  ],
+  "3.4.0": [
+    {
+      icon: headsetOutline,
+      text: "Nueva lectura en voz alta: escucha la oración completa con la voz de tu dispositivo",
+    },
+    {
+      icon: optionsOutline,
+      text: "Mientras escuchas, pausa, salta frases y ajusta la velocidad, el tono y la voz",
+    },
+    {
+      icon: notificationsOutline,
+      text: "Avisos diarios para cada hora de la Liturgia y el Ángelus, en la app para Android e iOS",
+    },
+    {
+      icon: shareOutline,
+      text: "Compartir, escribir en el Diario y los avisos, ahora a un toque en la cabecera de cada oración",
+    },
+    {
+      icon: roseOutline,
+      text: "Nueva oración a la Virgen: Acordaos",
+    },
+    {
+      icon: languageOutline,
+      text: "El Ángelus, ahora también en latín",
     },
   ],
 };

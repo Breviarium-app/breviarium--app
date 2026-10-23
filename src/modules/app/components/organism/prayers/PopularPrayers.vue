@@ -78,6 +78,7 @@ const groups = computed(() => [
       {name: "Rosario", route: "rosary", description: `Hoy, misterios ${todaysMysteries}`},
       {name: "Ángelus", route: "angelus", description: "Al amanecer, al mediodía y al atardecer"},
       {name: "Regina Coeli", route: "regina-coeli", description: "Sustituye al Ángelus en el tiempo pascual"},
+      {name: "Acordaos", route: "acordaos", description: "Atribuida a san Bernardo de Claraval"},
     ],
   },
   {

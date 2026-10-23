@@ -21,6 +21,7 @@ import CredoComponent from "@/modules/app/components/molecules/prayers/CredoComp
 import AlmaDeCristoComponent from "@/modules/app/components/molecules/prayers/AlmaDeCristoComponent.vue";
 import ComunionEspiritualComponent from "@/modules/app/components/molecules/prayers/ComunionEspiritualComponent.vue";
 import SagradaFamiliaComponent from "@/modules/app/components/molecules/prayers/SagradaFamiliaComponent.vue";
+import AcordaosComponent from "@/modules/app/components/molecules/prayers/AcordaosComponent.vue";
 
 const route = useRoute();
 
@@ -28,6 +29,7 @@ const prayers: Record<string, { title: string; component: any }> = {
   rosary: {title: "Rosario", component: RosariumComponent},
   angelus: {title: "Ángelus", component: AngelusComponent},
   "regina-coeli": {title: "Regina Coeli", component: ReginaCoeliComponent},
+  "acordaos": {title: "Acordaos", component: AcordaosComponent},
   "chaplet-divine-mercy": {title: "Coronilla de la Divina Misericordia", component: ChapletDivineMercyComponent},
   "litanies-humility": {title: "Letanías de la Humildad", component: LitaniesHumilityComponent},
   "san-miguel": {title: "San Miguel Arcángel", component: SanMiguelComponent},
