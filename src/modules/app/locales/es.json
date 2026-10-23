@@ -310,7 +310,7 @@
   "initialInvocationBody": "<p> $℣. $Dios mío, ven en mi auxilio. </p> <p> $℟. $Señor, date prisa en socorrerme. </p> <p> $℣. $Gloria al Padre, y al Hijo, y al Espíritu Santo. </p><p> $℟. $Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén. Aleluya. </p>",
   "initialInvocationBodyLent": "<p> $℣. $Dios mío, ven en mi auxilio. </p> <p> $℟. $Señor, date prisa en socorrerme. </p> <p> $℣. $Gloria al Padre, y al Hijo, y al Espíritu Santo. </p><p> $℟. $Como era en el principio ahora y siempre por los siglos de los siglos. Amén. </p>",
   "examinationOfConscience": "Examen de conciencia",
-  "examinationOfConscienceBody": "<p> Hermanos: Llegados al fin de esta jornada que Dios nos ha concedido, reconozcamos humildemente nuestros pecados. </p> $Todos examinan en silencio su conciencia. Después se prosigue con una de las fórmulas siguientes:$ <br /> <br />",
+  "examinationOfConscienceBody": "<p> Hermanos: Llegados al fin de esta jornada que Dios nos ha concedido, reconozcamos humildemente nuestros pecados. </p> <span data-tts-skip>$Todos examinan en silencio su conciencia. Después se prosigue con una de las fórmulas siguientes:$ </span><br /> <br />",
   "firstFormula": {
     "title": "1ª Fórmula",
     "body": "<p> Yo confieso ante Dios todopoderoso y ante vosotros, hermanos, que he pecado mucho de pensamiento, palabra, obra y omisión. <br />Por mi culpa, por mi culpa, por mi gran culpa. <br /> Por eso ruego a santa María, siempre Virgen, a los ángeles, a los santos y a vosotros, hermanos, que intercedáis por mí ante Dios, nuestro Señor. </p>"
@@ -327,7 +327,7 @@
   "secondFormulaMaryAntiphon": "Ant 2",
   "thirdFormulaMaryAntiphon": "Ant 3",
   "fourthFormulaMaryAntiphon": "Ant 4",
-  "complineCommonPresidentPrayer": "$ Si preside la celebración un ministro, él solo dice la conclusión siguiente; en caso contrario, la dicen todos: $ <p> $℣.$ Dios todopoderoso tenga misericordia de nosotros, perdone nuestros pecados y nos lleve a la vida eterna. <br /> $℟.$ Amén. </p>",
+  "complineCommonPresidentPrayer": "<span data-tts-skip>$ Si preside la celebración un ministro, él solo dice la conclusión siguiente; en caso contrario, la dicen todos: $</span> <p> $℣.$ Dios todopoderoso tenga misericordia de nosotros, perdone nuestros pecados y nos lleve a la vida eterna. <br /> $℟.$ Amén. </p>",
   "hymn": "Himno",
   "complineMarianPrayers": "Se canta o se dice una de las siguientes antífonas marianas:",
   "luc2": "<p> Ahora, Señor, según tu promesa, puedes dejar a tu siervo irse en paz. </p> <p> Porque mis ojos han visto a tu Salvador, a quien has presentado ante todos los pueblos: </p> <p>luz para alumbrar a las naciones y gloria de tu pueblo Israel.</p> <p> Gloria al Padre, y al Hijo, y al Espíritu Santo. Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén. </p>",
@@ -443,10 +443,11 @@
     "next": "Siguiente",
     "speed": "Cambiar velocidad",
     "stop": "Detener lectura",
-    "error": "No se pudo leer el texto. Revisa las voces instaladas en el dispositivo."
+    "settings": "Ajustes de lectura",
+    "error": "No se pudo leer el texto. Revisa las voces instaladas en el dispositivo.",
+    "voice_hint": "Las voces disponibles dependen de tu dispositivo."
   },
   "prayer_menu": {
-    "open": "Más opciones",
     "share": "Compartir",
     "alert": "Aviso diario"
   },

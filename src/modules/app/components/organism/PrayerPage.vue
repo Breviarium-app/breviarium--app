@@ -6,16 +6,11 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonNote,
   IonPage,
-  IonPopover,
   IonTitle,
   IonToolbar
 } from '@ionic/vue';
-import {ellipsisHorizontal, journalOutline, notificationsOutline, shareOutline} from 'ionicons/icons';
+import {journalOutline, notifications, notificationsOutline, shareOutline} from 'ionicons/icons';
 import {useI18n} from 'vue-i18n';
 import {useRoute} from 'vue-router';
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
@@ -106,26 +101,21 @@ const alertKey = computed<AlertKey | null>(() => {
 
 const alertModalKey = ref<AlertKey | null>(null);
 
-const menuEvent = ref<Event | null>(null);
+const alertEnabled = computed(() => alertKey.value !== null && alertsStore.alerts[alertKey.value].enabled);
 
-const openMenu = (event: Event) => {
+const sharePrayer = () => {
   HapticsService.light();
-  menuEvent.value = event;
+  share(props.sharePage!);
 };
 
-// Runs once the menu is fully closed: it hands focus back to its button on dismiss, which
-// would otherwise land in the next overlay's focus trap and focus (open) its first input
-let pendingMenuAction: (() => void) | null = null;
-
-const runMenuAction = (action: () => void) => {
-  pendingMenuAction = action;
-  menuEvent.value = null;
+const writeNote = () => {
+  HapticsService.light();
+  openNote();
 };
 
-const onMenuDismissed = () => {
-  menuEvent.value = null;
-  pendingMenuAction?.();
-  pendingMenuAction = null;
+const openAlert = () => {
+  HapticsService.light();
+  alertModalKey.value = alertKey.value;
 };
 
 const prayerWrapper = ref<HTMLElement | null>(null);
@@ -146,8 +136,18 @@ const prayerWrapperStyle = computed(() => ({
         </ion-buttons>
         <ion-title>{{ title || getPrayerTitle(prayerType as string) }}</ion-title>
         <ion-buttons slot="end">
-          <ion-button :aria-label="t('prayer_menu.open')" @click="openMenu" @pointerdown="captureSelection">
-            <ion-icon slot="icon-only" :icon="ellipsisHorizontal" aria-hidden="true"></ion-icon>
+          <ion-button v-if="sharePage" :aria-label="t('prayer_menu.share')" @click="sharePrayer">
+            <ion-icon slot="icon-only" :icon="shareOutline" aria-hidden="true"></ion-icon>
+          </ion-button>
+          <ion-button :aria-label="t('diary.write_note')" @click="writeNote" @pointerdown="captureSelection">
+            <ion-icon slot="icon-only" :icon="journalOutline" aria-hidden="true"></ion-icon>
+          </ion-button>
+          <!-- Filled bell when the daily reminder for this prayer is on -->
+          <ion-button v-if="alertKey" :aria-label="alertEnabled
+                          ? `${t('prayer_menu.alert')} · ${alertsStore.alerts[alertKey].time}`
+                          : t('prayer_menu.alert')"
+                      @click="openAlert">
+            <ion-icon slot="icon-only" :icon="alertEnabled ? notifications : notificationsOutline" aria-hidden="true"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -165,52 +165,11 @@ const prayerWrapperStyle = computed(() => ({
       <AutoScrollButton/>
     </ion-content>
 
-    <ion-popover :event="menuEvent" :is-open="menuEvent !== null" alignment="end" @didDismiss="onMenuDismissed">
-      <ion-list lines="none">
-        <ion-item v-if="sharePage" :button="true" :detail="false" @click="runMenuAction(() => share(sharePage!))">
-          <ion-icon slot="start" :icon="shareOutline" aria-hidden="true"></ion-icon>
-          <ion-label>{{ t('prayer_menu.share') }}</ion-label>
-        </ion-item>
-        <ion-item :button="true" :detail="false" @click="runMenuAction(openNote)">
-          <ion-icon slot="start" :icon="journalOutline" aria-hidden="true"></ion-icon>
-          <ion-label>{{ t('diary.write_note') }}</ion-label>
-        </ion-item>
-        <ion-item v-if="alertKey" :button="true" :detail="false"
-                  @click="runMenuAction(() => alertModalKey = alertKey)">
-          <ion-icon slot="start" :icon="notificationsOutline" aria-hidden="true"></ion-icon>
-          <ion-label>{{ t('prayer_menu.alert') }}</ion-label>
-          <ion-note v-if="alertsStore.alerts[alertKey].enabled" slot="end">{{ alertsStore.alerts[alertKey].time }}</ion-note>
-        </ion-item>
-      </ion-list>
-    </ion-popover>
-
     <DiaryEntryModal :is-open="noteReference !== null" :reference="noteReference" @close="noteReference = null"/>
     <PrayerAlertModal :alert-key="alertModalKey" @close="alertModalKey = null"/>
   </ion-page>
 </template>
 <style scoped>
-ion-popover {
-  --width: 250px;
-}
-
-ion-popover ion-list {
-  padding: 0;
-}
-
-/* Items are optional, so the separators are drawn between the visible ones only */
-ion-popover ion-item:not(:last-of-type) {
-  --inner-border-width: 0 0 0.55px 0;
-}
-
-ion-popover ion-icon {
-  margin-inline-end: 0.9rem;
-  font-size: 1.25rem;
-}
-
-ion-popover ion-note {
-  font-variant-numeric: tabular-nums;
-}
-
 .prayer-page {
   display: flex;
   justify-content: center;

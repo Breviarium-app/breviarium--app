@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4 class="title title-color">
+    <h4 class="title title-color" data-tts-skip>
       {{ $t("hymn") }}
     </h4>
     <div v-if="hymns.length > 1">

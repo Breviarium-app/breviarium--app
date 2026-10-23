@@ -67,40 +67,22 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, onMounted, onUnmounted, ref} from 'vue';
+import {onUnmounted} from 'vue';
 import {IonButton, IonIcon, IonRange, IonSelect, IonSelectOption} from '@ionic/vue';
 import {chevronDownOutline, chevronUpOutline, downloadOutline, playForwardOutline, playOutline, volumeHighOutline} from 'ionicons/icons';
 import {Capacitor} from '@capacitor/core';
 import {useI18n} from 'vue-i18n';
-import type {SpeechSynthesisVoice} from '@capacitor-community/text-to-speech';
 import {useSettingsStore} from '@/modules/app/stores/settingsStore.ts';
 import HapticsService from '@/modules/app/services/HapticsService.ts';
 import {TextToSpeechService} from '@/modules/app/services/TextToSpeechService.ts';
+import {useTtsVoices} from '@/modules/app/composables/useTtsVoices.ts';
 import SettingToggle from '@/modules/app/components/molecules/settings/SettingToggle.vue';
 
 const {t} = useI18n();
 const settingsStore = useSettingsStore();
 const isSupported = TextToSpeechService.isSupported();
 const isAndroid = Capacitor.getPlatform() === 'android';
-// Browsers load voices asynchronously and announce it with "voiceschanged"
-const listensVoicesChanged = isSupported && !Capacitor.isNativePlatform();
-
-const voices = ref<SpeechSynthesisVoice[]>([]);
-
-// Android names voices after their locale only ("Spanish Spain"), so repeated names get their id
-const voiceOptions = computed(() => voices.value.map((voice) => {
-  const repeated = voices.value.filter((other) => other.name === voice.name).length > 1;
-  return {value: voice.voiceURI, label: repeated ? `${voice.name} (${voice.voiceURI})` : voice.name};
-}));
-
-const loadVoices = async () => {
-  voices.value = await TextToSpeechService.getSpanishVoices();
-};
-
-const reloadVoices = () => {
-  TextToSpeechService.clearVoicesCache();
-  loadVoices();
-};
+const {voiceOptions} = useTtsVoices();
 
 const saveWithFeedback = () => {
   settingsStore.saveSettings();
@@ -117,15 +99,9 @@ const testVoice = async () => {
   }
 };
 
-onMounted(() => {
-  if (!isSupported) return;
-  loadVoices();
-  if (listensVoicesChanged) window.speechSynthesis.addEventListener('voiceschanged', reloadVoices);
-});
-
+// Stop the sample if the user leaves while it's playing
 onUnmounted(() => {
   if (isSupported) TextToSpeechService.stop();
-  if (listensVoicesChanged) window.speechSynthesis.removeEventListener('voiceschanged', reloadVoices);
 });
 </script>
 

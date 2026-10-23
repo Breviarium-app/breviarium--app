@@ -5,6 +5,9 @@ import {useSettingsStore} from '@/modules/app/stores/settingsStore.ts';
 // The liturgical texts are in Spanish whatever the app language is
 export const TTS_LANG = 'es-ES';
 
+// Speeds offered by the player and its quick settings; the settings page allows any value in between
+export const RATE_STEPS = [0.8, 1, 1.2, 1.5, 2];
+
 let voicesCache: SpeechSynthesisVoice[] = [];
 
 export class TextToSpeechService {

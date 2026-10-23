@@ -251,10 +251,11 @@
     "next": "Next",
     "speed": "Change speed",
     "stop": "Stop reading",
-    "error": "The text could not be read. Check the voices installed on the device."
+    "settings": "Reading settings",
+    "error": "The text could not be read. Check the voices installed on the device.",
+    "voice_hint": "The available voices depend on your device."
   },
   "prayer_menu": {
-    "open": "More options",
     "share": "Share",
     "alert": "Daily reminder"
   },

@@ -1,10 +1,10 @@
 <template>
-  <PrayerPage :display-liturgical-info="true" title="Completas" share-page="completorium">
+  <PrayerPage :display-liturgical-info="true" share-page="completorium" title="Completas">
 
-    <h4 data-tts-skip class="title title-color">
+    <h4 class="title title-color" data-tts-skip>
       {{ formatText($t("initialInvocation")) }}
     </h4>
-    <p data-tts-skip class="margin-y-md title-color ion-align-items-center ion-text-center">
+    <p class="margin-y-md title-color ion-align-items-center ion-text-center" data-tts-skip>
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>
@@ -13,7 +13,7 @@
     <div v-else
          v-html="formatText($t('initialInvocationBody'))"></div>
 
-    <h4 class="title title-color">
+    <h4 class="title title-color" data-tts-skip>
       {{ formatText($t("examinationOfConscience")) }}
     </h4>
     <div v-html="formatText($t('examinationOfConscienceBody'))"></div>
@@ -45,14 +45,14 @@
 
     <HymnComponent :text="prayer?.himno"/>
 
-    <h4 class="title title-color">{{ $t('salmodia') }}</h4>
+    <h4 class="title title-color" data-tts-skip>{{ $t('salmodia') }}</h4>
 
     <p>
       <span class="title-color">Ant. </span>
       <span v-if="isEasterCondition">Aleluya, aleluya, aleluya.</span>
       <span v-else v-html="formatText(prayer?.primer_salmo_antifona)"></span>
     </p>
-    <span class="subtitle title-color cita"
+    <span class="subtitle title-color cita" data-tts-skip
           v-html="formatText(prayer?.primer_salmo_cita)"></span>
     <div v-html="formatText(prayer?.primer_salmo_texto)"></div>
     <p v-if="isEasterCondition && !prayer?.segundo_salmo_texto">
@@ -68,7 +68,7 @@
         <span class="title-color">Ant. </span>
         <span v-html="formatText(prayer?.segundo_salmo_antifona)"></span>
       </p>
-      <span class="subtitle title-color cita"
+      <span class="subtitle title-color cita" data-tts-skip
             v-html="formatText(prayer?.segundo_salmo_cita)"></span>
       <div v-html="formatText(prayer?.segundo_salmo_texto)"></div>
       <p v-if="!isEasterCondition">
@@ -82,14 +82,14 @@
       </p>
     </div>
 
-    <h4 class="title title-color">
+    <h4 class="title title-color" data-tts-skip>
       {{ $t("briefReading") }}
     </h4>
     <div class="reference-bible title-color cita"
          v-html="formatText(prayer?.lectura_biblica_cita)"></div>
     <div v-html="formatText(prayer?.lectura_biblica_texto)"></div>
 
-    <h4 class="title title-color">
+    <h4 class="title title-color" data-tts-skip>
       {{
         isTriduumCondition ? "Antífona" : (isInAlbisCondition ? "Antífona" : (isEasterCondition ? $t("responsory") : $t("responsory")))
       }}
@@ -116,7 +116,7 @@
     </div>
 
 
-    <h4 class="title title-color">
+    <h4 class="title title-color" data-tts-skip>
       {{ $t("evangelicalCanticle") }}
     </h4>
     <p>
@@ -124,7 +124,7 @@
       <span v-html="formatText(prayer?.cantico_evangelico_antifona)"></span>
     </p>
 
-    <p data-tts-skip class="margin-y-md title-color ion-align-items-center ion-text-center">
+    <p class="margin-y-md title-color ion-align-items-center ion-text-center" data-tts-skip>
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>
@@ -134,7 +134,7 @@
       <span v-html="formatText(prayer?.cantico_evangelico_antifona)"></span>
     </p>
 
-    <h4 class="title title-color">
+    <h4 class="title title-color" data-tts-skip>
       {{ $t("oratio") }}
     </h4>
 
@@ -145,7 +145,7 @@
 
     <p><span class="title-color">℟. </span>Amén.</p>
 
-    <p data-tts-skip class="margin-y-md title-color ion-align-items-center ion-text-center">
+    <p class="margin-y-md title-color ion-align-items-center ion-text-center" data-tts-skip>
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
     </p>
@@ -153,7 +153,7 @@
 
     <!-- Mary Antiphon -->
     <div>
-      <p class="title-color text-center">
+      <p class="title-color text-center" data-tts-skip>
         {{ $t("complineMarianPrayers") }}
       </p>
       <ion-segment v-model="selectedMaryAntiphonCode">
@@ -175,25 +175,35 @@
         <div v-if="selectedMaryAntiphonCode=='theHailMary'" id="theHailMary">
           <div v-if="settingsStore.settings.latinPrayers === 'es'" v-html="$t('theHailMary')"></div>
           <div v-else>
-            Salve, Regína, Mater misericórdiæ, <br />vita, dulcédo et spes nostra, salve. <br />Ad te clamámus éxsules fílii Hevæ. <br />Ad te suspirámus, geméntes et flentes <br />in hac lacrimárum valle. <br />Eia ergo, advocáta nostra, <br />illos tuos misericórdes óculos ad nos convérte; <br />et Iesum, benedíctum fructum ventris tui, <br />nobis post hoc exsílium osténde. <br />O clemens, o pia, <br />o dulcis Virgo María. <br /><br />Ora pro nobis, sancta Dei Génetrix, <br />ut digni efficiámur promissiónibus Christi. Amen.
+            Salve, Regína, Mater misericórdiæ, <br/>vita, dulcédo et spes nostra, salve. <br/>Ad te clamámus éxsules
+            fílii Hevæ. <br/>Ad te suspirámus, geméntes et flentes <br/>in hac lacrimárum valle. <br/>Eia ergo, advocáta
+            nostra, <br/>illos tuos misericórdes óculos ad nos convérte; <br/>et Iesum, benedíctum fructum ventris tui,
+            <br/>nobis post hoc exsílium osténde. <br/>O clemens, o pia, <br/>o dulcis Virgo María. <br/><br/>Ora pro
+            nobis, sancta Dei Génetrix, <br/>ut digni efficiámur promissiónibus Christi. Amen.
           </div>
         </div>
         <div v-if="selectedMaryAntiphonCode=='motherOfTheRedeemer'" id="motherOfTheRedeemer">
           <div v-if="settingsStore.settings.latinPrayers === 'es'" v-html="$t('motherOfTheRedeemer')"></div>
           <div v-else>
-            Alma Redemptóris Mater, <br />quæ pérvia cæli porta manes, <br />et stella maris, <br />succúrre cadénti, súrgere qui curat, pópulo. <br /> <br /> Tu quæ genuísti, natúra miránte, <br />tuum sanctum Genitórem, <br />Virgo prius ac postérius, <br /> <br /> Gabriélis ab ore sumens illud Ave, <br />peccatórum miserére.
+            Alma Redemptóris Mater, <br/>quæ pérvia cæli porta manes, <br/>et stella maris, <br/>succúrre cadénti,
+            súrgere qui curat, pópulo. <br/> <br/> Tu quæ genuísti, natúra miránte, <br/>tuum sanctum Genitórem, <br/>Virgo
+            prius ac postérius, <br/> <br/> Gabriélis ab ore sumens illud Ave, <br/>peccatórum miserére.
           </div>
         </div>
         <div v-if="selectedMaryAntiphonCode=='queenOfHeaven'" id="queenOfHeaven">
           <div v-if="settingsStore.settings.latinPrayers === 'es'" v-html="$t('queenOfHeaven')"></div>
           <div v-else>
-            Ave, Regína cælórum<br /> ave, Dómina Angelórum: <br />Salve, radix, salve, porta, <br />ex qua mundo lux est orta. <br />  <br /> Gaude, Virgo gloriósa, <br />super omnes speciósa; <br />vale, o valde decóra, <br />et pro nobis Christum exóra.<br /><br /><br />
+            Ave, Regína cælórum<br/> ave, Dómina Angelórum: <br/>Salve, radix, salve, porta, <br/>ex qua mundo lux est
+            orta. <br/> <br/> Gaude, Virgo gloriósa, <br/>super omnes speciósa; <br/>vale, o valde decóra, <br/>et pro
+            nobis Christum exóra.<br/><br/><br/>
           </div>
         </div>
         <div v-if="selectedMaryAntiphonCode=='toThyProtection'" id="toThyProtection">
           <div v-if="settingsStore.settings.latinPrayers === 'es'" v-html="$t('toThyProtection')"></div>
           <div v-else>
-            Sub tuum præsídium confúgimus, <br />sancta Dei Génetrix. <br /><br />Nostras deprecatiónes ne despícias <br />in necessitátibus, <br />sed a perículis cunctis líbera nos semper, <br />Virgo gloriósa et benedícta.<br /><br /><br /><br />
+            Sub tuum præsídium confúgimus, <br/>sancta Dei Génetrix. <br/><br/>Nostras deprecatiónes ne despícias <br/>in
+            necessitátibus, <br/>sed a perículis cunctis líbera nos semper, <br/>Virgo gloriósa et
+            benedícta.<br/><br/><br/><br/>
           </div>
         </div>
       </div>

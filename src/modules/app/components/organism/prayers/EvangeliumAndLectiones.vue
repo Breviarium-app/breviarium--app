@@ -1,11 +1,11 @@
 <template>
-  <PrayerPage title="Evangelio y lecturas" share-page="evangelium">
+  <PrayerPage share-page="evangelium" title="Evangelio y lecturas">
     <div class="">
       <div>
         <h3 class="center">{{ $t('cycle') }} {{ liturgyInfo?.cycle }}</h3>
         <h3 class="center">{{ liturgyInfo?.celebration }}, {{ rank }}</h3>
       </div>
-      <CopyLink link="evangelium" show-description/>
+      <CopyLink data-tts-skip link="evangelium" show-description/>
     </div>
 
 

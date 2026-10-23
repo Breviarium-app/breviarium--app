@@ -1,13 +1,16 @@
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, computed, getCurrentInstance } from 'vue';
+import { ref, onMounted, onUnmounted, computed, getCurrentInstance, watch } from 'vue';
 import { IonFab, IonFabButton, IonIcon } from '@ionic/vue';
 import { arrowDownOutline, pauseOutline } from 'ionicons/icons';
 import { Capacitor } from '@capacitor/core';
 import { useSettingsStore } from '@/modules/app/stores/settingsStore';
 import { useTabbarVisibility } from '@/modules/app/composables/useTabbarVisibility';
+import { useTextToSpeechActive } from '@/modules/app/composables/useTextToSpeechActive';
 
 const settingsStore = useSettingsStore();
 const tabbarVisible = useTabbarVisibility();
+// The text-to-speech reader follows the text itself and puts its settings button here
+const textToSpeechActive = useTextToSpeechActive();
 const isNative = Capacitor.isNativePlatform();
 
 const props = defineProps({
@@ -85,14 +88,19 @@ onMounted(() => {
   }
 });
 
+watch(textToSpeechActive, (active) => {
+  if (active) stopScroll();
+});
+
 onUnmounted(() => {
   stopScroll();
 });
 </script>
 
 <template>
+  <Transition name="fab-swap">
   <ion-fab
-      v-if="settingsStore.settings.showAutoScroll"
+      v-if="settingsStore.settings.showAutoScroll && !textToSpeechActive"
       :class="{ 'tabbar-hidden': !tabbarVisible, 'tabbar-gone': !tabbarVisible && isNative }"
       vertical="bottom"
       horizontal="end"
@@ -106,6 +114,7 @@ onUnmounted(() => {
       <ion-icon :icon="isScrolling ? pauseOutline : arrowDownOutline"/>
     </ion-fab-button>
   </ion-fab>
+  </Transition>
 </template>
 
 <style scoped>
@@ -126,8 +135,24 @@ ion-fab.tabbar-gone {
   --tabbar-top: var(--ion-safe-area-bottom, 0px);
 }
 
+.fab-swap-enter-active {
+  transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1), bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fab-swap-leave-active {
+  transition: opacity 0.15s ease, transform 0.15s ease, bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fab-swap-enter-from,
+.fab-swap-leave-to {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  ion-fab {
+  ion-fab,
+  .fab-swap-enter-active,
+  .fab-swap-leave-active {
     transition: none;
   }
 }

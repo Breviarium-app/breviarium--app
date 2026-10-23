@@ -1,13 +1,15 @@
 <script lang="ts" setup>
 import {computed, onUnmounted, ref, watch} from 'vue';
-import {IonFab, IonFabButton, IonIcon, toastController} from '@ionic/vue';
-import {closeOutline, headsetOutline, pause, play as playIcon, playSkipBack, playSkipForward} from 'ionicons/icons';
+import {IonFab, IonFabButton, IonIcon, IonPopover, toastController} from '@ionic/vue';
+import {closeOutline, headsetOutline, pause, play as playIcon, playSkipBack, playSkipForward, settingsOutline} from 'ionicons/icons';
 import {Capacitor} from '@capacitor/core';
 import {useI18n} from 'vue-i18n';
 import {useRoute} from 'vue-router';
 import {useSettingsStore} from '@/modules/app/stores/settingsStore';
 import {useTabbarVisibility} from '@/modules/app/composables/useTabbarVisibility';
-import {TextToSpeechService} from '@/modules/app/services/TextToSpeechService.ts';
+import {RATE_STEPS, TextToSpeechService} from '@/modules/app/services/TextToSpeechService.ts';
+import {useTextToSpeechActive} from '@/modules/app/composables/useTextToSpeechActive.ts';
+import TextToSpeechQuickSettings from '@/modules/app/components/molecules/TextToSpeechQuickSettings.vue';
 import {cleanForSpeech, collectSpeechChunks, type SpeechChunk} from '@/modules/app/constants/speechText.ts';
 import HapticsService from '@/modules/app/services/HapticsService.ts';
 
@@ -29,8 +31,6 @@ const READING_CLASS = 'tts-reading';
 const supportsHighlights = typeof CSS !== 'undefined' && 'highlights' in CSS;
 // Space the player and tabbar take at the bottom of the screen
 const BOTTOM_OBSTRUCTION = 150;
-// Speeds the player's speed button cycles through; finer values are in settings
-const RATE_STEPS = [0.8, 1, 1.2, 1.5, 2];
 
 const state = ref<'idle' | 'playing' | 'paused'>('idle');
 const chunks = ref<SpeechChunk[]>([]);
@@ -41,6 +41,11 @@ let session = 0;
 let highlighted: SpeechChunk | null = null;
 
 const isActive = computed(() => state.value !== 'idle');
+const textToSpeechActive = useTextToSpeechActive();
+const isShown = computed(() => isSupported && settingsStore.settings.showTextToSpeech);
+
+const settingsOpen = ref(false);
+const settingsEvent = ref<Event | undefined>();
 const progress = computed(() => chunks.value.length ? (index.value + 1) / chunks.value.length : 0);
 const rateLabel = computed(() => `${Number(settingsStore.settings.ttsRate.toFixed(1))}×`);
 
@@ -168,21 +173,40 @@ const cycleRate = () => {
   const rate = settingsStore.settings.ttsRate;
   settingsStore.settings.ttsRate = RATE_STEPS.find((step) => step > rate + 0.01) ?? RATE_STEPS[0];
   settingsStore.saveSettings();
-  // Restart the current piece so the new speed is heard straight away
-  if (state.value === 'playing') speakFromCurrent();
 };
+
+const openSettings = (event: Event) => {
+  HapticsService.light();
+  settingsEvent.value = event;
+  settingsOpen.value = true;
+};
+
+// Restart the current piece so a new speed, pitch or voice is heard straight away
+watch(
+    () => [settingsStore.settings.ttsRate, settingsStore.settings.ttsPitch, settingsStore.settings.ttsVoice],
+    () => state.value === 'playing' && speakFromCurrent(),
+);
+
+watch(isActive, (active) => {
+  textToSpeechActive.value = active;
+  if (!active) settingsOpen.value = false;
+});
 
 // Ionic keeps the page mounted when navigating forward, so stop on any route change
 watch(() => route.fullPath, stop);
 watch(() => settingsStore.settings.showTextToSpeech, (show) => !show && stop());
-onUnmounted(stop);
+onUnmounted(() => {
+  stop();
+  textToSpeechActive.value = false;
+});
 </script>
 
 <template>
   <ion-fab
-      v-if="isSupported && settingsStore.settings.showTextToSpeech"
+      v-if="isShown"
       :class="{
-        'beside-auto-scroll': settingsStore.settings.showAutoScroll,
+        // While reading, the settings button takes the auto-scroll button's place
+        'beside-auto-scroll': isActive || settingsStore.settings.showAutoScroll,
         'tabbar-hidden': !tabbarVisible,
         'tabbar-gone': !tabbarVisible && isNative
       }"
@@ -222,6 +246,33 @@ onUnmounted(stop);
       </div>
     </Transition>
   </ion-fab>
+
+  <Transition name="tts-settings">
+    <ion-fab
+        v-if="isShown && isActive"
+        :class="{ 'tabbar-hidden': !tabbarVisible, 'tabbar-gone': !tabbarVisible && isNative }"
+        class="settings-fab"
+        horizontal="end"
+        slot="fixed"
+        vertical="bottom"
+    >
+      <ion-fab-button :aria-label="t('tts.settings')" class="custom-fab-button" size="small" @click="openSettings">
+        <ion-icon :icon="settingsOutline" aria-hidden="true"/>
+      </ion-fab-button>
+    </ion-fab>
+  </Transition>
+
+  <ion-popover
+      :arrow="false"
+      :event="settingsEvent"
+      :is-open="settingsOpen"
+      alignment="end"
+      class="tts-settings-popover"
+      side="top"
+      @didDismiss="settingsOpen = false"
+  >
+    <TextToSpeechQuickSettings/>
+  </ion-popover>
 </template>
 
 <style scoped>
@@ -234,11 +285,16 @@ ion-fab {
   margin: var(--fab-margin);
   margin-right: calc(var(--fab-margin) + var(--beside));
   bottom: var(--tabbar-top) !important;
-  transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1), margin-right 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 ion-fab.beside-auto-scroll {
   --beside: 52px;
+}
+
+/* The settings button sits exactly where the auto-scroll button was */
+ion-fab.settings-fab {
+  --beside: 0px;
 }
 
 ion-fab.tabbar-hidden {
@@ -373,6 +429,48 @@ ion-fab.tabbar-gone {
   transition: transform 0.3s ease;
 }
 
+/* Settings button: spins in as the auto-scroll button shrinks away */
+.tts-settings-enter-active {
+  transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1), bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tts-settings-leave-active {
+  transition: opacity 0.15s ease, transform 0.15s ease, bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tts-settings-enter-from {
+  opacity: 0;
+  transform: scale(0.5) rotate(-90deg);
+}
+
+.tts-settings-leave-to {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+/* Minimal card above the settings button, in the theme's colours */
+ion-popover.tts-settings-popover {
+  --width: 272px;
+  --background: var(--background-color-card, var(--ion-background-color, #fff));
+  --box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+  --offset-y: -8px;
+}
+
+ion-popover.tts-settings-popover::part(content) {
+  border: none;
+  border-radius: 18px;
+  /* Rises slightly as it fades in; restarts on every open because the popover is display:none while closed */
+  animation: tts-settings-in 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: bottom right;
+}
+
+@keyframes tts-settings-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+}
+
 .tts-morph-enter-active,
 .tts-morph-leave-active {
   transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
@@ -388,8 +486,14 @@ ion-fab.tabbar-gone {
   ion-fab,
   .player-progress,
   .tts-morph-enter-active,
-  .tts-morph-leave-active {
+  .tts-morph-leave-active,
+  .tts-settings-enter-active,
+  .tts-settings-leave-active {
     transition: none;
+  }
+
+  ion-popover.tts-settings-popover::part(content) {
+    animation: none;
   }
 }
 
