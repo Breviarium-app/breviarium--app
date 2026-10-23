@@ -25,9 +25,11 @@ const SKIP_SELECTOR = 'button, ion-button, ion-segment, ion-fab, ion-icon, ion-m
 
 /**
  * Removes the rubric marks that make sense on paper but not out loud:
- * versicle/response signs, antiphon labels and the psalm's mediant/flexa marks.
+ * versicle/response signs, antiphon labels, the psalm's mediant/flexa marks and
+ * reading instructions that come inside the texts ("Se repite la antífona").
  */
 export const cleanForSpeech = (text: string): string => text
+    .replace(/se repite la ant[ií]fona\.?/gi, ' ')
     .replace(/[℣℟]\.?/g, ' ')
     .replace(/\b[VR]\/\.?/g, ' ')
     .replace(/\bAnt\.(\s*\d+\.)?/g, ' ')

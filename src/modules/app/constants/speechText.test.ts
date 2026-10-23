@@ -10,6 +10,11 @@ describe('cleanForSpeech', () => {
         expect(cleanForSpeech('V/. El Señor esté con vosotros. R/. Y con tu espíritu.')).toBe('El Señor esté con vosotros. Y con tu espíritu.');
     });
 
+    it('removes the "Se repite la antífona" instruction', () => {
+        expect(cleanForSpeech('Se repite la antífona')).toBe('');
+        expect(cleanForSpeech('el rebaño que él guía. Se repite la antífona.')).toBe('el rebaño que él guía.');
+    });
+
     it('removes psalm mediant and flexa marks', () => {
         expect(cleanForSpeech('Oh Dios, tú eres mi Dios, † por ti madrugo, * mi alma está sedienta')).toBe('Oh Dios, tú eres mi Dios, por ti madrugo, mi alma está sedienta');
     });

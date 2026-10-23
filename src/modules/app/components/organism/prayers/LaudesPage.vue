@@ -1,5 +1,5 @@
 <template>
-  <PrayerPage :display-liturgical-info="true" title="Laudes" share-page="laudes">
+  <PrayerPage :display-liturgical-info="true" share-page="laudes" title="Laudes">
     <div v-if="laudesMultiple && laudesMultiple?.length > 1">
       <ion-segment v-model="selectedOption">
         <ion-segment-button :value="0">
@@ -29,7 +29,7 @@
         ></span>
         <span v-else v-html="formatText($t('initialInvocationBody'))"></span>
         <div v-if="!settings.hideInvitatorium">
-          <h4 class="title title-color">
+          <h4 class="title title-color" data-tts-skip>
             {{ formatText($t("invitatory")) }}
           </h4>
           <p class="margin-y-md title-color ion-align-items-center ion-text-center" data-tts-skip
@@ -37,8 +37,8 @@
             <CrossComponent/>
             <small>{{ formatText($t("signOfTheCrossInvitatory")) }}</small>
           </p>
-          <p><span class="title-color"> ℣.</span>{{ $t("firstVersiculumOffice") }}</p>
-          <p><span class="title-color"> ℟.</span>{{ $t("firstResponseOffice") }}</p>
+          <p><span class="title-color"> ℣.&nbsp;</span>{{ $t("firstVersiculumOffice") }}</p>
+          <p><span class="title-color"> ℟.&nbsp;</span>{{ $t("firstResponseOffice") }}</p>
           <InvitatoryComponent/>
         </div>
         <HymnComponent :text="laudes?.himno"/>
