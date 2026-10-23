@@ -19,8 +19,9 @@ export interface TextPiece {
 // restarts the current piece, so the text is read in short pieces of a sentence or a few lines.
 const MAX_CHUNK_LENGTH = 160;
 
-// Controls and widgets inside the prayer that are not part of the text
-const SKIP_SELECTOR = 'button, ion-button, ion-segment, ion-fab, ion-icon, ion-modal, input, textarea, select, svg, script, style, [data-tts-skip]';
+// Not read aloud: controls and widgets inside the prayer, bible/source citations
+// (".reference-bible", e.g. "Rm 13, 11b-12") and anything marked with data-tts-skip
+const SKIP_SELECTOR = 'button, ion-button, ion-segment, ion-fab, ion-icon, ion-modal, input, textarea, select, svg, script, style, .reference-bible, [data-tts-skip]';
 
 /**
  * Removes the rubric marks that make sense on paper but not out loud:

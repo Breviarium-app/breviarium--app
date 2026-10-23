@@ -1,8 +1,5 @@
 <template>
-  <PrayerPage :display-liturgical-info="true" title="Oficio">
-    <template #header-end>
-      <ShareButton page="officium"/>
-    </template>
+  <PrayerPage :display-liturgical-info="true" title="Oficio" share-page="officium">
     <h4 data-tts-skip class="title-color">
       <small>{{ $t("laudesFirstExplanation") }}</small>
     </h4>
@@ -95,7 +92,6 @@ import HymnComponent from "@/modules/app/components/molecules/prayers/HymnCompon
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 import TeDeum from "@/modules/app/components/molecules/prayers/TeDeum.vue";
-import ShareButton from "@/modules/app/components/molecules/ShareButton.vue";
 
 const prayer = ref<OfficiumSchemaOutput>();
 const isTodayLentCondition = ref();

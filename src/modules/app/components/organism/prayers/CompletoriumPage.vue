@@ -1,8 +1,5 @@
 <template>
-  <PrayerPage :display-liturgical-info="true" title="Completas">
-    <template #header-end>
-      <ShareButton page="completorium"/>
-    </template>
+  <PrayerPage :display-liturgical-info="true" title="Completas" share-page="completorium">
 
     <h4 data-tts-skip class="title title-color">
       {{ formatText($t("initialInvocation")) }}
@@ -218,7 +215,6 @@ import LatinPrayerSelector from "@/modules/app/components/molecules/prayers/Lati
 import {useBreviariumStore} from "@/modules/app/stores/breviarium.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
-import ShareButton from "@/modules/app/components/molecules/ShareButton.vue";
 
 
 const prayer = ref<CompletoriumSchemaOutput>();

@@ -1,8 +1,5 @@
 <template>
-  <PrayerPage :display-liturgical-info="true" :title="props.prayerTitle">
-    <template #header-end>
-      <ShareButton :page="pageSegment"/>
-    </template>
+  <PrayerPage :display-liturgical-info="true" :title="props.prayerTitle" :share-page="pageSegment">
     <p data-tts-skip class="margin-y-md title-color ion-align-items-center ion-text-center">
       <CrossComponent/>
       <small>{{ formatText($t("signOfTheCrossSay")) }}</small>
@@ -90,7 +87,6 @@ import HymnComponent from "@/modules/app/components/molecules/prayers/HymnCompon
 import CrossComponent from "@/modules/app/components/molecules/prayers/CrossComponent.vue";
 import {isOrdinaryTime, isTodayLent} from "@/modules/app/constants/utils.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
-import ShareButton from "@/modules/app/components/molecules/ShareButton.vue";
 
 const prayer = ref<IntermediateSchemaOutput>();
 const isOrdinaryTimeCondition = ref()

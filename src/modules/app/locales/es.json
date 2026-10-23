@@ -83,7 +83,8 @@
       "reading": "Lectura",
       "text_to_speech": "Lectura en voz alta",
       "appearance": "Apariencia",
-      "general": "General"
+      "general": "General",
+      "alerts": "Notificaciones"
     },
     "hints": {
       "laudes_and_evangelium": "Incluye el Evangelio del día en Laudes, después del responsorio.",
@@ -443,5 +444,52 @@
     "speed": "Cambiar velocidad",
     "stop": "Detener lectura",
     "error": "No se pudo leer el texto. Revisa las voces instaladas en el dispositivo."
+  },
+  "prayer_menu": {
+    "open": "Más opciones",
+    "share": "Compartir",
+    "alert": "Aviso diario"
+  },
+  "alerts": {
+    "title": "Avisos de oración",
+    "intro": "Recibe cada día una notificación a la hora de cada oración. Los avisos funcionan sin conexión: se programan en tu dispositivo.",
+    "settings_hint": "Notificaciones diarias para la Liturgia de las Horas y el Ángelus.",
+    "summary_active": "{n} activo | {n} activos",
+    "summary_off": "Desactivados",
+    "prayers": {
+      "officium": "Oficio de lectura",
+      "laudes": "Laudes",
+      "tertia": "Tercia",
+      "angelus": "Ángelus",
+      "sexta": "Sexta",
+      "nona": "Nona",
+      "vesperae": "Vísperas",
+      "completorium": "Completas"
+    },
+    "bodies": {
+      "officium": "Es momento del Oficio de lectura.",
+      "laudes": "Señor, ábreme los labios, y mi boca proclamará tu alabanza.",
+      "tertia": "Es la hora de Tercia. Dios mío, ven en mi auxilio.",
+      "angelus": "Es mediodía: un momento para saludar a la Virgen María.",
+      "sexta": "Es la hora de Sexta. Dios mío, ven en mi auxilio.",
+      "nona": "Es la hora de Nona. Dios mío, ven en mi auxilio.",
+      "vesperae": "Es la hora de Vísperas. Dios mío, ven en mi auxilio.",
+      "completorium": "El Señor todopoderoso nos conceda una noche tranquila y una santa muerte."
+    },
+    "hints": {
+      "angelus": "En tiempo pascual abre el Regina Coeli."
+    },
+    "time_of": "Hora del aviso de {prayer}",
+    "modal_title": "Aviso de {prayer}",
+    "modal_hint": "Recibe cada día una notificación a la hora que elijas para no olvidar esta oración.",
+    "daily_at": "Cada día a las",
+    "manage_all": "Ver todos",
+    "done": "Listo",
+    "unsupported": "Los avisos de oración están disponibles en la aplicación para Android e iOS.",
+    "permission_denied": "Las notificaciones están desactivadas para Breviarium. Actívalas en los ajustes del dispositivo para recibir los avisos.",
+    "exact_alarm_hint": "Para que los avisos lleguen a la hora exacta, permite «Alarmas y recordatorios» para Breviarium.",
+    "exact_alarm_button": "Permitir avisos puntuales",
+    "channel_name": "Avisos de oración",
+    "channel_description": "Recordatorios diarios de la Liturgia de las Horas y del Ángelus"
   }
 }

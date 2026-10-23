@@ -1,5 +1,5 @@
 <template>
-  <PrayerPage :title="prayerTitle">
+  <PrayerPage :alert="prayerAlert" :title="prayerTitle">
     <component :is="prayerComponent"/>
   </PrayerPage>
 </template>
@@ -43,4 +43,6 @@ const prayers: Record<string, { title: string; component: any }> = {
 const prayerKey = computed(() => route.params.prayer as string);
 const prayerTitle = computed(() => prayers[prayerKey.value]?.title || "Oración");
 const prayerComponent = computed(() => prayers[prayerKey.value]?.component);
+// The Regina Coeli replaces the Angelus in Easter, so both offer the noon reminder
+const prayerAlert = computed(() => ['angelus', 'regina-coeli'].includes(prayerKey.value) ? 'angelus' as const : undefined);
 </script>

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import {watch} from 'vue';
+import {computed, watch} from 'vue';
+import {useRouter} from 'vue-router';
 import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
 import {Capacitor} from '@capacitor/core';
 import {useI18n} from 'vue-i18n';
@@ -12,9 +13,20 @@ import AutoScrollSpeedSelector from "@/modules/app/components/molecules/AutoScro
 import TextToSpeechSettings from "@/modules/app/components/molecules/TextToSpeechSettings.vue";
 import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue";
 import SettingToggle from "@/modules/app/components/molecules/settings/SettingToggle.vue";
+import SettingLink from "@/modules/app/components/molecules/settings/SettingLink.vue";
+import {useAlertsStore} from "@/modules/app/stores/alertsStore.ts";
+import {ALERT_KEYS} from "@/modules/app/constants/alerts.ts";
 
 const {t} = useI18n();
 const settingsStore = useSettingsStore();
+const alertsStore = useAlertsStore();
+const router = useRouter();
+
+const enabledAlerts = computed(() => ALERT_KEYS.filter((key) => alertsStore.alerts[key].enabled).length);
+const alertsSummary = computed(() => {
+  if (!alertsStore.isSupported) return undefined;
+  return enabledAlerts.value ? t('alerts.summary_active', enabledAlerts.value) : t('alerts.summary_off');
+});
 
 type ToggleKey = 'laudesEvangelium' | 'laudesOfficium' | 'vesperaeOfficium' | 'hideInvitatorium'
     | 'bienalOfficiumDefault' | 'deceased' | 'keepAwake' | 'hapticsActive';
@@ -79,6 +91,14 @@ const updateLatinPrayers = async (value: boolean) => {
                            :label="t('settings.prefer_latin_prayers')"
                            :model-value="settingsStore.settings.latinPrayers === 'la'"
                            @update:model-value="updateLatinPrayers"/>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">{{ t('settings.sections.alerts') }}</h2>
+          <div class="settings-group">
+            <SettingLink :hint="t('alerts.settings_hint')" :label="t('alerts.title')" :value="alertsSummary"
+                         @click="router.push('/settings/alerts')"/>
           </div>
         </section>
 

@@ -63,25 +63,41 @@ export const useSettingsStore = defineStore('settings', () => {
         });
     };
 
-    // The Wake Lock API rejects while the tab isn't visible, so a failed request here
-    // isn't fatal: retry once the tab becomes visible instead of surfacing an error.
+    // The web Wake Lock API rejects with NotAllowedError while the page isn't visible (e.g. the app
+    // was loaded in a background tab), so the request waits for the page to be shown instead.
+    let wakeLockRetryPending = false;
+
+    const requestWakeLockWhenVisible = () => {
+        if (wakeLockRetryPending) return;
+        wakeLockRetryPending = true;
+        document.addEventListener('visibilitychange', function retry() {
+            if (document.visibilityState !== 'visible') return;
+            document.removeEventListener('visibilitychange', retry);
+            wakeLockRetryPending = false;
+            // The setting may have been turned off meanwhile
+            if (settings.value.keepAwake) applyKeepAwake(true);
+        });
+    };
+
     const applyKeepAwake = async (keepAwake: boolean) => {
         try {
-            const isSupported = await KeepAwakeService.isSupported();
-            if (keepAwake && isSupported) {
-                await KeepAwakeService.keepAwake();
-            } else if (!keepAwake) {
+            if (!await KeepAwakeService.isSupported()) return;
+            if (!keepAwake) {
                 await KeepAwakeService.allowSleep();
+                return;
             }
+            if (!Capacitor.isNativePlatform() && document.visibilityState !== 'visible') {
+                requestWakeLockWhenVisible();
+                return;
+            }
+            await KeepAwakeService.keepAwake();
         } catch (error) {
-            console.error('Error applying keep-awake setting:', error);
-            if (keepAwake && typeof document !== 'undefined' && document.visibilityState === 'hidden') {
-                document.addEventListener('visibilitychange', function retry() {
-                    if (document.visibilityState !== 'visible') return;
-                    document.removeEventListener('visibilitychange', retry);
-                    KeepAwakeService.keepAwake().catch((err) => console.error('Error applying keep-awake setting:', err));
-                });
+            // Expected when the page gets hidden right as the lock is requested: try again once visible
+            if (keepAwake && error instanceof DOMException && error.name === 'NotAllowedError') {
+                requestWakeLockWhenVisible();
+                return;
             }
+            console.error('Error applying keep-awake setting:', error);
         }
     };
 

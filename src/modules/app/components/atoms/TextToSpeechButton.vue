@@ -45,9 +45,11 @@ const progress = computed(() => chunks.value.length ? (index.value + 1) / chunks
 const rateLabel = computed(() => `${Number(settingsStore.settings.ttsRate.toFixed(1))}×`);
 
 const ionContent = () => props.target?.closest('ion-content') as HTMLIonContentElement | null;
+// <ion-page> renders as a div with the "ion-page" class
+const ionPage = () => props.target?.closest('.ion-page');
 
 const visibleTop = (): number => {
-  const header = props.target?.closest('ion-page')?.querySelector('ion-header');
+  const header = ionPage()?.querySelector('ion-header');
   return header?.getBoundingClientRect().bottom ?? 0;
 };
 
@@ -65,7 +67,7 @@ const follow = (chunk: SpeechChunk) => {
 const sectionOf = (element: HTMLElement): string => {
   const headings = Array.from(props.target?.querySelectorAll('h1, h2, h3, h4') ?? []);
   const heading = headings.filter((h) => h === element || h.compareDocumentPosition(element) & Node.DOCUMENT_POSITION_FOLLOWING).pop();
-  const pageTitle = props.target?.closest('ion-page')?.querySelector('ion-title')?.textContent ?? '';
+  const pageTitle = ionPage()?.querySelector('ion-title')?.textContent ?? '';
   return cleanForSpeech(heading?.textContent ?? pageTitle);
 };
 
@@ -250,13 +252,13 @@ ion-fab.tabbar-gone {
 .custom-fab-button {
   --box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   --background: var(--ion-color-primary);
-  --background-hover: white;
-  --background-focused: white;
-  --background-activated: white;
-  --color: white;
-  --color-hover: #ff4444;
-  --color-focused: #ff4444;
-  --color-activated: #ff4444;
+  --background-hover: var(--background-color-card);
+  --background-focused: var(--background-color-card);
+  --background-activated: var(--background-color-card);
+  --color: var(--ion-color-primary-contrast, #fff);
+  --color-hover: var(--ion-color-primary);
+  --color-focused: var(--ion-color-primary);
+  --color-activated: var(--ion-color-primary);
 }
 
 .custom-fab-button::part(native) {
@@ -264,11 +266,11 @@ ion-fab.tabbar-gone {
 }
 
 .custom-fab-button:hover::part(native) {
-  background-color: white !important;
+  background-color: var(--background-color-card) !important;
 }
 
 .custom-fab-button:hover ion-icon {
-  color: #ff4444 !important;
+  color: var(--ion-color-primary) !important;
 }
 
 /* Player: grows to the left from where the button was, vertically centred with the
@@ -285,8 +287,9 @@ ion-fab.tabbar-gone {
   padding: 0 4px;
   overflow: hidden;
   border-radius: 22px;
-  background: var(--background-color-card, var(--ion-background-color));
-  color: var(--ion-text-color);
+  background: var(--background-color-card, var(--ion-background-color, #fff));
+  /* The light theme doesn't set --ion-text-color, so fall back like Ionic does */
+  color: var(--ion-text-color, #000);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   transform-origin: right center;
 }
@@ -325,7 +328,7 @@ ion-fab.tabbar-gone {
 
 .player-button.main {
   background: var(--ion-color-primary);
-  color: white;
+  color: var(--ion-color-primary-contrast, #fff);
 }
 
 .player-button.rate {

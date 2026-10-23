@@ -5,8 +5,12 @@ PODS:
     - Capacitor
   - CapacitorCommunityKeepAwake (8.0.1):
     - Capacitor
+  - CapacitorCommunityTextToSpeech (8.0.2):
+    - Capacitor
   - CapacitorCordova (8.5.3)
   - CapacitorHaptics (8.0.2):
+    - Capacitor
+  - CapacitorLocalNotifications (8.3.1):
     - Capacitor
   - CapacitorPreferences (8.0.1):
     - Capacitor
@@ -17,8 +21,10 @@ DEPENDENCIES:
   - "Capacitor (from `../../node_modules/.pnpm/@capacitor+ios@8.5.3_@capacitor+core@8.5.3/node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../node_modules/.pnpm/@capacitor+app@8.1.2_@capacitor+core@8.5.3/node_modules/@capacitor/app`)"
   - "CapacitorCommunityKeepAwake (from `../../node_modules/.pnpm/@capacitor-community+keep-awake@8.0.1_@capacitor+core@8.5.3/node_modules/@capacitor-community/keep-awake`)"
+  - "CapacitorCommunityTextToSpeech (from `../../node_modules/.pnpm/@capacitor-community+text-to-speech@8.0.2_@capacitor+core@8.5.3/node_modules/@capacitor-community/text-to-speech`)"
   - "CapacitorCordova (from `../../node_modules/.pnpm/@capacitor+ios@8.5.3_@capacitor+core@8.5.3/node_modules/@capacitor/ios`)"
   - "CapacitorHaptics (from `../../node_modules/.pnpm/@capacitor+haptics@8.0.2_@capacitor+core@8.5.3/node_modules/@capacitor/haptics`)"
+  - "CapacitorLocalNotifications (from `../../node_modules/.pnpm/@capacitor+local-notifications@8.3.1_@capacitor+core@8.5.3/node_modules/@capacitor/local-notifications`)"
   - "CapacitorPreferences (from `../../node_modules/.pnpm/@capacitor+preferences@8.0.1_@capacitor+core@8.5.3/node_modules/@capacitor/preferences`)"
   - "CapacitorShare (from `../../node_modules/.pnpm/@capacitor+share@8.0.3_@capacitor+core@8.5.3/node_modules/@capacitor/share`)"
 
@@ -29,10 +35,14 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/.pnpm/@capacitor+app@8.1.2_@capacitor+core@8.5.3/node_modules/@capacitor/app"
   CapacitorCommunityKeepAwake:
     :path: "../../node_modules/.pnpm/@capacitor-community+keep-awake@8.0.1_@capacitor+core@8.5.3/node_modules/@capacitor-community/keep-awake"
+  CapacitorCommunityTextToSpeech:
+    :path: "../../node_modules/.pnpm/@capacitor-community+text-to-speech@8.0.2_@capacitor+core@8.5.3/node_modules/@capacitor-community/text-to-speech"
   CapacitorCordova:
     :path: "../../node_modules/.pnpm/@capacitor+ios@8.5.3_@capacitor+core@8.5.3/node_modules/@capacitor/ios"
   CapacitorHaptics:
     :path: "../../node_modules/.pnpm/@capacitor+haptics@8.0.2_@capacitor+core@8.5.3/node_modules/@capacitor/haptics"
+  CapacitorLocalNotifications:
+    :path: "../../node_modules/.pnpm/@capacitor+local-notifications@8.3.1_@capacitor+core@8.5.3/node_modules/@capacitor/local-notifications"
   CapacitorPreferences:
     :path: "../../node_modules/.pnpm/@capacitor+preferences@8.0.1_@capacitor+core@8.5.3/node_modules/@capacitor/preferences"
   CapacitorShare:
@@ -42,11 +52,13 @@ SPEC CHECKSUMS:
   Capacitor: 2f67eaeb8ed79909cd35b5e7439a5c2a9ca58e0f
   CapacitorApp: 7b7e43debe505bc61beedb83796aa1368c86078b
   CapacitorCommunityKeepAwake: d41922812644562e94a79acaf7f41e6d9413af8c
+  CapacitorCommunityTextToSpeech: a9f7c5bcdc424197d11bb7ae3e9010b415e931b0
   CapacitorCordova: 0b7326439c7a09fc5d20eced5e0dab986327a493
   CapacitorHaptics: 296f771ecd89c7a1bd92a7b6826a7d268e2e70f5
+  CapacitorLocalNotifications: e0747a329ddde3074d52dc74a003688af90e42be
   CapacitorPreferences: cca2021f386efb75947c850334447d9ff22b14f1
   CapacitorShare: 5b5e53347556bee89ae6163ed20b5b3c25fe75f1
 
-PODFILE CHECKSUM: 9b8a7e1e304792738cb47075981553617e975840
+PODFILE CHECKSUM: 5e8dc40a0d86e2eab37e829ff4aa68abdd507b41
 
 COCOAPODS: 1.16.2

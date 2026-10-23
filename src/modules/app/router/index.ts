@@ -51,6 +51,10 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'Settings',
                 component: SettingsPage
             }, {
+                path: '/settings/alerts',
+                name: 'AlertsSettings',
+                component: () => import('../views/AlertsSettingsPage.vue')
+            }, {
                 path: '/privacy',
                 name: 'Privacy',
                 component: () => import('../components/organism/PrivacyPage.vue')

@@ -21,23 +21,10 @@ import '@ionic/vue/css/flex-utils.css'
 import '@ionic/vue/css/display.css'
 
 import '@/style.css'
-import {createI18n} from "vue-i18n";
-import es from '@/modules/app/locales/es.json'
-import en from '@/modules/app/locales/en.json'
+import {i18n} from "@/modules/app/i18n.ts";
 import {welcomeMsg} from "@/modules/onboarding/welcome.ts";
 
 const pinia = createPinia();
-
-const i18n = createI18n({
-    locale: 'es',
-    fallbackLocale: 'es',
-    warnHtmlMessage: false,
-    warnHtmlInMessage: 'off',
-    messages: {
-        es,
-        en
-    },
-})
 
 const app = createApp(App)
     .use(IonicVue, {mode: 'ios'})
