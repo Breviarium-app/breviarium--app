@@ -1,22 +1,22 @@
 import {
-  appsOutline,
-  bookmarkOutline,
-  bookOutline,
-  calendarOutline,
-  colorPaletteOutline,
-  contrastOutline,
-  headsetOutline,
-  informationCircleOutline,
-  languageOutline,
-  notificationsOutline,
-  optionsOutline,
-  phonePortraitOutline,
-  playCircleOutline,
-  roseOutline,
-  searchOutline,
-  shareOutline,
-  shieldCheckmarkOutline,
-  swapHorizontalOutline,
+    appsOutline,
+    bookmarkOutline,
+    bookOutline,
+    calendarOutline,
+    colorPaletteOutline,
+    contrastOutline,
+    headsetOutline,
+    informationCircleOutline,
+    languageOutline,
+    notificationsOutline,
+    optionsOutline,
+    phonePortraitOutline,
+    playCircleOutline,
+    roseOutline,
+    searchOutline,
+    shareOutline,
+    shieldCheckmarkOutline,
+    swapHorizontalOutline,
 } from "ionicons/icons";
 
 export type ReleaseNote = { icon: string; text: string };
@@ -124,12 +124,6 @@ export const RELEASE_NOTES: Record<string, ReleaseNote[]> = {
             text: "El Ángelus, ahora también en latín",
         },
     ],
-    "3.4.2": [
-        {
-            icon: languageOutline,
-            text: "El Acordaos, ahora también en latín (Memoráre)",
-        },
-    ],
     "3.4.3": [
         {
             icon: roseOutline,
@@ -139,5 +133,9 @@ export const RELEASE_NOTES: Record<string, ReleaseNote[]> = {
             icon: bookOutline,
             text: "Ahora se muestra el tomo del salterio correspondiente en la liturgia de las horas",
         },
+        {
+            icon: languageOutline,
+            text: "El Acordaos, ahora también en latín (Memoráre)",
+        }
     ],
 };
