@@ -26,7 +26,7 @@
     "@ionic/vue": "^9.0.8",
     "@ionic/vue-router": "^9.0.8",
     "biblia-de-jerusalen": "^1.0.8",
-    "breviarium": "latest",
+    "breviarium": "^3.1.7",
     "date-fns": "^4.4.0",
     "i18next": "^26.4.5",
     "ionicons": "^8.1.0",
