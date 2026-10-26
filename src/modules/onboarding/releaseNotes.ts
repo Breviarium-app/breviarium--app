@@ -124,7 +124,7 @@ export const RELEASE_NOTES: Record<string, ReleaseNote[]> = {
             text: "El Ángelus, ahora también en latín",
         },
     ],
-    "3.4.3": [
+    "3.4.2": [
         {
             icon: roseOutline,
             text: "Nueva oración al Espíritu Santo: Secuencia de Pentecostés",
