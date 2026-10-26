@@ -91,6 +91,12 @@ const groups = computed(() => [
     ],
   },
   {
+    title: "Al Espíritu Santo",
+    prayers: [
+      {name: "Secuencia de Pentecostés", route: "oracion-espiritu-santo", description: "Invocación clásica previa al estudio o la toma de decisiones"},
+    ],
+  },
+  {
     title: "A los ángeles y santos",
     prayers: [
       {name: "San Miguel Arcángel", route: "san-miguel", description: "Del papa León XIII"},

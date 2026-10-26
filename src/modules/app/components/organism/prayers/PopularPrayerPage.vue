@@ -22,6 +22,7 @@ import AlmaDeCristoComponent from "@/modules/app/components/molecules/prayers/Al
 import ComunionEspiritualComponent from "@/modules/app/components/molecules/prayers/ComunionEspiritualComponent.vue";
 import SagradaFamiliaComponent from "@/modules/app/components/molecules/prayers/SagradaFamiliaComponent.vue";
 import AcordaosComponent from "@/modules/app/components/molecules/prayers/AcordaosComponent.vue";
+import OracionEspirituSantoComponent from "@/modules/app/components/molecules/prayers/OracionEspirituSantoComponent.vue";
 
 const route = useRoute();
 
@@ -40,6 +41,7 @@ const prayers: Record<string, { title: string; component: any }> = {
   "alma-de-cristo": {title: "Alma de Cristo", component: AlmaDeCristoComponent},
   "comunion-espiritual": {title: "Comunión espiritual", component: ComunionEspiritualComponent},
   "sagrada-familia": {title: "Oración a la Sagrada Familia", component: SagradaFamiliaComponent},
+  "oracion-espiritu-santo": {title: "Secuencia de Pentecostés", component: OracionEspirituSantoComponent},
 };
 
 const prayerKey = computed(() => route.params.prayer as string);

@@ -13,7 +13,7 @@ onMounted(async () => {
 <template>
   <!--  <p>{{ liturgyInfo }}</p>-->
   <p>{{ liturgyInfo?.celebration }}</p>
-  <p>Semana {{ liturgyInfo?.psaltery_week }} del salterio</p>
+  <p>Semana {{ liturgyInfo?.psaltery_week }} del salterio, tomo {{ liturgyInfo?.book }}</p>
 </template>
 
 <style scoped>
