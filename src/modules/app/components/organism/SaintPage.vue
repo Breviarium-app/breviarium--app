@@ -1,12 +1,10 @@
 <script lang="ts" setup>
 import {
   IonBackButton,
-  IonButton,
   IonButtons,
   IonContent,
   IonHeader,
   IonIcon,
-  IonModal,
   IonPage,
   IonSearchbar,
   IonTitle,
@@ -17,7 +15,7 @@ import {storeToRefs} from "pinia";
 import {useRouter} from "vue-router";
 import {useI18n} from "vue-i18n";
 import {SaintInfo} from "sanctus";
-import {arrowForward, closeOutline, peopleOutline} from "ionicons/icons";
+import {arrowForward, chevronDownOutline, chevronUpOutline, peopleOutline} from "ionicons/icons";
 import {useSanctusStore} from "@/modules/app/stores/sanctus.ts";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 import {formatFeastDay, saintPath} from "@/modules/app/constants/saints.ts";
@@ -25,6 +23,8 @@ import SaintList from "@/modules/app/components/molecules/saints/SaintList.vue";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 
 const SEARCH_LIMIT = 50;
+// Other saints of the day stay collapsed under this count, behind a fade + "show all" toggle
+const DAY_SAINTS_COLLAPSED_COUNT = 3;
 
 const {t, n, locale} = useI18n();
 const router = useRouter();
@@ -38,17 +38,26 @@ const feastDay = computed(() => selectedSaint.value
     ? formatFeastDay(selectedSaint.value.month, selectedSaint.value.day, locale.value)
     : '');
 
+// Same facts shown on the full saint detail page
+const facts = computed(() => [
+  {label: t('saints.birth'), value: selectedSaint.value?.birth},
+  {label: t('saints.death'), value: selectedSaint.value?.dead},
+  {label: t('saints.meaning'), value: selectedSaint.value?.meaning},
+].filter((fact) => fact.value));
+
 const openSaint = (saint: SaintInfo) => {
   HapticsService.light();
-  isDayListOpen.value = false;
   router.push(saintPath(saint));
 };
 
-/* All saints of the day */
-const isDayListOpen = ref(false);
-const setDayListOpen = (open: boolean) => {
+/* Other saints of the day, shown inline below the main card */
+const otherSaintsOfDay = computed(() =>
+    (saintsOfDay.value ?? []).filter((saint) => saint.name !== selectedSaint.value?.name));
+const isDayListExpanded = ref(false);
+const canCollapseDayList = computed(() => otherSaintsOfDay.value.length > DAY_SAINTS_COLLAPSED_COUNT);
+const toggleDayList = () => {
   HapticsService.light();
-  isDayListOpen.value = open;
+  isDayListExpanded.value = !isDayListExpanded.value;
 };
 
 /* Santoral search */
@@ -87,19 +96,36 @@ const scrollToSearch = () => {
             <button class="saint-name-link btn" @click="openSaint(selectedSaint)">{{ selectedSaint.name }}</button>
           </h2>
 
+          <div v-if="facts.length" class="saint-facts">
+            <div v-for="fact in facts" :key="fact.label" class="fact-chip">
+              <span class="fact-label">{{ fact.label }}</span>
+              <span class="fact-value">{{ fact.value }}</span>
+            </div>
+          </div>
+
           <p v-if="selectedSaint.description" class="saint-history">{{ selectedSaint.description }}</p>
           <p v-else class="saint-no-bio">{{ t('saints.no_bio') }}</p>
 
           <div class="saint-card-actions">
-            <button v-if="saintsOfDay?.length" class="day-badge btn" @click="setDayListOpen(true)">
-              <ion-icon :icon="peopleOutline" aria-hidden="true"/>
-              {{ t('saints.day_saints', {n: saintsOfDay.length}) }}
-            </button>
             <button class="details-link btn" @click="openSaint(selectedSaint)">
               {{ t('saints.view_details') }}
               <ion-icon :icon="arrowForward" aria-hidden="true"/>
             </button>
           </div>
+        </section>
+
+        <section v-if="otherSaintsOfDay.length" class="day-section">
+          <h2 class="section-title">
+            <ion-icon :icon="peopleOutline" aria-hidden="true"/>
+            {{ t('saints.day_saints', {n: otherSaintsOfDay.length}) }}
+          </h2>
+          <div class="day-list-wrapper" :class="{ 'day-list-wrapper--collapsed': canCollapseDayList && !isDayListExpanded }">
+            <SaintList :saints="otherSaintsOfDay" @select="openSaint"/>
+          </div>
+          <button v-if="canCollapseDayList" class="day-toggle btn" @click="toggleDayList">
+            {{ isDayListExpanded ? t('saints.show_less_day_saints') : t('saints.show_all_day_saints') }}
+            <ion-icon :icon="isDayListExpanded ? chevronUpOutline : chevronDownOutline" aria-hidden="true"/>
+          </button>
         </section>
 
         <section ref="searchSectionRef" class="search-section">
@@ -137,23 +163,6 @@ const scrollToSearch = () => {
           <a href="https://breviarium.es/sanctus/" target="_blank">Sanctus</a>
         </p>
       </div>
-
-      <Teleport to="body">
-        <ion-modal :breakpoints="[0, 0.75, 1]" :expand-to-scroll="false" :initial-breakpoint="0.75"
-                   :is-open="isDayListOpen" @didDismiss="isDayListOpen = false">
-          <ion-content>
-            <div class="sheet-header">
-              <h2 class="sheet-title">{{ t('saints.day_saints_title', {date: feastDay}) }}</h2>
-              <ion-button class="close-button" fill="clear" @click="setDayListOpen(false)">
-                <ion-icon :icon="closeOutline"/>
-              </ion-button>
-            </div>
-            <div class="sheet-content">
-              <SaintList :saints="saintsOfDay ?? []" @select="openSaint"/>
-            </div>
-          </ion-content>
-        </ion-modal>
-      </Teleport>
     </ion-content>
   </ion-page>
 </template>
@@ -228,27 +237,39 @@ button {
   opacity: 0.6;
 }
 
+.saint-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.fact-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 10px;
+  background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.06);
+}
+
+.fact-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.fact-value {
+  font-size: 0.85rem;
+}
+
 .saint-card-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
   margin-top: 0.1rem;
-}
-
-.day-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.8rem 0.35rem 0.6rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  color: var(--ion-color-primary);
-  background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.06);
-}
-
-.day-badge ion-icon {
-  font-size: 1.05rem;
 }
 
 .details-link {
@@ -260,6 +281,48 @@ button {
   color: var(--ion-color-primary);
 }
 
+.day-section {
+  margin-top: 1.4rem;
+}
+
+.day-list-wrapper {
+  position: relative;
+  overflow: hidden;
+  max-height: 40rem;
+  transition: max-height 0.3s ease;
+}
+
+.day-list-wrapper--collapsed {
+  max-height: 11rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .day-list-wrapper {
+    transition: none;
+  }
+}
+
+.day-list-wrapper--collapsed::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 3.5rem;
+  background: linear-gradient(to bottom, transparent, var(--background-color-card));
+  pointer-events: none;
+}
+
+.day-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: 100%;
+  margin-top: 0.6rem;
+  padding: 0.5rem 0;
+  font-size: 0.85rem;
+  color: var(--ion-color-primary);
+}
+
 .search-section {
   /* Tall enough to scroll the search box to the top even with few results */
   min-height: calc(100vh - 120px);
@@ -267,12 +330,19 @@ button {
 }
 
 .section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   margin: 0 0.25rem 0.4rem;
   font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   opacity: 0.6;
+}
+
+.section-title ion-icon {
+  font-size: 0.95rem;
 }
 
 .saint-search {
@@ -292,33 +362,5 @@ button {
   text-align: center;
   padding: 1.5em 0;
   font-size: 0.9rem;
-}
-
-ion-modal {
-  --background: var(--ion-background-color);
-  --border-radius: 20px;
-}
-
-.sheet-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.25rem 0.5rem 0.75rem 1.25rem;
-}
-
-.sheet-title {
-  margin: 0;
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--ion-color-primary);
-}
-
-.close-button {
-  --color: var(--ion-text-color);
-  font-size: 1.1rem;
-}
-
-.sheet-content {
-  padding: 0 1rem 2rem;
 }
 </style>
