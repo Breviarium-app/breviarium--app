@@ -23,6 +23,10 @@ const MAX_CHUNK_LENGTH = 160;
 // (".reference-bible", e.g. "Rm 13, 11b-12") and anything marked with data-tts-skip
 const SKIP_SELECTOR = 'button, ion-button, ion-segment, ion-fab, ion-icon, ion-modal, input, textarea, select, svg, script, style, .reference-bible, [data-tts-skip]';
 
+// A block marked data-tts-repeat="N" is spoken N times in a row (e.g. a decade's Hail Mary,
+// shown once on screen with a "×10" badge rather than printed out ten times)
+const REPEAT_ATTR = 'data-tts-repeat';
+
 /**
  * Removes the rubric marks that make sense on paper but not out loud:
  * versicle/response signs, antiphon labels, the psalm's mediant/flexa marks and
@@ -147,9 +151,13 @@ export const collectSpeechChunks = (root: HTMLElement): SpeechChunk[] => {
 
     const flush = () => {
         if (currentBlock && hasWords(raw)) {
-            for (const piece of splitIntoPieces(raw)) {
-                chunks.push({element: currentBlock, range: toRange(piece.start, piece.end), text: piece.text});
-            }
+            const pieces = splitIntoPieces(raw).map((piece) => ({
+                element: currentBlock as HTMLElement,
+                range: toRange(piece.start, piece.end),
+                text: piece.text,
+            }));
+            const repeat = Math.max(1, parseInt(currentBlock.getAttribute(REPEAT_ATTR) ?? '1', 10) || 1);
+            for (let i = 0; i < repeat; i++) chunks.push(...pieces);
         }
         raw = '';
         segments = [];
