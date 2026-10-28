@@ -88,6 +88,9 @@ const groups = computed(() => [
       {name: "Letanías de la Humildad", route: "litanies-humility", description: "Del cardenal Rafael Merry del Val"},
       {name: "Alma de Cristo", route: "alma-de-cristo", description: "Oración eucarística clásica"},
       {name: "Comunión espiritual", route: "comunion-espiritual", description: "De san Alfonso María de Ligorio"},
+      {name: "Consagración al Corazón de Jesús y María", route: "consagracion-corazon-jesus-maria", description: "Consagración de la familia a los Sagrados Corazones"},
+      {name: "Soneto a Cristo crucificado", route: "soneto-cristo-crucificado", description: "«No me mueve, mi Dios, para quererte», autor anónimo"},
+      {name: "Vía Crucis", route: "via-crucis", description: "Las 14 estaciones del camino de la cruz"},
     ],
   },
   {

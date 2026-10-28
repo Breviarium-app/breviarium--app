@@ -1,5 +1,5 @@
 <template>
-  <PrayerPage :alert="prayerAlert" :title="prayerTitle">
+  <PrayerPage :alert="prayerAlert" :title="prayerTitle" :static-share-page="`popular-prayers/${prayerKey}`">
     <component :is="prayerComponent"/>
   </PrayerPage>
 </template>
@@ -23,6 +23,9 @@ import ComunionEspiritualComponent from "@/modules/app/components/molecules/pray
 import SagradaFamiliaComponent from "@/modules/app/components/molecules/prayers/SagradaFamiliaComponent.vue";
 import AcordaosComponent from "@/modules/app/components/molecules/prayers/AcordaosComponent.vue";
 import OracionEspirituSantoComponent from "@/modules/app/components/molecules/prayers/OracionEspirituSantoComponent.vue";
+import ConsagracionCorazonJesusMariaComponent from "@/modules/app/components/molecules/prayers/ConsagracionCorazonJesusMariaComponent.vue";
+import SonetoCristoCrucificadoComponent from "@/modules/app/components/molecules/prayers/SonetoCristoCrucificadoComponent.vue";
+import ViaCrucisComponent from "@/modules/app/components/molecules/prayers/ViaCrucisComponent.vue";
 
 const route = useRoute();
 
@@ -42,6 +45,9 @@ const prayers: Record<string, { title: string; component: any }> = {
   "comunion-espiritual": {title: "Comunión espiritual", component: ComunionEspiritualComponent},
   "sagrada-familia": {title: "Oración a la Sagrada Familia", component: SagradaFamiliaComponent},
   "oracion-espiritu-santo": {title: "Secuencia de Pentecostés", component: OracionEspirituSantoComponent},
+  "consagracion-corazon-jesus-maria": {title: "Consagración al Corazón de Jesús y María", component: ConsagracionCorazonJesusMariaComponent},
+  "soneto-cristo-crucificado": {title: "Soneto a Cristo crucificado", component: SonetoCristoCrucificadoComponent},
+  "via-crucis": {title: "Vía Crucis", component: ViaCrucisComponent},
 };
 
 const prayerKey = computed(() => route.params.prayer as string);

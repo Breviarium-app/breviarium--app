@@ -44,6 +44,11 @@ const props = defineProps({
     type: String,
     required: false,
   },
+  // Full, non-dated path used for the share link instead, e.g. "popular-prayers/rosary"
+  staticSharePage: {
+    type: String,
+    required: false,
+  },
   // Daily reminder offered in the menu; defaults to the one matching sharePage
   alert: {
     type: String as () => AlertKey,
@@ -95,7 +100,7 @@ const openNote = () => {
 };
 
 const alertsStore = useAlertsStore();
-const {share} = useShareLink();
+const {share, shareStatic} = useShareLink();
 
 const alertKey = computed<AlertKey | null>(() => {
   if (!alertsStore.isSupported) return null;
@@ -108,8 +113,11 @@ const alertModalKey = ref<AlertKey | null>(null);
 const alertEnabled = computed(() => alertKey.value !== null && alertsStore.alerts[alertKey.value].enabled);
 
 const sharePrayer = () => {
-  HapticsService.light();
-  share(props.sharePage!);
+  if (props.staticSharePage) {
+    shareStatic(props.staticSharePage);
+  } else {
+    share(props.sharePage!);
+  }
 };
 
 const writeNote = () => {
@@ -148,7 +156,7 @@ const prayerWrapperStyle = computed(() => ({
           <ion-button v-if="showHeaderReader" :aria-label="t('tts.start')" @click="reader?.start()">
             <ion-icon slot="icon-only" :icon="headsetOutline" aria-hidden="true"></ion-icon>
           </ion-button>
-          <ion-button v-if="sharePage" :aria-label="t('prayer_menu.share')" @click="sharePrayer">
+          <ion-button v-if="sharePage || staticSharePage" :aria-label="t('prayer_menu.share')" @click="sharePrayer">
             <ion-icon slot="icon-only" :icon="shareOutline" aria-hidden="true"></ion-icon>
           </ion-button>
           <ion-button :aria-label="t('diary.write_note')" @click="writeNote" @pointerdown="captureSelection">

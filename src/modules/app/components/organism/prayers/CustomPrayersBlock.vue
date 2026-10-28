@@ -1,7 +1,7 @@
 <template>
   <div v-if="storageManager.loadIntentions().length > 0" class="custom-prayers">
     <ul>
-      <li v-for="element in storageManager.loadIntentions()">- {{ element }}</li>
+      <li v-for="element in storageManager.loadIntentions()" :key="element.id">- {{ element.text }}</li>
     </ul>
     <p>
       <small>{{ $t('prayer_intentions_modify_explanation') }} <a
