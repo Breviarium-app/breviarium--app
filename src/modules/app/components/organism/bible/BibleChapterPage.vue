@@ -29,16 +29,31 @@
         </header>
 
         <div class="reader-text">
-          <p
-              v-for="(verse, index) in verses"
-              :id="`v${verse.number}`"
-              :key="verse.number"
-              :class="{'is-highlighted': verse.number === highlightedVerse}"
-              class="verse"
-              @click="onVerseTap(verse)"
-          >
-            <sup class="verse-number">{{ verse.number }}</sup><template v-if="index === 0"><span class="verse-initial">{{ verse.text.charAt(0).toUpperCase() }}</span>{{ verse.text.slice(1) }}</template><template v-else>{{ verse.text }}</template>
-          </p>
+          <div v-for="(verse, index) in verses" :key="verse.number" class="verse-row">
+            <aside
+                v-if="verse.references.length"
+                :aria-label="t('bible.cross_references')"
+                class="verse-references"
+            >
+              <template v-for="reference in verse.references" :key="reference.label">
+                <a
+                    v-if="reference.target"
+                    class="verse-reference"
+                    href="#"
+                    @click.prevent="openReference(verse, reference)"
+                >{{ reference.label }}</a>
+                <span v-else class="verse-reference">{{ reference.label }}</span>
+              </template>
+            </aside>
+            <p
+                :id="`v${verse.number}`"
+                :class="{'is-highlighted': verse.number === highlightedVerse}"
+                class="verse"
+                @click="onVerseTap(verse)"
+            >
+              <sup class="verse-number">{{ verse.number }}</sup><template v-if="index === 0"><span class="verse-initial">{{ verse.text.charAt(0).toUpperCase() }}</span>{{ verse.text.slice(1) }}</template><template v-else>{{ verse.text }}</template>
+            </p>
+          </div>
         </div>
 
         <nav :aria-label="t('bible.chapter_nav')" class="chapter-nav">
@@ -74,6 +89,7 @@
         <ion-button fill="outline" router-link="/bible">{{ t('bible.back_to_bible') }}</ion-button>
       </div>
 
+      <BibleCrossReferenceTrail v-if="verses" slot="fixed" @select="goToTrailStep"/>
       <AutoScrollButton v-if="verses"/>
     </ion-content>
 
@@ -94,21 +110,26 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  onIonViewDidEnter
+  onIonViewDidEnter,
+  useIonRouter
 } from '@ionic/vue';
 import {chevronBack, chevronForward, gridOutline, journalOutline} from 'ionicons/icons';
 import {useRoute} from 'vue-router';
 import {useI18n} from 'vue-i18n';
-import {bibleStore} from '@/modules/app/stores/bibleStore.ts';
+import {bibleStore, type BibleCrossReference} from '@/modules/app/stores/bibleStore.ts';
+import {bibleTrailStore, type TrailEntry} from '@/modules/app/stores/bibleTrailStore.ts';
 import {useSettingsStore} from '@/modules/app/stores/settingsStore.ts';
+import BibleCrossReferenceTrail from '@/modules/app/components/molecules/BibleCrossReferenceTrail.vue';
 import AutoScrollButton from '@/modules/app/components/atoms/AutoScrollButton.vue';
 import DiaryEntryModal from '@/modules/app/components/molecules/DiaryEntryModal.vue';
 import type {DiaryReference} from '@/modules/app/stores/diaryStore.ts';
 
 const {t} = useI18n();
 const store = bibleStore();
+const trail = bibleTrailStore();
 const settingsStore = useSettingsStore();
 const route = useRoute();
+const ionRouter = useIonRouter();
 
 // Ionic keeps each page instance for its own URL, so the params are read once.
 const bookName = String(route.params.id ?? '');
@@ -119,7 +140,11 @@ const isValidChapter = !!book && Number.isInteger(chapterNumber) && chapterNumbe
 
 const verses = isValidChapter
     ? Object.entries<string>(store.getVersiculums({name: bookName, number: chapterNumber}).verses ?? {})
-        .map(([number, text]) => ({number: Number(number), text}))
+        .map(([number, text]) => ({
+          number: Number(number),
+          text,
+          references: store.getCrossReferences(bookName, chapterNumber, Number(number)),
+        }))
         .sort((a, b) => a.number - b.number)
     : null;
 
@@ -161,21 +186,65 @@ const onVerseTap = async (verse: Verse) => {
   }
 };
 
+const scrollToVerse = async (verse: number) => {
+  highlightedVerse.value = verse;
+  await nextTick();
+  reader.value?.querySelector(`#v${verse}`)?.scrollIntoView({behavior: 'smooth', block: 'center'});
+};
+
+const entryPath = (entry: TrailEntry) =>
+    `/bible/${entry.book}/${entry.chapter}${entry.verse ? `#v${entry.verse}` : ''}`;
+
+const openEntry = (entry: TrailEntry, direction: 'forward' | 'back') => {
+  if (entry.book === bookName && entry.chapter === chapterNumber) {
+    if (entry.verse) scrollToVerse(entry.verse);
+    return;
+  }
+  ionRouter.navigate(entryPath(entry), direction, 'push');
+};
+
+// The tapped reference becomes a child of the verse it was opened from.
+const openReference = (verse: Verse, reference: BibleCrossReference) => {
+  const target = reference.target;
+  if (!target) return;
+  const abbreviation = book?.abbreviation ?? bookName;
+  const targetText = store.getVerseText(target.book, target.chapter, target.verse ?? 1);
+  const origin: TrailEntry = {
+    book: bookName,
+    chapter: chapterNumber,
+    verse: verse.number,
+    label: `${abbreviation} ${chapterNumber}:${verse.number}`,
+    quote: verse.text,
+  };
+  const child: TrailEntry = {...target, label: reference.label, quote: targetText};
+  trail.follow(origin, child);
+  openEntry(child, 'forward');
+};
+
+const goToTrailStep = (position: number) => {
+  const entry = trail.entries[position];
+  if (!entry) return;
+  const direction = position < trail.index ? 'back' : 'forward';
+  trail.goTo(position);
+  openEntry(entry, direction);
+};
+
 onIonViewDidEnter(async () => {
-  if (isValidChapter) store.setLastRead({book: bookName, chapter: chapterNumber});
+  if (!isValidChapter) return;
+  store.setLastRead({book: bookName, chapter: chapterNumber});
+  // Arriving by any other way (back button, book list) keeps the trail only if it covers this chapter.
+  trail.sync(bookName, chapterNumber);
 
   // Diary notes link to a verse as #v<number>; Ionic does not scroll to hashes on its own.
   const verse = Number(route.hash.replace('#v', '')) || null;
   highlightedVerse.value = verse;
-  if (!verse) return;
-  await nextTick();
-  reader.value?.querySelector(`#v${verse}`)?.scrollIntoView({behavior: 'smooth', block: 'center'});
+  if (verse) await scrollToVerse(verse);
 });
 </script>
 
 <style scoped>
 .reader {
-  max-width: 680px;
+  max-width: 880px;
   margin: 0 auto;
   padding: 1.5rem 1.4rem 11rem;
   user-select: text;
@@ -220,9 +289,59 @@ onIonViewDidEnter(async () => {
   color: var(--ion-text-color);
 }
 
-.verse {
-  margin: 0 0 0.6rem;
+.verse-row {
+  display: grid;
+  grid-template-columns: minmax(4.5rem, 24%) minmax(0, 1fr);
+  column-gap: 0.9rem;
+  margin-bottom: 0.6rem;
   scroll-margin-top: 5rem;
+}
+
+.verse {
+  grid-column: 2;
+  margin: 0;
+  scroll-margin-top: 5rem;
+}
+
+.verse-references {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: flex-end;
+  gap: 0.3rem 0.35rem;
+  padding-top: 0.2em;
+  font-size: 0.6em;
+  line-height: 1.5;
+  text-align: right;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.verse-reference {
+  padding: 0.05em 0.55em;
+  border-radius: 999px;
+  background: rgba(235, 68, 90, 0.12);
+  background: color-mix(in srgb, var(--ion-color-danger) 12%, transparent);
+  color: var(--ion-color-danger);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+a.verse-reference {
+  text-decoration: none;
+}
+
+a.verse-reference:active {
+  background: color-mix(in srgb, var(--ion-color-danger) 24%, transparent);
+}
+
+@media (min-width: 768px) {
+  .verse-row {
+    grid-template-columns: 11rem minmax(0, 1fr);
+    column-gap: 1.5rem;
+  }
 }
 
 .verse-initial {
@@ -245,7 +364,7 @@ onIonViewDidEnter(async () => {
   -webkit-user-select: none;
 }
 
-.verse:first-child .verse-number {
+.verse-row:first-child .verse-number {
   margin-left: 0;
 }
 .chapter-nav {

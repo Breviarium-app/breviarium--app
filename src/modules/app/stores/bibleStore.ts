@@ -6,7 +6,8 @@ import {normalizeSearch} from "@/modules/app/constants/search.ts";
 
 export const bibleStore = defineStore('bible', () => {
 
-    const all_bible = new Bible().bible;
+    const bibleLibrary = new Bible();
+    const all_bible = bibleLibrary.bible;
     // var storage = localStorage.getItem("all_bible")
 
     // if (storage) {
@@ -102,6 +103,29 @@ export const bibleStore = defineStore('bible', () => {
         return {book: neighbour.name, chapter: step === 1 ? 1 : neighbour.chapters}
     }
 
+    const booksByAbbreviation = new Map(books.map((book) => [book.abbreviation, book]))
+
+    const getVerseText = (bookName: string, chapter: number, verse: number): string | undefined =>
+        getChapters(bookName)[chapter - 1]?.verses?.[String(verse)]
+
+    // Parallel passages of the Biblia de Jerusalén; `target` is null when the passage is not in this Bible.
+    const getCrossReferences = (bookName: string, chapter: number, verse: number): BibleCrossReference[] => {
+        const abbreviation = getBookMeta(bookName)?.abbreviation
+        if (!abbreviation) return []
+        const versiculum = {b: abbreviation, c: String(chapter), v: String(verse)}
+        const labels = bibleLibrary.getCrossReferences(versiculum)
+        return bibleLibrary.getCrossReferenceDetails(versiculum).map((detail, index) => {
+            const target = booksByAbbreviation.get(detail.book)
+            const targetChapter = Number(detail.chapter)
+            const firstVerse = parseInt(detail.verses?.[0]?.from ?? '', 10)
+            const valid = !!target && targetChapter >= 1 && targetChapter <= target.chapters
+            return {
+                label: labels[index] ?? detail.book,
+                target: valid ? {book: target.name, chapter: targetChapter, verse: firstVerse || null} : null,
+            }
+        })
+    }
+
     const lastRead = ref<BiblePosition | null>(readLastRead())
 
     const setLastRead = (position: BiblePosition) => {
@@ -121,6 +145,8 @@ export const bibleStore = defineStore('bible', () => {
         getBookMeta,
         searchBooks,
         getAdjacentChapter,
+        getCrossReferences,
+        getVerseText,
         lastRead,
         setLastRead,
     }
@@ -133,6 +159,11 @@ export type BibleBookMeta = {
     chapters: number;
     verses: number;
     searchKey: string;
+}
+
+export type BibleCrossReference = {
+    label: string;
+    target: { book: string; chapter: number; verse: number | null } | null;
 }
 
 export type BiblePosition = {
