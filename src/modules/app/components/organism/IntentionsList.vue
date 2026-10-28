@@ -16,15 +16,20 @@
         <section v-if="intentions.length > 0">
           <h2 class="section-title">{{ t('prayer_intentions_list_title', {n: intentions.length}) }}</h2>
           <div class="intention-list">
-            <div v-for="(intention, index) in intentions" :key="index" class="intention-row">
-              <button :aria-label="t('prayer_intentions_edit_title')" class="intention-text btn"
-                      @click="openModalForEdit(index, intention)">
-                {{ intention }}
-              </button>
-              <button :aria-label="t('delete')" class="delete-button btn" @click="deleteIntention(index)">
-                <ion-icon :icon="trashOutline" aria-hidden="true"/>
-              </button>
-            </div>
+            <ion-reorder-group :disabled="false" @ionItemReorder="handleReorder">
+              <div v-for="(intention, index) in intentions" :key="intention.id" class="intention-row">
+                <ion-reorder class="reorder-handle" :aria-label="t('prayer_intentions_reorder_title')">
+                  <ion-icon :icon="reorderTwoOutline" aria-hidden="true"/>
+                </ion-reorder>
+                <button :aria-label="t('prayer_intentions_edit_title')" class="intention-text btn"
+                        @click="openModalForEdit(index, intention.text)">
+                  {{ intention.text }}
+                </button>
+                <button :aria-label="t('delete')" class="delete-button btn" @click="deleteIntention(index)">
+                  <ion-icon :icon="trashOutline" aria-hidden="true"/>
+                </button>
+              </div>
+            </ion-reorder-group>
             <button class="add-row btn" @click="openModalForAdd">
               <ion-icon :icon="addOutline" aria-hidden="true"/>
               {{ t('prayer_intentions_add_button') }}
@@ -80,14 +85,17 @@ import {
   IonIcon,
   IonModal,
   IonPage,
+  IonReorder,
+  IonReorderGroup,
   IonTextarea,
   IonTitle,
   IonToolbar
 } from '@ionic/vue';
-import {addOutline, heartOutline, lockClosedOutline, trashOutline} from 'ionicons/icons';
+import type {ItemReorderEventDetail} from '@ionic/vue';
+import {addOutline, heartOutline, lockClosedOutline, reorderTwoOutline, trashOutline} from 'ionicons/icons';
 import {useI18n} from 'vue-i18n';
 import {computed, onBeforeUnmount, onMounted, ref} from 'vue';
-import {IntentionsStorageManager} from '@/modules/app/services/IntentionsStorageManager.ts';
+import {Intention, IntentionsStorageManager} from '@/modules/app/services/IntentionsStorageManager.ts';
 import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 
@@ -97,7 +105,7 @@ const {t} = useI18n();
 const storageManager = new IntentionsStorageManager('prayerIntentions');
 
 // State
-const intentions = ref<string[]>([]);
+const intentions = ref<Intention[]>([]);
 const isModalOpen = ref(false);
 const modalIntention = ref('');
 const editingIndex = ref<number | null>(null);
@@ -156,7 +164,7 @@ const deleteIntention = async (index: number) => {
   HapticsService.light();
   const alert = await alertController.create({
     header: t('prayer_intentions_delete_title'),
-    message: intentions.value[index],
+    message: intentions.value[index].text,
     buttons: [
       {text: t('cancel'), role: 'cancel'},
       {text: t('delete'), role: 'destructive'},
@@ -167,6 +175,13 @@ const deleteIntention = async (index: number) => {
   if (role === 'destructive') {
     intentions.value = storageManager.deleteIntention(intentions.value, index);
   }
+};
+
+// Reorders the underlying array to match the drag-and-drop gesture, then persists the new order
+const handleReorder = (event: CustomEvent<ItemReorderEventDetail>) => {
+  intentions.value = event.detail.complete(intentions.value);
+  intentions.value = storageManager.reorderIntentions(intentions.value);
+  HapticsService.light();
 };
 </script>
 
@@ -226,6 +241,18 @@ button {
   display: flex;
   align-items: center;
   border-bottom: 0.5px solid rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.1);
+}
+
+.reorder-handle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-left: 0.25rem;
+  font-size: 1.15rem;
+  opacity: 0.4;
 }
 
 .intention-text {
