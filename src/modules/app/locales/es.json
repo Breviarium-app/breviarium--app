@@ -31,7 +31,11 @@
       "sexta": "Mediodía",
       "nona": "Media tarde",
       "vesperae": "Oración de la tarde",
-      "completorium": "Antes de dormir"
+      "completorium": "Antes de dormir",
+      "deceased_hint": "Por los fieles difuntos"
+    },
+    "deceased_modal": {
+      "subtitle": "Elige qué hora rezar"
     }
   },
   "prayer_intentions": "Intenciones",
@@ -95,7 +99,7 @@
       "hide_invitatorium": "Laudes empieza sin el salmo invitatorio.",
       "bienal_office_by_default": "El Oficio de lectura muestra primero las lecturas del ciclo bienal.",
       "prefer_latin_prayers": "Los textos con versión en latín se muestran en latín por defecto (Padre nuestro, Ángelus, Benedictus, Magníficat, Nunc dimittis, Regina Caeli y antífonas marianas).",
-      "office_deceased": "Próximamente.",
+      "office_deceased": "Añade una entrada en la pantalla principal para rezar el Oficio de difuntos.",
       "show_cross_references": "Muestra junto a cada versículo la columna de pasajes paralelos.",
       "show_auto_scroll": "Muestra un botón para desplazar el texto de las oraciones automáticamente.",
       "keepAwake": "La pantalla no se apaga mientras usas la aplicación.",

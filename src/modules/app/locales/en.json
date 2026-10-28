@@ -31,7 +31,11 @@
       "sexta": "Midday",
       "nona": "Mid-afternoon",
       "vesperae": "Evening prayer",
-      "completorium": "Night prayer"
+      "completorium": "Night prayer",
+      "deceased_hint": "For the faithful departed"
+    },
+    "deceased_modal": {
+      "subtitle": "Choose which hour to pray"
     }
   },
   "bible_name": "Bible",
@@ -78,7 +82,7 @@
       "hide_invitatorium": "Lauds starts without the invitatory psalm.",
       "bienal_office_by_default": "The Office of Readings shows the two-year cycle readings first.",
       "prefer_latin_prayers": "Prayers that have a Latin version are shown in Latin by default (Our Father, Angelus, Benedictus, Magnificat, Nunc dimittis, Regina Caeli and Marian antiphons).",
-      "office_deceased": "Coming soon.",
+      "office_deceased": "Adds an entry on the home screen to pray the Office of the Dead.",
       "show_cross_references": "Shows the column of parallel passages next to each verse.",
       "show_auto_scroll": "Shows a button that scrolls prayer text automatically.",
       "keepAwake": "The screen stays on while you use the app.",

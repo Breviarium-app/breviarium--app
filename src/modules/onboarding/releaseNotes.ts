@@ -172,5 +172,9 @@ export const RELEASE_NOTES: Record<string, ReleaseNote[]> = {
             icon: colorPaletteOutline,
             text: "Mejoras generales de diseño",
         },
+        {
+            icon: bookOutline,
+            text: "Nuevo Oficio de difuntos: activa esta hora opcional en Ajustes para rezarla desde Inicio",
+        },
     ],
 };

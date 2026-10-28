@@ -88,6 +88,33 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'Completorium',
                 component: () => import('../components/organism/prayers/CompletoriumPage.vue')
             }, {
+                path: '/prayer/deceased/officium',
+                name: 'DeceasedOfficium',
+                component: () => import('../components/organism/prayers/deceased/DeceasedOfficiumPage.vue')
+            }, {
+                path: '/prayer/deceased/laudes',
+                name: 'DeceasedLaudes',
+                component: () => import('../components/organism/prayers/deceased/DeceasedLaudesPage.vue')
+            }, {
+                path: '/prayer/deceased/vesperae',
+                name: 'DeceasedVesperae',
+                component: () => import('../components/organism/prayers/deceased/DeceasedVesperaePage.vue')
+            }, {
+                path: '/prayer/deceased/tertia',
+                name: 'DeceasedTertia',
+                component: () => import('../components/organism/prayers/deceased/DeceasedIntermediumPage.vue'),
+                props: {hour: 'tertia'}
+            }, {
+                path: '/prayer/deceased/sexta',
+                name: 'DeceasedSexta',
+                component: () => import('../components/organism/prayers/deceased/DeceasedIntermediumPage.vue'),
+                props: {hour: 'sexta'}
+            }, {
+                path: '/prayer/deceased/nona',
+                name: 'DeceasedNona',
+                component: () => import('../components/organism/prayers/deceased/DeceasedIntermediumPage.vue'),
+                props: {hour: 'nona'}
+            }, {
                 path: '/prayer/evangelium',
                 name: 'Evangelium',
                 component: () => import('../components/organism/prayers/EvangeliumAndLectiones.vue')

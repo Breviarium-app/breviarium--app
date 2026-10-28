@@ -15,9 +15,12 @@ import AnimatedComponent from "@/modules/app/components/molecules/AnimatedCompon
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
 import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue";
 import LiturgyHoursInfo from "@/modules/app/components/molecules/home-banners/LiturgyHoursInfo.vue";
+import DeceasedOfficeEntry from "@/modules/app/components/molecules/home-banners/DeceasedOfficeEntry.vue";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
+import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
 
 const {t} = useI18n()
+const settingsStore = useSettingsStore();
 
 const openAbout = () => {
   HapticsService.light();
@@ -113,6 +116,7 @@ useDateStore().updateDateParams()
                 <span class="hour-name">{{ t(officium.label) }}</span>
                 <span class="hour-hint">{{ t(officium.hint) }}</span>
               </button>
+              <DeceasedOfficeEntry v-if="settingsStore.settings.deceased"/>
             </div>
           </AnimatedComponent>
         </section>

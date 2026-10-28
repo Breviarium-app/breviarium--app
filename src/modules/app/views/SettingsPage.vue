@@ -39,8 +39,7 @@ const prayerToggles: { key: ToggleKey; i18n: string; disabled?: boolean }[] = [
   {key: 'vesperaeOfficium', i18n: 'vesperae_and_office'},
   {key: 'hideInvitatorium', i18n: 'hide_invitatorium'},
   {key: 'bienalOfficiumDefault', i18n: 'bienal_office_by_default'},
-  // Not implemented yet: shown disabled as a preview
-  {key: 'deceased', i18n: 'office_deceased', disabled: true},
+  {key: 'deceased', i18n: 'office_deceased'},
 ];
 
 // Vibration only exists in the native app
