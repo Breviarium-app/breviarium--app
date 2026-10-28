@@ -57,6 +57,7 @@ const markAsSeen = async () => {
 <style scoped>
 ion-modal {
   --height: auto;
+  --max-height: 85vh;
   --width: 88%;
   --max-width: 380px;
   --border-radius: 24px;
@@ -95,8 +96,11 @@ ion-modal {
   flex-direction: column;
   gap: 0.8rem;
   width: 100%;
+  max-height: 45vh;
   margin: 1.5rem 0;
   padding: 1rem 1.1rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   border-radius: 16px;
   list-style: none;
   text-align: left;

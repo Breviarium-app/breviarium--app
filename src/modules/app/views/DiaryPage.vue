@@ -370,8 +370,7 @@ button {
   transition: box-shadow 0.15s ease;
 }
 
-.compose:hover,
-.compose:focus-visible {
+.compose:hover {
   box-shadow: inset 0 0 0 1.5px var(--ion-color-primary);
 }
 

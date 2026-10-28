@@ -52,7 +52,7 @@ const lastRead = computed(() => {
         <ion-buttons slot="start">
           <ion-back-button default-href="/" text="Atrás"></ion-back-button>
         </ion-buttons>
-        <ion-title>{{ t('bibleOfJerusalem') }}</ion-title>
+        <ion-title>{{ t('bible_name') }}</ion-title>
       </ion-toolbar>
       <ion-toolbar>
         <ion-searchbar

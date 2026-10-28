@@ -217,8 +217,7 @@ button {
   text-decoration-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.3);
 }
 
-.saint-name-link:hover,
-.saint-name-link:focus-visible {
+.saint-name-link:hover {
   text-decoration: underline;
 }
 

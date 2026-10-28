@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import {ref} from "vue";
 import {resultBible} from "@/modules/app/constants/types.ts";
-import {Bible} from "biblia-de-jerusalen";
+import {Bible} from "bible-core";
 import {normalizeSearch} from "@/modules/app/constants/search.ts";
 
 export const bibleStore = defineStore('bible', () => {
@@ -108,7 +108,7 @@ export const bibleStore = defineStore('bible', () => {
     const getVerseText = (bookName: string, chapter: number, verse: number): string | undefined =>
         getChapters(bookName)[chapter - 1]?.verses?.[String(verse)]
 
-    // Parallel passages of the Biblia de Jerusalén; `target` is null when the passage is not in this Bible.
+    // Parallel passages; `target` is null when the passage is not in this Bible.
     const getCrossReferences = (bookName: string, chapter: number, verse: number): BibleCrossReference[] => {
         const abbreviation = getBookMeta(bookName)?.abbreviation
         if (!abbreviation) return []
@@ -120,7 +120,8 @@ export const bibleStore = defineStore('bible', () => {
             const firstVerse = parseInt(detail.verses?.[0]?.from ?? '', 10)
             const valid = !!target && targetChapter >= 1 && targetChapter <= target.chapters
             return {
-                label: labels[index] ?? detail.book,
+                // The library writes chapter:verse; Spanish citations use a comma (Jn 1,1-3).
+                label: (labels[index] ?? detail.book).replace(/:/g, ','),
                 target: valid ? {book: target.name, chapter: targetChapter, verse: firstVerse || null} : null,
             }
         })

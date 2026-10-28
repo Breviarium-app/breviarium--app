@@ -312,11 +312,11 @@ ion-fab.tabbar-gone {
   --box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   --background: var(--ion-color-primary);
   --background-hover: var(--background-color-card);
-  --background-focused: var(--background-color-card);
+  --background-focused: var(--ion-color-primary);
   --background-activated: var(--background-color-card);
   --color: var(--ion-color-primary-contrast, #fff);
   --color-hover: var(--ion-color-primary);
-  --color-focused: var(--ion-color-primary);
+  --color-focused: var(--ion-color-primary-contrast, #fff);
   --color-activated: var(--ion-color-primary);
 }
 
@@ -369,15 +369,6 @@ ion-fab.tabbar-gone {
   font-size: 1.1rem;
   -webkit-tap-highlight-color: transparent;
   transition: background-color 0.15s ease, transform 0.1s ease;
-}
-
-.player-button:focus {
-  outline: none;
-}
-
-.player-button:focus-visible {
-  outline: 2px solid var(--ion-color-primary);
-  outline-offset: 1px;
 }
 
 .player-button:active {

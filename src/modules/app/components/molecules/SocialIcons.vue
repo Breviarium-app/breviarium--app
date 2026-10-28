@@ -114,8 +114,7 @@ button {
   transition: opacity 0.15s ease, background 0.15s ease;
 }
 
-.profile:hover,
-.profile:focus-visible {
+.profile:hover {
   opacity: 1;
   background: var(--background-color-card);
 }

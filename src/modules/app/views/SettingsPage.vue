@@ -14,6 +14,7 @@ import TextToSpeechSettings from "@/modules/app/components/molecules/TextToSpeec
 import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue";
 import SettingToggle from "@/modules/app/components/molecules/settings/SettingToggle.vue";
 import SettingLink from "@/modules/app/components/molecules/settings/SettingLink.vue";
+import {bibleTrailStore} from "@/modules/app/stores/bibleTrailStore.ts";
 import {useAlertsStore} from "@/modules/app/stores/alertsStore.ts";
 import {ALERT_KEYS} from "@/modules/app/constants/alerts.ts";
 
@@ -29,7 +30,7 @@ const alertsSummary = computed(() => {
 });
 
 type ToggleKey = 'laudesEvangelium' | 'laudesOfficium' | 'vesperaeOfficium' | 'hideInvitatorium'
-    | 'bienalOfficiumDefault' | 'deceased' | 'keepAwake' | 'hapticsActive';
+    | 'bienalOfficiumDefault' | 'deceased' | 'keepAwake' | 'hapticsActive' | 'showCrossReferences';
 
 // Label keys live under settings.*, hints under settings.hints.*
 const prayerToggles: { key: ToggleKey; i18n: string; disabled?: boolean }[] = [
@@ -58,6 +59,11 @@ const updateToggle = async (key: ToggleKey, value: boolean) => {
   // The store only applies this on startup, so apply it here to take effect immediately
   if (key === 'keepAwake') {
     await settingsStore.applyKeepAwake(value);
+  }
+
+  // A path through the references makes no sense once they are hidden
+  if (key === 'showCrossReferences' && !value) {
+    bibleTrailStore().clear();
   }
 };
 
@@ -111,6 +117,10 @@ const updateLatinPrayers = async (value: boolean) => {
                            :label="t('settings.keepAwake')"
                            :model-value="settingsStore.settings.keepAwake"
                            @update:model-value="updateToggle('keepAwake', $event)"/>
+            <SettingToggle :hint="t('settings.hints.show_cross_references')"
+                           :label="t('settings.show_cross_references')"
+                           :model-value="settingsStore.settings.showCrossReferences"
+                           @update:model-value="updateToggle('showCrossReferences', $event)"/>
           </div>
         </section>
 

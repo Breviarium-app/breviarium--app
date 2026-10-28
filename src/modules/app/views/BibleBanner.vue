@@ -2,7 +2,7 @@
   <ion-item :detail="true" class="prayer-item" @click="router.push('/bible')">
     <ion-icon slot="start" :icon="bookOutline"></ion-icon>
     <ion-label>
-      <h2>{{ t('bibleOfJerusalem') }}</h2>
+      <h2>{{ t('bible_name') }}</h2>
       <p>{{ t('bibleSubtitle') }}</p>
     </ion-label>
   </ion-item>

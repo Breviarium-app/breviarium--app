@@ -7,6 +7,9 @@
         </ion-buttons>
         <ion-title>{{ verses ? `${bookName} ${chapterNumber}` : t('bible_name') }}</ion-title>
         <ion-buttons v-if="verses" slot="end">
+          <ion-button id="bible-options-trigger" :aria-label="t('bible.options')">
+            <ion-icon slot="icon-only" :icon="ellipsisVertical" aria-hidden="true"></ion-icon>
+          </ion-button>
           <ion-button
               :aria-label="t('bible.all_chapters')"
               :router-link="`/bible/${bookName}`"
@@ -18,8 +21,25 @@
       </ion-toolbar>
     </ion-header>
 
+    <ion-popover
+        v-if="verses"
+        :dismiss-on-select="false"
+        class="options-popover"
+        trigger="bible-options-trigger"
+        trigger-action="click"
+    >
+      <label class="option-row">
+        <span class="option-text">{{ t('settings.show_cross_references') }}</span>
+        <ion-toggle
+            :aria-label="t('settings.show_cross_references')"
+            :checked="showReferences"
+            @ion-change="setShowReferences($event.detail.checked)"
+        ></ion-toggle>
+      </label>
+    </ion-popover>
+
     <ion-content :fullscreen="true">
-      <article v-if="verses" ref="reader" :style="readingStyle" class="reader">
+      <article v-if="verses" ref="reader" :class="{'no-references': !showReferences}" :style="readingStyle" class="reader">
         <header class="reader-heading">
           <h1>
             <span class="reader-book">{{ bookName }}</span>
@@ -31,7 +51,7 @@
         <div class="reader-text">
           <div v-for="(verse, index) in verses" :key="verse.number" class="verse-row">
             <aside
-                v-if="verse.references.length"
+                v-if="showReferences && verse.references.length"
                 :aria-label="t('bible.cross_references')"
                 class="verse-references"
             >
@@ -51,7 +71,12 @@
                 class="verse"
                 @click="onVerseTap(verse)"
             >
-              <sup class="verse-number">{{ verse.number }}</sup><template v-if="index === 0"><span class="verse-initial">{{ verse.text.charAt(0).toUpperCase() }}</span>{{ verse.text.slice(1) }}</template><template v-else>{{ verse.text }}</template>
+              <sup class="verse-number">{{ verse.number }}</sup>
+              <template v-if="index === 0"><span class="verse-initial">{{
+                  verse.text.charAt(0).toUpperCase()
+                }}</span>{{ verse.text.slice(1) }}
+              </template>
+              <template v-else>{{ verse.text }}</template>
             </p>
           </div>
         </div>
@@ -89,7 +114,7 @@
         <ion-button fill="outline" router-link="/bible">{{ t('bible.back_to_bible') }}</ion-button>
       </div>
 
-      <BibleCrossReferenceTrail v-if="verses" slot="fixed" @select="goToTrailStep"/>
+      <BibleCrossReferenceTrail v-if="verses && showReferences" slot="fixed" @select="goToTrailStep"/>
       <AutoScrollButton v-if="verses"/>
     </ion-content>
 
@@ -108,15 +133,17 @@ import {
   IonHeader,
   IonIcon,
   IonPage,
+  IonPopover,
   IonTitle,
+  IonToggle,
   IonToolbar,
   onIonViewDidEnter,
   useIonRouter
 } from '@ionic/vue';
-import {chevronBack, chevronForward, gridOutline, journalOutline} from 'ionicons/icons';
+import {chevronBack, chevronForward, ellipsisVertical, gridOutline, journalOutline} from 'ionicons/icons';
 import {useRoute} from 'vue-router';
 import {useI18n} from 'vue-i18n';
-import {bibleStore, type BibleCrossReference} from '@/modules/app/stores/bibleStore.ts';
+import {type BibleCrossReference, bibleStore} from '@/modules/app/stores/bibleStore.ts';
 import {bibleTrailStore, type TrailEntry} from '@/modules/app/stores/bibleTrailStore.ts';
 import {useSettingsStore} from '@/modules/app/stores/settingsStore.ts';
 import BibleCrossReferenceTrail from '@/modules/app/components/molecules/BibleCrossReferenceTrail.vue';
@@ -150,6 +177,15 @@ const verses = isValidChapter
 
 const previous = isValidChapter ? store.getAdjacentChapter(bookName, chapterNumber, -1) : undefined;
 const next = isValidChapter ? store.getAdjacentChapter(bookName, chapterNumber, 1) : undefined;
+
+const showReferences = computed(() => settingsStore.settings.showCrossReferences);
+
+const setShowReferences = async (value: boolean) => {
+  settingsStore.settings.showCrossReferences = value;
+  await settingsStore.saveSettings();
+  // A path through the references makes no sense once they are hidden
+  if (!value) trail.clear();
+};
 
 const readingStyle = computed(() => ({
   fontSize: `${settingsStore.settings.fontSize * 1.2}px`,
@@ -213,7 +249,7 @@ const openReference = (verse: Verse, reference: BibleCrossReference) => {
     book: bookName,
     chapter: chapterNumber,
     verse: verse.number,
-    label: `${abbreviation} ${chapterNumber}:${verse.number}`,
+    label: `${abbreviation} ${chapterNumber},${verse.number}`,
     quote: verse.text,
   };
   const child: TrailEntry = {...target, label: reference.label, quote: targetText};
@@ -243,6 +279,35 @@ onIonViewDidEnter(async () => {
 </script>
 
 <style scoped>
+.options-popover {
+  --width: min(17rem, calc(100vw - 32px));
+  --background: var(--background-color-card, var(--ion-background-color));
+  --box-shadow: 0 6px 24px rgba(0, 0, 0, 0.22);
+  --backdrop-opacity: 0.15;
+}
+
+.options-popover::part(content) {
+  border: 1px solid color-mix(in srgb, var(--ion-text-color) 10%, transparent);
+  border-radius: 14px;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  color: var(--ion-text-color);
+  font-size: 0.95rem;
+  line-height: 1.35;
+  cursor: pointer;
+}
+
+.option-text {
+  flex: 1;
+  min-width: 0;
+}
+
 .reader {
   max-width: 880px;
   margin: 0 auto;
@@ -266,14 +331,14 @@ onIonViewDidEnter(async () => {
 }
 
 .reader-book {
-  font-size: 0.75em;
+  font-size: 0.4em;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ion-color-primary);
 }
 
 .reader-chapter {
-  font-size: 2.6em;
+  font-size: 1.4em;
   line-height: 1;
 }
 
@@ -291,7 +356,7 @@ onIonViewDidEnter(async () => {
 
 .verse-row {
   display: grid;
-  grid-template-columns: minmax(4.5rem, 24%) minmax(0, 1fr);
+  grid-template-columns: minmax(3.5rem, 17%) minmax(0, 1fr);
   column-gap: 0.9rem;
   margin-bottom: 0.6rem;
   scroll-margin-top: 5rem;
@@ -337,6 +402,14 @@ a.verse-reference:active {
   background: color-mix(in srgb, var(--ion-color-danger) 24%, transparent);
 }
 
+.reader.no-references {
+  max-width: 680px;
+}
+
+.reader.no-references .verse-row {
+  display: block;
+}
+
 @media (min-width: 768px) {
   .verse-row {
     grid-template-columns: 11rem minmax(0, 1fr);
@@ -367,6 +440,7 @@ a.verse-reference:active {
 .verse-row:first-child .verse-number {
   margin-left: 0;
 }
+
 .chapter-nav {
   display: grid;
   grid-template-columns: 1fr 1fr;

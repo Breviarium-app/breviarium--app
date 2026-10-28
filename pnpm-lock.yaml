@@ -44,9 +44,9 @@ importers:
       '@ionic/vue-router':
         specifier: ^9.0.8
         version: 9.0.8(@stencil/core@4.45.2)(vue-router@5.4.0(@vue/compiler-sfc@3.5.44)(esbuild@0.25.12)(pinia@4.1.0(@vue/devtools-api@8.2.1)(typescript@5.9.3)(vue@3.5.44(typescript@5.9.3)))(rollup@4.55.1)(vite@6.4.1(@types/node@25.0.3))(vue@3.5.44(typescript@5.9.3)))(vue@3.5.44(typescript@5.9.3))
-      biblia-de-jerusalen:
-        specifier: ^1.0.8
-        version: 1.0.10
+      bible-core:
+        specifier: ^2.0.3
+        version: 2.0.3
       breviarium:
         specifier: ^3.1.7
         version: 3.1.7(typescript@5.9.3)
@@ -1185,8 +1185,8 @@ packages:
     resolution: {integrity: sha512-Sg0xJUNDU1sJNGdfGWhVHX0kkZ+HWcvmVymJbj6NSgZZmW/8S9Y2HQ5euytnIgakgxN6papOAWiwDo1ctFDcoQ==}
     hasBin: true
 
-  biblia-de-jerusalen@1.0.10:
-    resolution: {integrity: sha512-w8UEQYZ10/dmKSZ0kFP78eCXCgRVELDvzmr+9J5rBpboOP40z66uz7SW5BMKrzzYS6U7raPvVACigWm8jBJGLA==}
+  bible-core@2.0.3:
+    resolution: {integrity: sha512-BfP5kgfS0PdaSWx5BLHOoCKvCTpHSWSZhEF3Hp8aCZyCSkfIcI//x5DCh42fsVKIReCYhQ4jcN3W66PlShHFog==}
 
   big-integer@1.6.52:
     resolution: {integrity: sha512-QxD8cf2eVqJOOz63z6JIN9BzvVs/dlySa5HGSBH5xtR8dPteIRQnBxxKqkNTiT6jbDTF6jAfrd4oMcND9RGbQg==}
@@ -4369,7 +4369,7 @@ snapshots:
 
   baseline-browser-mapping@2.9.11: {}
 
-  biblia-de-jerusalen@1.0.10:
+  bible-core@2.0.3:
     optionalDependencies:
       '@rollup/rollup-linux-x64-gnu': 4.9.5
 

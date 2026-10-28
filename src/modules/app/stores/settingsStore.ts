@@ -25,6 +25,8 @@ export const useSettingsStore = defineStore('settings', () => {
         keepAwake: true,
         fontSize: 14,
         hideInvitatorium: false,
+        // Cross-references (parallel passages) next to the verses in the Bible chapters
+        showCrossReferences: true,
         showAutoScroll: true,
         autoScrollSpeed: 7,
         showTextToSpeech: true,

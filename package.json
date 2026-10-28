@@ -2,7 +2,7 @@
   "name": "breviarium",
   "description": "App for meditation and pray with the Liturgy of the Hours, gospel of the day and much more!",
   "private": true,
-  "version": "3.4.2",
+  "version": "3.4.3",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -25,7 +25,7 @@
     "@capacitor/share": "^8",
     "@ionic/vue": "^9.0.8",
     "@ionic/vue-router": "^9.0.8",
-    "biblia-de-jerusalen": "^1.0.8",
+    "bible-core": "^2.0.3",
     "breviarium": "^3.1.7",
     "date-fns": "^4.4.0",
     "i18next": "^26.4.5",

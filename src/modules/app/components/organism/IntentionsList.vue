@@ -278,8 +278,7 @@ button {
   opacity: 0.5;
 }
 
-.delete-button:hover,
-.delete-button:focus-visible {
+.delete-button:hover {
   opacity: 1;
   color: var(--ion-color-danger);
 }

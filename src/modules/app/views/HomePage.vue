@@ -9,7 +9,7 @@ import router from "@/modules/app/router";
 import {useI18n} from 'vue-i18n'
 import SaintBannerComponent from "@/modules/app/components/molecules/home-banners/SaintBannerComponent.vue";
 import PopularPrayers from "@/modules/app/components/molecules/home-banners/PopularPrayers.vue";
-import JerusalemBibleBanner from "@/modules/app/views/JerusalemBibleBanner.vue";
+import BibleBanner from "@/modules/app/views/BibleBanner.vue";
 import EvangeliumBanner from "@/modules/app/views/EvangeliumBanner.vue";
 import AnimatedComponent from "@/modules/app/components/molecules/AnimatedComponent.vue";
 import {useDateStore} from "@/modules/app/stores/useDateStore.ts";
@@ -124,7 +124,7 @@ useDateStore().updateDateParams()
               <EvangeliumBanner/>
               <SaintBannerComponent/>
               <PopularPrayers/>
-              <JerusalemBibleBanner/>
+              <BibleBanner/>
             </div>
           </AnimatedComponent>
         </section>

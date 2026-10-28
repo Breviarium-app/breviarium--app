@@ -12,6 +12,7 @@ import {
     optionsOutline,
     phonePortraitOutline,
     playCircleOutline,
+    reorderTwoOutline,
     roseOutline,
     searchOutline,
     shareOutline,
@@ -136,6 +137,40 @@ export const RELEASE_NOTES: Record<string, ReleaseNote[]> = {
         {
             icon: languageOutline,
             text: "El Acordaos, ahora también en latín (Memoráre)",
-        }
+        },
+    ],
+    "3.4.3": [
+        {
+            icon: bookOutline,
+            text: "Biblia: referencias cruzadas junto a cada versículo, con un recorrido flotante para volver sobre tus pasos",
+        },
+        {
+            icon: optionsOutline,
+            text: "Biblia: muestra u oculta las referencias cruzadas desde el menú de la cabecera o desde Ajustes",
+        },
+        {
+            icon: roseOutline,
+            text: "Nuevas oraciones: Consagración al Corazón de Jesús y María, Soneto a Cristo crucificado, Via Crucis",
+        },
+        {
+            icon: reorderTwoOutline,
+            text: "Reordena tus intenciones de oración arrastrándolas",
+        },
+        {
+            icon: shareOutline,
+            text: "Compartir, ahora también en todas las oraciones populares",
+        },
+        {
+            icon: headsetOutline,
+            text: "El Rosario, ahora con la estructura completa de cada misterio: Padre nuestro, diez Avemarías y Gloria, para rezarlo también en voz alta",
+        },
+        {
+            icon: colorPaletteOutline,
+            text: "El Santoral, con nuevo diseño: más datos del santo del día y los demás santos a la vista",
+        },
+        {
+            icon: colorPaletteOutline,
+            text: "Mejoras generales de diseño",
+        },
     ],
 };

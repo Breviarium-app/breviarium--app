@@ -141,15 +141,6 @@ const setVoice = (voice: string) => {
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
 }
 
-.chip:focus {
-  outline: none;
-}
-
-.chip:focus-visible {
-  outline: 2px solid var(--ion-color-primary);
-  outline-offset: 1px;
-}
-
 .chip:active {
   transform: scale(0.94);
 }

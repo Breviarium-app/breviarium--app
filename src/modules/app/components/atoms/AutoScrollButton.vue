@@ -161,11 +161,11 @@ ion-fab.tabbar-gone {
   --box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   --background: var(--ion-color-primary);
   --background-hover: white;
-  --background-focused: white;
+  --background-focused: var(--ion-color-primary);
   --background-activated: white;
   --color: white;
   --color-hover: #ff4444;
-  --color-focused: #ff4444;
+  --color-focused: white;
   --color-activated: #ff4444;
   position: relative;
 }
