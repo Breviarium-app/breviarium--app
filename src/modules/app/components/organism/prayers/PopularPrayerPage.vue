@@ -26,6 +26,8 @@ import OracionEspirituSantoComponent from "@/modules/app/components/molecules/pr
 import ConsagracionCorazonJesusMariaComponent from "@/modules/app/components/molecules/prayers/ConsagracionCorazonJesusMariaComponent.vue";
 import SonetoCristoCrucificadoComponent from "@/modules/app/components/molecules/prayers/SonetoCristoCrucificadoComponent.vue";
 import ViaCrucisComponent from "@/modules/app/components/molecules/prayers/ViaCrucisComponent.vue";
+import OracionSanJohnHenryNewmanComponent
+  from "@/modules/app/components/molecules/prayers/OracionSanJohnHenryNewmanComponent.vue";
 
 const route = useRoute();
 
@@ -48,6 +50,10 @@ const prayers: Record<string, { title: string; component: any }> = {
   "consagracion-corazon-jesus-maria": {title: "Consagración al Corazón de Jesús y María", component: ConsagracionCorazonJesusMariaComponent},
   "soneto-cristo-crucificado": {title: "Soneto a Cristo crucificado", component: SonetoCristoCrucificadoComponent},
   "via-crucis": {title: "Vía Crucis", component: ViaCrucisComponent},
+  "oracion-san-john-henry-newman": {
+    title: "Oración de San John Henry Newman",
+    component: OracionSanJohnHenryNewmanComponent
+  },
 };
 
 const prayerKey = computed(() => route.params.prayer as string);

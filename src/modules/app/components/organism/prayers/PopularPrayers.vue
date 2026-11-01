@@ -91,6 +91,7 @@ const groups = computed(() => [
       {name: "Consagración al Corazón de Jesús y María", route: "consagracion-corazon-jesus-maria", description: "Consagración de la familia a los Sagrados Corazones"},
       {name: "Soneto a Cristo crucificado", route: "soneto-cristo-crucificado", description: "«No me mueve, mi Dios, para quererte», autor anónimo"},
       {name: "Vía Crucis", route: "via-crucis", description: "Las 14 estaciones del camino de la cruz"},
+      {name: "Oración de San John Henry Newman", route: "oracion-san-john-henry-newman", description: "«Ayúdame a esparcir tu fragancia donde quiera que vaya»"},
     ],
   },
   {
