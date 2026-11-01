@@ -177,4 +177,10 @@ export const RELEASE_NOTES: Record<string, ReleaseNote[]> = {
             text: "Nuevo Oficio de difuntos: activa esta hora opcional en Ajustes para rezarla desde Inicio",
         },
     ],
+    "3.4.4": [
+        {
+            icon: roseOutline,
+            text: "Nueva oración: Oración de San John Henry Newman",
+        },
+    ],
 };
