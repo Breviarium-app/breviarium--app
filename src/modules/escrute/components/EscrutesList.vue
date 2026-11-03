@@ -35,7 +35,7 @@ import {IonIcon} from "@ionic/vue";
 import {addOutline, leafOutline} from "ionicons/icons";
 import {useI18n} from "vue-i18n";
 import StartEscruteModal from "./StartEscruteModal.vue";
-import {formatPassage, type Passage} from "../reference";
+import {biblePath, formatPassage, type Passage} from "../reference";
 import {formatDate, rootLecture} from "../escrute";
 import {useEscruteStore} from "../escruteStore";
 
@@ -46,8 +46,9 @@ const {t, locale} = useI18n();
 const showNew = ref(false);
 
 function start(title: string, passage: Passage) {
-  const escrute = store.create(title, passage);
-  router.push(`/escrutes/${escrute.id}/${rootLecture(escrute).id}`);
+  // The escrute becomes the one being read, so its trail floats over the chapter
+  store.start(title, passage);
+  router.push(biblePath(passage));
 }
 </script>
 
