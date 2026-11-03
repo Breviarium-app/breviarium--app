@@ -55,6 +55,7 @@ import {computed, nextTick, ref, watch} from "vue";
 import {IonIcon} from "@ionic/vue";
 import {checkmarkOutline, chevronDownOutline, createOutline, gitBranchOutline, gitNetworkOutline} from "ionicons/icons";
 import {useI18n} from "vue-i18n";
+import {useRouter} from "vue-router";
 import {useTabbarVisibility} from "@/modules/app/composables/useTabbarVisibility";
 import LectureNoteModal from "./LectureNoteModal.vue";
 import {formatPassage, getPassageVerses} from "../reference";
@@ -68,6 +69,7 @@ defineOptions({inheritAttrs: false});
 const emit = defineEmits<{ select: [lecture: Lecture] }>();
 
 const {t} = useI18n();
+const router = useRouter();
 const store = useEscruteStore();
 const tabbarVisible = useTabbarVisibility();
 const escrute = computed(() => store.ongoingEscrute);
