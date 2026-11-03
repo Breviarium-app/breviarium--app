@@ -86,6 +86,7 @@ const groups = computed(() => [
     prayers: [
       {name: "Coronilla de la Divina Misericordia", route: "chaplet-divine-mercy", description: "Revelada a santa Faustina Kowalska"},
       {name: "Letanías de la Humildad", route: "litanies-humility", description: "Del cardenal Rafael Merry del Val"},
+      {name: "Letanías del Santo Nombre de Jesús", route: "litanies-holy-name-jesus", description: "Devoción al Santísimo Nombre de Jesús"},
       {name: "Alma de Cristo", route: "alma-de-cristo", description: "Oración eucarística clásica"},
       {name: "Comunión espiritual", route: "comunion-espiritual", description: "De san Alfonso María de Ligorio"},
       {name: "Consagración al Corazón de Jesús y María", route: "consagracion-corazon-jesus-maria", description: "Consagración de la familia a los Sagrados Corazones"},

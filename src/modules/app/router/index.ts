@@ -47,6 +47,23 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import('../components/organism/bible/BibleChapterPage.vue')
             },
             {
+                // The list of escrutes lives in a tab of the diary
+                path: '/escrutes',
+                redirect: '/diary?section=escrutes'
+            },
+            {
+                path: '/escrutes/:id',
+                name: 'escrute',
+                component: () => import('@/modules/escrute/views/EscrutePage.vue'),
+                props: true
+            },
+            {
+                path: '/escrutes/:id/:lectureId',
+                name: 'escrute-lecture',
+                component: () => import('@/modules/escrute/views/LecturePage.vue'),
+                props: true
+            },
+            {
                 path: '/settings',
                 name: 'Settings',
                 component: SettingsPage

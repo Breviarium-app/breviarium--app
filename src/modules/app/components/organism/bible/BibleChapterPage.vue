@@ -114,11 +114,19 @@
         <ion-button fill="outline" router-link="/bible">{{ t('bible.back_to_bible') }}</ion-button>
       </div>
 
-      <BibleCrossReferenceTrail v-if="verses && showReferences" slot="fixed" @select="goToTrailStep"/>
+      <EscruteTrail v-if="verses && escruteStore.ongoingEscrute" slot="fixed" @select="openLecture"/>
+      <BibleCrossReferenceTrail v-else-if="verses && showReferences" slot="fixed" @select="goToTrailStep"/>
       <AutoScrollButton v-if="verses"/>
     </ion-content>
 
     <DiaryEntryModal :is-open="noteReference !== null" :reference="noteReference" @close="noteReference = null"/>
+
+    <StartEscruteModal
+        v-model="showStartEscrute"
+        :hint="t('escrute.start_hint')"
+        :initial="`${book?.abbreviation ?? bookName} ${chapterNumber},${startVerse}`"
+        @start="startEscrute"
+    />
   </ion-page>
 </template>
 
@@ -140,7 +148,7 @@ import {
   onIonViewDidEnter,
   useIonRouter
 } from '@ionic/vue';
-import {chevronBack, chevronForward, ellipsisVertical, gridOutline, journalOutline} from 'ionicons/icons';
+import {chevronBack, chevronForward, ellipsisVertical, gitBranchOutline, gridOutline, journalOutline} from 'ionicons/icons';
 import {useRoute} from 'vue-router';
 import {useI18n} from 'vue-i18n';
 import {type BibleCrossReference, bibleStore} from '@/modules/app/stores/bibleStore.ts';
@@ -150,10 +158,16 @@ import BibleCrossReferenceTrail from '@/modules/app/components/molecules/BibleCr
 import AutoScrollButton from '@/modules/app/components/atoms/AutoScrollButton.vue';
 import DiaryEntryModal from '@/modules/app/components/molecules/DiaryEntryModal.vue';
 import type {DiaryReference} from '@/modules/app/stores/diaryStore.ts';
+import EscruteTrail from '@/modules/escrute/components/EscruteTrail.vue';
+import StartEscruteModal from '@/modules/escrute/components/StartEscruteModal.vue';
+import type {Lecture} from '@/modules/escrute/escrute.ts';
+import {useEscruteStore} from '@/modules/escrute/escruteStore.ts';
+import type {Passage} from '@/modules/escrute/reference.ts';
 
 const {t} = useI18n();
 const store = bibleStore();
 const trail = bibleTrailStore();
+const escruteStore = useEscruteStore();
 const settingsStore = useSettingsStore();
 const route = useRoute();
 const ionRouter = useIonRouter();
@@ -206,6 +220,8 @@ const onVerseTap = async (verse: Verse) => {
     header: `${bookName} ${chapterNumber}, ${verse.number}`,
     buttons: [
       {text: t('diary.write_note'), icon: journalOutline, data: 'note'},
+      // Only one escrute at a time: a new one can start once the ongoing one is finished
+      ...(escruteStore.ongoingEscrute ? [] : [{text: t('escrute.start_option'), icon: gitBranchOutline, data: 'escrute'}]),
       {text: t('cancel'), role: 'cancel'},
     ],
   });
@@ -217,21 +233,39 @@ const onVerseTap = async (verse: Verse) => {
       path: `/bible/${bookName}/${chapterNumber}#v${verse.number}`,
       quote: verse.text,
     };
+  } else if (data === 'escrute') {
+    startVerse.value = verse.number;
   } else {
     highlightedVerse.value = null;
   }
 };
 
+const startVerse = ref<number>();
+const showStartEscrute = computed({
+  get: () => startVerse.value !== undefined,
+  set: (open) => {
+    if (!open) startVerse.value = undefined;
+  },
+});
+
+const startEscrute = (title: string, passage: Passage) => {
+  // The trail of the escrute takes over from the plain one
+  trail.clear();
+  escruteStore.start(title, passage);
+};
+
 const scrollToVerse = async (verse: number) => {
   highlightedVerse.value = verse;
   await nextTick();
-  reader.value?.querySelector(`#v${verse}`)?.scrollIntoView({behavior: 'smooth', block: 'center'});
+  // At the top while an escrute is open: its trail floats over the lower half of the screen
+  const block = escruteStore.ongoingEscrute ? 'start' : 'center';
+  reader.value?.querySelector(`#v${verse}`)?.scrollIntoView({behavior: 'smooth', block});
 };
 
-const entryPath = (entry: TrailEntry) =>
+const entryPath = (entry: Pick<TrailEntry, 'book' | 'chapter' | 'verse'>) =>
     `/bible/${entry.book}/${entry.chapter}${entry.verse ? `#v${entry.verse}` : ''}`;
 
-const openEntry = (entry: TrailEntry, direction: 'forward' | 'back') => {
+const openEntry = (entry: Pick<TrailEntry, 'book' | 'chapter' | 'verse'>, direction: 'forward' | 'back') => {
   if (entry.book === bookName && entry.chapter === chapterNumber) {
     if (entry.verse) scrollToVerse(entry.verse);
     return;
@@ -243,6 +277,10 @@ const openEntry = (entry: TrailEntry, direction: 'forward' | 'back') => {
 const openReference = (verse: Verse, reference: BibleCrossReference) => {
   const target = reference.target;
   if (!target) return;
+  if (escruteStore.ongoingEscrute) {
+    followInEscrute(verse, target);
+    return;
+  }
   const abbreviation = book?.abbreviation ?? bookName;
   const targetText = store.getVerseText(target.book, target.chapter, target.verse ?? 1);
   const origin: TrailEntry = {
@@ -255,6 +293,38 @@ const openReference = (verse: Verse, reference: BibleCrossReference) => {
   const child: TrailEntry = {...target, label: reference.label, quote: targetText};
   trail.follow(origin, child);
   openEntry(child, 'forward');
+};
+
+const isCurrentLecture = () => {
+  const passage = escruteStore.currentLecture?.passage;
+  return passage?.book === bookName && Number(passage.chapter) === chapterNumber;
+};
+
+// References followed from the lecture being read become jumps of the escrute; elsewhere they only open the passage.
+const followInEscrute = (verse: Verse, target: NonNullable<BibleCrossReference['target']>) => {
+  if (isCurrentLecture()) {
+    const passage: Passage = {book: target.book, chapter: String(target.chapter)};
+    if (target.verse) passage.from = target.verse;
+    if (target.verse && target.to && target.to > target.verse) passage.to = target.to;
+    escruteStore.follow(passage, String(verse.number));
+  }
+  openEntry(target, 'forward');
+};
+
+const openLecture = ({id, passage}: Lecture) => {
+  const {lectures, index} = escruteStore.trail;
+  const direction = lectures.findIndex((lecture) => lecture.id === id) < index ? 'back' : 'forward';
+  escruteStore.goTo(id);
+  openEntry({book: passage.book, chapter: Number(passage.chapter), verse: passage.from ?? null}, direction);
+};
+
+// Arriving by the back button or the chapter links: read on from the trail step of this chapter, if there is one.
+const syncEscrute = () => {
+  if (!escruteStore.ongoingEscrute || isCurrentLecture()) return;
+  const {lectures, index} = escruteStore.trail;
+  const matches = ({passage}: Lecture) => passage.book === bookName && Number(passage.chapter) === chapterNumber;
+  const found = lectures.slice(0, index + 1).reverse().find(matches) ?? lectures.find(matches);
+  if (found) escruteStore.goTo(found.id);
 };
 
 const goToTrailStep = (position: number) => {
@@ -270,6 +340,7 @@ onIonViewDidEnter(async () => {
   store.setLastRead({book: bookName, chapter: chapterNumber});
   // Arriving by any other way (back button, book list) keeps the trail only if it covers this chapter.
   trail.sync(bookName, chapterNumber);
+  syncEscrute();
 
   // Diary notes link to a verse as #v<number>; Ionic does not scroll to hashes on its own.
   const verse = Number(route.hash.replace('#v', '')) || null;

@@ -5,6 +5,9 @@ import {
     calendarOutline,
     colorPaletteOutline,
     contrastOutline,
+    createOutline,
+    gitBranchOutline,
+    gitNetworkOutline,
     headsetOutline,
     informationCircleOutline,
     languageOutline,
@@ -179,8 +182,24 @@ export const RELEASE_NOTES: Record<string, ReleaseNote[]> = {
     ],
     "3.4.4": [
         {
+            icon: gitBranchOutline,
+            text: "Nuevos escrutes en la Biblia: toca un versículo y salta de una lectura a otra siguiendo las referencias",
+        },
+        {
+            icon: createOutline,
+            text: "Anota tu reflexión en cada lectura desde el recorrido flotante",
+        },
+        {
+            icon: gitNetworkOutline,
+            text: "Nueva pestaña Escrutes en el Diario: repasa cada escrute en árbol o lista y vuelve a la Biblia con un toque",
+        },
+        {
+            icon: colorPaletteOutline,
+            text: "Rediseño de la página de Biblia",
+        },
+        {
             icon: roseOutline,
-            text: "Nueva oración: Oración de San John Henry Newman",
+            text: "Nuevas oraciones: Oración de San John Henry Newman y Letanías del Santo Nombre de Jesús",
         },
     ],
 };

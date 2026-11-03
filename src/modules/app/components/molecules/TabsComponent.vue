@@ -64,6 +64,8 @@ const tabs = computed(() => [
 
 // Prayers, Bible and saints are opened from Home, so Home stays active for any route outside the other tabs
 const activeTab = computed(() => {
+  // Escrutes are listed in the diary, so their pages belong to its tab
+  if (route.path.startsWith('/escrutes/')) return '/diary';
   const match = tabs.value.find((tab) => tab.path !== HOME_PATH
       && (route.path === tab.path || route.path.startsWith(tab.path + '/')));
   return match?.path ?? HOME_PATH;

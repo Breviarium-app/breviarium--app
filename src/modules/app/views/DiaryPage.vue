@@ -3,7 +3,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>{{ t('diary.title') }}</ion-title>
-        <ion-buttons slot="end">
+        <ion-buttons v-if="section === 'diary'" slot="end">
           <ion-button :aria-label="t('diary.calendar_button')" @click="openCalendar">
             <ion-icon slot="icon-only" :icon="calendarOutline" aria-hidden="true"/>
           </ion-button>
@@ -12,7 +12,7 @@
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
-      <ion-toolbar v-if="isSearchOpen">
+      <ion-toolbar v-if="isSearchOpen && section === 'diary'">
         <ion-searchbar
             ref="searchbarRef"
             v-model="searchQuery"
@@ -23,64 +23,77 @@
     </ion-header>
     <ion-content :fullscreen="true">
       <div class="diary">
-        <template v-if="!isSearchOpen">
-          <p class="intro">{{ t('diary.explanation') }}</p>
-          <p class="privacy">
-            <ion-icon :icon="lockClosedOutline" aria-hidden="true"/>
-            {{ t('diary.explanation_offline') }}
-          </p>
+        <ion-segment v-model="section" class="section-picker">
+          <ion-segment-button value="diary">
+            <ion-label>{{ t('diary.tab') }}</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="escrutes">
+            <ion-label>{{ t('escrute.title') }}</ion-label>
+          </ion-segment-button>
+        </ion-segment>
 
-          <button :aria-label="t('diary.add_button')" class="compose btn" @click="openNew">
-            <ion-icon :icon="createOutline" aria-hidden="true" class="compose-icon"/>
-            <span class="compose-prompt">{{ composePrompt }}</span>
-          </button>
-        </template>
-
-        <div v-if="selectedDayFilter" class="filter-chip">
-          <span>{{ dayLabel(selectedDayFilter) }}</span>
-          <button :aria-label="t('diary.filter_clear')" class="chip-clear btn" @click="clearDayFilter">
-            <ion-icon :icon="closeOutline" aria-hidden="true"/>
-          </button>
-        </div>
-
-        <section v-if="store.entries.length === 0" class="empty-state">
-          <ion-icon :icon="journalOutline" aria-hidden="true" class="empty-icon"/>
-          <p class="empty-title">{{ t('diary.empty') }}</p>
-          <p class="empty-text">{{ t('diary.empty_hint') }}</p>
-        </section>
-
-        <section v-else-if="filteredEntries.length === 0" class="empty-state">
-          <ion-icon :icon="searchOutline" aria-hidden="true" class="empty-icon"/>
-          <p class="empty-title">{{ noResultsMessage }}</p>
-        </section>
+        <EscrutesList v-if="section === 'escrutes'"/>
 
         <template v-else>
-          <section v-for="group in groups" :key="group.key">
-            <h2 class="section-title">{{ group.label }}</h2>
-            <div class="entries">
-              <article v-for="entry in group.entries" :key="entry.id" class="entry">
-                <DiaryReferenceCard v-if="entry.reference" :reference="entry.reference"/>
-                <button :aria-label="t('diary.edit_title')" class="entry-body btn" @click="openEdit(entry)">
-                  <span class="entry-text">{{ entry.text }}</span>
-                  <span class="entry-time">{{ formatTime(entry.createdAt) }}</span>
-                </button>
-              </article>
-            </div>
-          </section>
+          <template v-if="!isSearchOpen">
+            <p class="intro">{{ t('diary.explanation') }}</p>
+            <p class="privacy">
+              <ion-icon :icon="lockClosedOutline" aria-hidden="true"/>
+              {{ t('diary.explanation_offline') }}
+            </p>
 
-          <div v-if="totalPages > 1" class="pagination">
-            <button :aria-label="t('diary.previous_page')" :disabled="currentPage === 1" class="page-nav btn"
-                    @click="goToPrevPage">
-              <ion-icon :icon="chevronBackOutline" aria-hidden="true"/>
+            <button :aria-label="t('diary.add_button')" class="compose btn" @click="openNew">
+              <ion-icon :icon="createOutline" aria-hidden="true" class="compose-icon"/>
+              <span class="compose-prompt">{{ composePrompt }}</span>
             </button>
-            <span class="page-indicator">{{
-                t('diary.page_indicator', {current: currentPage, total: totalPages})
-              }}</span>
-            <button :aria-label="t('diary.next_page')" :disabled="currentPage === totalPages" class="page-nav btn"
-                    @click="goToNextPage">
-              <ion-icon :icon="chevronForwardOutline" aria-hidden="true"/>
+          </template>
+
+          <div v-if="selectedDayFilter" class="filter-chip">
+            <span>{{ dayLabel(selectedDayFilter) }}</span>
+            <button :aria-label="t('diary.filter_clear')" class="chip-clear btn" @click="clearDayFilter">
+              <ion-icon :icon="closeOutline" aria-hidden="true"/>
             </button>
           </div>
+
+          <section v-if="store.entries.length === 0" class="empty-state">
+            <ion-icon :icon="journalOutline" aria-hidden="true" class="empty-icon"/>
+            <p class="empty-title">{{ t('diary.empty') }}</p>
+            <p class="empty-text">{{ t('diary.empty_hint') }}</p>
+          </section>
+
+          <section v-else-if="filteredEntries.length === 0" class="empty-state">
+            <ion-icon :icon="searchOutline" aria-hidden="true" class="empty-icon"/>
+            <p class="empty-title">{{ noResultsMessage }}</p>
+          </section>
+
+          <template v-else>
+            <section v-for="group in groups" :key="group.key">
+              <h2 class="section-title">{{ group.label }}</h2>
+              <div class="entries">
+                <article v-for="entry in group.entries" :key="entry.id" class="entry">
+                  <DiaryReferenceCard v-if="entry.reference" :reference="entry.reference"/>
+                  <button :aria-label="t('diary.edit_title')" class="entry-body btn" @click="openEdit(entry)">
+                    <span class="entry-text">{{ entry.text }}</span>
+                    <span class="entry-time">{{ formatTime(entry.createdAt) }}</span>
+                  </button>
+                </article>
+              </div>
+            </section>
+
+            <div v-if="totalPages > 1" class="pagination">
+              <button :aria-label="t('diary.previous_page')" :disabled="currentPage === 1" class="page-nav btn"
+                      @click="goToPrevPage">
+                <ion-icon :icon="chevronBackOutline" aria-hidden="true"/>
+              </button>
+              <span class="page-indicator">{{
+                  t('diary.page_indicator', {current: currentPage, total: totalPages})
+                }}</span>
+              <button :aria-label="t('diary.next_page')" :disabled="currentPage === totalPages" class="page-nav btn"
+                      @click="goToNextPage">
+                <ion-icon :icon="chevronForwardOutline" aria-hidden="true"/>
+              </button>
+            </div>
+          </template>
         </template>
       </div>
     </ion-content>
@@ -118,7 +131,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, ref, watch} from 'vue';
+import {computed, defineAsyncComponent, ref, watch} from 'vue';
 import {
   IonButton,
   IonButtons,
@@ -126,9 +139,12 @@ import {
   IonDatetime,
   IonHeader,
   IonIcon,
+  IonLabel,
   IonModal,
   IonPage,
   IonSearchbar,
+  IonSegment,
+  IonSegmentButton,
   IonTitle,
   IonToolbar,
   onIonViewWillEnter
@@ -144,6 +160,7 @@ import {
   searchOutline
 } from 'ionicons/icons';
 import {useI18n} from 'vue-i18n';
+import {useRoute} from 'vue-router';
 import {type DiaryEntry, useDiaryStore} from '@/modules/app/stores/diaryStore.ts';
 import DiaryEntryModal from '@/modules/app/components/molecules/DiaryEntryModal.vue';
 import DiaryReferenceCard from '@/modules/app/components/molecules/DiaryReferenceCard.vue';
@@ -151,8 +168,18 @@ import HapticsService from '@/modules/app/services/HapticsService.ts';
 
 const {t, tm, locale} = useI18n();
 const store = useDiaryStore();
+const route = useRoute();
 
 const PAGE_SIZE = 15;
+
+// Loaded with its tab: it needs the Bible, which the diary alone does not
+const EscrutesList = defineAsyncComponent(() => import('@/modules/escrute/components/EscrutesList.vue'));
+const section = ref<'diary' | 'escrutes'>('diary');
+
+// Links can open the escrutes tab directly; the page stays alive in the Ionic stack, so this has to keep watching
+watch(() => route.query.section, (value) => {
+  if (value === 'escrutes') section.value = 'escrutes';
+}, {immediate: true});
 
 // A different prompt each time the page is opened, to keep the invitation to write feeling fresh
 const prompts = computed<string[]>(() => tm('diary.prompts') as string[]);
@@ -320,6 +347,11 @@ const openEdit = (entry: DiaryEntry) => {
 </script>
 
 <style scoped>
+.section-picker {
+  width: auto;
+  margin-bottom: 1.25rem;
+}
+
 .diary {
   max-width: 560px;
   margin: 0 auto;

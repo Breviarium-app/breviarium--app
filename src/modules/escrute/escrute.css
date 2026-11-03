@@ -1,0 +1,143 @@
+/* Scrutatio's design tokens, mapped onto the themes of this app */
+:root {
+    --font-serif: var(--ion-font-family);
+    --font-sans: var(--ion-font-family);
+
+    --paper: var(--ion-background-color);
+    --paper-raised: var(--background-color-card);
+    --paper-sunken: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.06);
+    --ink: var(--ion-text-color, #000);
+    --ink-soft: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.75);
+    --ink-faint: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.58);
+    --rule: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.12);
+    --rule-strong: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.24);
+    --rubric: var(--ion-color-danger);
+    --rubric-rgb: 235, 68, 90;
+    --rubric-strong: #d33a4e;
+    --rubric-soft: rgba(var(--rubric-rgb), 0.12);
+    --highlight: rgba(var(--rubric-rgb), 0.16);
+    --shadow-color: 0, 0, 0;
+
+    --shadow-sm: 0 1px 2px rgba(var(--shadow-color), 0.1);
+    --shadow-md: 0 4px 16px rgba(var(--shadow-color), 0.22);
+    --shadow-lg: 0 24px 48px -12px rgba(var(--shadow-color), 0.35);
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-pill: 999px;
+
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+
+    --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.es-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rubric);
+    margin: 0 0 var(--space-2);
+}
+
+button.es-btn,
+a.es-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.2;
+    padding: 0.7rem 1.2rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--rule-strong);
+    background: var(--paper-raised);
+    color: var(--ink);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 150ms var(--ease), border-color 150ms var(--ease), color 150ms var(--ease);
+}
+
+button.es-btn:hover {
+    border-color: var(--rubric);
+    color: var(--rubric);
+}
+
+button.es-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+button.es-btn-primary {
+    background: var(--rubric);
+    border-color: var(--rubric);
+    color: #fff;
+}
+
+button.es-btn-primary:hover {
+    background: var(--rubric-strong);
+    border-color: var(--rubric-strong);
+    color: #fff;
+}
+
+button.es-btn-quiet {
+    border-color: transparent;
+    background: none;
+    color: var(--ink-soft);
+}
+
+.es-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+}
+
+.es-field-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+}
+
+.es-field-hint {
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+}
+
+.es-input {
+    font: inherit;
+    font-size: 1rem;
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    color: var(--ink);
+    background: var(--ion-background-color);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-md);
+    box-sizing: border-box;
+    transition: border-color 150ms var(--ease), box-shadow 150ms var(--ease);
+}
+
+.es-input::placeholder {
+    color: var(--ink-faint);
+}
+
+.es-input:focus {
+    border-color: var(--rubric);
+    box-shadow: 0 0 0 3px rgba(var(--rubric-rgb), 0.15);
+}
+
+textarea.es-input {
+    resize: vertical;
+    min-height: 7rem;
+    line-height: 1.6;
+}

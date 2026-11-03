@@ -21,6 +21,7 @@ import '@ionic/vue/css/flex-utils.css'
 import '@ionic/vue/css/display.css'
 
 import '@/style.css'
+import '@/modules/escrute/escrute.css'
 import {i18n} from "@/modules/app/i18n.ts";
 import {welcomeMsg} from "@/modules/onboarding/welcome.ts";
 

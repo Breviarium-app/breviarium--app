@@ -13,6 +13,7 @@ import AngelusComponent from "@/modules/app/components/molecules/prayers/Angelus
 import ReginaCoeliComponent from "@/modules/app/components/molecules/prayers/ReginaCoeliComponent.vue";
 import ChapletDivineMercyComponent from "@/modules/app/components/molecules/prayers/ChapletDivineMercyComponent.vue";
 import LitaniesHumilityComponent from "@/modules/app/components/molecules/prayers/LitaniesHumilityComponent.vue";
+import LitaniesHolyNameJesusComponent from "@/modules/app/components/molecules/prayers/LitaniesHolyNameJesusComponent.vue";
 import SanMiguelComponent from "@/modules/app/components/molecules/prayers/SanMiguelComponent.vue";
 import LitaniesSaintJosephComponent from "@/modules/app/components/molecules/prayers/LitaniesSaintJosephComponent.vue";
 import PrayerSaintJosephComponent from "@/modules/app/components/molecules/prayers/PrayerSaintJosephComponent.vue";
@@ -38,6 +39,7 @@ const prayers: Record<string, { title: string; component: any }> = {
   "acordaos": {title: "Acordaos", component: AcordaosComponent},
   "chaplet-divine-mercy": {title: "Coronilla de la Divina Misericordia", component: ChapletDivineMercyComponent},
   "litanies-humility": {title: "Letanías de la Humildad", component: LitaniesHumilityComponent},
+  "litanies-holy-name-jesus": {title: "Letanías del Santo Nombre de Jesús", component: LitaniesHolyNameJesusComponent},
   "san-miguel": {title: "San Miguel Arcángel", component: SanMiguelComponent},
   "litanies-saint-joseph": {title: "Letanías de San José", component: LitaniesSaintJosephComponent},
   "prayer-saint-joseph": {title: "Oración a San José", component: PrayerSaintJosephComponent},

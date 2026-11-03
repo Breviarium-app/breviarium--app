@@ -118,11 +118,12 @@ export const bibleStore = defineStore('bible', () => {
             const target = booksByAbbreviation.get(detail.book)
             const targetChapter = Number(detail.chapter)
             const firstVerse = parseInt(detail.verses?.[0]?.from ?? '', 10)
+            const lastVerse = parseInt(detail.verses?.[0]?.to ?? '', 10)
             const valid = !!target && targetChapter >= 1 && targetChapter <= target.chapters
             return {
                 // The library writes chapter:verse; Spanish citations use a comma (Jn 1,1-3).
                 label: (labels[index] ?? detail.book).replace(/:/g, ','),
-                target: valid ? {book: target.name, chapter: targetChapter, verse: firstVerse || null} : null,
+                target: valid ? {book: target.name, chapter: targetChapter, verse: firstVerse || null, to: lastVerse || null} : null,
             }
         })
     }
@@ -164,7 +165,7 @@ export type BibleBookMeta = {
 
 export type BibleCrossReference = {
     label: string;
-    target: { book: string; chapter: number; verse: number | null } | null;
+    target: { book: string; chapter: number; verse: number | null; to: number | null } | null;
 }
 
 export type BiblePosition = {
