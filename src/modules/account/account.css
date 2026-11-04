@@ -1,0 +1,205 @@
+/* Shared look for the Profile tab's forms: cards and pills in the app's existing tokens
+   (--background-color-card, --ion-color-primary), following SettingsPage/DiaryEntryModal's style. */
+
+.account-page {
+  max-width: 560px;
+  margin: 0 auto;
+  /* Bottom padding keeps the last section clear of the floating tab bar */
+  padding: 1rem 1rem 96px;
+}
+
+.account-segment {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.3rem;
+  margin-bottom: 1.25rem;
+  border-radius: 999px;
+  background: var(--background-color-card);
+}
+
+.account-segment button {
+  flex: 1;
+  padding: 0.55rem 0;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  color: inherit;
+  opacity: 0.6;
+  background: transparent;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+}
+
+.account-segment button.active {
+  opacity: 1;
+  color: #fff;
+  background: var(--ion-color-primary);
+}
+
+.account-field {
+  margin-bottom: 1rem;
+}
+
+.account-field-label {
+  display: block;
+  margin: 0 0.1rem 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+/* Wrapper draws the rounded field and focus ring, which ion-input does not clip itself */
+.account-input-wrap {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--background-color-card);
+  box-shadow: inset 0 0 0 1.5px transparent;
+  transition: box-shadow 0.15s ease;
+}
+
+.account-input-wrap:focus-within {
+  box-shadow: inset 0 0 0 1.5px var(--ion-color-primary);
+}
+
+.account-input {
+  --background: transparent;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+}
+
+.account-input-wrap.with-toggle .account-input {
+  --padding-end: 44px;
+}
+
+.account-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: inherit;
+  opacity: 0.6;
+  background: transparent;
+  transform: translateY(-50%);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.account-field-hint {
+  margin: 0.4rem 0.1rem 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  opacity: 0.6;
+}
+
+.account-error {
+  margin: 0.75rem 0.1rem 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--ion-color-danger);
+}
+
+.account-notice {
+  margin: 0.75rem 0.1rem 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  opacity: 0.7;
+}
+
+.account-button {
+  display: block;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin-top: 0.6rem;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  text-align: center;
+  color: #fff;
+  background: var(--ion-color-primary);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.account-button:disabled {
+  opacity: 0.5;
+}
+
+.account-button.secondary {
+  color: inherit;
+  background: var(--background-color-card);
+}
+
+.account-google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.account-link-row {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.account-link-row button {
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.account-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 1.1rem 0;
+  font-size: 0.8rem;
+  opacity: 0.5;
+}
+
+.account-divider::before,
+.account-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.15);
+}
+
+.account-banner {
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  border-radius: 16px;
+  background: var(--background-color-card);
+  border-left: 3px solid var(--ion-color-primary);
+}
+
+.account-banner-title {
+  margin: 0 0 0.4rem;
+  font-weight: 600;
+}
+
+.account-code-input {
+  letter-spacing: 0.3em;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .account-segment button,
+  .account-input-wrap {
+    transition: none;
+  }
+}

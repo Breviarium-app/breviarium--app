@@ -117,6 +117,20 @@ export const useAlertsStore = defineStore('alerts', () => {
         }
     };
 
+    // Applies an alerts blob pulled from the account (e.g. after signing in on a new device),
+    // merged per prayer the same way load() merges from storage.
+    const applyRemoteAlerts = async (data: Record<string, unknown>) => {
+        for (const key of ALERT_KEYS) {
+            const stored = (data[key] ?? {}) as { enabled?: unknown; time?: unknown };
+            alerts.value[key] = {
+                enabled: stored.enabled === true,
+                time: isValidAlertTime(stored.time) ? stored.time : alerts.value[key].time,
+            };
+        }
+        await save();
+        if (hasEnabled.value && permission.value === 'granted') await reschedule();
+    };
+
     return {
         alerts,
         isLoaded,
@@ -129,5 +143,6 @@ export const useAlertsStore = defineStore('alerts', () => {
         setEnabled,
         setTime,
         requestExactAlarm,
+        applyRemoteAlerts,
     };
 });

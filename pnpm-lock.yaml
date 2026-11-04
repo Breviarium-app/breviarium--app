@@ -38,6 +38,9 @@ importers:
       '@capacitor/share':
         specifier: ^8
         version: 8.0.3(@capacitor/core@8.5.3)
+      '@capawesome/capacitor-google-sign-in':
+        specifier: ^0.1.0
+        version: 0.1.4(@capacitor/core@8.5.3)
       '@ionic/vue':
         specifier: ^9.0.8
         version: 9.0.8(@stencil/core@4.45.2)(vue-router@5.4.0(@vue/compiler-sfc@3.5.44)(esbuild@0.25.12)(pinia@4.1.0(@vue/devtools-api@8.2.1)(typescript@5.9.3)(vue@3.5.44(typescript@5.9.3)))(rollup@4.55.1)(vite@6.4.1(@types/node@25.0.3))(vue@3.5.44(typescript@5.9.3)))(vue@3.5.44(typescript@5.9.3))
@@ -343,6 +346,11 @@ packages:
 
   '@capacitor/share@8.0.3':
     resolution: {integrity: sha512-gnvZBV1NPu2B8vd1UKncR56G15ueHd0aZLqgDov++t3SmTBG9Q0VrAZ1VnHn5stxlmglVaTb4RwopMgbpLzroA==}
+    peerDependencies:
+      '@capacitor/core': '>=8.0.0'
+
+  '@capawesome/capacitor-google-sign-in@0.1.4':
+    resolution: {integrity: sha512-+8+3mfWN1B0+qB5r1xUZpy0hrYkpEDD5XHxa5LQ5wwDIVKoFLj/orYGRf/RrsB1AbkSpRfZZ1N2U7C3gPcjAdA==}
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
@@ -3498,6 +3506,10 @@ snapshots:
       '@capacitor/core': 8.5.3
 
   '@capacitor/share@8.0.3(@capacitor/core@8.5.3)':
+    dependencies:
+      '@capacitor/core': 8.5.3
+
+  '@capawesome/capacitor-google-sign-in@0.1.4(@capacitor/core@8.5.3)':
     dependencies:
       '@capacitor/core': 8.5.3
 

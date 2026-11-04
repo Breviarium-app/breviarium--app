@@ -13,6 +13,36 @@
       </button>
     </div>
   </div>
+
+  <div class="setting-block">
+    <span id="light-variant-label" class="setting-label">{{ t('settings.customize_light_theme') }}</span>
+    <div aria-labelledby="light-variant-label" class="themes variant-themes" role="radiogroup">
+      <button v-for="option in lightVariants" :key="option.value" :aria-checked="lightVariant === option.value"
+              :class="{ active: lightVariant === option.value }" class="theme-option btn" role="radio"
+              @click="applyVariant('light', option.value)">
+        <span :style="{ background: option.background }" aria-hidden="true" class="swatch">
+          <span :style="{ background: option.card }" class="swatch-card"/>
+          <span :style="{ background: option.accent }" class="swatch-dot"/>
+        </span>
+        <span class="theme-name">{{ t(option.value) }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="setting-block">
+    <span id="dark-variant-label" class="setting-label">{{ t('settings.customize_dark_theme') }}</span>
+    <div aria-labelledby="dark-variant-label" class="themes variant-themes" role="radiogroup">
+      <button v-for="option in darkVariants" :key="option.value" :aria-checked="darkVariant === option.value"
+              :class="{ active: darkVariant === option.value }" class="theme-option btn" role="radio"
+              @click="applyVariant('dark', option.value)">
+        <span :style="{ background: option.background }" aria-hidden="true" class="swatch">
+          <span :style="{ background: option.card }" class="swatch-card"/>
+          <span :style="{ background: option.accent }" class="swatch-dot"/>
+        </span>
+        <span class="theme-name">{{ t(option.value) }}</span>
+      </button>
+    </div>
+  </div>
 </template>
 <script lang="ts" setup>
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
@@ -21,8 +51,10 @@ import {useI18n} from "vue-i18n";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 
 const {t} = useI18n();
-const {applyTheme, settings} = useSettingsStore();
+const {applyTheme, setThemeVariant, settings} = useSettingsStore();
 const theme = ref(settings.theme);
+const lightVariant = ref(settings.lightVariant);
+const darkVariant = ref(settings.darkVariant);
 
 // Miniature of each theme's background, card and accent colours (see style.css)
 const options = [
@@ -33,9 +65,26 @@ const options = [
   {value: 'dark', background: '#121212', card: '#222222', accent: '#be4747'},
 ];
 
+// Used when "system" resolves itself to the OS's light/dark appearance
+const lightVariants = [
+  {value: 'paper', background: '#f5e6d3', card: '#e1d0ba', accent: '#b1773c'},
+  {value: 'light', background: '#f8f9fb', card: '#e9ebed', accent: '#be4747'},
+];
+const darkVariants = [
+  {value: 'moon', background: '#15202b', card: '#1b2e42', accent: '#4e82b8'},
+  {value: 'dark', background: '#121212', card: '#222222', accent: '#be4747'},
+];
+
 const apply = (x: string) => {
   theme.value = x;
   applyTheme(x);
+  HapticsService.light();
+}
+
+const applyVariant = (mode: 'light' | 'dark', value: string) => {
+  if (mode === 'light') lightVariant.value = value;
+  else darkVariant.value = value;
+  setThemeVariant(mode, value);
   HapticsService.light();
 }
 </script>
@@ -49,6 +98,10 @@ const apply = (x: string) => {
   grid-template-columns: repeat(5, 1fr);
   gap: 0.5rem;
   margin-top: 0.75rem;
+}
+
+.variant-themes {
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .theme-option {

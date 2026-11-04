@@ -20,6 +20,9 @@ export const useSettingsStore = defineStore('settings', () => {
         laudesEvangelium: false,
         vesperaeOfficium: false,
         theme: 'paper',
+        // Which concrete theme "system" resolves to for each OS appearance
+        lightVariant: 'light',
+        darkVariant: 'dark',
         deceased: false,
         hapticsActive: false,
         keepAwake: true,
@@ -110,7 +113,7 @@ export const useSettingsStore = defineStore('settings', () => {
         if (theme === 'system') {
             document.documentElement.removeAttribute('data-theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-            resolvedTheme = prefersDark ? 'dark' : 'light';
+            resolvedTheme = prefersDark ? settings.value.darkVariant : settings.value.lightVariant;
             document.documentElement.setAttribute('data-theme', resolvedTheme);
         } else {
             document.documentElement.setAttribute('data-theme', theme);
@@ -119,6 +122,18 @@ export const useSettingsStore = defineStore('settings', () => {
         if (settings.value.theme != theme) {
             settings.value.theme = theme;
         }
+    };
+
+    // Sets which concrete theme "system" resolves to for the given OS appearance, and
+    // re-applies immediately if system mode is currently showing that appearance
+    const setThemeVariant = (mode: 'light' | 'dark', variant: string) => {
+        if (mode === 'light') {
+            settings.value.lightVariant = variant;
+        } else {
+            settings.value.darkVariant = variant;
+        }
+        if (settings.value.theme === 'system') applyTheme('system');
+        saveSettings();
     };
 
     const loadSettings = async () => {
@@ -142,6 +157,18 @@ export const useSettingsStore = defineStore('settings', () => {
 
     };
 
+    // Applies a settings blob pulled from the account (e.g. after signing in on a new device),
+    // the same way loadSettings() merges what it reads from storage.
+    const applyRemoteSettings = async (data: Record<string, unknown>) => {
+        settings.value = {
+            ...settings.value,
+            ...data,
+        };
+        applyTheme(settings.value.theme);
+        await applyKeepAwake(settings.value.keepAwake ?? false);
+        await saveSettings();
+    };
+
     return {
         settings,
         isLoaded,
@@ -149,8 +176,10 @@ export const useSettingsStore = defineStore('settings', () => {
         themes,
         saveSettings,
         applyTheme,
+        setThemeVariant,
         applyKeepAwake,
         loadSettings,
-        setHapticsState
+        setHapticsState,
+        applyRemoteSettings,
     };
 });
