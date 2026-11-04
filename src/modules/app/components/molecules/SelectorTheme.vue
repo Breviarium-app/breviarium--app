@@ -16,30 +16,30 @@
 
   <div class="setting-block">
     <span id="light-variant-label" class="setting-label">{{ t('settings.customize_light_theme') }}</span>
-    <div aria-labelledby="light-variant-label" class="themes variant-themes" role="radiogroup">
+    <div aria-labelledby="light-variant-label" class="variant-list" role="radiogroup">
       <button v-for="option in lightVariants" :key="option.value" :aria-checked="lightVariant === option.value"
-              :class="{ active: lightVariant === option.value }" class="theme-option btn" role="radio"
+              :class="{ active: lightVariant === option.value }" class="variant-option btn" role="radio"
               @click="applyVariant('light', option.value)">
-        <span :style="{ background: option.background }" aria-hidden="true" class="swatch">
-          <span :style="{ background: option.card }" class="swatch-card"/>
-          <span :style="{ background: option.accent }" class="swatch-dot"/>
+        <span :style="{ background: option.background }" aria-hidden="true" class="variant-swatch">
+          <span :style="{ background: option.accent }" class="variant-swatch-dot"/>
         </span>
-        <span class="theme-name">{{ t(option.value) }}</span>
+        <span class="variant-name">{{ t(option.value) }}</span>
+        <ion-icon v-if="lightVariant === option.value" :icon="checkmark" aria-hidden="true" class="variant-check"/>
       </button>
     </div>
   </div>
 
   <div class="setting-block">
     <span id="dark-variant-label" class="setting-label">{{ t('settings.customize_dark_theme') }}</span>
-    <div aria-labelledby="dark-variant-label" class="themes variant-themes" role="radiogroup">
+    <div aria-labelledby="dark-variant-label" class="variant-list" role="radiogroup">
       <button v-for="option in darkVariants" :key="option.value" :aria-checked="darkVariant === option.value"
-              :class="{ active: darkVariant === option.value }" class="theme-option btn" role="radio"
+              :class="{ active: darkVariant === option.value }" class="variant-option btn" role="radio"
               @click="applyVariant('dark', option.value)">
-        <span :style="{ background: option.background }" aria-hidden="true" class="swatch">
-          <span :style="{ background: option.card }" class="swatch-card"/>
-          <span :style="{ background: option.accent }" class="swatch-dot"/>
+        <span :style="{ background: option.background }" aria-hidden="true" class="variant-swatch">
+          <span :style="{ background: option.accent }" class="variant-swatch-dot"/>
         </span>
-        <span class="theme-name">{{ t(option.value) }}</span>
+        <span class="variant-name">{{ t(option.value) }}</span>
+        <ion-icon v-if="darkVariant === option.value" :icon="checkmark" aria-hidden="true" class="variant-check"/>
       </button>
     </div>
   </div>
@@ -48,6 +48,8 @@
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
 import {ref} from "vue";
 import {useI18n} from "vue-i18n";
+import {IonIcon} from "@ionic/vue";
+import {checkmark} from "ionicons/icons";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 
 const {t} = useI18n();
@@ -100,8 +102,69 @@ const applyVariant = (mode: 'light' | 'dark', value: string) => {
   margin-top: 0.75rem;
 }
 
-.variant-themes {
-  grid-template-columns: repeat(2, 1fr);
+/* One compact row per option, instead of the big vertical swatch cards above */
+.variant-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.variant-option {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 0;
+  border-radius: 12px;
+  background: var(--background);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: inherit;
+  text-align: left;
+  box-shadow: inset 0 0 0 1.5px transparent;
+  transition: box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.variant-option.active {
+  box-shadow: inset 0 0 0 1.5px var(--ion-color-primary);
+}
+
+.variant-swatch {
+  position: relative;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.12);
+}
+
+.variant-swatch-dot {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.variant-name {
+  flex: 1;
+  min-width: 0;
+}
+
+.variant-option.active .variant-name {
+  color: var(--ion-color-primary);
+  font-weight: 500;
+}
+
+.variant-check {
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  color: var(--ion-color-primary);
 }
 
 .theme-option {
@@ -161,7 +224,8 @@ const applyVariant = (mode: 'light' | 'dark', value: string) => {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .swatch {
+  .swatch,
+  .variant-option {
     transition: none;
   }
 }
