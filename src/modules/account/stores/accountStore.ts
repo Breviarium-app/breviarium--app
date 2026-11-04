@@ -1,28 +1,25 @@
 import {defineStore} from 'pinia';
-import {ref, watch} from 'vue';
+import {computed, ref, watch} from 'vue';
+import {useQueryClient} from '@tanstack/vue-query';
 import {Preferences} from '@capacitor/preferences';
 import {
-    type Account,
-    addPasswordWithCode,
-    changePassword as apiChangePassword,
-    continueWithGoogle as apiContinueWithGoogle,
-    getAccount,
-    getNewsletterSubscription,
-    getPreferences,
+    getAccount as apiGetAccount,
+    getNewsletterSubscription as apiGetNewsletterSubscription,
+    getPreferences as apiGetPreferences,
     hasSession,
     isGoogleAccountCodeSent,
-    logIn as apiLogIn,
-    mergePreferences,
     onSignedOut,
-    register as apiRegister,
-    replacePreferences,
-    resendVerificationCode as apiResendVerificationCode,
     sessionReady,
-    setNewsletterSubscription,
-    signOut as apiSignOut,
-    updateAccount as apiUpdateAccount,
-    verifyEmail as apiVerifyEmail,
 } from '@/modules/account/services/backendClient.ts';
+import {
+    ACCOUNT_KEY,
+    NEWSLETTER_KEY,
+    PREFERENCES_KEY,
+    useAccountMutations,
+    useAccountQuery,
+    useNewsletterMutation,
+    usePreferencesMutations,
+} from '@/modules/account/queries/accountQueries.ts';
 import {completeRedirectSignIn, signInWithGoogle} from '@/modules/account/services/googleSignIn.ts';
 import {useSettingsStore} from '@/modules/app/stores/settingsStore.ts';
 import {useAlertsStore} from '@/modules/app/stores/alertsStore.ts';
@@ -40,10 +37,25 @@ function debounce<Args extends unknown[]>(fn: (...args: Args) => void, ms: numbe
 }
 
 export const useAccountStore = defineStore('account', () => {
-    const account = ref<Account | null>(null);
     const signedIn = ref(false);
     const isReady = ref(false);
     const pictureUrl = ref<string | null>(null);
+
+    const queryClient = useQueryClient();
+    const {data: account} = useAccountQuery(computed(() => signedIn.value));
+    const {
+        registerMutation,
+        addPasswordMutation,
+        loginMutation,
+        googleMutation,
+        updateMutation,
+        verifyEmailMutation,
+        resendMutation,
+        changePasswordMutation,
+        logoutMutation,
+    } = useAccountMutations();
+    const newsletterMutation = useNewsletterMutation();
+    const {replaceMutation, mergeMutation} = usePreferencesMutations();
 
     const savePictureUrl = async (url: string | null) => {
         pictureUrl.value = url;
@@ -61,7 +73,7 @@ export const useAccountStore = defineStore('account', () => {
         const snapshot = JSON.stringify(useSettingsStore().settings);
         if (snapshot === lastSyncedSettings) return;
         try {
-            await mergePreferences({settings: useSettingsStore().settings});
+            await mergeMutation.mutateAsync({settings: useSettingsStore().settings});
             lastSyncedSettings = snapshot;
         } catch (error) {
             console.error('Error syncing settings:', error);
@@ -73,7 +85,7 @@ export const useAccountStore = defineStore('account', () => {
         const snapshot = JSON.stringify(useAlertsStore().alerts);
         if (snapshot === lastSyncedAlerts) return;
         try {
-            await mergePreferences({alerts: useAlertsStore().alerts});
+            await mergeMutation.mutateAsync({alerts: useAlertsStore().alerts});
             lastSyncedAlerts = snapshot;
         } catch (error) {
             console.error('Error syncing alerts:', error);
@@ -97,9 +109,12 @@ export const useAccountStore = defineStore('account', () => {
         const settingsStore = useSettingsStore();
         const alertsStore = useAlertsStore();
         try {
-            const {preferences, updated_at} = await getPreferences();
+            const {preferences, updated_at} = await queryClient.fetchQuery({
+                queryKey: PREFERENCES_KEY,
+                queryFn: apiGetPreferences,
+            });
             if (updated_at === null) {
-                await replacePreferences({settings: settingsStore.settings, alerts: alertsStore.alerts});
+                await replaceMutation.mutateAsync({settings: settingsStore.settings, alerts: alertsStore.alerts});
             } else {
                 const remote = preferences as { settings?: Record<string, unknown>; alerts?: Record<string, unknown> };
                 if (remote.settings) await settingsStore.applyRemoteSettings(remote.settings);
@@ -113,17 +128,22 @@ export const useAccountStore = defineStore('account', () => {
         watchLocalChanges();
     };
 
-    const applySignedIn = async (acc: Account) => {
-        account.value = acc;
+    const applySignedIn = async () => {
         signedIn.value = true;
         await syncPreferences();
     };
 
     const continueWithGoogle = async (idToken: string, locale = 'es', newPictureUrl: string | null = null) => {
-        const acc = await apiContinueWithGoogle(idToken, locale);
+        const acc = await googleMutation.mutateAsync({idToken, locale});
         if (newPictureUrl) await savePictureUrl(newPictureUrl);
-        await applySignedIn(acc);
+        await applySignedIn();
         return acc;
+    };
+
+    const clearAccountCache = () => {
+        queryClient.removeQueries({queryKey: ACCOUNT_KEY});
+        queryClient.removeQueries({queryKey: NEWSLETTER_KEY});
+        queryClient.removeQueries({queryKey: PREFERENCES_KEY});
     };
 
     /** Restores the session (if any) and account; call once at startup. */
@@ -132,15 +152,15 @@ export const useAccountStore = defineStore('account', () => {
         await sessionReady();
         signedIn.value = hasSession();
         onSignedOut(() => {
-            account.value = null;
             signedIn.value = false;
             unwatchLocalChanges();
+            clearAccountCache();
         });
         const {value: cachedPictureUrl} = await Preferences.get({key: PICTURE_KEY});
         pictureUrl.value = cachedPictureUrl || null;
         if (signedIn.value) {
             try {
-                account.value = await getAccount();
+                await queryClient.fetchQuery({queryKey: ACCOUNT_KEY, queryFn: apiGetAccount});
                 await syncPreferences();
             } catch (error) {
                 console.error('Error loading account:', error);
@@ -153,21 +173,21 @@ export const useAccountStore = defineStore('account', () => {
     };
 
     const register = async (input: { name: string; email: string; password: string; locale: string }) => {
-        const acc = await apiRegister(input);
-        await applySignedIn(acc);
+        const acc = await registerMutation.mutateAsync(input);
+        await applySignedIn();
         return acc;
     };
 
     /** Adds a password to a Google-only account, with the code register() emailed. Signs in. */
     const completeGoogleAddPassword = async (input: { email: string; code: string; new_password: string }) => {
-        const acc = await addPasswordWithCode(input);
-        await applySignedIn(acc);
+        const acc = await addPasswordMutation.mutateAsync(input);
+        await applySignedIn();
         return acc;
     };
 
     const logIn = async (input: { email: string; password: string }) => {
-        const acc = await apiLogIn(input);
-        await applySignedIn(acc);
+        const acc = await loginMutation.mutateAsync(input);
+        await applySignedIn();
         return acc;
     };
 
@@ -180,28 +200,22 @@ export const useAccountStore = defineStore('account', () => {
 
     const logOut = async () => {
         unwatchLocalChanges();
-        await apiSignOut();
+        await logoutMutation.mutateAsync();
         await savePictureUrl(null);
-        account.value = null;
         signedIn.value = false;
     };
 
-    const updateAccount = async (changes: { name: string; country: string; city: string }) => {
-        account.value = await apiUpdateAccount(changes);
-        return account.value;
-    };
+    const updateAccount = (changes: { name: string; country: string; city: string }) => updateMutation.mutateAsync(changes);
 
-    const verifyEmail = async (code: string) => {
-        account.value = await apiVerifyEmail(code);
-        return account.value;
-    };
+    const verifyEmail = (code: string) => verifyEmailMutation.mutateAsync(code);
 
-    const resendVerificationCode = () => apiResendVerificationCode();
+    const resendVerificationCode = () => resendMutation.mutateAsync();
 
-    const changePassword = async (input: { current_password: string; new_password: string }) => {
-        account.value = await apiChangePassword(input);
-        return account.value;
-    };
+    const changePassword = (input: { current_password: string; new_password: string }) => changePasswordMutation.mutateAsync(input);
+
+    const getNewsletterSubscription = () => queryClient.fetchQuery({queryKey: NEWSLETTER_KEY, queryFn: apiGetNewsletterSubscription});
+
+    const setNewsletterSubscription = (subscribed: boolean) => newsletterMutation.mutateAsync(subscribed);
 
     return {
         account,

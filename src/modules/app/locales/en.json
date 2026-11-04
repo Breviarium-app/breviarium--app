@@ -184,8 +184,8 @@
     }
   },
   "system": "System",
-  "dark": "Dark",
-  "light": "Light",
+  "dark": "Black",
+  "light": "White",
   "moon": "Moon",
   "paper": "Paper",
   "opensource_join_us": "Open-source project, ¡join us!",

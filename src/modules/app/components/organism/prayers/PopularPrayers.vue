@@ -105,8 +105,12 @@ const groups = computed(() => [
     title: "A los ángeles y santos",
     prayers: [
       {name: "San Miguel Arcángel", route: "san-miguel", description: "Del papa León XIII"},
+      {name: "Coronilla a San Miguel Arcángel", route: "coronilla-san-miguel", description: "En honor de los nueve coros de los ángeles"},
       {name: "Letanías de San José", route: "litanies-saint-joseph", description: "Aprobadas por san Pío X"},
       {name: "Oración a San José", route: "prayer-saint-joseph", description: "Del papa Francisco, Patris Corde"},
+      {name: "Treintena a San José", route: "treintena-san-jose", description: "Treinta días de confianza en San José"},
+      {name: "Oración a San Juan Bosco", route: "oracion-san-juan-bosco", description: "Padre y maestro de la juventud"},
+      {name: "Oración al Padre Pío de Pietrelcina", route: "oracion-padre-pio", description: "El santo de los estigmas"},
     ],
   },
   {

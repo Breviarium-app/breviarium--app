@@ -14,35 +14,43 @@
     </div>
   </div>
 
-  <div class="setting-block">
-    <span id="light-variant-label" class="setting-label">{{ t('settings.customize_light_theme') }}</span>
-    <div aria-labelledby="light-variant-label" class="variant-list" role="radiogroup">
-      <button v-for="option in lightVariants" :key="option.value" :aria-checked="lightVariant === option.value"
-              :class="{ active: lightVariant === option.value }" class="variant-option btn" role="radio"
-              @click="applyVariant('light', option.value)">
-        <span :style="{ background: option.background }" aria-hidden="true" class="variant-swatch">
-          <span :style="{ background: option.accent }" class="variant-swatch-dot"/>
-        </span>
-        <span class="variant-name">{{ t(option.value) }}</span>
-        <ion-icon v-if="lightVariant === option.value" :icon="checkmark" aria-hidden="true" class="variant-check"/>
-      </button>
+  <Transition name="variant-collapse">
+    <div v-if="theme === 'system'" class="setting-block variant-collapse">
+      <div class="variant-collapse-content">
+        <span id="light-variant-label" class="setting-label">{{ t('settings.customize_light_theme') }}</span>
+        <div aria-labelledby="light-variant-label" class="variant-list" role="radiogroup">
+          <button v-for="option in lightVariants" :key="option.value" :aria-checked="lightVariant === option.value"
+                  :class="{ active: lightVariant === option.value }" class="variant-option btn" role="radio"
+                  @click="applyVariant('light', option.value)">
+            <span :style="{ background: option.background }" aria-hidden="true" class="variant-swatch">
+              <span :style="{ background: option.accent }" class="variant-swatch-dot"/>
+            </span>
+            <span class="variant-name">{{ t(option.value) }}</span>
+            <ion-icon v-if="lightVariant === option.value" :icon="checkmark" aria-hidden="true" class="variant-check"/>
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
+  </Transition>
 
-  <div class="setting-block">
-    <span id="dark-variant-label" class="setting-label">{{ t('settings.customize_dark_theme') }}</span>
-    <div aria-labelledby="dark-variant-label" class="variant-list" role="radiogroup">
-      <button v-for="option in darkVariants" :key="option.value" :aria-checked="darkVariant === option.value"
-              :class="{ active: darkVariant === option.value }" class="variant-option btn" role="radio"
-              @click="applyVariant('dark', option.value)">
-        <span :style="{ background: option.background }" aria-hidden="true" class="variant-swatch">
-          <span :style="{ background: option.accent }" class="variant-swatch-dot"/>
-        </span>
-        <span class="variant-name">{{ t(option.value) }}</span>
-        <ion-icon v-if="darkVariant === option.value" :icon="checkmark" aria-hidden="true" class="variant-check"/>
-      </button>
+  <Transition name="variant-collapse">
+    <div v-if="theme === 'system'" class="setting-block variant-collapse">
+      <div class="variant-collapse-content">
+        <span id="dark-variant-label" class="setting-label">{{ t('settings.customize_dark_theme') }}</span>
+        <div aria-labelledby="dark-variant-label" class="variant-list" role="radiogroup">
+          <button v-for="option in darkVariants" :key="option.value" :aria-checked="darkVariant === option.value"
+                  :class="{ active: darkVariant === option.value }" class="variant-option btn" role="radio"
+                  @click="applyVariant('dark', option.value)">
+            <span :style="{ background: option.background }" aria-hidden="true" class="variant-swatch">
+              <span :style="{ background: option.accent }" class="variant-swatch-dot"/>
+            </span>
+            <span class="variant-name">{{ t(option.value) }}</span>
+            <ion-icon v-if="darkVariant === option.value" :icon="checkmark" aria-hidden="true" class="variant-check"/>
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
+  </Transition>
 </template>
 <script lang="ts" setup>
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
@@ -93,6 +101,39 @@ const applyVariant = (mode: 'light' | 'dark', value: string) => {
 <style scoped>
 .setting-block {
   padding: 0.8rem 1rem 1rem;
+}
+
+.variant-collapse {
+  display: grid;
+  grid-template-rows: 1fr;
+  padding: 0;
+}
+
+.variant-collapse-content {
+  min-height: 0;
+  padding: 0.8rem 1rem 1rem;
+  overflow: hidden;
+}
+
+.variant-collapse-enter-active,
+.variant-collapse-leave-active {
+  overflow: hidden;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.variant-collapse-enter-active .variant-collapse-content,
+.variant-collapse-leave-active .variant-collapse-content {
+  transition: opacity 0.2s ease;
+}
+
+.variant-collapse-enter-from,
+.variant-collapse-leave-to {
+  grid-template-rows: 0fr;
+}
+
+.variant-collapse-enter-from .variant-collapse-content,
+.variant-collapse-leave-to .variant-collapse-content {
+  opacity: 0;
 }
 
 .themes {
@@ -225,7 +266,11 @@ const applyVariant = (mode: 'light' | 'dark', value: string) => {
 
 @media (prefers-reduced-motion: reduce) {
   .swatch,
-  .variant-option {
+  .variant-option,
+  .variant-collapse-enter-active,
+  .variant-collapse-leave-active,
+  .variant-collapse-enter-active .variant-collapse-content,
+  .variant-collapse-leave-active .variant-collapse-content {
     transition: none;
   }
 }

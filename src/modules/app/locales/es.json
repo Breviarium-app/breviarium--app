@@ -201,8 +201,8 @@
     }
   },
   "system": "Sistema",
-  "dark": "Oscuro",
-  "light": "Claro",
+  "dark": "Negro",
+  "light": "Blanco",
   "moon": "Lunar",
   "paper": "Papel",
   "opensource_join_us": "Proyecto open-source, ¡únete!",

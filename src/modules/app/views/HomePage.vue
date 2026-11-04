@@ -3,7 +3,7 @@ import {IonContent, IonIcon, IonPage, onIonViewWillEnter, useBackButton, useIonR
 import {App} from '@capacitor/app';
 import {computed, ref} from "vue";
 import {storeToRefs} from "pinia";
-import {arrowForward, personCircleOutline} from "ionicons/icons";
+import {arrowForward} from "ionicons/icons";
 import {currentLiturgyHour} from "@/modules/app/constants/utils.ts";
 import DateAndCelebration from "@/modules/app/components/molecules/home-banners/DateAndCelebration.vue";
 import router from "@/modules/app/router";
@@ -96,8 +96,6 @@ useDateStore().updateDateParams()
           <button :aria-label="t('account.title')" class="profile-button btn" @click="openSettings">
             <img v-if="signedIn && pictureUrl" :src="pictureUrl" alt="" class="profile-avatar"
                  referrerpolicy="no-referrer"/>
-            <ion-icon v-else :icon="personCircleOutline" class="profile-icon"
-                      :class="{ 'profile-icon--signed-in': signedIn }"/>
           </button>
         </div>
 

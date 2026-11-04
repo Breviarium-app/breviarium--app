@@ -206,16 +206,20 @@ export const RELEASE_NOTES: Record<string, ReleaseNote[]> = {
     ],
     "3.5.0": [
         {
-            icon: colorPaletteOutline,
-            text: "Personaliza el tema que usa el modo Sistema: Claro o Papel de día, Luna u Oscuro de noche",
-        },
-        {
             icon: personCircleOutline,
-            text: "Nueva pestaña Perfil: crea tu cuenta o inicia sesión, con Google o con tu correo",
+            text: "Nueva pestaña Perfil (en Ajustes): crea tu cuenta o inicia sesión, con Google o con tu correo",
         },
         {
             icon: cloudDoneOutline,
             text: "Tus ajustes y recordatorios se guardan en tu cuenta y te siguen si cambias de dispositivo",
+        },
+        {
+            icon: colorPaletteOutline,
+            text: "Personaliza el tema que usa el modo Sistema: Claro o Papel de día, Luna u Oscuro de noche",
+        },
+        {
+            icon: roseOutline,
+            text: "Nuevas oraciones: Coronilla a San Miguel Arcángel, San Juan Bosco, Padre Pío y Treintena a San José",
         },
     ],
 };

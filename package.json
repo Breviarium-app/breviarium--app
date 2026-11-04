@@ -15,7 +15,6 @@
   "dependencies": {
     "@capacitor-community/keep-awake": "^8.0.1",
     "@capacitor-community/text-to-speech": "^8.0.2",
-    "@capawesome/capacitor-google-sign-in": "^0.1.0",
     "@capacitor/android": "^8.5.3",
     "@capacitor/app": "^8.1.2",
     "@capacitor/core": "^8.5.3",
@@ -24,8 +23,10 @@
     "@capacitor/local-notifications": "^8",
     "@capacitor/preferences": "^8.0.1",
     "@capacitor/share": "^8",
+    "@capawesome/capacitor-google-sign-in": "^0.1.0",
     "@ionic/vue": "^9.0.8",
     "@ionic/vue-router": "^9.0.8",
+    "@tanstack/vue-query": "^5.106.0",
     "bible-core": "^2.0.3",
     "breviarium": "^3.1.7",
     "date-fns": "^4.4.0",
