@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia';
 import {ref, watch} from 'vue';
+import {Preferences} from '@capacitor/preferences';
 import {
     type Account,
     addPasswordWithCode,
@@ -26,6 +27,10 @@ import {completeRedirectSignIn, signInWithGoogle} from '@/modules/account/servic
 import {useSettingsStore} from '@/modules/app/stores/settingsStore.ts';
 import {useAlertsStore} from '@/modules/app/stores/alertsStore.ts';
 
+// The backend has no avatar field, so the Google profile picture is only cached on this device,
+// from whichever Google sign-in last provided one - it won't follow you to a new device.
+const PICTURE_KEY = 'account.pictureUrl';
+
 function debounce<Args extends unknown[]>(fn: (...args: Args) => void, ms: number) {
     let timer: ReturnType<typeof setTimeout> | null = null;
     return (...args: Args) => {
@@ -38,6 +43,13 @@ export const useAccountStore = defineStore('account', () => {
     const account = ref<Account | null>(null);
     const signedIn = ref(false);
     const isReady = ref(false);
+    const pictureUrl = ref<string | null>(null);
+
+    const savePictureUrl = async (url: string | null) => {
+        pictureUrl.value = url;
+        if (url) await Preferences.set({key: PICTURE_KEY, value: url});
+        else await Preferences.remove({key: PICTURE_KEY});
+    };
 
     // Skips pushing a settings/alerts sync that merely echoes what was just pulled or pushed
     let lastSyncedSettings = '';
@@ -107,8 +119,9 @@ export const useAccountStore = defineStore('account', () => {
         await syncPreferences();
     };
 
-    const continueWithGoogle = async (idToken: string, locale = 'es') => {
+    const continueWithGoogle = async (idToken: string, locale = 'es', newPictureUrl: string | null = null) => {
         const acc = await apiContinueWithGoogle(idToken, locale);
+        if (newPictureUrl) await savePictureUrl(newPictureUrl);
         await applySignedIn(acc);
         return acc;
     };
@@ -123,6 +136,8 @@ export const useAccountStore = defineStore('account', () => {
             signedIn.value = false;
             unwatchLocalChanges();
         });
+        const {value: cachedPictureUrl} = await Preferences.get({key: PICTURE_KEY});
+        pictureUrl.value = cachedPictureUrl || null;
         if (signedIn.value) {
             try {
                 account.value = await getAccount();
@@ -132,8 +147,8 @@ export const useAccountStore = defineStore('account', () => {
             }
         }
         // Picks up a Google sign-in that redirected away and back on the web build
-        const idToken = await completeRedirectSignIn();
-        if (idToken) await continueWithGoogle(idToken);
+        const result = await completeRedirectSignIn();
+        if (result) await continueWithGoogle(result.idToken, 'es', result.pictureUrl);
         isReady.value = true;
     };
 
@@ -159,13 +174,14 @@ export const useAccountStore = defineStore('account', () => {
     /** Starts Google sign-in. Resolves on native; on web the page redirects, and init() finishes
      *  the job after it comes back. */
     const signInWithGoogleAndContinue = async (locale = 'es') => {
-        const idToken = await signInWithGoogle();
-        if (idToken) await continueWithGoogle(idToken, locale);
+        const result = await signInWithGoogle();
+        if (result) await continueWithGoogle(result.idToken, locale, result.pictureUrl);
     };
 
     const logOut = async () => {
         unwatchLocalChanges();
         await apiSignOut();
+        await savePictureUrl(null);
         account.value = null;
         signedIn.value = false;
     };
@@ -191,6 +207,7 @@ export const useAccountStore = defineStore('account', () => {
         account,
         signedIn,
         isReady,
+        pictureUrl,
         init,
         register,
         completeGoogleAddPassword,

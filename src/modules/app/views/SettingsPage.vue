@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {computed, watch} from 'vue';
 import {useRouter} from 'vue-router';
+import {storeToRefs} from 'pinia';
 import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
 import {Capacitor} from '@capacitor/core';
 import {useI18n} from 'vue-i18n';
@@ -17,11 +18,19 @@ import SettingLink from "@/modules/app/components/molecules/settings/SettingLink
 import {bibleTrailStore} from "@/modules/app/stores/bibleTrailStore.ts";
 import {useAlertsStore} from "@/modules/app/stores/alertsStore.ts";
 import {ALERT_KEYS} from "@/modules/app/constants/alerts.ts";
+import {useAccountStore} from "@/modules/account/stores/accountStore.ts";
 
 const {t} = useI18n();
 const settingsStore = useSettingsStore();
 const alertsStore = useAlertsStore();
+const accountStore = useAccountStore();
+const {account, signedIn, pictureUrl} = storeToRefs(accountStore);
 const router = useRouter();
+
+const accountValue = computed(() => signedIn.value ? account.value?.name : t('account.login_tab'));
+const accountHint = computed(() => signedIn.value ? account.value?.email : t('account.settings_hint'));
+// Only shown once signed in: a cached picture from a previous device/account shouldn't flash up for a guest
+const accountAvatarUrl = computed(() => signedIn.value ? pictureUrl.value : undefined);
 
 const enabledAlerts = computed(() => ALERT_KEYS.filter((key) => alertsStore.alerts[key].enabled).length);
 const alertsSummary = computed(() => {
@@ -83,6 +92,13 @@ const updateLatinPrayers = async (value: boolean) => {
     </ion-header>
     <ion-content>
       <div v-if="settingsStore.isLoaded" class="settings">
+        <section>
+          <div class="settings-group">
+            <SettingLink :avatar-url="accountAvatarUrl" :hint="accountHint" :label="t('account.title')"
+                         :value="accountValue" @click="router.push('/profile')"/>
+          </div>
+        </section>
+
         <section>
           <h2 class="section-title">{{ t('settings.sections.prayer') }}</h2>
           <div class="settings-group">

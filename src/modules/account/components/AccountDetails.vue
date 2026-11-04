@@ -10,17 +10,6 @@
       </div>
 
       <div class="account-field">
-        <label :for="emailId" class="account-field-label">{{ t('account.email') }}</label>
-        <div class="account-input-wrap">
-          <ion-input :id="emailId" :model-value="account.email" class="account-input" disabled/>
-        </div>
-        <p class="account-field-hint">
-          {{ t('account.email_locked') }}
-          {{ signInMethodHint }}
-        </p>
-      </div>
-
-      <div class="account-field">
         <label :for="countryId" class="account-field-label">
           {{ t('account.country') }} <span class="optional">({{ t('account.optional') }})</span>
         </label>
@@ -49,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, ref, useId, watch} from 'vue';
+import {ref, useId, watch} from 'vue';
 import {IonInput} from '@ionic/vue';
 import {useI18n} from 'vue-i18n';
 import type {Account} from '@/modules/account/services/backendClient.ts';
@@ -62,7 +51,6 @@ const {t} = useI18n();
 const accountStore = useAccountStore();
 
 const nameId = useId();
-const emailId = useId();
 const countryId = useId();
 const cityId = useId();
 
@@ -75,11 +63,6 @@ watch(() => props.account, (account) => {
   name.value = account.name;
   country.value = account.country ?? '';
   city.value = account.city ?? '';
-});
-
-const signInMethodHint = computed(() => {
-  if (props.account.has_google && props.account.has_password) return t('account.sign_in_with_both');
-  return props.account.has_google ? t('account.sign_in_with_google') : t('account.sign_in_with_password');
 });
 
 const {busy, error, run} = useRequest((status) => (status === 422 ? t('account.errors.invalid_details') : undefined));

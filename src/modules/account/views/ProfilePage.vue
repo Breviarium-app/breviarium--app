@@ -27,6 +27,7 @@
         </template>
 
         <template v-else-if="account">
+          <AccountIdentityCard :account="account"/>
           <VerifyEmailStep v-if="!account.email_verified" :email="account.email" @verified="onVerified"/>
           <AccountDetails :account="account"/>
           <NewsletterToggle v-if="account.email_verified"/>
@@ -49,6 +50,7 @@ import {useI18n} from 'vue-i18n';
 import {useAccountStore} from '@/modules/account/stores/accountStore.ts';
 import LoginForm from '@/modules/account/components/LoginForm.vue';
 import SignupForm from '@/modules/account/components/SignupForm.vue';
+import AccountIdentityCard from '@/modules/account/components/AccountIdentityCard.vue';
 import VerifyEmailStep from '@/modules/account/components/VerifyEmailStep.vue';
 import AccountDetails from '@/modules/account/components/AccountDetails.vue';
 import NewsletterToggle from '@/modules/account/components/NewsletterToggle.vue';
@@ -89,26 +91,8 @@ const logOut = async () => {
   padding: 3rem 0;
 }
 
-.section-title {
-  margin: 0 0.25rem 0.6rem;
-  font-size: 0.75rem;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  opacity: 0.6;
-}
-
-section {
-  margin-bottom: 1.5rem;
-}
-
-.settings-group {
-  border-radius: 16px;
-  overflow: hidden;
-  background: var(--background-color-card);
-}
-
 .account-logout-button {
   margin-top: 0.5rem;
+  color: var(--ion-color-danger);
 }
 </style>

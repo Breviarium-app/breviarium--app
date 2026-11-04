@@ -8,6 +8,27 @@
   padding: 1rem 1rem 96px;
 }
 
+/* Each card below lives in its own component with its own scoped style, so these shared card/section
+   rules (matching SettingsPage.vue's) have to be global here rather than duplicated per component. */
+.account-page section {
+  margin-bottom: 1.5rem;
+}
+
+.account-page .section-title {
+  margin: 0 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.account-page .settings-group {
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--background-color-card);
+}
+
 .account-segment {
   display: flex;
   gap: 0.4rem;
@@ -49,12 +70,15 @@
   opacity: 0.7;
 }
 
-/* Wrapper draws the rounded field and focus ring, which ion-input does not clip itself */
+/* Wrapper draws the rounded field and focus ring, which ion-input does not clip itself.
+   A text-tinted overlay (rather than --background-color-card) keeps it visible against both the
+   plain page background (login/signup) and a card's background (details/password/verify), in
+   every theme - including "moon", where --background-accent is a bright coral, not a neutral shade. */
 .account-input-wrap {
   position: relative;
   border-radius: 14px;
   overflow: hidden;
-  background: var(--background-color-card);
+  background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.06);
   box-shadow: inset 0 0 0 1.5px transparent;
   transition: box-shadow 0.15s ease;
 }

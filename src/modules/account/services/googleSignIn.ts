@@ -9,6 +9,11 @@ const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID as string | undefined;
 
 export const googleSignInEnabled = Boolean(CLIENT_ID);
 
+export type GoogleSignInResult = {
+    idToken: string;
+    pictureUrl: string | null;
+};
+
 let initialized: Promise<void> | null = null;
 
 function ensureInitialized(): Promise<void> {
@@ -36,12 +41,12 @@ function hasRedirectResult(): boolean {
  * in place; this picks up the ID token after that round trip. No-op on native, when disabled, and
  * on an ordinary load that isn't returning from Google.
  */
-export async function completeRedirectSignIn(): Promise<string | null> {
+export async function completeRedirectSignIn(): Promise<GoogleSignInResult | null> {
     if (!googleSignInEnabled || Capacitor.getPlatform() !== 'web' || !hasRedirectResult()) return null;
     await ensureInitialized();
     try {
         const result = await GoogleSignIn.handleRedirectCallback();
-        return result?.idToken ?? null;
+        return result ? {idToken: result.idToken, pictureUrl: result.imageUrl} : null;
     } catch (error) {
         console.error('Error completing Google sign-in redirect:', error);
         return null;
@@ -52,8 +57,8 @@ export async function completeRedirectSignIn(): Promise<string | null> {
  * Starts sign-in. Resolves with the ID token on native platforms; on web it redirects and this
  * promise never settles — the token arrives later from completeRedirectSignIn() on next load.
  */
-export async function signInWithGoogle(): Promise<string | null> {
+export async function signInWithGoogle(): Promise<GoogleSignInResult | null> {
     await ensureInitialized();
     const result = await GoogleSignIn.signIn();
-    return result?.idToken ?? null;
+    return result ? {idToken: result.idToken, pictureUrl: result.imageUrl} : null;
 }

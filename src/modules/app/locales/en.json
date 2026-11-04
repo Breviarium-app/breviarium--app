@@ -382,8 +382,8 @@
     "more_options": "More options"
   },
   "account": {
-    "tab": "Profile",
     "title": "Your profile",
+    "settings_hint": "Log in to sync your settings and reminders across devices",
     "login_tab": "Log in",
     "signup_tab": "Sign up",
     "or": "or",
@@ -417,7 +417,6 @@
     "verify": "Confirm",
     "verifying": "Confirming…",
     "details_title": "Your details",
-    "email_locked": "Email can't be changed.",
     "sign_in_with_both": "You can log in with your password or with Google.",
     "sign_in_with_google": "You log in with Google.",
     "sign_in_with_password": "You log in with your password.",

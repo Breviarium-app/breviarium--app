@@ -574,8 +574,8 @@
     "more_options": "Más opciones"
   },
   "account": {
-    "tab": "Perfil",
     "title": "Tu perfil",
+    "settings_hint": "Inicia sesión para sincronizar tus ajustes y recordatorios entre dispositivos",
     "login_tab": "Iniciar sesión",
     "signup_tab": "Crear cuenta",
     "or": "o",
@@ -609,7 +609,6 @@
     "verify": "Confirmar",
     "verifying": "Confirmando…",
     "details_title": "Tus datos",
-    "email_locked": "El correo no se puede cambiar.",
     "sign_in_with_both": "Puedes iniciar sesión con tu contraseña o con Google.",
     "sign_in_with_google": "Inicias sesión con Google.",
     "sign_in_with_password": "Inicias sesión con tu contraseña.",

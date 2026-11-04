@@ -29,8 +29,6 @@ import {
   journalOutline,
   list,
   listOutline,
-  person,
-  personOutline,
   settings,
   settingsOutline
 } from 'ionicons/icons';
@@ -52,16 +50,15 @@ let scrollListener: (() => void) | null = null;
 const SCROLL_THRESHOLD = 10;
 
 const HOME_PATH = '/home';
-const MAIN_PATHS = [HOME_PATH, '/prayer-intentions', '/diary', '/profile', '/settings'];
+const MAIN_PATHS = [HOME_PATH, '/prayer-intentions', '/diary', '/settings'];
 
-// On the 5 principal screens the tabbar stays put; it only hides on scroll for secondary/reading screens
+// On the 4 principal screens the tabbar stays put; it only hides on scroll for secondary/reading screens
 const isMainScreen = computed(() => MAIN_PATHS.includes(route.path));
 
 const tabs = computed(() => [
   {path: HOME_PATH, icon: bonfireOutline, activeIcon: bonfire, label: t('home')},
   {path: '/prayer-intentions', icon: listOutline, activeIcon: list, label: t('prayer_intentions')},
   {path: '/diary', icon: journalOutline, activeIcon: journal, label: t('diary.tab')},
-  {path: '/profile', icon: personOutline, activeIcon: person, label: t('account.tab')},
   {path: '/settings', icon: settingsOutline, activeIcon: settings, label: t('settings.title')},
 ]);
 
@@ -69,6 +66,8 @@ const tabs = computed(() => [
 const activeTab = computed(() => {
   // Escrutes are listed in the diary, so their pages belong to its tab
   if (route.path.startsWith('/escrutes/')) return '/diary';
+  // Profile is opened from the account card at the top of Settings
+  if (route.path === '/profile') return '/settings';
   const match = tabs.value.find((tab) => tab.path !== HOME_PATH
       && (route.path === tab.path || route.path.startsWith(tab.path + '/')));
   return match?.path ?? HOME_PATH;
