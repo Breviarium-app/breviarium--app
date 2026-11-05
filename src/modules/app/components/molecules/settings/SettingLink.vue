@@ -1,5 +1,9 @@
 <template>
   <button class="setting-row btn" type="button" @click="emit('click')">
+    <span v-if="avatarUrl !== undefined" class="setting-avatar">
+      <img v-if="avatarUrl" :src="avatarUrl" alt="" referrerpolicy="no-referrer"/>
+      <ion-icon v-else :icon="personCircleOutline" aria-hidden="true"/>
+    </span>
     <span class="setting-text">
       <span class="setting-label">{{ label }}</span>
       <span v-if="hint" class="setting-hint">{{ hint }}</span>
@@ -11,13 +15,15 @@
 
 <script lang="ts" setup>
 import {IonIcon} from "@ionic/vue";
-import {chevronForward} from "ionicons/icons";
+import {chevronForward, personCircleOutline} from "ionicons/icons";
 
 defineProps<{
   label: string;
   hint?: string;
   // Current state shown before the chevron, e.g. "2 activos"
   value?: string;
+  // Leading avatar; pass null for a placeholder icon, or omit to not show one at all
+  avatarUrl?: string | null;
 }>();
 
 const emit = defineEmits<{ click: [] }>();
@@ -41,6 +47,30 @@ const emit = defineEmits<{ click: [] }>();
 
 .setting-row:active {
   background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.05);
+}
+
+.setting-avatar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--background);
+  font-size: 1.8rem;
+}
+
+/* The opacity is only meant to mute the placeholder icon, not a real photo */
+.setting-avatar ion-icon {
+  opacity: 0.6;
+}
+
+.setting-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .setting-text {

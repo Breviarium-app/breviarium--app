@@ -16,6 +16,7 @@ dependencies {
     implementation project(':capacitor-local-notifications')
     implementation project(':capacitor-preferences')
     implementation project(':capacitor-share')
+    implementation project(':capawesome-capacitor-google-sign-in')
 
 }
 

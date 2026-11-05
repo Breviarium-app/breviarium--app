@@ -3,6 +3,7 @@ import {
     bookmarkOutline,
     bookOutline,
     calendarOutline,
+    cloudDoneOutline,
     colorPaletteOutline,
     contrastOutline,
     createOutline,
@@ -13,6 +14,7 @@ import {
     languageOutline,
     notificationsOutline,
     optionsOutline,
+    personCircleOutline,
     phonePortraitOutline,
     playCircleOutline,
     reorderTwoOutline,
@@ -200,6 +202,28 @@ export const RELEASE_NOTES: Record<string, ReleaseNote[]> = {
         {
             icon: roseOutline,
             text: "Nuevas oraciones: Oración de San John Henry Newman y Letanías del Santo Nombre de Jesús",
+        },
+    ],
+    "3.5.0": [
+        {
+            icon: personCircleOutline,
+            text: "Nueva pestaña Perfil (en Ajustes): crea tu cuenta o inicia sesión, con Google o con tu correo",
+        },
+        {
+            icon: cloudDoneOutline,
+            text: "Tus ajustes y recordatorios se guardan en tu cuenta y te siguen si cambias de dispositivo",
+        },
+        {
+            icon: colorPaletteOutline,
+            text: "Personaliza el tema que usa el modo Sistema: Claro o Papel de día, Luna u Oscuro de noche",
+        },
+        {
+            icon: roseOutline,
+            text: "Nuevas oraciones: Coronilla a San Miguel Arcángel, San Juan Bosco, Padre Pío y Treintena a San José",
+        },
+        {
+            icon: cloudDoneOutline,
+            text: "Tus intenciones de oración, el Diario y los Escrutes también se sincronizan con tu cuenta",
         },
     ],
 };

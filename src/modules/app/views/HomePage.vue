@@ -2,6 +2,7 @@
 import {IonContent, IonIcon, IonPage, onIonViewWillEnter, useBackButton, useIonRouter} from '@ionic/vue';
 import {App} from '@capacitor/app';
 import {computed, ref} from "vue";
+import {storeToRefs} from "pinia";
 import {arrowForward} from "ionicons/icons";
 import {currentLiturgyHour} from "@/modules/app/constants/utils.ts";
 import DateAndCelebration from "@/modules/app/components/molecules/home-banners/DateAndCelebration.vue";
@@ -18,13 +19,21 @@ import LiturgyHoursInfo from "@/modules/app/components/molecules/home-banners/Li
 import DeceasedOfficeEntry from "@/modules/app/components/molecules/home-banners/DeceasedOfficeEntry.vue";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 import {useSettingsStore} from "@/modules/app/stores/settingsStore.ts";
+import {useAccountStore} from "@/modules/account/stores/accountStore.ts";
 
 const {t} = useI18n()
 const settingsStore = useSettingsStore();
+const accountStore = useAccountStore();
+const {signedIn, pictureUrl} = storeToRefs(accountStore);
 
 const openAbout = () => {
   HapticsService.light();
   router.push('/about');
+};
+
+const openSettings = () => {
+  HapticsService.light();
+  router.push('/settings');
 };
 
 const ionRouter = useIonRouter();
@@ -76,13 +85,19 @@ useDateStore().updateDateParams()
   <ion-page>
     <ion-content>
       <div class="home">
-        <button :aria-label="t('about.title')" class="masthead btn" @click="openAbout">
-          <img alt="" class="masthead-logo" height="52" src="/breviarium-favicon-small.png" width="52"/>
-          <div>
-            <h1 class="masthead-title">{{ t('title') }}</h1>
-            <p class="masthead-subtitle">{{ t('landing.subtitle') }}</p>
-          </div>
-        </button>
+        <div class="masthead-row">
+          <button :aria-label="t('about.title')" class="masthead btn" @click="openAbout">
+            <img alt="" class="masthead-logo" height="52" src="/breviarium-favicon-small.png" width="52"/>
+            <div>
+              <h1 class="masthead-title">{{ t('title') }}</h1>
+              <p class="masthead-subtitle">{{ t('landing.subtitle') }}</p>
+            </div>
+          </button>
+          <button :aria-label="t('account.title')" class="profile-button btn" @click="openSettings">
+            <img v-if="signedIn && pictureUrl" :src="pictureUrl" alt="" class="profile-avatar"
+                 referrerpolicy="no-referrer"/>
+          </button>
+        </div>
 
         <AnimatedComponent :delay="getDelay(0)">
           <DateAndCelebration/>
@@ -153,10 +168,17 @@ useDateStore().updateDateParams()
   gap: 1rem;
 }
 
+.masthead-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .masthead {
   display: flex;
   align-items: center;
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   gap: 0.85rem;
   padding: 0.25rem 0.25rem 0.5rem;
   border-radius: 14px;
@@ -165,6 +187,40 @@ useDateStore().updateDateParams()
 
 .masthead:active {
   opacity: 0.7;
+}
+
+.profile-button {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  transition: opacity 0.15s ease-out;
+}
+
+.profile-button:active {
+  opacity: 0.7;
+}
+
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+.profile-icon {
+  font-size: 2.5rem;
+  opacity: 0.45;
+}
+
+.profile-icon--signed-in {
+  color: var(--ion-color-primary);
+  opacity: 1;
 }
 
 .masthead-logo {

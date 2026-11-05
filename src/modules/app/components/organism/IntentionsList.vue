@@ -94,18 +94,18 @@ import {
 import type {ItemReorderEventDetail} from '@ionic/vue';
 import {addOutline, heartOutline, lockClosedOutline, reorderTwoOutline, trashOutline} from 'ionicons/icons';
 import {useI18n} from 'vue-i18n';
-import {computed, onBeforeUnmount, onMounted, ref} from 'vue';
-import {Intention, IntentionsStorageManager} from '@/modules/app/services/IntentionsStorageManager.ts';
+import {computed, onBeforeUnmount, ref} from 'vue';
+import {storeToRefs} from 'pinia';
+import {useIntentionsStore} from '@/modules/app/stores/intentionsStore.ts';
 import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 
 const {t} = useI18n();
 
-// Initialize IntentionsStorageManager
-const storageManager = new IntentionsStorageManager('prayerIntentions');
+const intentionsStore = useIntentionsStore();
+const {intentions} = storeToRefs(intentionsStore);
 
 // State
-const intentions = ref<Intention[]>([]);
 const isModalOpen = ref(false);
 const modalIntention = ref('');
 const editingIndex = ref<number | null>(null);
@@ -115,10 +115,6 @@ const isEditing = computed(() => editingIndex.value !== null);
 // Opens the keyboard straight away instead of needing a second tap on the field
 const textareaRef = ref();
 const focusTextarea = () => textareaRef.value?.$el.setFocus();
-
-onMounted(() => {
-  intentions.value = storageManager.loadIntentions();
-});
 
 onBeforeUnmount(() => {
   if (isModalOpen.value) {
@@ -144,9 +140,9 @@ const saveIntention = () => {
   if (!modalIntention.value.trim()) return;
 
   if (isEditing.value && editingIndex.value !== null) {
-    intentions.value = storageManager.updateIntention(intentions.value, editingIndex.value, modalIntention.value);
+    intentionsStore.updateIntention(editingIndex.value, modalIntention.value);
   } else {
-    intentions.value = storageManager.addIntention(intentions.value, modalIntention.value);
+    intentionsStore.addIntention(modalIntention.value);
   }
 
   closeModal();
@@ -173,14 +169,14 @@ const deleteIntention = async (index: number) => {
   await alert.present();
   const {role} = await alert.onDidDismiss();
   if (role === 'destructive') {
-    intentions.value = storageManager.deleteIntention(intentions.value, index);
+    await intentionsStore.deleteIntention(index);
   }
 };
 
 // Reorders the underlying array to match the drag-and-drop gesture, then persists the new order
 const handleReorder = (event: CustomEvent<ItemReorderEventDetail>) => {
-  intentions.value = event.detail.complete(intentions.value);
-  intentions.value = storageManager.reorderIntentions(intentions.value);
+  const reordered = event.detail.complete(intentions.value);
+  intentionsStore.reorderIntentions(reordered);
   HapticsService.light();
 };
 </script>

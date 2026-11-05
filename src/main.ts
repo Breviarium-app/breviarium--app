@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './modules/app/router'
 import {IonicVue} from '@ionic/vue'
 import {createPinia} from "pinia";
+import {QueryClient, VueQueryPlugin} from "@tanstack/vue-query";
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css'
@@ -22,14 +23,30 @@ import '@ionic/vue/css/display.css'
 
 import '@/style.css'
 import '@/modules/escrute/escrute.css'
+import '@/modules/account/account.css'
 import {i18n} from "@/modules/app/i18n.ts";
 import {welcomeMsg} from "@/modules/onboarding/welcome.ts";
 
 const pinia = createPinia();
 
+// A Capacitor app goes offline often; a stuck mutation shouldn't silently retry a login/register.
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            retry: 1,
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: true,
+        },
+        mutations: {
+            retry: 0,
+        },
+    },
+});
+
 const app = createApp(App)
     .use(IonicVue, {mode: 'ios'})
     .use(pinia)
+    .use(VueQueryPlugin, {queryClient})
     .use(i18n)
     .use(router)
 

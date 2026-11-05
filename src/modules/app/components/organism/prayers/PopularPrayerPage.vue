@@ -29,6 +29,14 @@ import SonetoCristoCrucificadoComponent from "@/modules/app/components/molecules
 import ViaCrucisComponent from "@/modules/app/components/molecules/prayers/ViaCrucisComponent.vue";
 import OracionSanJohnHenryNewmanComponent
   from "@/modules/app/components/molecules/prayers/OracionSanJohnHenryNewmanComponent.vue";
+import CoronillaSanMiguelComponent
+  from "@/modules/app/components/molecules/prayers/CoronillaSanMiguelComponent.vue";
+import OracionSanJuanBoscoComponent
+  from "@/modules/app/components/molecules/prayers/OracionSanJuanBoscoComponent.vue";
+import OracionPadrePioComponent
+  from "@/modules/app/components/molecules/prayers/OracionPadrePioComponent.vue";
+import TreintenaSanJoseComponent
+  from "@/modules/app/components/molecules/prayers/TreintenaSanJoseComponent.vue";
 
 const route = useRoute();
 
@@ -55,6 +63,22 @@ const prayers: Record<string, { title: string; component: any }> = {
   "oracion-san-john-henry-newman": {
     title: "Oración de San John Henry Newman",
     component: OracionSanJohnHenryNewmanComponent
+  },
+  "coronilla-san-miguel": {
+    title: "Coronilla a San Miguel Arcángel",
+    component: CoronillaSanMiguelComponent
+  },
+  "oracion-san-juan-bosco": {
+    title: "Oración a San Juan Bosco",
+    component: OracionSanJuanBoscoComponent
+  },
+  "oracion-padre-pio": {
+    title: "Oración al Padre Pío de Pietrelcina",
+    component: OracionPadrePioComponent
+  },
+  "treintena-san-jose": {
+    title: "Treintena a San José",
+    component: TreintenaSanJoseComponent
   },
 };
 

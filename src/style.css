@@ -120,17 +120,18 @@ body {
 }
 
 [data-theme="moon"] {
-    --background: #15202b;
-    --background-accent: #4e82b8;
-    --ion-tab-bar-background: rgba(21, 32, 43, 0.55);
-    --ion-background-color-rgb: 18, 18, 18;
-    --ion-text-color: #ffffff;
-    --ion-text-color-rgb: 255, 255, 255;
-    --ion-border-color: #1e3249; /* top header border */
-    --background-color-card: #1b2e42;
-    --border-color-light: #162637; /* navbar & ion-item border */
-    --background-card-shadow: #4e82b8;
-    --ion-tab-bar-color: #5a7c9f;
+    /* Matches the dark palette from breviarium--landing (app/globals.css .dark lp-* vars) */
+    --background: #0b1624;
+    --background-accent: #ec806b;
+    --ion-tab-bar-background: rgba(11, 22, 36, 0.55);
+    --ion-background-color-rgb: 11, 22, 36;
+    --ion-text-color: #f3ecdd;
+    --ion-text-color-rgb: 243, 236, 221;
+    --ion-border-color: #2a3a52; /* top header border */
+    --background-color-card: #13223a;
+    --border-color-light: #1a2c47; /* navbar & ion-item border */
+    --background-card-shadow: #ec806b;
+    --ion-tab-bar-color: #b8ad9c;
     --ion-color-primary: var(--background-card-shadow);
 }
 

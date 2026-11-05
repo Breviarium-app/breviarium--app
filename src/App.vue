@@ -11,10 +11,12 @@ import WhatsNewModal from '@/modules/onboarding/WhatsNewModal.vue';
 import {useAlertsStore} from "@/modules/app/stores/alertsStore.ts";
 import {NotificationService} from "@/modules/app/services/NotificationService.ts";
 import {isEaster} from "@/modules/app/constants/utils.ts";
+import {useAccountStore} from "@/modules/account/stores/accountStore.ts";
 
 const store = useSettingsStore();
 const router = useRouter();
 const alertsStore = useAlertsStore();
+const accountStore = useAccountStore();
 
 // Tapping a reminder opens today's prayer, even if another day was being browsed
 const openAlert = async (extra: Record<string, unknown> | undefined) => {
@@ -28,7 +30,7 @@ const openAlert = async (extra: Record<string, unknown> | undefined) => {
 };
 
 onMounted(() => {
-  store.loadSettings().then(() => {
+  const settingsLoaded = store.loadSettings().then(() => {
     store.saveSettings();
     store.applyTheme(store.settings.theme);
     // document.documentElement.style.fontSize = `${store.settings.fontSize}px`;
@@ -45,12 +47,19 @@ onMounted(() => {
   useDateStore();
   useBreviariumStore();
 
+  let alertsLoaded: Promise<void> = Promise.resolve();
   if (alertsStore.isSupported) {
-    alertsStore.load();
+    alertsLoaded = alertsStore.load();
     NotificationService.onOpened(openAlert);
     // Notification permissions may have changed in the system settings meanwhile
     CapacitorApp.addListener('resume', () => alertsStore.refreshPermissions());
   }
+
+  // Restores the session (if any); once settings/alerts are loaded, so a signed-in account can
+  // seed or pull them right away.
+  Promise.all([settingsLoaded, alertsLoaded]).then(() => accountStore.init()).catch(error => {
+    console.error('Error initializing account:', error);
+  });
 
   CapacitorApp.addListener('appUrlOpen', (event) => {
     const url = new URL(event.url);
