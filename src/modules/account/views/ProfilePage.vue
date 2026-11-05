@@ -37,6 +37,16 @@
             {{ t('account.logout') }}
           </button>
         </template>
+
+        <template v-else>
+          <p class="account-load-error">{{ t('account.load_error') }}</p>
+          <button :disabled="retrying" class="account-button" type="button" @click="retry">
+            {{ t('account.retry') }}
+          </button>
+          <button class="account-button secondary account-logout-button" type="button" @click="logOut">
+            {{ t('account.logout') }}
+          </button>
+        </template>
       </div>
     </ion-content>
   </ion-page>
@@ -80,6 +90,16 @@ const onVerified = () => {
   pendingNewsletterOptIn.value = null;
 };
 
+const retrying = ref(false);
+const retry = async () => {
+  retrying.value = true;
+  try {
+    await accountStore.retryLoadAccount();
+  } finally {
+    retrying.value = false;
+  }
+};
+
 const logOut = async () => {
   HapticsService.light();
   await accountStore.logOut();
@@ -92,6 +112,12 @@ const logOut = async () => {
   display: flex;
   justify-content: center;
   padding: 3rem 0;
+}
+
+.account-load-error {
+  text-align: center;
+  color: var(--ion-color-medium);
+  margin: 2rem 0 1rem;
 }
 
 .account-logout-button {

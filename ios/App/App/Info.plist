@@ -28,10 +28,6 @@
 				<string>breviarium</string>
 			</array>
 		</dict>
-		<!-- Google Sign-In: replace both placeholders below with the iOS OAuth client ID from
-		     Google Cloud Console (a DIFFERENT client ID than VITE_GOOGLE_CLIENT_ID, which is the
-		     web client ID). The scheme is that iOS client ID reversed, e.g. for
-		     1234567890-abc.apps.googleusercontent.com it is com.googleusercontent.apps.1234567890-abc. -->
 		<dict>
 			<key>CFBundleURLName</key>
 			<string>google-sign-in</string>
@@ -41,11 +37,10 @@
 			</array>
 		</dict>
 	</array>
-	<!-- Google Sign-In: the iOS OAuth client ID itself (see the URL scheme comment above). -->
-	<key>GIDClientID</key>
-	<string>1038748191717-n505bube4rnbk2j4t2r8bbp8cg59j9kj.apps.googleusercontent.com</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>GIDClientID</key>
+	<string>1038748191717-n505bube4rnbk2j4t2r8bbp8cg59j9kj.apps.googleusercontent.com</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>

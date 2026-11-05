@@ -35,6 +35,7 @@ const PICTURE_KEY = 'account.pictureUrl';
 export const useAccountStore = defineStore('account', () => {
     const signedIn = ref(false);
     const isReady = ref(false);
+    const accountLoadFailed = ref(false);
     const pictureUrl = ref<string | null>(null);
 
     const queryClient = useQueryClient();
@@ -169,12 +170,25 @@ export const useAccountStore = defineStore('account', () => {
                 await syncAllOnSignIn();
             } catch (error) {
                 console.error('Error loading account:', error);
+                accountLoadFailed.value = true;
             }
         }
         // Picks up a Google sign-in that redirected away and back on the web build
         const result = await completeRedirectSignIn();
         if (result) await continueWithGoogle(result.idToken, 'es', result.pictureUrl);
         isReady.value = true;
+    };
+
+    /** Retries loading the account after a failed startup load; the session is kept either way. */
+    const retryLoadAccount = async () => {
+        try {
+            await queryClient.fetchQuery({queryKey: ACCOUNT_KEY, queryFn: apiGetAccount, staleTime: 0});
+            accountLoadFailed.value = false;
+            await syncAllOnSignIn();
+        } catch (error) {
+            console.error('Error loading account:', error);
+            accountLoadFailed.value = true;
+        }
     };
 
     const register = async (input: { name: string; email: string; password: string; locale: string }) => {
@@ -226,8 +240,10 @@ export const useAccountStore = defineStore('account', () => {
         account,
         signedIn,
         isReady,
+        accountLoadFailed,
         pictureUrl,
         init,
+        retryLoadAccount,
         register,
         completeGoogleAddPassword,
         logIn,

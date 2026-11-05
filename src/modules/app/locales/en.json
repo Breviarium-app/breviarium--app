@@ -385,6 +385,8 @@
   },
   "account": {
     "title": "Your profile",
+    "load_error": "We couldn't load your account. Check your connection and try again.",
+    "retry": "Retry",
     "settings_hint": "Log in to sync your settings and reminders across devices",
     "login_tab": "Log in",
     "signup_tab": "Sign up",

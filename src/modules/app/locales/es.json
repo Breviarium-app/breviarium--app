@@ -577,6 +577,8 @@
   },
   "account": {
     "title": "Tu perfil",
+    "load_error": "No pudimos cargar tu cuenta. Comprueba tu conexión e inténtalo de nuevo.",
+    "retry": "Reintentar",
     "settings_hint": "Inicia sesión para sincronizar tus ajustes y recordatorios entre dispositivos",
     "login_tab": "Iniciar sesión",
     "signup_tab": "Crear cuenta",
