@@ -9,25 +9,6 @@
         </div>
       </div>
 
-      <div class="account-field">
-        <label :for="countryId" class="account-field-label">
-          {{ t('account.country') }} <span class="optional">({{ t('account.optional') }})</span>
-        </label>
-        <div class="account-input-wrap">
-          <ion-input :id="countryId" v-model="country" autocomplete="country-name" class="account-input" :maxlength="100"/>
-        </div>
-      </div>
-
-      <div class="account-field">
-        <label :for="cityId" class="account-field-label">
-          {{ t('account.city') }} <span class="optional">({{ t('account.optional') }})</span>
-        </label>
-        <div class="account-input-wrap">
-          <ion-input :id="cityId" v-model="city" autocomplete="address-level2" class="account-input" :maxlength="100"/>
-        </div>
-        <p class="account-field-hint">{{ t('account.location_hint') }}</p>
-      </div>
-
       <button :disabled="busy" class="account-button" type="submit">
         {{ busy ? t('account.saving') : t('account.save') }}
       </button>
@@ -51,8 +32,6 @@ const {t} = useI18n();
 const accountStore = useAccountStore();
 
 const nameId = useId();
-const countryId = useId();
-const cityId = useId();
 
 const name = ref(props.account.name);
 const country = ref(props.account.country ?? '');
@@ -81,10 +60,5 @@ const onSubmit = () => run(async () => {
 <style scoped>
 .account-details-group {
   padding: 1.1rem 1rem;
-}
-
-.optional {
-  font-weight: 400;
-  opacity: 0.6;
 }
 </style>

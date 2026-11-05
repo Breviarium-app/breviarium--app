@@ -135,7 +135,9 @@ function refreshTokens(staleRefreshToken: string): Promise<void> {
     return refreshLock;
 }
 
-async function sendWithSession<T>(path: string, options: { method?: string; body?: unknown } = {}): Promise<T> {
+/** The authenticated request primitive (token attach + refresh-on-401), reused by other modules'
+ *  own query files (intentions, diary, escrutes) so there's one place that owns the session. */
+export async function sendWithSession<T>(path: string, options: { method?: string; body?: unknown } = {}): Promise<T> {
     await loadCache();
     if (!cachedTokens) throw new ApiError(401);
     const tokens = cachedTokens;

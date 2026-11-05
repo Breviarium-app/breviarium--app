@@ -221,5 +221,9 @@ export const RELEASE_NOTES: Record<string, ReleaseNote[]> = {
             icon: roseOutline,
             text: "Nuevas oraciones: Coronilla a San Miguel Arcángel, San Juan Bosco, Padre Pío y Treintena a San José",
         },
+        {
+            icon: cloudDoneOutline,
+            text: "Tus intenciones de oración, el Diario y los Escrutes también se sincronizan con tu cuenta",
+        },
     ],
 };

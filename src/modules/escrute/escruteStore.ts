@@ -3,11 +3,23 @@ import {computed, ref, watch} from "vue";
 import {Preferences} from "@capacitor/preferences";
 import type {Passage} from "./reference";
 import {branchTip, type Escrute, findLecture, type Lecture, pathTo, rootLecture, subtreeIds} from "./escrute";
+import {
+    getEscrutes,
+    useCreateEscruteMutation,
+    useDeleteEscruteMutation,
+    useReplaceEscrutesMutation,
+    useUpdateEscruteMutation,
+} from "@/modules/escrute/queries/escruteQueries.ts";
+import {useAccountStore} from "@/modules/account/stores/accountStore.ts";
+import {debounce} from "@/modules/app/utils/debounce.ts";
 
 const STORAGE_KEY = 'escrutes.v1';
 const ONGOING_KEY = 'escrutes.ongoing.v1';
 
-const newId = (): string => Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+// crypto.randomUUID(), not a timestamp+Math.random() string: the latter can repeat under rapid
+// calls (Date.now() ties within the same millisecond, and Math.random().toString(36) can yield a
+// shorter-than-expected suffix), and these ids are now also the backend's primary key for the row.
+const newId = (): string => crypto.randomUUID();
 
 /** An escrute being read in the Bible: jumps made through cross-references are added to it until it is finished */
 interface Ongoing {
@@ -40,7 +52,7 @@ export const useEscruteStore = defineStore('escrutes', () => {
     watch(ongoing, value => save(ONGOING_KEY, value), {deep: true});
 
     // Preferences is async, so saved escrutes arrive shortly after the store is created; anything started meanwhile is kept
-    Promise.all([load<Escrute[]>(STORAGE_KEY, []), load<Ongoing | null>(ONGOING_KEY, null)]).then(([savedEscrutes, savedOngoing]) => {
+    const loadedPromise = Promise.all([load<Escrute[]>(STORAGE_KEY, []), load<Ongoing | null>(ONGOING_KEY, null)]).then(([savedEscrutes, savedOngoing]) => {
         escrutes.value = [...savedEscrutes, ...escrutes.value];
         ongoing.value ??= savedOngoing;
         loaded = true;
@@ -54,10 +66,38 @@ export const useEscruteStore = defineStore('escrutes', () => {
 
     const touch = (escrute: Escrute) => escrute.updatedAt = new Date().toISOString();
 
+    const createMutation = useCreateEscruteMutation();
+    const updateMutation = useUpdateEscruteMutation();
+    const deleteMutation = useDeleteEscruteMutation();
+    const replaceMutation = useReplaceEscrutesMutation();
+
+    // addLecture/updateNote can fire on every keystroke (note textareas), so pushes are debounced
+    // and keyed by "whichever escrute was last touched" rather than one request per call.
+    let touchedId: string | null = null;
+    const pushTouched = debounce(() => {
+        const escrute = touchedId && find(touchedId);
+        if (!useAccountStore().signedIn || !escrute) return;
+        updateMutation.mutateAsync({id: escrute.id, title: escrute.title, lectures: escrute.lectures}).catch((error) => {
+            console.error('Error syncing escrute:', error);
+        });
+    }, 1000);
+    const scheduleSync = (id: string) => {
+        touchedId = id;
+        pushTouched();
+    };
+
     function create(title: string, passage: Passage): Escrute {
         const now = new Date().toISOString();
         const root: Lecture = {id: newId(), parentId: null, passage, note: '', createdAt: now};
-        escrutes.value.push({id: newId(), title, lectures: [root], createdAt: now, updatedAt: now});
+        const escrute: Escrute = {id: newId(), title, lectures: [root], createdAt: now, updatedAt: now};
+        escrutes.value.push(escrute);
+        // A new escrute needs creating remotely, not patching, so this doesn't go through
+        // scheduleSync()/pushTouched() - fire-and-forget, same best-effort spirit as the rest.
+        if (useAccountStore().signedIn) {
+            createMutation.mutateAsync({id: escrute.id, title: escrute.title, lectures: escrute.lectures}).catch((error) => {
+                console.error('Error syncing new escrute:', error);
+            });
+        }
         // Return the reactive copy so later edits are tracked
         return escrutes.value[escrutes.value.length - 1];
     }
@@ -67,10 +107,17 @@ export const useEscruteStore = defineStore('escrutes', () => {
         if (!escrute) return;
         escrute.title = title;
         touch(escrute);
+        scheduleSync(id);
     }
 
     function remove(id: string) {
         escrutes.value = escrutes.value.filter(escrute => escrute.id !== id);
+        if (touchedId === id) touchedId = null;
+        if (useAccountStore().signedIn) {
+            deleteMutation.mutateAsync(id).catch((error) => {
+                console.error('Error syncing escrute deletion:', error);
+            });
+        }
     }
 
     function addLecture(escruteId: string, parentId: string, passage: Passage, fromVerse?: string): Lecture | undefined {
@@ -79,6 +126,7 @@ export const useEscruteStore = defineStore('escrutes', () => {
         const lecture: Lecture = {id: newId(), parentId, passage, fromVerse, note: '', createdAt: new Date().toISOString()};
         escrute.lectures.push(lecture);
         touch(escrute);
+        scheduleSync(escruteId);
         return lecture;
     }
 
@@ -88,6 +136,7 @@ export const useEscruteStore = defineStore('escrutes', () => {
         if (!escrute || !lecture) return;
         lecture.note = note;
         touch(escrute);
+        scheduleSync(escruteId);
     }
 
     /** Removes a lecture and every jump made from it. The starting lecture cannot be removed. */
@@ -98,6 +147,7 @@ export const useEscruteStore = defineStore('escrutes', () => {
         const removed = subtreeIds(escrute, lectureId);
         escrute.lectures = escrute.lectures.filter(l => !removed.has(l.id));
         touch(escrute);
+        scheduleSync(escruteId);
     }
 
     const ongoingEscrute = computed(() => ongoing.value ? find(ongoing.value.escruteId) : undefined);
@@ -149,8 +199,35 @@ export const useEscruteStore = defineStore('escrutes', () => {
         ongoing.value = null;
     }
 
+    // Pulls on sign-in: seeds the account from this device if it has none yet, otherwise applies
+    // what's stored remotely (remote wins - logging in elsewhere follows you). `ongoing` (which
+    // lecture you're currently reading) is local-only and untouched - reasonable to differ per device.
+    async function syncOnSignIn() {
+        await loadedPromise;
+        try {
+            const remote = await getEscrutes();
+            if (remote.length === 0) {
+                if (escrutes.value.length > 0) {
+                    await replaceMutation.mutateAsync(
+                        escrutes.value.map((escrute) => ({id: escrute.id, title: escrute.title, lectures: escrute.lectures}))
+                    );
+                }
+            } else {
+                escrutes.value = remote.map((item) => ({
+                    id: item.id,
+                    title: item.title,
+                    lectures: item.lectures,
+                    createdAt: item.created_at,
+                    updatedAt: item.updated_at,
+                }));
+            }
+        } catch (error) {
+            console.error('Error syncing escrutes:', error);
+        }
+    }
+
     return {
         escrutes, sorted, find, create, rename, remove, addLecture, updateNote, removeLecture,
-        ongoingEscrute, trail, currentLecture, start, resume, follow, goTo, finish,
+        ongoingEscrute, trail, currentLecture, start, resume, follow, goTo, finish, syncOnSignIn,
     };
 });

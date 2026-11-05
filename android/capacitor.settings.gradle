@@ -8,9 +8,6 @@ project(':capacitor-community-keep-awake').projectDir = new File('../node_module
 include ':capacitor-community-text-to-speech'
 project(':capacitor-community-text-to-speech').projectDir = new File('../node_modules/.pnpm/@capacitor-community+text-to-speech@8.0.2_@capacitor+core@8.5.3/node_modules/@capacitor-community/text-to-speech/android')
 
-include ':capawesome-capacitor-google-sign-in'
-project(':capawesome-capacitor-google-sign-in').projectDir = new File('../node_modules/.pnpm/@capawesome+capacitor-google-sign-in@0.1.4_@capacitor+core@8.5.3/node_modules/@capawesome/capacitor-google-sign-in/android')
-
 include ':capacitor-app'
 project(':capacitor-app').projectDir = new File('../node_modules/.pnpm/@capacitor+app@8.1.2_@capacitor+core@8.5.3/node_modules/@capacitor/app/android')
 
@@ -25,3 +22,6 @@ project(':capacitor-preferences').projectDir = new File('../node_modules/.pnpm/@
 
 include ':capacitor-share'
 project(':capacitor-share').projectDir = new File('../node_modules/.pnpm/@capacitor+share@8.0.3_@capacitor+core@8.5.3/node_modules/@capacitor/share/android')
+
+include ':capawesome-capacitor-google-sign-in'
+project(':capawesome-capacitor-google-sign-in').projectDir = new File('../node_modules/.pnpm/@capawesome+capacitor-google-sign-in@0.1.4_@capacitor+core@8.5.3/node_modules/@capawesome/capacitor-google-sign-in/android')

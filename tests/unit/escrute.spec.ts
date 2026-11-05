@@ -1,6 +1,9 @@
 import {beforeEach, describe, expect, test, vi} from 'vitest'
+import {createApp} from 'vue'
 import {createPinia, setActivePinia} from 'pinia'
+import {QueryClient, VueQueryPlugin} from '@tanstack/vue-query'
 import {useEscruteStore} from "../../src/modules/escrute/escruteStore";
+import {useAccountStore} from "../../src/modules/account/stores/accountStore";
 import {childrenOf, layoutTree, pathTo, rootLecture} from "../../src/modules/escrute/escrute";
 import {formatPassage, parsePassage} from "../../src/modules/escrute/reference";
 
@@ -16,6 +19,20 @@ vi.mock('@capacitor/preferences', () => ({
 /** Lets the saved escrutes arrive, as Preferences is async */
 const loaded = () => new Promise(resolve => setTimeout(resolve))
 
+// escruteStore (and the accountStore it checks signedIn on) use TanStack Query, which needs an
+// injection context to construct its hooks. Creating both once here, inside a throwaway app's
+// context, caches them in the given (just-activated) Pinia instance - every useXStore() call
+// anywhere afterwards then just returns that same cached store, setup() never re-running outside it.
+const freshPinia = () => {
+    setActivePinia(createPinia())
+    const app = createApp({})
+    app.use(VueQueryPlugin, {queryClient: new QueryClient()})
+    app.runWithContext(() => {
+        useAccountStore()
+        useEscruteStore()
+    })
+}
+
 const MT_1 = {book: 'Mateo', chapter: '1', from: 1, to: 5}
 const IS_7 = {book: 'Isaías', chapter: '7', from: 14}
 const LC_1 = {book: 'Lucas', chapter: '1', from: 26, to: 38}
@@ -23,7 +40,7 @@ const LC_1 = {book: 'Lucas', chapter: '1', from: 26, to: 38}
 describe('escrute store', () => {
     beforeEach(() => {
         saved.clear()
-        setActivePinia(createPinia())
+        freshPinia()
     })
 
     test('builds a tree of lectures from a starting lecture', () => {
@@ -89,7 +106,7 @@ describe('escrute store', () => {
         store.updateNote(escrute.id, rootLecture(escrute).id, 'Una reflexión')
         await loaded()
 
-        setActivePinia(createPinia())
+        freshPinia()
         const store2 = useEscruteStore()
         await loaded()
         const reloaded = store2.find(escrute.id)!
@@ -101,7 +118,7 @@ describe('escrute store', () => {
 describe('ongoing escrute', () => {
     beforeEach(() => {
         saved.clear()
-        setActivePinia(createPinia())
+        freshPinia()
     })
 
     const labels = (store: ReturnType<typeof useEscruteStore>) => store.trail.lectures.map(l => l.passage.book)
@@ -140,7 +157,7 @@ describe('ongoing escrute', () => {
         store.follow(IS_7, '23')
         await loaded()
 
-        setActivePinia(createPinia())
+        freshPinia()
         const reloaded = useEscruteStore()
         await loaded()
         expect(reloaded.ongoingEscrute?.id).toBe(escrute.id)
@@ -163,7 +180,7 @@ describe('ongoing escrute', () => {
 describe('resuming an escrute', () => {
     beforeEach(() => {
         saved.clear()
-        setActivePinia(createPinia())
+        freshPinia()
     })
 
     const labels = (store: ReturnType<typeof useEscruteStore>) => store.trail.lectures.map(l => l.passage.book)

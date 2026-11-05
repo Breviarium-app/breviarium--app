@@ -23,18 +23,14 @@ import {
 import {completeRedirectSignIn, signInWithGoogle} from '@/modules/account/services/googleSignIn.ts';
 import {useSettingsStore} from '@/modules/app/stores/settingsStore.ts';
 import {useAlertsStore} from '@/modules/app/stores/alertsStore.ts';
+import {useIntentionsStore} from '@/modules/app/stores/intentionsStore.ts';
+import {useDiaryStore} from '@/modules/app/stores/diaryStore.ts';
+import {useEscruteStore} from '@/modules/escrute/escruteStore.ts';
+import {debounce} from '@/modules/app/utils/debounce.ts';
 
 // The backend has no avatar field, so the Google profile picture is only cached on this device,
 // from whichever Google sign-in last provided one - it won't follow you to a new device.
 const PICTURE_KEY = 'account.pictureUrl';
-
-function debounce<Args extends unknown[]>(fn: (...args: Args) => void, ms: number) {
-    let timer: ReturnType<typeof setTimeout> | null = null;
-    return (...args: Args) => {
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(() => fn(...args), ms);
-    };
-}
 
 export const useAccountStore = defineStore('account', () => {
     const signedIn = ref(false);
@@ -128,9 +124,18 @@ export const useAccountStore = defineStore('account', () => {
         watchLocalChanges();
     };
 
+    // Pulls/seeds every synced collection; called whenever a session starts, whether just now
+    // (register/login/Google) or restored from a previous one (init() on a cold start).
+    const syncAllOnSignIn = async () => {
+        await syncPreferences();
+        await useIntentionsStore().syncOnSignIn();
+        await useDiaryStore().syncOnSignIn();
+        await useEscruteStore().syncOnSignIn();
+    };
+
     const applySignedIn = async () => {
         signedIn.value = true;
-        await syncPreferences();
+        await syncAllOnSignIn();
     };
 
     const continueWithGoogle = async (idToken: string, locale = 'es', newPictureUrl: string | null = null) => {
@@ -161,7 +166,7 @@ export const useAccountStore = defineStore('account', () => {
         if (signedIn.value) {
             try {
                 await queryClient.fetchQuery({queryKey: ACCOUNT_KEY, queryFn: apiGetAccount});
-                await syncPreferences();
+                await syncAllOnSignIn();
             } catch (error) {
                 console.error('Error loading account:', error);
             }

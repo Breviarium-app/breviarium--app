@@ -1,7 +1,7 @@
 <template>
-  <div v-if="storageManager.loadIntentions().length > 0" class="custom-prayers">
+  <div v-if="intentions.length > 0" class="custom-prayers">
     <ul>
-      <li v-for="element in storageManager.loadIntentions()" :key="element.id">- {{ element.text }}</li>
+      <li v-for="element in intentions" :key="element.id">- {{ element.text }}</li>
     </ul>
     <p>
       <small>{{ $t('prayer_intentions_modify_explanation') }} <a
@@ -10,10 +10,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {IntentionsStorageManager} from "@/modules/app/services/IntentionsStorageManager.ts";
+import {storeToRefs} from "pinia";
+import {useIntentionsStore} from "@/modules/app/stores/intentionsStore.ts";
 import router from "@/modules/app/router";
 
-const storageManager = new IntentionsStorageManager('prayerIntentions');
+const {intentions} = storeToRefs(useIntentionsStore());
 </script>
 <style lang="css" scoped>
 .custom-prayers li {

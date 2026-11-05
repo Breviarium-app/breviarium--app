@@ -66,7 +66,6 @@
       {{ t('account.has_account') }}
       <button type="button" @click="emit('switch-to-login')">{{ t('account.login_tab') }}</button>
     </p>
-    <p class="account-field-hint">{{ t('account.location_notice') }}</p>
   </form>
 </template>
 
