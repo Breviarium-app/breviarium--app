@@ -39,7 +39,7 @@
             <p class="intro">{{ t('diary.explanation') }}</p>
             <p class="privacy">
               <ion-icon :icon="lockClosedOutline" aria-hidden="true"/>
-              {{ t('diary.explanation_offline') }}
+              {{ t(accountStore.signedIn ? 'diary.explanation_account' : 'diary.explanation_offline') }}
             </p>
 
             <button :aria-label="t('diary.add_button')" class="compose btn" @click="openNew">
@@ -162,12 +162,14 @@ import {
 import {useI18n} from 'vue-i18n';
 import {useRoute} from 'vue-router';
 import {type DiaryEntry, useDiaryStore} from '@/modules/app/stores/diaryStore.ts';
+import {useAccountStore} from '@/modules/account/stores/accountStore.ts';
 import DiaryEntryModal from '@/modules/app/components/molecules/DiaryEntryModal.vue';
 import DiaryReferenceCard from '@/modules/app/components/molecules/DiaryReferenceCard.vue';
 import HapticsService from '@/modules/app/services/HapticsService.ts';
 
 const {t, tm, locale} = useI18n();
 const store = useDiaryStore();
+const accountStore = useAccountStore();
 const route = useRoute();
 
 const PAGE_SIZE = 15;

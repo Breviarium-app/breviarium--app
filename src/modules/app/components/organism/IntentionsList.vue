@@ -10,7 +10,7 @@
         <p class="intro">{{ t('prayer_intentions_explanation_1') }}</p>
         <p class="privacy">
           <ion-icon :icon="lockClosedOutline" aria-hidden="true"/>
-          {{ t('prayer_intentions_explanation_offline') }}
+          {{ t(accountStore.signedIn ? 'prayer_intentions_explanation_account' : 'prayer_intentions_explanation_offline') }}
         </p>
 
         <section v-if="intentions.length > 0">
@@ -97,11 +97,13 @@ import {useI18n} from 'vue-i18n';
 import {computed, onBeforeUnmount, ref} from 'vue';
 import {storeToRefs} from 'pinia';
 import {useIntentionsStore} from '@/modules/app/stores/intentionsStore.ts';
+import {useAccountStore} from '@/modules/account/stores/accountStore.ts';
 import SocialIcons from "@/modules/app/components/molecules/SocialIcons.vue";
 import HapticsService from "@/modules/app/services/HapticsService.ts";
 
 const {t} = useI18n();
 
+const accountStore = useAccountStore();
 const intentionsStore = useIntentionsStore();
 const {intentions} = storeToRefs(intentionsStore);
 
