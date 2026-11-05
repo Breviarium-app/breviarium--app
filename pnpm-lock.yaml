@@ -54,8 +54,8 @@ importers:
         specifier: ^2.0.3
         version: 2.0.3
       breviarium:
-        specifier: ^3.1.7
-        version: 3.1.7(typescript@5.9.3)
+        specifier: ^3.1.8
+        version: 3.1.8(typescript@5.9.3)
       date-fns:
         specifier: ^4.4.0
         version: 4.4.0
@@ -1249,8 +1249,8 @@ packages:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
 
-  breviarium@3.1.7:
-    resolution: {integrity: sha512-Ew5KdBW9G+8UTGJUc1A7QrFyonvuh0WVm3YrGid7OFl6b0Hl/qx9W/eM6/XnqrkL8zwFW0XV2hdEyauYKmutzg==}
+  breviarium@3.1.8:
+    resolution: {integrity: sha512-3Myi4OW+wI/634RNCZsgHRTu///WrwayunGttHKagy+t7lPYEKUmsSQMm6EvWvMVqA0FiqOB55J6DVtiYQ3hHA==}
 
   browserslist@4.28.1:
     resolution: {integrity: sha512-ZC5Bd0LgJXgwGqUknZY/vkUQ04r8NXnJZ3yYi4vDmSiZmC/pdSN0NbNRPxZpbtO4uAfDUAFffO8IZoM3Gj8IkA==}
@@ -4469,7 +4469,7 @@ snapshots:
     dependencies:
       fill-range: 7.1.1
 
-  breviarium@3.1.7(typescript@5.9.3):
+  breviarium@3.1.8(typescript@5.9.3):
     dependencies:
       '@romcal/calendar.spain': 3.0.0-dev.119(romcal@3.0.0-dev.119(typescript@5.9.3))
       romcal: 3.0.0-dev.119(typescript@5.9.3)

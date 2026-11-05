@@ -28,7 +28,7 @@
 
         <template v-else-if="account">
           <AccountIdentityCard :account="account"/>
-          <VerifyEmailStep v-if="!account.email_verified" :email="account.email" @verified="onVerified"/>
+          <VerifyEmailStep v-if="SHOW_EMAIL_VERIFICATION && !account.email_verified" :email="account.email" @verified="onVerified"/>
           <AccountDetails :account="account"/>
           <NewsletterToggle v-if="account.email_verified"/>
           <ChangePasswordForm v-if="account.has_password"/>
@@ -60,6 +60,9 @@ import HapticsService from '@/modules/app/services/HapticsService.ts';
 const {t} = useI18n();
 const accountStore = useAccountStore();
 const {account} = storeToRefs(accountStore);
+
+// TEMPORARY: set to true to restore the email confirmation step.
+const SHOW_EMAIL_VERIFICATION = false as boolean;
 
 const mode = ref<'login' | 'signup'>('login');
 // The newsletter opt-in chosen at signup; applied once the emailed code verifies, since

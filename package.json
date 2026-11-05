@@ -28,7 +28,7 @@
     "@ionic/vue-router": "^9.0.8",
     "@tanstack/vue-query": "^5.106.0",
     "bible-core": "^2.0.3",
-    "breviarium": "^3.1.7",
+    "breviarium": "^3.1.8",
     "date-fns": "^4.4.0",
     "i18next": "^26.4.5",
     "ionicons": "^8.1.0",
